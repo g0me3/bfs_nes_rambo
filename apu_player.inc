@@ -428,22 +428,22 @@ _apu_mul6_tbl:
 _apu_mus_prg_list:
 		.BYTE $01,$00,$01,$00,$01,$00,$00,$00,$00,$01,$00,$00,$00,$00,$01,$00
 _apu_mus_lib:
-		.WORD _apu_mus00A,_apu_mus00B,_apu_mus00C,_apu_mus00D
-		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
-		.WORD _apu_mus02A,_apu_mus02B,_apu_mus02C,_apu_mus02D
-		.WORD _apu_mus03A,_apu_mus03B,_apu_mus03C,_apu_mus03D
-		.WORD _apu_mus04A,_apu_mus04B,_apu_mus04C,_apu_mus04D
-		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
-		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
-		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
-		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
-		.WORD _apu_mus09A,_apu_mus09B,_apu_mus09C,_apu_mus09D
-		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
-		.WORD _apu_mus0BA,_apu_mus0BB,_apu_mus0BC,_apu_mus0BD
-		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
-		.WORD _apu_mus0DA,_apu_mus0DB,_apu_mus0DC,_apu_mus0DD
-		.WORD _apu_mus00A,_apu_mus00B,_apu_mus00C,_apu_mus00D
-		.WORD _apu_mus0FA,_apu_mus0FB,_apu_mus0FC,_apu_mus0FD
+		APU_IDX _apu_mus00
+		APU_IDX _apu_mus01
+		APU_IDX _apu_mus02
+		APU_IDX _apu_mus03
+		APU_IDX _apu_mus04
+		APU_IDX _apu_mus01
+		APU_IDX _apu_mus01
+		APU_IDX _apu_mus01
+		APU_IDX _apu_mus01
+		APU_IDX _apu_mus09
+		APU_IDX _apu_mus01
+		APU_IDX _apu_mus0B
+		APU_IDX _apu_mus01
+		APU_IDX _apu_mus0D
+		APU_IDX _apu_mus00
+		APU_IDX _apu_mus0F
 _apu_tbl3:
 		.BYTE $09,$0A,$0B,$FF,$01,$01,$01,$04,$04,$04,$04,$04,$04,$04,$04,$03
 		.BYTE $03,$03,$03,$03,$03,$03,$03,$02,$02,$02,$02,$02,$02,$02,$02,$01

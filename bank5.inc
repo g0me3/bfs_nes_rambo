@@ -6,7 +6,7 @@
 		SECTION_START
 
 ; =============== S U B	R O U T	I N E =======================================
-_inventory_screen_draw:
+_dialog_script_play:
 		LDA		#$90
 		STA		_PPU_CTRL
 		JSR		_palette_off
@@ -20,21 +20,16 @@ loc_4400C:
 		INX
 		BNE		loc_4400C
 		JSR		_ppu_screen_clear
-		LDA		_game._scr_idx
+		LDA		_game._scr_idx			; backup currently selected script idx
 		PHA
-		LDA		#$83
-		STA		_game._scr_idx
+		LDA		#$83					; execute the inventory draw script
+		STA		_game._scr_idx			; must be alwys drawn before any dialog
 		JSR		_script_lib_player
 		PLA
-		STA		_game._scr_idx
+		STA		_game._scr_idx			; restore script idx and run the actual one
 		JSR		_script_lib_player
 		JSR		_palette_off
-loc_4402E:
-		JSR		_read_pad_safeA
-		LDA		_pad
-		AND		#$30
-		BNE		loc_4402E
-		RTS
+		JMP		_msg_wait_key_release
 
 ; =============== S U B	R O U T	I N E =======================================
 _palette_off:
@@ -356,7 +351,6 @@ loc_442D4:
 		INY
 		JMP		loc_442D4
 _select_is_over:
-		JSR		_msg_wait_key_release
 		LDA		_tmp11
 		AND		#$C7
 		STA		_tmp11
@@ -988,7 +982,6 @@ loc_440E7:
 ; =============== S U B	R O U T	I N E =======================================
 _msg_wait_key_release:
 		JSR		_read_pad_safeA
-		LDA		_pad
 		BNE		_msg_wait_key_release
 		RTS
 
@@ -998,7 +991,6 @@ _msg_wait_for_input:
 loc_447C4:
 		JSR		_script_sprite_anim
 		JSR		_read_pad_safeA
-		LDA		_pad
 		BEQ		loc_447C4
 		LDA		_game._scr_idx
 		CMP		#$84
@@ -1031,7 +1023,6 @@ _msg_display_inventory_screen:
 		JSR		_msg_wait_key_release
 loc_44817:
 		JSR		_read_pad_safeA
-		LDA		_pad
 		AND		#$10
 		BEQ		loc_44817
 		JSR		_render_on_ex_ex
@@ -1608,7 +1599,6 @@ loc_44C84:
 		LDA		#$50
 		STA		_spr_buf+$FF
 		JSR		_read_pad_safeA
-		LDA		_pad
 		BNE		loc_44C5E
 loc_44C9E:
 		LDA		_nmi_flag
@@ -1622,7 +1612,6 @@ loc_44C9E:
 		JSR		_title_screen_spr_animate
 loc_44CB3:
 		JSR		_read_pad_safeA
-		LDA		_pad
 		BEQ		loc_44C9E
 		LDA		_pad
 		AND		#$10
@@ -1780,6 +1769,7 @@ _read_pad_safeA:
 		TAY
 		PLA
 		STA		_tmp03
+		LDA		_pad
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -2044,7 +2034,6 @@ loc_450C9:
 		BNE		loc_450E3
 loc_450DB:
 		JSR		_read_pad_safeA
-		LDA		_pad
 		BNE		loc_450C9
 loc_450E3:
 		JSR		_read_pad_safeA

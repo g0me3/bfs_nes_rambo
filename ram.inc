@@ -115,7 +115,6 @@ _game._potions:
 		.BYTE 0
 _game._redraw_req:
 		.BYTE 0
-
 _hud_decimals_buf:
 		.BYTE 0,0,0,0,0,0,0,0,0,0,0
 _ppu_dequeue_idx:
@@ -159,7 +158,6 @@ _cur_pal_bg_idx:
 		.BYTE 0
 _cur_pal_spr_lib:
 		.BYTE 0
-		.BYTE 0,0
 _pad:
 		.BYTE 0,0
 _ingame_dpad_cheat_counter:
@@ -186,7 +184,6 @@ _objA_buf_shuffle_pos:
 		.BYTE 0
 _spr_buf_pos:
 		.BYTE 0
-		.BYTE 0
 _cur_prg_bank:
 		.BYTE 0
 _cur_weapon_selected:
@@ -203,7 +200,6 @@ _obj_heli_tmp_flag:
 		.BYTE 0
 _prev_weapon_selected:
 		.BYTE 0
-		.BYTE 0
 _game_scr_idx_backup:
 		.BYTE 0
 _game_flags_backup:
@@ -214,7 +210,6 @@ _game_life_level_backup:
 		.BYTE 0
 _game_life_backup:
 		.BYTE 0,0
-		.BYTE 0,0,0,0
 _ppu_status_shadow:
 		.BYTE 0
 _final_boss_scroll_pos:
@@ -223,7 +218,6 @@ _final_boss_delay_and_hp:
 		.BYTE 0
 _final_boss_deploy_delay_timer:
 		.BYTE 0
-		.BYTE 0,0
 _apu_cur_mus_idx:
 		.BYTE 0
 
@@ -253,7 +247,12 @@ _chr_tiles_send_src:
 		.BYTE 0,0
 _chr_tiles_send_dst:
 		.BYTE 0,0
-		.BYTE 0,0,0
+
+		ECHO "-------------"
+		ECHO "stack ram free:",[$190-.]
+		ECHO "-------------"
+
+		ORG $0190
 
 		_tarray _ppu_queue_buf, 16*7
 

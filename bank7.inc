@@ -74,8 +74,8 @@ _delay:
 		JSR		_mmc_prg_set
 		LDA		_ppu_ctrl_shadow
 		STA		_PPU_CTRL
-		LDA		#$0E
-		JSR		_apu_cur_mus_load
+;		LDA		#$0E					; there is no MUS sith 0E idx, and it will
+;		JSR		_apu_cur_mus_load		; immediately overwritten with other music
 _main_loop:
 		LDA		_nmi_flag
 		CMP		#$02
@@ -516,7 +516,7 @@ _hud_cursor_spr_insert:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_far_inventory_screen_draw:
+_far_dialog_script_play:
 		LDA		_game._scr_idx
 		BMI		loc_604A8
 		RTS
@@ -525,7 +525,7 @@ loc_604A8:
 		JSR		_chr_spr_tiles_load
 		LDA		#$05
 		JSR		_mmc_prg_set
-		JMP		_inventory_screen_draw
+		JMP		_dialog_script_play
 
 ; =============== S U B	R O U T	I N E =======================================
 _level_draw_update:
@@ -594,7 +594,7 @@ loc_60525:
 		LDA		_ppu_ctrl_shadow
 		STA		_PPU_CTRL
 loc_60542:
-		JSR		_far_inventory_screen_draw
+		JSR		_far_dialog_script_play
 		LDA		_game._scr_idx
 		BPL		loc_60551
 		CMP		#$FF

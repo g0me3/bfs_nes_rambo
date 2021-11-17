@@ -277,134 +277,1158 @@ _cutscene_chr_tbl:
 		.BYTE $D8,$D8,$D8,$C8,$C8,$D8,$C8,$C8,$C8,$C8,$C8,$C8,$C8,$D8,$C8,$D8
 		.BYTE $C8,$C8,$D8,$E8,$F8,$C8
 _stage_obj_list:
-		.BYTE $00,$00,$AD,$43,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
-		.BYTE $00,$00,$3D,$C1,$2D,$82,$82,$3E,$00,$00,$00,$00,$00,$00,$00,$00; $10
-		.BYTE $00,$00,$85,$85,$A6,$45,$BD,$86,$34,$C5,$00,$00,$00,$00,$00,$00; $20
-		.BYTE $00,$00,$84,$C5,$7D,$C6,$B6,$05,$5D,$46,$87,$45,$45,$85,$00,$00; $30
-		.BYTE $00,$00,$47,$45,$88,$85,$8D,$46,$35,$05,$24,$C5,$00,$00,$00,$00; $40
-		.BYTE $00,$00,$47,$85,$47,$45,$5D,$46,$A5,$05,$86,$C5,$5D,$86,$00,$00; $50
-		.BYTE $00,$00,$5D,$84,$8D,$01,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00; $60
-		.BYTE $00,$00,$7D,$86,$5D,$46,$ED,$46,$54,$05,$65,$C5,$2D,$C6,$00,$00; $70
-		.BYTE $00,$00,$B9,$59,$9D,$99,$E3,$05,$85,$85,$00,$00,$00,$00,$00,$00; $80
-		.BYTE $00,$00,$9D,$59,$C5,$86,$84,$46,$BD,$06,$45,$C6,$AD,$86,$00,$00; $90
-		.BYTE $00,$00,$AD,$41,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00; $A0
-		.BYTE $00,$00,$FF,$55,$FF,$95,$9B,$04,$FF,$95,$E8,$BE,$00,$00,$00,$00; $B0
-		.BYTE $00,$00,$7D,$43,$AD,$84,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00; $C0
-		.BYTE $00,$00,$3B,$81,$BB,$84,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00; $D0
-		.BYTE $00,$00,$8D,$81,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00; $E0
-		.BYTE $00,$00,$8D,$A3,$BD,$51,$1D,$E7,$BD,$91,$CD,$11,$7D,$63,$00,$00; $F0
-		.BYTE $00,$00,$54,$85,$CD,$07,$2D,$47,$4D,$87,$3D,$C7,$86,$45,$00,$00; $100
-		.BYTE $00,$00,$AB,$87,$6C,$47,$CB,$07,$2A,$87,$2A,$C7,$00,$00,$00,$00; $110
-		.BYTE $00,$00,$84,$45,$CD,$07,$9D,$47,$B6,$85,$1D,$87,$4D,$C7,$00,$00; $120
-		.BYTE $00,$00,$AD,$97,$8F,$8C,$5D,$D7,$AD,$17,$8F,$4C,$AD,$57,$00,$00; $130
-		.BYTE $00,$00,$3B,$4F,$4B,$8F,$5D,$4F,$6D,$8F,$4B,$CF,$BB,$4F,$00,$00; $140
-		.BYTE $00,$00,$1B,$59,$3B,$D9,$CB,$59,$00,$00,$00,$00,$00,$00,$00,$00; $150
-		.BYTE $00,$00,$58,$98,$FF,$94,$E9,$18,$FF,$54,$00,$00,$00,$00,$00,$00; $160
-		.BYTE $00,$00,$69,$59,$B9,$46,$5B,$99,$B9,$86,$EB,$06,$1D,$C6,$00,$00; $170
-		.BYTE $00,$00,$C5,$A1,$25,$A1,$8D,$9D,$25,$61,$D5,$61,$7D,$5D,$00,$00; $180
-		.BYTE $00,$00,$EC,$BF,$FF,$D4,$FF,$94,$00,$00,$00,$00,$00,$00,$00,$00; $190
-		.BYTE $00,$00,$68,$98,$A4,$85,$A8,$58,$35,$45,$94,$05,$64,$C5,$00,$00; $1A0
-		.BYTE $00,$00,$D4,$85,$1D,$87,$BD,$87,$5D,$C7,$55,$45,$AD,$07,$00,$00; $1B0
-		.BYTE $00,$00,$AB,$87,$1A,$47,$BB,$47,$2A,$C7,$00,$00,$00,$00,$00,$00; $1C0
-		.BYTE $00,$00,$7D,$07,$64,$85,$6D,$C7,$6D,$87,$64,$45,$6D,$47,$00,$00; $1D0
-		.BYTE $00,$00,$6D,$C7,$AD,$07,$6D,$47,$E3,$45,$34,$85,$00,$00,$00,$00; $1E0
-		.BYTE $00,$00,$7D,$57,$8F,$0C,$8F,$4C,$8F,$8C,$8F,$CC,$BD,$97,$00,$00; $1F0
-		.BYTE $00,$00,$4D,$17,$FF,$48,$FF,$48,$DD,$97,$2D,$D7,$FF,$48,$00,$00; $200
-		.BYTE $00,$00,$6D,$D7,$8F,$4C,$8F,$0C,$8F,$CC,$8F,$8C,$4D,$57,$00,$00; $210
-		.BYTE $00,$00,$7D,$57,$EB,$17,$5D,$D7,$3D,$97,$00,$00,$00,$00,$00,$00; $220
-		.BYTE $00,$00,$BD,$3F,$FF,$48,$FF,$48,$FF,$48,$DD,$57,$ED,$97,$00,$00; $230
-		.BYTE $00,$00,$9D,$97,$DB,$17,$7D,$57,$8F,$8C,$8F,$CC,$8F,$0C,$00,$00; $240
-		.BYTE $00,$00,$BC,$5D,$2B,$5C,$7D,$9C,$2A,$DD,$00,$00,$00,$00,$00,$00; $250
-		.BYTE $00,$00,$3C,$9C,$1A,$5C,$AD,$5D,$CB,$9D,$00,$00,$00,$00,$00,$00; $260
-		.BYTE $00,$00,$1D,$9C,$8D,$9C,$EA,$1C,$AD,$5C,$00,$00,$00,$00,$00,$00; $270
-		.BYTE $00,$00,$AD,$5E,$1A,$5D,$CB,$9E,$EA,$5D,$2A,$DD,$00,$00,$00,$00; $280
-		.BYTE $00,$00,$4D,$6C,$6B,$AC,$1D,$DD,$1D,$5D,$8D,$5D,$3D,$5D,$00,$00; $290
-		.BYTE $00,$00,$CD,$7F,$1B,$5D,$B8,$9C,$B8,$5C,$DD,$9D,$48,$DC,$00,$00; $2A0
-		.BYTE $00,$00,$3D,$9A,$6D,$5A,$ED,$1D,$2D,$DD,$7B,$9C,$00,$00,$00,$00; $2B0
-		.BYTE $00,$00,$1D,$BF,$28,$A1,$ED,$1D,$39,$61,$1A,$DD,$88,$9D,$00,$00; $2C0
-		.BYTE $00,$00,$1D,$BF,$BD,$5A,$4D,$9D,$C9,$9A,$19,$5D,$00,$00,$00,$00; $2D0
-		.BYTE $00,$00,$C9,$6C,$19,$5C,$89,$5C,$49,$9C,$A9,$9C,$19,$E1,$00,$00; $2E0
-		.BYTE $00,$00,$A7,$61,$27,$5D,$C7,$21,$B8,$9D,$18,$E1,$00,$00,$00,$00; $2F0
-		.BYTE $00,$00,$78,$44,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00; $300
-		.BYTE $00,$00,$BD,$74,$99,$66,$ED,$26,$69,$A6,$1D,$E6,$CD,$B4,$00,$00; $310
-		.BYTE $00,$00,$6D,$B8,$BD,$66,$19,$66,$E9,$A6,$00,$00,$00,$00,$00,$00; $320
-		.BYTE $00,$00,$4D,$74,$DD,$26,$BD,$66,$CD,$A6,$2D,$E6,$8D,$B4,$00,$00; $330
-		.BYTE $00,$00,$8D,$57,$8D,$97,$8F,$0C,$8F,$4C,$8F,$8C,$8F,$CC,$00,$00; $340
-		.BYTE $00,$00,$B6,$45,$BD,$46,$24,$C6,$A5,$85,$6D,$86,$A6,$05,$00,$00; $350
-		.BYTE $00,$00,$6D,$99,$45,$86,$7D,$59,$87,$46,$88,$06,$45,$C6,$00,$00; $360
-		.BYTE $00,$00,$83,$8E,$89,$0F,$49,$CF,$83,$4E,$B9,$4F,$D8,$8F,$00,$00; $370
-		.BYTE $00,$00,$88,$8E,$DD,$4F,$48,$0E,$ED,$0F,$7D,$8F,$2D,$CF,$00,$00; $380
-		.BYTE $00,$00,$FF,$4B,$FF,$4B,$1D,$4F,$DD,$4F,$FD,$8F,$5D,$CF,$00,$00; $390
-		.BYTE $00,$00,$3D,$84,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00; $3A0
-		.BYTE $00,$00,$65,$C9,$45,$89,$45,$49,$95,$09,$FF,$4B,$00,$00,$00,$00; $3B0
-		.BYTE $00,$00,$CD,$37,$AB,$4F,$19,$8F,$4D,$DB,$29,$4F,$7D,$4F,$00,$00; $3C0
-		.BYTE $00,$00,$AF,$16,$EF,$56,$6F,$96,$2F,$D6,$85,$09,$85,$89,$00,$00; $3D0
-		.BYTE $00,$00,$7C,$4E,$97,$0A,$C5,$0A,$C6,$4A,$C6,$0E,$14,$8A,$00,$00; $3E0
-		.BYTE $00,$00,$8D,$47,$5D,$47,$BD,$07,$7D,$87,$BD,$87,$6D,$C7,$00,$00; $3F0
-		.BYTE $00,$00,$35,$85,$C7,$45,$C3,$85,$8C,$85,$F4,$05,$18,$45,$00,$00; $400
-		.BYTE $00,$00,$FF,$CD,$FF,$CD,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00; $410
-		.BYTE $00,$00,$8C,$97,$59,$57,$8F,$8C,$8F,$0C,$8F,$4C,$8F,$CC,$00,$00; $420
-		.BYTE $00,$00,$7D,$76,$B9,$4A,$38,$8A,$CA,$8A,$DA,$8A,$58,$CA,$00,$00; $430
-		.BYTE $00,$00,$77,$8E,$B8,$0E,$85,$4E,$E6,$8E,$65,$CE,$00,$00,$00,$00; $440
-		.BYTE $00,$00,$65,$89,$95,$09,$75,$49,$7D,$4F,$8D,$4F,$75,$C9,$00,$00; $450
-		.BYTE $00,$00,$6F,$96,$EF,$56,$AF,$16,$2F,$D6,$A9,$4A,$C5,$8A,$00,$00; $460
-		.BYTE $00,$00,$8F,$8C,$8F,$4C,$FA,$17,$69,$57,$8F,$CC,$1A,$D7,$00,$00; $470
-		.BYTE $00,$00,$AD,$64,$CD,$82,$AD,$24,$3D,$E4,$00,$00,$00,$00,$00,$00; $480
-		.BYTE $00,$00,$9D,$A4,$A9,$50,$1D,$50,$9D,$90,$00,$00,$00,$00,$00,$00; $490
-		.BYTE $00,$00,$29,$A4,$9D,$65,$FD,$25,$39,$E4,$29,$64,$CD,$A5,$00,$00; $4A0
-		.BYTE $00,$00,$1D,$B9,$3D,$64,$4D,$E5,$CD,$A5,$00,$00,$00,$00,$00,$00; $4B0
-		.BYTE $00,$00,$35,$64,$A9,$64,$A9,$A4,$1D,$A4,$F5,$A4,$7D,$24,$00,$00; $4C0
-		.BYTE $00,$00,$9D,$7F,$B6,$24,$1D,$72,$76,$64,$9D,$B2,$46,$E4,$00,$00; $4D0
-		.BYTE $00,$00,$2D,$BF,$1D,$64,$7D,$64,$95,$65,$5D,$A5,$1D,$E5,$00,$00; $4E0
-		.BYTE $00,$00,$B9,$64,$D5,$24,$1D,$64,$19,$E4,$2D,$A4,$85,$A4,$00,$00; $4F0
-		.BYTE $00,$00,$AD,$B2,$66,$65,$B6,$25,$36,$E5,$5D,$72,$96,$A5,$00,$00; $500
-		.BYTE $00,$00,$B6,$A4,$5D,$65,$9D,$A5,$1D,$E5,$46,$64,$8D,$25,$00,$00; $510
-		.BYTE $00,$00,$1D,$B1,$A6,$24,$76,$64,$3D,$71,$86,$A4,$56,$E4,$00,$00; $520
-		.BYTE $00,$00,$BD,$53,$9D,$11,$FD,$93,$4D,$91,$2D,$51,$2D,$D1,$00,$00; $530
-		.BYTE $00,$00,$22,$FE,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00; $540
-		.BYTE $00,$00,$DD,$BA,$8D,$53,$88,$53,$88,$93,$39,$D3,$00,$00,$00,$00; $550
-		.BYTE $00,$00,$1D,$E3,$A7,$63,$E7,$27,$87,$A7,$ED,$27,$00,$00,$00,$00; $560
-		.BYTE $00,$00,$1D,$BF,$ED,$AD,$DD,$2D,$2D,$67,$AD,$67,$00,$00,$00,$00; $570
-		.BYTE $00,$00,$57,$FF,$FD,$A7,$87,$27,$27,$E7,$9D,$23,$87,$63,$00,$00; $580
-		.BYTE $00,$00,$38,$7F,$7D,$73,$88,$67,$8D,$A7,$28,$F3,$BD,$27,$00,$00; $590
-		.BYTE $00,$00,$77,$B3,$6D,$A3,$1D,$E3,$F7,$23,$ED,$23,$9D,$73,$00,$00; $5A0
-		.BYTE $00,$00,$8D,$A3,$14,$52,$14,$D2,$5D,$63,$14,$92,$00,$00,$00,$00; $5B0
-		.BYTE $00,$00,$57,$E7,$87,$A7,$37,$67,$8D,$6D,$7D,$AD,$00,$00,$00,$00; $5C0
-		.BYTE $00,$00,$1D,$BF,$DA,$22,$49,$62,$8D,$62,$38,$A2,$C8,$A2,$00,$00; $5D0
-		.BYTE $00,$00,$5D,$A2,$1B,$62,$BB,$22,$1D,$E2,$BD,$62,$00,$00,$00,$00; $5E0
-		.BYTE $00,$00,$4C,$69,$DB,$28,$2A,$E9,$CC,$69,$7D,$A8,$FB,$A9,$00,$00; $5F0
-		.BYTE $00,$00,$4D,$6B,$BD,$6A,$1B,$81,$EB,$AA,$4D,$EA,$AD,$2A,$00,$00; $600
-		.BYTE $00,$00,$CD,$43,$9D,$C2,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00; $610
-		.BYTE $00,$00,$3D,$C3,$BD,$44,$82,$3E,$00,$00,$00,$00,$00,$00,$00,$00; $620
-		.BYTE $00,$00,$EE,$97,$EE,$17,$FF,$95,$FF,$95,$1D,$97,$00,$00,$00,$00; $630
-		.BYTE $00,$00,$6C,$5C,$DB,$1D,$CB,$5D,$8B,$9C,$1A,$9C,$DB,$9D,$00,$00; $640
-		.BYTE $00,$00,$6D,$9C,$CD,$1C,$7D,$5C,$BD,$5C,$6D,$9C,$6D,$DC,$00,$00; $650
-		.BYTE $00,$00,$6D,$D7,$CD,$17,$FF,$55,$FF,$55,$7D,$97,$00,$00,$00,$00; $660
-		.BYTE $00,$00,$6D,$9D,$BD,$9D,$1D,$5D,$CD,$5D,$6D,$DD,$00,$00,$00,$00; $670
-		.BYTE $00,$00,$19,$9C,$D8,$9C,$1D,$DD,$28,$5C,$ED,$1D,$00,$00,$00,$00; $680
-		.BYTE $00,$00,$7D,$E1,$ED,$9D,$4D,$61,$ED,$5D,$DD,$1D,$00,$00,$00,$00; $690
-		.BYTE $00,$00,$8D,$9C,$1B,$9C,$5D,$5C,$5D,$DC,$00,$00,$00,$00,$00,$00; $6A0
-		.BYTE $00,$00,$CD,$5D,$3D,$5D,$29,$5C,$39,$9C,$C9,$9C,$1D,$DD,$00,$00; $6B0
-		.BYTE $00,$00,$BB,$9C,$9D,$5C,$1A,$DD,$EA,$5D,$3C,$9C,$EB,$1C,$00,$00; $6C0
-		.BYTE $00,$00,$4D,$60,$5B,$A0,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00; $6D0
-		.BYTE $00,$00,$5D,$F5,$88,$A0,$39,$60,$00,$00,$00,$00,$00,$00,$00,$00; $6E0
-		.BYTE $00,$00,$9D,$A0,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00; $6F0
-		.BYTE $00,$00,$6B,$1F,$8B,$9F,$1D,$70,$4B,$DF,$BB,$1F,$2B,$B0,$00,$00; $700
-		.BYTE $00,$00,$48,$9F,$E8,$9F,$D8,$70,$19,$5F,$3D,$F0,$00,$00,$00,$00; $710
-		.BYTE $00,$00,$CB,$9E,$1A,$DF,$EA,$5F,$3B,$5F,$AD,$5E,$6D,$1E,$00,$00; $720
-		.BYTE $00,$00,$5D,$AE,$2B,$A9,$1D,$E9,$6B,$29,$FD,$2E,$00,$00,$00,$00; $730
-		.BYTE $00,$00,$1D,$BF,$19,$69,$28,$A8,$9D,$A8,$DA,$29,$1A,$E8,$00,$00; $740
-		.BYTE $00,$00,$3D,$68,$E9,$A9,$79,$6E,$49,$AE,$19,$69,$7D,$A8,$00,$00; $750
-		.BYTE $00,$00,$E7,$2F,$1A,$A9,$DD,$A9,$78,$EF,$FB,$29,$00,$00,$00,$00; $760
-		.BYTE $00,$00,$78,$44,$32,$FE,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00; $770
-		.BYTE $00,$00,$4C,$A9,$EA,$68,$1A,$E9,$BB,$A8,$5D,$28,$FB,$29,$00,$00; $780
-		.BYTE $00,$00,$8D,$BB,$2D,$E2,$FD,$22,$00,$00,$00,$00,$00,$00,$00,$00; $790
-		.BYTE $00,$00,$8D,$A9,$6D,$A9,$7D,$E9,$DB,$29,$6D,$69,$9D,$69,$00,$00; $7A0
-		.BYTE $00,$00,$F8,$A9,$77,$29,$1A,$91,$49,$91,$87,$69,$CD,$E8,$00,$00; $7B0
-		.BYTE $00,$3C,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00; $7C0
-		.BYTE $8D,$FD,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00; $7D0
-		.BYTE $8D,$FD,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00; $7E0
-		.BYTE $8D,$FD,$CD,$FE,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00; $7F0
+; $00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$A,$1,_obj_hndl03_npcC
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $01
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$3,$3,_obj_hndl01_npcA
+		OBJ_MAP $D,$2,$2,_obj_hndl02_npcB
+		OBJ_MAP $2,$8,$0,_obj_hndl3E_helicopterB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $02
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $5,$8,$2,_obj_hndl05_bee
+		OBJ_MAP $6,$A,$1,_obj_hndl05_bee
+		OBJ_MAP $D,$B,$2,_obj_hndl06_snake
+		OBJ_MAP $4,$3,$3,_obj_hndl05_bee
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $03
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $4,$8,$3,_obj_hndl05_bee
+		OBJ_MAP $D,$7,$3,_obj_hndl06_snake
+		OBJ_MAP $6,$B,$0,_obj_hndl05_bee
+		OBJ_MAP $D,$5,$1,_obj_hndl06_snake
+		OBJ_MAP $7,$8,$1,_obj_hndl05_bee
+		OBJ_MAP $5,$4,$2,_obj_hndl05_bee
+		OBJ_MAP $0,$0,$0,$00
+; $04
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $7,$4,$1,_obj_hndl05_bee
+		OBJ_MAP $8,$8,$2,_obj_hndl05_bee
+		OBJ_MAP $D,$8,$1,_obj_hndl06_snake
+		OBJ_MAP $5,$3,$0,_obj_hndl05_bee
+		OBJ_MAP $4,$2,$3,_obj_hndl05_bee
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $05
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $7,$4,$2,_obj_hndl05_bee
+		OBJ_MAP $7,$4,$1,_obj_hndl05_bee
+		OBJ_MAP $D,$5,$1,_obj_hndl06_snake
+		OBJ_MAP $5,$A,$0,_obj_hndl05_bee
+		OBJ_MAP $6,$8,$3,_obj_hndl05_bee
+		OBJ_MAP $D,$5,$2,_obj_hndl06_snake
+		OBJ_MAP $0,$0,$0,$00
+; $06
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$5,$2,_obj_hndl04_npcD
+		OBJ_MAP $D,$8,$0,_obj_hndl01_npcA
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $07
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$7,$2,_obj_hndl06_snake
+		OBJ_MAP $D,$5,$1,_obj_hndl06_snake
+		OBJ_MAP $D,$E,$1,_obj_hndl06_snake
+		OBJ_MAP $4,$5,$0,_obj_hndl05_bee
+		OBJ_MAP $5,$6,$3,_obj_hndl05_bee
+		OBJ_MAP $D,$2,$3,_obj_hndl06_snake
+		OBJ_MAP $0,$0,$0,$00
+; $08
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $9,$B,$1,_obj_hndl19_tiger
+		OBJ_MAP $D,$9,$2,_obj_hndl19_tiger
+		OBJ_MAP $3,$E,$0,_obj_hndl05_bee
+		OBJ_MAP $5,$8,$2,_obj_hndl05_bee
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $09
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$9,$1,_obj_hndl19_tiger
+		OBJ_MAP $5,$C,$2,_obj_hndl06_snake
+		OBJ_MAP $4,$8,$1,_obj_hndl06_snake
+		OBJ_MAP $D,$B,$0,_obj_hndl06_snake
+		OBJ_MAP $5,$4,$3,_obj_hndl06_snake
+		OBJ_MAP $D,$A,$2,_obj_hndl06_snake
+		OBJ_MAP $0,$0,$0,$00
+; $0A
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$A,$1,_obj_hndl01_npcA
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $0B
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $F,$F,$1,_obj_hndl15_grenades
+		OBJ_MAP $F,$F,$2,_obj_hndl15_grenades
+		OBJ_MAP $B,$9,$0,_obj_hndl04_npcD
+		OBJ_MAP $F,$F,$2,_obj_hndl15_grenades
+		OBJ_MAP $8,$E,$2,_obj_hndl3E_helicopterB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $0C
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$7,$1,_obj_hndl03_npcC
+		OBJ_MAP $D,$A,$2,_obj_hndl04_npcD
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $0D
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $B,$3,$2,_obj_hndl01_npcA
+		OBJ_MAP $B,$B,$2,_obj_hndl04_npcD
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $0E
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$8,$2,_obj_hndl01_npcA
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $0F
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$8,$2,_obj_hndl23_soldierC
+		OBJ_MAP $D,$B,$1,_obj_hndl11_landmine
+		OBJ_MAP $D,$1,$3,_obj_hndl27_soldierB
+		OBJ_MAP $D,$B,$2,_obj_hndl11_landmine
+		OBJ_MAP $D,$C,$0,_obj_hndl11_landmine
+		OBJ_MAP $D,$7,$1,_obj_hndl23_soldierC
+		OBJ_MAP $0,$0,$0,$00
+; $10
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $4,$5,$2,_obj_hndl05_bee
+		OBJ_MAP $D,$C,$0,_obj_hndl07_fish
+		OBJ_MAP $D,$2,$1,_obj_hndl07_fish
+		OBJ_MAP $D,$4,$2,_obj_hndl07_fish
+		OBJ_MAP $D,$3,$3,_obj_hndl07_fish
+		OBJ_MAP $6,$8,$1,_obj_hndl05_bee
+		OBJ_MAP $0,$0,$0,$00
+; $11
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $B,$A,$2,_obj_hndl07_fish
+		OBJ_MAP $C,$6,$1,_obj_hndl07_fish
+		OBJ_MAP $B,$C,$0,_obj_hndl07_fish
+		OBJ_MAP $A,$2,$2,_obj_hndl07_fish
+		OBJ_MAP $A,$2,$3,_obj_hndl07_fish
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $12
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $4,$8,$1,_obj_hndl05_bee
+		OBJ_MAP $D,$C,$0,_obj_hndl07_fish
+		OBJ_MAP $D,$9,$1,_obj_hndl07_fish
+		OBJ_MAP $6,$B,$2,_obj_hndl05_bee
+		OBJ_MAP $D,$1,$2,_obj_hndl07_fish
+		OBJ_MAP $D,$4,$3,_obj_hndl07_fish
+		OBJ_MAP $0,$0,$0,$00
+; $13
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$A,$2,_obj_hndl17_pelikan
+		OBJ_MAP $F,$8,$2,_obj_hndl0C_bird
+		OBJ_MAP $D,$5,$3,_obj_hndl17_pelikan
+		OBJ_MAP $D,$A,$0,_obj_hndl17_pelikan
+		OBJ_MAP $F,$8,$1,_obj_hndl0C_bird
+		OBJ_MAP $D,$A,$1,_obj_hndl17_pelikan
+		OBJ_MAP $0,$0,$0,$00
+; $14
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $B,$3,$1,_obj_hndl0F_spider
+		OBJ_MAP $B,$4,$2,_obj_hndl0F_spider
+		OBJ_MAP $D,$5,$1,_obj_hndl0F_spider
+		OBJ_MAP $D,$6,$2,_obj_hndl0F_spider
+		OBJ_MAP $B,$4,$3,_obj_hndl0F_spider
+		OBJ_MAP $B,$B,$1,_obj_hndl0F_spider
+		OBJ_MAP $0,$0,$0,$00
+; $15
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $B,$1,$1,_obj_hndl19_tiger
+		OBJ_MAP $B,$3,$3,_obj_hndl19_tiger
+		OBJ_MAP $B,$C,$1,_obj_hndl19_tiger
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $16
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $8,$5,$2,_obj_hndl18_gorilla
+		OBJ_MAP $F,$F,$2,_obj_hndl14_rocks
+		OBJ_MAP $9,$E,$0,_obj_hndl18_gorilla
+		OBJ_MAP $F,$F,$1,_obj_hndl14_rocks
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $17
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $9,$6,$1,_obj_hndl19_tiger
+		OBJ_MAP $9,$B,$1,_obj_hndl06_snake
+		OBJ_MAP $B,$5,$2,_obj_hndl19_tiger
+		OBJ_MAP $9,$B,$2,_obj_hndl06_snake
+		OBJ_MAP $B,$E,$0,_obj_hndl06_snake
+		OBJ_MAP $D,$1,$3,_obj_hndl06_snake
+		OBJ_MAP $0,$0,$0,$00
+; $18
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $5,$C,$2,_obj_hndl21_soldierA
+		OBJ_MAP $5,$2,$2,_obj_hndl21_soldierA
+		OBJ_MAP $D,$8,$2,_obj_hndl1D_soldierB
+		OBJ_MAP $5,$2,$1,_obj_hndl21_soldierA
+		OBJ_MAP $5,$D,$1,_obj_hndl21_soldierA
+		OBJ_MAP $D,$7,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $19
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $C,$E,$2,_obj_hndl3F_multipurpose
+		OBJ_MAP $F,$F,$3,_obj_hndl14_rocks
+		OBJ_MAP $F,$F,$2,_obj_hndl14_rocks
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $1A
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $8,$6,$2,_obj_hndl18_gorilla
+		OBJ_MAP $4,$A,$2,_obj_hndl05_bee
+		OBJ_MAP $8,$A,$1,_obj_hndl18_gorilla
+		OBJ_MAP $5,$3,$1,_obj_hndl05_bee
+		OBJ_MAP $4,$9,$0,_obj_hndl05_bee
+		OBJ_MAP $4,$6,$3,_obj_hndl05_bee
+		OBJ_MAP $0,$0,$0,$00
+; $1B
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $4,$D,$2,_obj_hndl05_bee
+		OBJ_MAP $D,$1,$2,_obj_hndl07_fish
+		OBJ_MAP $D,$B,$2,_obj_hndl07_fish
+		OBJ_MAP $D,$5,$3,_obj_hndl07_fish
+		OBJ_MAP $5,$5,$1,_obj_hndl05_bee
+		OBJ_MAP $D,$A,$0,_obj_hndl07_fish
+		OBJ_MAP $0,$0,$0,$00
+; $1C
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $B,$A,$2,_obj_hndl07_fish
+		OBJ_MAP $A,$1,$1,_obj_hndl07_fish
+		OBJ_MAP $B,$B,$1,_obj_hndl07_fish
+		OBJ_MAP $A,$2,$3,_obj_hndl07_fish
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $1D
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$7,$0,_obj_hndl07_fish
+		OBJ_MAP $4,$6,$2,_obj_hndl05_bee
+		OBJ_MAP $D,$6,$3,_obj_hndl07_fish
+		OBJ_MAP $D,$6,$2,_obj_hndl07_fish
+		OBJ_MAP $4,$6,$1,_obj_hndl05_bee
+		OBJ_MAP $D,$6,$1,_obj_hndl07_fish
+		OBJ_MAP $0,$0,$0,$00
+; $1E
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$6,$3,_obj_hndl07_fish
+		OBJ_MAP $D,$A,$0,_obj_hndl07_fish
+		OBJ_MAP $D,$6,$1,_obj_hndl07_fish
+		OBJ_MAP $3,$E,$1,_obj_hndl05_bee
+		OBJ_MAP $4,$3,$2,_obj_hndl05_bee
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $1F
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$7,$1,_obj_hndl17_pelikan
+		OBJ_MAP $F,$8,$0,_obj_hndl0C_bird
+		OBJ_MAP $F,$8,$1,_obj_hndl0C_bird
+		OBJ_MAP $F,$8,$2,_obj_hndl0C_bird
+		OBJ_MAP $F,$8,$3,_obj_hndl0C_bird
+		OBJ_MAP $D,$B,$2,_obj_hndl17_pelikan
+		OBJ_MAP $0,$0,$0,$00
+; $20
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$4,$0,_obj_hndl17_pelikan
+		OBJ_MAP $F,$F,$1,_obj_hndl08_bubbles
+		OBJ_MAP $F,$F,$1,_obj_hndl08_bubbles
+		OBJ_MAP $D,$D,$2,_obj_hndl17_pelikan
+		OBJ_MAP $D,$2,$3,_obj_hndl17_pelikan
+		OBJ_MAP $F,$F,$1,_obj_hndl08_bubbles
+		OBJ_MAP $0,$0,$0,$00
+; $21
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$6,$3,_obj_hndl17_pelikan
+		OBJ_MAP $F,$8,$1,_obj_hndl0C_bird
+		OBJ_MAP $F,$8,$0,_obj_hndl0C_bird
+		OBJ_MAP $F,$8,$3,_obj_hndl0C_bird
+		OBJ_MAP $F,$8,$2,_obj_hndl0C_bird
+		OBJ_MAP $D,$4,$1,_obj_hndl17_pelikan
+		OBJ_MAP $0,$0,$0,$00
+; $22
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$7,$1,_obj_hndl17_pelikan
+		OBJ_MAP $B,$E,$0,_obj_hndl17_pelikan
+		OBJ_MAP $D,$5,$3,_obj_hndl17_pelikan
+		OBJ_MAP $D,$3,$2,_obj_hndl17_pelikan
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $23
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$B,$0,_obj_hndl3F_multipurpose
+		OBJ_MAP $F,$F,$1,_obj_hndl08_bubbles
+		OBJ_MAP $F,$F,$1,_obj_hndl08_bubbles
+		OBJ_MAP $F,$F,$1,_obj_hndl08_bubbles
+		OBJ_MAP $D,$D,$1,_obj_hndl17_pelikan
+		OBJ_MAP $D,$E,$2,_obj_hndl17_pelikan
+		OBJ_MAP $0,$0,$0,$00
+; $24
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$9,$2,_obj_hndl17_pelikan
+		OBJ_MAP $B,$D,$0,_obj_hndl17_pelikan
+		OBJ_MAP $D,$7,$1,_obj_hndl17_pelikan
+		OBJ_MAP $F,$8,$2,_obj_hndl0C_bird
+		OBJ_MAP $F,$8,$3,_obj_hndl0C_bird
+		OBJ_MAP $F,$8,$0,_obj_hndl0C_bird
+		OBJ_MAP $0,$0,$0,$00
+; $25
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $C,$B,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $B,$2,$1,_obj_hndl1C_soldierA
+		OBJ_MAP $D,$7,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $A,$2,$3,_obj_hndl1D_soldierB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $26
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $C,$3,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $A,$1,$1,_obj_hndl1C_soldierA
+		OBJ_MAP $D,$A,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $B,$C,$2,_obj_hndl1D_soldierB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $27
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$1,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $D,$8,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $A,$E,$0,_obj_hndl1C_soldierA
+		OBJ_MAP $D,$A,$1,_obj_hndl1C_soldierA
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $28
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$A,$1,_obj_hndl1E_soldierB
+		OBJ_MAP $A,$1,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $B,$C,$2,_obj_hndl1E_soldierB
+		OBJ_MAP $A,$E,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $A,$2,$3,_obj_hndl1D_soldierB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $29
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$4,$1,_obj_hndl2C_dubina_man
+		OBJ_MAP $B,$6,$2,_obj_hndl2C_dubina_man
+		OBJ_MAP $D,$1,$3,_obj_hndl1D_soldierB
+		OBJ_MAP $D,$1,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $D,$8,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $D,$3,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $2A
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$C,$1,_obj_hndl3F_multipurpose
+		OBJ_MAP $B,$1,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $8,$B,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $8,$B,$1,_obj_hndl1C_soldierA
+		OBJ_MAP $D,$D,$2,_obj_hndl1D_soldierB
+		OBJ_MAP $8,$4,$3,_obj_hndl1C_soldierA
+		OBJ_MAP $0,$0,$0,$00
+; $2B
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$3,$2,_obj_hndl1A_tiger
+		OBJ_MAP $D,$6,$1,_obj_hndl1A_tiger
+		OBJ_MAP $D,$E,$0,_obj_hndl1D_soldierB
+		OBJ_MAP $D,$2,$3,_obj_hndl1D_soldierB
+		OBJ_MAP $B,$7,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $2C
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$1,$2,_obj_hndl3F_multipurpose
+		OBJ_MAP $8,$2,$2,_obj_hndl21_soldierA
+		OBJ_MAP $D,$E,$0,_obj_hndl1D_soldierB
+		OBJ_MAP $9,$3,$1,_obj_hndl21_soldierA
+		OBJ_MAP $A,$1,$3,_obj_hndl1D_soldierB
+		OBJ_MAP $8,$8,$2,_obj_hndl1D_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $2D
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$1,$2,_obj_hndl3F_multipurpose
+		OBJ_MAP $D,$B,$1,_obj_hndl1A_tiger
+		OBJ_MAP $D,$4,$2,_obj_hndl1D_soldierB
+		OBJ_MAP $9,$C,$2,_obj_hndl1A_tiger
+		OBJ_MAP $9,$1,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $2E
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $9,$C,$1,_obj_hndl2C_dubina_man
+		OBJ_MAP $9,$1,$1,_obj_hndl1C_soldierA
+		OBJ_MAP $9,$8,$1,_obj_hndl1C_soldierA
+		OBJ_MAP $9,$4,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $9,$A,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $9,$1,$3,_obj_hndl21_soldierA
+		OBJ_MAP $0,$0,$0,$00
+; $2F
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $7,$A,$1,_obj_hndl21_soldierA
+		OBJ_MAP $7,$2,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $7,$C,$0,_obj_hndl21_soldierA
+		OBJ_MAP $8,$B,$2,_obj_hndl1D_soldierB
+		OBJ_MAP $8,$1,$3,_obj_hndl21_soldierA
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $30
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $8,$7,$1,_obj_hndl04_npcD
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $31
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$B,$1,_obj_hndl34_crouching_bomb_man
+		OBJ_MAP $9,$9,$1,_obj_hndl26_grenade_soldier
+		OBJ_MAP $D,$E,$0,_obj_hndl26_grenade_soldier
+		OBJ_MAP $9,$6,$2,_obj_hndl26_grenade_soldier
+		OBJ_MAP $D,$1,$3,_obj_hndl26_grenade_soldier
+		OBJ_MAP $D,$C,$2,_obj_hndl34_crouching_bomb_man
+		OBJ_MAP $0,$0,$0,$00
+; $32
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$6,$2,_obj_hndl38_boss_motorcycle
+		OBJ_MAP $D,$B,$1,_obj_hndl26_grenade_soldier
+		OBJ_MAP $9,$1,$1,_obj_hndl26_grenade_soldier
+		OBJ_MAP $9,$E,$2,_obj_hndl26_grenade_soldier
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $33
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$4,$1,_obj_hndl34_crouching_bomb_man
+		OBJ_MAP $D,$D,$0,_obj_hndl26_grenade_soldier
+		OBJ_MAP $D,$B,$1,_obj_hndl26_grenade_soldier
+		OBJ_MAP $D,$C,$2,_obj_hndl26_grenade_soldier
+		OBJ_MAP $D,$2,$3,_obj_hndl26_grenade_soldier
+		OBJ_MAP $D,$8,$2,_obj_hndl34_crouching_bomb_man
+		OBJ_MAP $0,$0,$0,$00
+; $34
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$8,$1,_obj_hndl17_pelikan
+		OBJ_MAP $D,$8,$2,_obj_hndl17_pelikan
+		OBJ_MAP $F,$8,$0,_obj_hndl0C_bird
+		OBJ_MAP $F,$8,$1,_obj_hndl0C_bird
+		OBJ_MAP $F,$8,$2,_obj_hndl0C_bird
+		OBJ_MAP $F,$8,$3,_obj_hndl0C_bird
+		OBJ_MAP $0,$0,$0,$00
+; $35
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $6,$B,$1,_obj_hndl05_bee
+		OBJ_MAP $D,$B,$1,_obj_hndl06_snake
+		OBJ_MAP $4,$2,$3,_obj_hndl06_snake
+		OBJ_MAP $5,$A,$2,_obj_hndl05_bee
+		OBJ_MAP $D,$6,$2,_obj_hndl06_snake
+		OBJ_MAP $6,$A,$0,_obj_hndl05_bee
+		OBJ_MAP $0,$0,$0,$00
+; $36
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$6,$2,_obj_hndl19_tiger
+		OBJ_MAP $5,$4,$2,_obj_hndl06_snake
+		OBJ_MAP $D,$7,$1,_obj_hndl19_tiger
+		OBJ_MAP $7,$8,$1,_obj_hndl06_snake
+		OBJ_MAP $8,$8,$0,_obj_hndl06_snake
+		OBJ_MAP $5,$4,$3,_obj_hndl06_snake
+		OBJ_MAP $0,$0,$0,$00
+; $37
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $3,$8,$2,_obj_hndl0E_small_bat
+		OBJ_MAP $9,$8,$0,_obj_hndl0F_spider
+		OBJ_MAP $9,$4,$3,_obj_hndl0F_spider
+		OBJ_MAP $3,$8,$1,_obj_hndl0E_small_bat
+		OBJ_MAP $9,$B,$1,_obj_hndl0F_spider
+		OBJ_MAP $8,$D,$2,_obj_hndl0F_spider
+		OBJ_MAP $0,$0,$0,$00
+; $38
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $8,$8,$2,_obj_hndl0E_small_bat
+		OBJ_MAP $D,$D,$1,_obj_hndl0F_spider
+		OBJ_MAP $8,$4,$0,_obj_hndl0E_small_bat
+		OBJ_MAP $D,$E,$0,_obj_hndl0F_spider
+		OBJ_MAP $D,$7,$2,_obj_hndl0F_spider
+		OBJ_MAP $D,$2,$3,_obj_hndl0F_spider
+		OBJ_MAP $0,$0,$0,$00
+; $39
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $F,$F,$1,_obj_hndl0B_skull
+		OBJ_MAP $F,$F,$1,_obj_hndl0B_skull
+		OBJ_MAP $D,$1,$1,_obj_hndl0F_spider
+		OBJ_MAP $D,$D,$1,_obj_hndl0F_spider
+		OBJ_MAP $D,$F,$2,_obj_hndl0F_spider
+		OBJ_MAP $D,$5,$3,_obj_hndl0F_spider
+		OBJ_MAP $0,$0,$0,$00
+; $3A
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$3,$2,_obj_hndl04_npcD
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $3B
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $5,$6,$3,_obj_hndl09_ceiling_bat
+		OBJ_MAP $5,$4,$2,_obj_hndl09_ceiling_bat
+		OBJ_MAP $5,$4,$1,_obj_hndl09_ceiling_bat
+		OBJ_MAP $5,$9,$0,_obj_hndl09_ceiling_bat
+		OBJ_MAP $F,$F,$1,_obj_hndl0B_skull
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $3C
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$C,$0,_obj_hndl37_boss_spider
+		OBJ_MAP $B,$A,$1,_obj_hndl0F_spider
+		OBJ_MAP $9,$1,$2,_obj_hndl0F_spider
+		OBJ_MAP $D,$4,$3,_obj_hndl1B_kid
+		OBJ_MAP $9,$2,$1,_obj_hndl0F_spider
+		OBJ_MAP $D,$7,$1,_obj_hndl0F_spider
+		OBJ_MAP $0,$0,$0,$00
+; $3D
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $F,$A,$0,_obj_hndl16_cobra
+		OBJ_MAP $F,$E,$1,_obj_hndl16_cobra
+		OBJ_MAP $F,$6,$2,_obj_hndl16_cobra
+		OBJ_MAP $F,$2,$3,_obj_hndl16_cobra
+		OBJ_MAP $5,$8,$0,_obj_hndl09_ceiling_bat
+		OBJ_MAP $5,$8,$2,_obj_hndl09_ceiling_bat
+		OBJ_MAP $0,$0,$0,$00
+; $3E
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $C,$7,$1,_obj_hndl0E_small_bat
+		OBJ_MAP $7,$9,$0,_obj_hndl0A_stalaktit
+		OBJ_MAP $5,$C,$0,_obj_hndl0A_stalaktit
+		OBJ_MAP $6,$C,$1,_obj_hndl0A_stalaktit
+		OBJ_MAP $6,$C,$0,_obj_hndl0E_small_bat
+		OBJ_MAP $4,$1,$2,_obj_hndl0A_stalaktit
+		OBJ_MAP $0,$0,$0,$00
+; $3F
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$8,$1,_obj_hndl07_fish
+		OBJ_MAP $D,$5,$1,_obj_hndl07_fish
+		OBJ_MAP $D,$B,$0,_obj_hndl07_fish
+		OBJ_MAP $D,$7,$2,_obj_hndl07_fish
+		OBJ_MAP $D,$B,$2,_obj_hndl07_fish
+		OBJ_MAP $D,$6,$3,_obj_hndl07_fish
+		OBJ_MAP $0,$0,$0,$00
+; $40
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $5,$3,$2,_obj_hndl05_bee
+		OBJ_MAP $7,$C,$1,_obj_hndl05_bee
+		OBJ_MAP $3,$C,$2,_obj_hndl05_bee
+		OBJ_MAP $C,$8,$2,_obj_hndl05_bee
+		OBJ_MAP $4,$F,$0,_obj_hndl05_bee
+		OBJ_MAP $8,$1,$1,_obj_hndl05_bee
+		OBJ_MAP $0,$0,$0,$00
+; $41
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $F,$F,$3,_obj_hndl0D_waterfall_logs
+		OBJ_MAP $F,$F,$3,_obj_hndl0D_waterfall_logs
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $42
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $C,$8,$2,_obj_hndl17_pelikan
+		OBJ_MAP $9,$5,$1,_obj_hndl17_pelikan
+		OBJ_MAP $F,$8,$2,_obj_hndl0C_bird
+		OBJ_MAP $F,$8,$0,_obj_hndl0C_bird
+		OBJ_MAP $F,$8,$1,_obj_hndl0C_bird
+		OBJ_MAP $F,$8,$3,_obj_hndl0C_bird
+		OBJ_MAP $0,$0,$0,$00
+; $43
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$7,$1,_obj_hndl36_boss_fire_tiger
+		OBJ_MAP $9,$B,$1,_obj_hndl0A_stalaktit
+		OBJ_MAP $8,$3,$2,_obj_hndl0A_stalaktit
+		OBJ_MAP $A,$C,$2,_obj_hndl0A_stalaktit
+		OBJ_MAP $A,$D,$2,_obj_hndl0A_stalaktit
+		OBJ_MAP $8,$5,$3,_obj_hndl0A_stalaktit
+		OBJ_MAP $0,$0,$0,$00
+; $44
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $7,$7,$2,_obj_hndl0E_small_bat
+		OBJ_MAP $8,$B,$0,_obj_hndl0E_small_bat
+		OBJ_MAP $5,$8,$1,_obj_hndl0E_small_bat
+		OBJ_MAP $6,$E,$2,_obj_hndl0E_small_bat
+		OBJ_MAP $5,$6,$3,_obj_hndl0E_small_bat
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $45
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $5,$6,$2,_obj_hndl09_ceiling_bat
+		OBJ_MAP $5,$9,$0,_obj_hndl09_ceiling_bat
+		OBJ_MAP $5,$7,$1,_obj_hndl09_ceiling_bat
+		OBJ_MAP $D,$7,$1,_obj_hndl0F_spider
+		OBJ_MAP $D,$8,$1,_obj_hndl0F_spider
+		OBJ_MAP $5,$7,$3,_obj_hndl09_ceiling_bat
+		OBJ_MAP $0,$0,$0,$00
+; $46
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $F,$6,$2,_obj_hndl16_cobra
+		OBJ_MAP $F,$E,$1,_obj_hndl16_cobra
+		OBJ_MAP $F,$A,$0,_obj_hndl16_cobra
+		OBJ_MAP $F,$2,$3,_obj_hndl16_cobra
+		OBJ_MAP $9,$A,$1,_obj_hndl0A_stalaktit
+		OBJ_MAP $5,$C,$2,_obj_hndl0A_stalaktit
+		OBJ_MAP $0,$0,$0,$00
+; $47
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $F,$8,$2,_obj_hndl0C_bird
+		OBJ_MAP $F,$8,$1,_obj_hndl0C_bird
+		OBJ_MAP $A,$F,$0,_obj_hndl17_pelikan
+		OBJ_MAP $9,$6,$1,_obj_hndl17_pelikan
+		OBJ_MAP $F,$8,$3,_obj_hndl0C_bird
+		OBJ_MAP $A,$1,$3,_obj_hndl17_pelikan
+		OBJ_MAP $0,$0,$0,$00
+; $48
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$A,$1,_obj_hndl24_soldierB
+		OBJ_MAP $D,$C,$2,_obj_hndl02_npcB
+		OBJ_MAP $D,$A,$0,_obj_hndl24_soldierB
+		OBJ_MAP $D,$3,$3,_obj_hndl24_soldierB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $49
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$9,$2,_obj_hndl24_soldierB
+		OBJ_MAP $9,$A,$1,_obj_hndl10_floor_turret
+		OBJ_MAP $D,$1,$1,_obj_hndl10_floor_turret
+		OBJ_MAP $D,$9,$2,_obj_hndl10_floor_turret
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $4A
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $9,$2,$2,_obj_hndl24_soldierB
+		OBJ_MAP $D,$9,$1,_obj_hndl25_soldierB
+		OBJ_MAP $D,$F,$0,_obj_hndl25_soldierB
+		OBJ_MAP $9,$3,$3,_obj_hndl24_soldierB
+		OBJ_MAP $9,$2,$1,_obj_hndl24_soldierB
+		OBJ_MAP $D,$C,$2,_obj_hndl25_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $4B
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$1,$2,_obj_hndl39_boss_drone
+		OBJ_MAP $D,$3,$1,_obj_hndl24_soldierB
+		OBJ_MAP $D,$4,$3,_obj_hndl25_soldierB
+		OBJ_MAP $D,$C,$2,_obj_hndl25_soldierB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $4C
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $5,$3,$1,_obj_hndl24_soldierB
+		OBJ_MAP $9,$A,$1,_obj_hndl24_soldierB
+		OBJ_MAP $9,$A,$2,_obj_hndl24_soldierB
+		OBJ_MAP $D,$1,$2,_obj_hndl24_soldierB
+		OBJ_MAP $5,$F,$2,_obj_hndl24_soldierB
+		OBJ_MAP $D,$7,$0,_obj_hndl24_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $4D
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$9,$1,_obj_hndl3F_multipurpose
+		OBJ_MAP $6,$B,$0,_obj_hndl24_soldierB
+		OBJ_MAP $D,$1,$1,_obj_hndl32_skull_monkey
+		OBJ_MAP $6,$7,$1,_obj_hndl24_soldierB
+		OBJ_MAP $D,$9,$2,_obj_hndl32_skull_monkey
+		OBJ_MAP $6,$4,$3,_obj_hndl24_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $4E
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$2,$2,_obj_hndl3F_multipurpose
+		OBJ_MAP $D,$1,$1,_obj_hndl24_soldierB
+		OBJ_MAP $D,$7,$1,_obj_hndl24_soldierB
+		OBJ_MAP $5,$9,$1,_obj_hndl25_soldierB
+		OBJ_MAP $D,$5,$2,_obj_hndl25_soldierB
+		OBJ_MAP $D,$1,$3,_obj_hndl25_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $4F
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $9,$B,$1,_obj_hndl24_soldierB
+		OBJ_MAP $5,$D,$0,_obj_hndl24_soldierB
+		OBJ_MAP $D,$1,$1,_obj_hndl24_soldierB
+		OBJ_MAP $9,$1,$3,_obj_hndl24_soldierB
+		OBJ_MAP $D,$2,$2,_obj_hndl24_soldierB
+		OBJ_MAP $5,$8,$2,_obj_hndl24_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $50
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$A,$2,_obj_hndl32_skull_monkey
+		OBJ_MAP $6,$6,$1,_obj_hndl25_soldierB
+		OBJ_MAP $6,$B,$0,_obj_hndl25_soldierB
+		OBJ_MAP $6,$3,$3,_obj_hndl25_soldierB
+		OBJ_MAP $D,$5,$1,_obj_hndl32_skull_monkey
+		OBJ_MAP $6,$9,$2,_obj_hndl25_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $51
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $6,$B,$2,_obj_hndl24_soldierB
+		OBJ_MAP $D,$5,$1,_obj_hndl25_soldierB
+		OBJ_MAP $D,$9,$2,_obj_hndl25_soldierB
+		OBJ_MAP $D,$1,$3,_obj_hndl25_soldierB
+		OBJ_MAP $6,$4,$1,_obj_hndl24_soldierB
+		OBJ_MAP $D,$8,$0,_obj_hndl25_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $52
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$1,$2,_obj_hndl31_machete_man
+		OBJ_MAP $6,$A,$0,_obj_hndl24_soldierB
+		OBJ_MAP $6,$7,$1,_obj_hndl24_soldierB
+		OBJ_MAP $D,$3,$1,_obj_hndl31_machete_man
+		OBJ_MAP $6,$8,$2,_obj_hndl24_soldierB
+		OBJ_MAP $6,$5,$3,_obj_hndl24_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $53
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$B,$1,_obj_hndl13_jumping_ball
+		OBJ_MAP $D,$9,$0,_obj_hndl11_landmine
+		OBJ_MAP $D,$F,$2,_obj_hndl13_jumping_ball
+		OBJ_MAP $D,$4,$2,_obj_hndl11_landmine
+		OBJ_MAP $D,$2,$1,_obj_hndl11_landmine
+		OBJ_MAP $D,$2,$3,_obj_hndl11_landmine
+		OBJ_MAP $0,$0,$0,$00
+; $54
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $2,$2,$3,_obj_hndl3E_helicopterB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $55
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$D,$2,_obj_hndl3A_boss_yusin
+		OBJ_MAP $D,$8,$1,_obj_hndl13_jumping_ball
+		OBJ_MAP $8,$8,$1,_obj_hndl13_jumping_ball
+		OBJ_MAP $8,$8,$2,_obj_hndl13_jumping_ball
+		OBJ_MAP $9,$3,$3,_obj_hndl13_jumping_ball
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $56
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$1,$3,_obj_hndl23_soldierC
+		OBJ_MAP $7,$A,$1,_obj_hndl23_soldierC
+		OBJ_MAP $7,$E,$0,_obj_hndl27_soldierB
+		OBJ_MAP $7,$8,$2,_obj_hndl27_soldierB
+		OBJ_MAP $D,$E,$0,_obj_hndl27_soldierB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $57
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$1,$2,_obj_hndl3F_multipurpose
+		OBJ_MAP $D,$E,$2,_obj_hndl2D_spectre
+		OBJ_MAP $D,$D,$0,_obj_hndl2D_spectre
+		OBJ_MAP $D,$2,$1,_obj_hndl27_soldierB
+		OBJ_MAP $D,$A,$1,_obj_hndl27_soldierB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $58
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $7,$5,$3,_obj_hndl3F_multipurpose
+		OBJ_MAP $D,$F,$2,_obj_hndl27_soldierB
+		OBJ_MAP $7,$8,$0,_obj_hndl27_soldierB
+		OBJ_MAP $7,$2,$3,_obj_hndl27_soldierB
+		OBJ_MAP $D,$9,$0,_obj_hndl23_soldierC
+		OBJ_MAP $7,$8,$1,_obj_hndl23_soldierC
+		OBJ_MAP $0,$0,$0,$00
+; $59
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $8,$3,$1,_obj_hndl3F_multipurpose
+		OBJ_MAP $D,$7,$1,_obj_hndl33_shield_man
+		OBJ_MAP $8,$8,$1,_obj_hndl27_soldierB
+		OBJ_MAP $D,$8,$2,_obj_hndl27_soldierB
+		OBJ_MAP $8,$2,$3,_obj_hndl33_shield_man
+		OBJ_MAP $D,$B,$0,_obj_hndl27_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $5A
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $7,$7,$2,_obj_hndl33_shield_man
+		OBJ_MAP $D,$6,$2,_obj_hndl23_soldierC
+		OBJ_MAP $D,$1,$3,_obj_hndl23_soldierC
+		OBJ_MAP $7,$F,$0,_obj_hndl23_soldierC
+		OBJ_MAP $D,$E,$0,_obj_hndl23_soldierC
+		OBJ_MAP $D,$9,$1,_obj_hndl33_shield_man
+		OBJ_MAP $0,$0,$0,$00
+; $5B
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$8,$2,_obj_hndl23_soldierC
+		OBJ_MAP $4,$1,$1,_obj_hndl12_ceiling_turret
+		OBJ_MAP $4,$1,$3,_obj_hndl12_ceiling_turret
+		OBJ_MAP $D,$5,$1,_obj_hndl23_soldierC
+		OBJ_MAP $4,$1,$2,_obj_hndl12_ceiling_turret
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $5C
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $7,$5,$3,_obj_hndl27_soldierB
+		OBJ_MAP $7,$8,$2,_obj_hndl27_soldierB
+		OBJ_MAP $7,$3,$1,_obj_hndl27_soldierB
+		OBJ_MAP $D,$8,$1,_obj_hndl2D_spectre
+		OBJ_MAP $D,$7,$2,_obj_hndl2D_spectre
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $5D
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$1,$2,_obj_hndl3F_multipurpose
+		OBJ_MAP $A,$D,$0,_obj_hndl22_soldierB
+		OBJ_MAP $9,$4,$1,_obj_hndl22_soldierB
+		OBJ_MAP $D,$8,$1,_obj_hndl22_soldierB
+		OBJ_MAP $8,$3,$2,_obj_hndl22_soldierB
+		OBJ_MAP $8,$C,$2,_obj_hndl22_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $5E
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$5,$2,_obj_hndl22_soldierB
+		OBJ_MAP $B,$1,$1,_obj_hndl22_soldierB
+		OBJ_MAP $B,$B,$0,_obj_hndl22_soldierB
+		OBJ_MAP $D,$1,$3,_obj_hndl22_soldierB
+		OBJ_MAP $D,$B,$1,_obj_hndl22_soldierB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $5F
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $C,$4,$1,_obj_hndl29_soldierB
+		OBJ_MAP $B,$D,$0,_obj_hndl28_soldierB
+		OBJ_MAP $A,$2,$3,_obj_hndl29_soldierB
+		OBJ_MAP $C,$C,$1,_obj_hndl29_soldierB
+		OBJ_MAP $D,$7,$2,_obj_hndl28_soldierB
+		OBJ_MAP $B,$F,$2,_obj_hndl29_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $60
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$4,$1,_obj_hndl2B_boss_pirate
+		OBJ_MAP $D,$B,$1,_obj_hndl2A_pirate
+		OBJ_MAP $B,$1,$2,_obj_hndl01_npcA
+		OBJ_MAP $B,$E,$2,_obj_hndl2A_pirate
+		OBJ_MAP $D,$4,$3,_obj_hndl2A_pirate
+		OBJ_MAP $D,$A,$0,_obj_hndl2A_pirate
+		OBJ_MAP $0,$0,$0,$00
+; $61
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$C,$1,_obj_hndl03_npcC
+		OBJ_MAP $D,$9,$3,_obj_hndl02_npcB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $62
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$3,$3,_obj_hndl03_npcC
+		OBJ_MAP $D,$B,$1,_obj_hndl04_npcD
+		OBJ_MAP $2,$8,$0,_obj_hndl3E_helicopterB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $63
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $E,$E,$2,_obj_hndl17_pelikan
+		OBJ_MAP $E,$E,$0,_obj_hndl17_pelikan
+		OBJ_MAP $F,$F,$2,_obj_hndl15_grenades
+		OBJ_MAP $F,$F,$2,_obj_hndl15_grenades
+		OBJ_MAP $D,$1,$2,_obj_hndl17_pelikan
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $64
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $C,$6,$1,_obj_hndl1C_soldierA
+		OBJ_MAP $B,$D,$0,_obj_hndl1D_soldierB
+		OBJ_MAP $B,$C,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $B,$8,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $A,$1,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $B,$D,$2,_obj_hndl1D_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $65
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$6,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $D,$C,$0,_obj_hndl1C_soldierA
+		OBJ_MAP $D,$7,$1,_obj_hndl1C_soldierA
+		OBJ_MAP $D,$B,$1,_obj_hndl1C_soldierA
+		OBJ_MAP $D,$6,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $D,$6,$3,_obj_hndl1C_soldierA
+		OBJ_MAP $0,$0,$0,$00
+; $66
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$6,$3,_obj_hndl17_pelikan
+		OBJ_MAP $D,$C,$0,_obj_hndl17_pelikan
+		OBJ_MAP $F,$F,$1,_obj_hndl15_grenades
+		OBJ_MAP $F,$F,$1,_obj_hndl15_grenades
+		OBJ_MAP $D,$7,$2,_obj_hndl17_pelikan
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $67
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$6,$2,_obj_hndl1D_soldierB
+		OBJ_MAP $D,$B,$2,_obj_hndl1D_soldierB
+		OBJ_MAP $D,$1,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $D,$C,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $D,$6,$3,_obj_hndl1D_soldierB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $68
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $9,$1,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $8,$D,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $D,$1,$3,_obj_hndl1D_soldierB
+		OBJ_MAP $8,$2,$1,_obj_hndl1C_soldierA
+		OBJ_MAP $D,$E,$0,_obj_hndl1D_soldierB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $69
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$7,$3,_obj_hndl21_soldierA
+		OBJ_MAP $D,$E,$2,_obj_hndl1D_soldierB
+		OBJ_MAP $D,$4,$1,_obj_hndl21_soldierA
+		OBJ_MAP $D,$E,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $D,$D,$0,_obj_hndl1D_soldierB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $6A
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$8,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $B,$1,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $D,$5,$1,_obj_hndl1C_soldierA
+		OBJ_MAP $D,$5,$3,_obj_hndl1C_soldierA
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $6B
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$C,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $D,$3,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $9,$2,$1,_obj_hndl1C_soldierA
+		OBJ_MAP $9,$3,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $9,$C,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $D,$1,$3,_obj_hndl1D_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $6C
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $B,$B,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $D,$9,$1,_obj_hndl1C_soldierA
+		OBJ_MAP $A,$1,$3,_obj_hndl1D_soldierB
+		OBJ_MAP $A,$E,$1,_obj_hndl1D_soldierB
+		OBJ_MAP $C,$3,$2,_obj_hndl1C_soldierA
+		OBJ_MAP $B,$E,$0,_obj_hndl1C_soldierA
+		OBJ_MAP $0,$0,$0,$00
+; $6D
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$4,$1,_obj_hndl20_torture_room_soldier
+		OBJ_MAP $B,$5,$2,_obj_hndl20_torture_room_soldier
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $6E
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$5,$3,_obj_hndl35_guard_of_torture_room
+		OBJ_MAP $8,$8,$2,_obj_hndl20_torture_room_soldier
+		OBJ_MAP $9,$3,$1,_obj_hndl20_torture_room_soldier
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $6F
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$9,$2,_obj_hndl20_torture_room_soldier
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $70
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $B,$6,$0,_obj_hndl1F_soldierB
+		OBJ_MAP $B,$8,$2,_obj_hndl1F_soldierB
+		OBJ_MAP $D,$1,$1,_obj_hndl30_burning_man
+		OBJ_MAP $B,$4,$3,_obj_hndl1F_soldierB
+		OBJ_MAP $B,$B,$0,_obj_hndl1F_soldierB
+		OBJ_MAP $B,$2,$2,_obj_hndl30_burning_man
+		OBJ_MAP $0,$0,$0,$00
+; $71
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $8,$4,$2,_obj_hndl1F_soldierB
+		OBJ_MAP $8,$E,$2,_obj_hndl1F_soldierB
+		OBJ_MAP $8,$D,$1,_obj_hndl30_burning_man
+		OBJ_MAP $9,$1,$1,_obj_hndl1F_soldierB
+		OBJ_MAP $D,$3,$3,_obj_hndl30_burning_man
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $72
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $B,$C,$2,_obj_hndl1E_soldierB
+		OBJ_MAP $A,$1,$3,_obj_hndl1F_soldierB
+		OBJ_MAP $A,$E,$1,_obj_hndl1F_soldierB
+		OBJ_MAP $B,$3,$1,_obj_hndl1F_soldierB
+		OBJ_MAP $D,$A,$1,_obj_hndl1E_soldierB
+		OBJ_MAP $D,$6,$0,_obj_hndl1E_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $73
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$5,$2,_obj_hndl2E_armored_man
+		OBJ_MAP $B,$2,$2,_obj_hndl29_soldierB
+		OBJ_MAP $D,$1,$3,_obj_hndl29_soldierB
+		OBJ_MAP $B,$6,$0,_obj_hndl29_soldierB
+		OBJ_MAP $D,$F,$0,_obj_hndl2E_armored_man
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $74
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$1,$2,_obj_hndl3F_multipurpose
+		OBJ_MAP $9,$1,$1,_obj_hndl29_soldierB
+		OBJ_MAP $8,$2,$2,_obj_hndl28_soldierB
+		OBJ_MAP $D,$9,$2,_obj_hndl28_soldierB
+		OBJ_MAP $A,$D,$0,_obj_hndl29_soldierB
+		OBJ_MAP $A,$1,$3,_obj_hndl28_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $75
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$3,$1,_obj_hndl28_soldierB
+		OBJ_MAP $9,$E,$2,_obj_hndl29_soldierB
+		OBJ_MAP $9,$7,$1,_obj_hndl2E_armored_man
+		OBJ_MAP $9,$4,$2,_obj_hndl2E_armored_man
+		OBJ_MAP $9,$1,$1,_obj_hndl29_soldierB
+		OBJ_MAP $D,$7,$2,_obj_hndl28_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $76
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $7,$E,$0,_obj_hndl2F_strong_man
+		OBJ_MAP $A,$1,$2,_obj_hndl29_soldierB
+		OBJ_MAP $D,$D,$2,_obj_hndl29_soldierB
+		OBJ_MAP $8,$7,$3,_obj_hndl2F_strong_man
+		OBJ_MAP $B,$F,$0,_obj_hndl29_soldierB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $77
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $8,$7,$1,_obj_hndl04_npcD
+		OBJ_MAP $2,$3,$3,_obj_hndl3E_helicopterB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $78
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $C,$4,$2,_obj_hndl29_soldierB
+		OBJ_MAP $A,$E,$1,_obj_hndl28_soldierB
+		OBJ_MAP $A,$1,$3,_obj_hndl29_soldierB
+		OBJ_MAP $B,$B,$2,_obj_hndl28_soldierB
+		OBJ_MAP $D,$5,$0,_obj_hndl28_soldierB
+		OBJ_MAP $B,$F,$0,_obj_hndl29_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $79
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$8,$2,_obj_hndl3B_boss_padovski
+		OBJ_MAP $D,$2,$3,_obj_hndl22_soldierB
+		OBJ_MAP $D,$F,$0,_obj_hndl22_soldierB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $7A
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $D,$8,$2,_obj_hndl29_soldierB
+		OBJ_MAP $D,$6,$2,_obj_hndl29_soldierB
+		OBJ_MAP $D,$7,$3,_obj_hndl29_soldierB
+		OBJ_MAP $B,$D,$0,_obj_hndl29_soldierB
+		OBJ_MAP $D,$6,$1,_obj_hndl29_soldierB
+		OBJ_MAP $D,$9,$1,_obj_hndl29_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $7B
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $8,$F,$2,_obj_hndl29_soldierB
+		OBJ_MAP $7,$7,$0,_obj_hndl29_soldierB
+		OBJ_MAP $A,$1,$2,_obj_hndl11_landmine
+		OBJ_MAP $9,$4,$2,_obj_hndl11_landmine
+		OBJ_MAP $7,$8,$1,_obj_hndl29_soldierB
+		OBJ_MAP $D,$C,$3,_obj_hndl28_soldierB
+		OBJ_MAP $0,$0,$0,$00
+; $7C
+		OBJ_MAP $0,$0,$0,_obj_hndl3C_plane
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $7D
+		OBJ_MAP $D,$8,$3,_obj_hndl3D_helicopterA
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $7E
+		OBJ_MAP $D,$8,$3,_obj_hndl3D_helicopterA
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+; $7F
+		OBJ_MAP $D,$8,$3,_obj_hndl3D_helicopterA
+		OBJ_MAP $D,$C,$3,_obj_hndl3E_helicopterB
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
+		OBJ_MAP $0,$0,$0,$00
 _obj_params_lib:
 		.BYTE $F0,$EF,$00,$06,$00,$00,$80,$00	; $00
 		.BYTE $F0,$D8,$00,$06,$00,$FF,$94,$00	; $01
@@ -635,7 +1659,7 @@ loc_52097:
 _obj_sub52099:
 		LDA		_objsA._player.field_C,X
 		BNE		locret_52107
-		LDA		#$3F
+		LDA		#_obj_hndl3F_multipurpose_idx
 		STA		_objsA._player._hndl_idx,X
 		LDA		#$F0
 		STA		_objsA._player._anim_phase_idx,X
@@ -973,7 +1997,7 @@ loc_522A9:
 		TXA
 		SBC		#$10
 		TAX
-		LDA		#$3F
+		LDA		#_obj_hndl3F_multipurpose_idx
 		STA		_objsA._player._hndl_idx,X
 		LDA		#$F2
 		STA		_objsA._player._anim_phase_idx,X
@@ -1053,7 +2077,8 @@ locret_52332:
 		RTS
 ; ---------------------------------------------------------------------------
 _obj_data_special:
-		.BYTE $3F,$F5,$00,$00,$80,$20,$00,$18,$00,$03,$00,$00,$00,$03,$9F,$00
+		.BYTE _obj_hndl3F_multipurpose_idx
+		.BYTE $F5,$00,$00,$80,$20,$00,$18,$00,$03,$00,$00,$00,$03,$9F,$00
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_rambo_shout_deploy_test:
@@ -1157,7 +2182,8 @@ locret_523F6:
 		RTS
 ; ---------------------------------------------------------------------------
 _obj_data_rambo_shout:
-		.BYTE $3F,$F6,$00,$00,$00,$00,$80,$00,$00,$00,$00,$00,$00,$04,$9F,$00
+		.BYTE _obj_hndl3F_multipurpose_idx
+		.BYTE $F6,$00,$00,$00,$00,$80,$00,$00,$00,$00,$00,$00,$04,$9F,$00
 
 ; =============== S U B	R O U T	I N E =======================================
 _cur_obj_direction_left_set:
@@ -1188,70 +2214,70 @@ _cur_obj_direction_up_set:
 		RTS
 ; ---------------------------------------------------------------------------
 _obj_hndl_lib:
-		.WORD _obj_hndl00_rambo
-		.WORD _obj_hndl01_npcA
-		.WORD _obj_hndl02_npcB
-		.WORD _obj_hndl03_npcC
-		.WORD _obj_hndl04_npcD
-		.WORD _obj_hndl05_bee
-		.WORD _obj_hndl06_snake
-		.WORD _obj_hndl07_fish
-		.WORD _obj_hndl08_bubbles
-		.WORD _obj_hndl09_ceiling_bat
-		.WORD _obj_hndl0A_stalaktit
-		.WORD _obj_hndl0B_skull
-		.WORD _obj_hndl0C_bird
-		.WORD _obj_hndl0D_waterfall_logs
-		.WORD _obj_hndl0E_small_bat
-		.WORD _obj_hndl0F_spider
-		.WORD _obj_hndl10_floor_turret
-		.WORD _obj_hndl11_landmine
-		.WORD _obj_hndl12_ceiling_turret
-		.WORD _obj_hndl13_jumping_ball
-		.WORD _obj_hndl14_rocks
-		.WORD _obj_hndl15_grenades
-		.WORD _obj_hndl16_cobra
-		.WORD _obj_hndl17_pelikan
-		.WORD _obj_hndl18_gorilla
-		.WORD _obj_hndl19_tiger
-		.WORD _obj_hndl19_tiger
-		.WORD _obj_hndl1B_kid
-		.WORD _obj_hndl1C_soldierA
-		.WORD _obj_hndl1D_soldierB
-		.WORD _obj_hndl1D_soldierB
-		.WORD _obj_hndl1D_soldierB
-		.WORD _obj_hndl20_torture_room_soldier
-		.WORD _obj_hndl1C_soldierA
-		.WORD _obj_hndl1D_soldierB
-		.WORD _obj_hndl23_soldierC
-		.WORD _obj_hndl1D_soldierB
-		.WORD _obj_hndl1D_soldierB
-		.WORD _obj_hndl26_grenade_soldier
-		.WORD _obj_hndl1D_soldierB
-		.WORD _obj_hndl1D_soldierB
-		.WORD _obj_hndl1D_soldierB
-		.WORD _obj_hndl2A_pirate
-		.WORD _obj_hndl2B_boss_pirate
-		.WORD _obj_hndl2C_dubina_man
-		.WORD _obj_hndl2D_spectre
-		.WORD _obj_hndl2E_armored_man
-		.WORD _obj_hndl2F_strong_man
-		.WORD _obj_hndl30_burning_man
-		.WORD _obj_hndl31_machete_man
-		.WORD _obj_hndl32_skull_monkey
-		.WORD _obj_hndl33_shield_man
-		.WORD _obj_hndl34_crouching_bomb_man
-		.WORD _obj_hndl35_guard_of_torture_room
-		.WORD _obj_hndl36_boss_fire_tiger
-		.WORD _obj_hndl37_boss_spider
-		.WORD _obj_hndl38_boss_motorcycle
-		.WORD _obj_hndl39_boss_drone
-		.WORD _obj_hndl3A_boss_yusin
-		.WORD _obj_hndl3B_boss_padovski
-		.WORD _obj_hndl3C_plane
-		.WORD _obj_hndl3D_helicopterA
-		.WORD _obj_hndl3E_helicopterB
-		.WORD _obj_hndl3F_multipurpose
+		OBJ_HNDL _obj_hndl00_rambo
+		OBJ_HNDL _obj_hndl01_npcA
+		OBJ_HNDL _obj_hndl02_npcB
+		OBJ_HNDL _obj_hndl03_npcC
+		OBJ_HNDL _obj_hndl04_npcD
+		OBJ_HNDL _obj_hndl05_bee
+		OBJ_HNDL _obj_hndl06_snake
+		OBJ_HNDL _obj_hndl07_fish
+		OBJ_HNDL _obj_hndl08_bubbles
+		OBJ_HNDL _obj_hndl09_ceiling_bat
+		OBJ_HNDL _obj_hndl0A_stalaktit
+		OBJ_HNDL _obj_hndl0B_skull
+		OBJ_HNDL _obj_hndl0C_bird
+		OBJ_HNDL _obj_hndl0D_waterfall_logs
+		OBJ_HNDL _obj_hndl0E_small_bat
+		OBJ_HNDL _obj_hndl0F_spider
+		OBJ_HNDL _obj_hndl10_floor_turret
+		OBJ_HNDL _obj_hndl11_landmine
+		OBJ_HNDL _obj_hndl12_ceiling_turret
+		OBJ_HNDL _obj_hndl13_jumping_ball
+		OBJ_HNDL _obj_hndl14_rocks
+		OBJ_HNDL _obj_hndl15_grenades
+		OBJ_HNDL _obj_hndl16_cobra
+		OBJ_HNDL _obj_hndl17_pelikan
+		OBJ_HNDL _obj_hndl18_gorilla
+		OBJ_HNDL _obj_hndl19_tiger
+		OBJ_HNDL _obj_hndl1A_tiger
+		OBJ_HNDL _obj_hndl1B_kid
+		OBJ_HNDL _obj_hndl1C_soldierA
+		OBJ_HNDL _obj_hndl1D_soldierB
+		OBJ_HNDL _obj_hndl1E_soldierB
+		OBJ_HNDL _obj_hndl1F_soldierB
+		OBJ_HNDL _obj_hndl20_torture_room_soldier
+		OBJ_HNDL _obj_hndl21_soldierA
+		OBJ_HNDL _obj_hndl22_soldierB
+		OBJ_HNDL _obj_hndl23_soldierC
+		OBJ_HNDL _obj_hndl24_soldierB
+		OBJ_HNDL _obj_hndl25_soldierB
+		OBJ_HNDL _obj_hndl26_grenade_soldier
+		OBJ_HNDL _obj_hndl27_soldierB
+		OBJ_HNDL _obj_hndl28_soldierB
+		OBJ_HNDL _obj_hndl29_soldierB
+		OBJ_HNDL _obj_hndl2A_pirate
+		OBJ_HNDL _obj_hndl2B_boss_pirate
+		OBJ_HNDL _obj_hndl2C_dubina_man
+		OBJ_HNDL _obj_hndl2D_spectre
+		OBJ_HNDL _obj_hndl2E_armored_man
+		OBJ_HNDL _obj_hndl2F_strong_man
+		OBJ_HNDL _obj_hndl30_burning_man
+		OBJ_HNDL _obj_hndl31_machete_man
+		OBJ_HNDL _obj_hndl32_skull_monkey
+		OBJ_HNDL _obj_hndl33_shield_man
+		OBJ_HNDL _obj_hndl34_crouching_bomb_man
+		OBJ_HNDL _obj_hndl35_guard_of_torture_room
+		OBJ_HNDL _obj_hndl36_boss_fire_tiger
+		OBJ_HNDL _obj_hndl37_boss_spider
+		OBJ_HNDL _obj_hndl38_boss_motorcycle
+		OBJ_HNDL _obj_hndl39_boss_drone
+		OBJ_HNDL _obj_hndl3A_boss_yusin
+		OBJ_HNDL _obj_hndl3B_boss_padovski
+		OBJ_HNDL _obj_hndl3C_plane
+		OBJ_HNDL _obj_hndl3D_helicopterA
+		OBJ_HNDL _obj_hndl3E_helicopterB
+		OBJ_HNDL _obj_hndl3F_multipurpose
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl01_talk_idx_select:
@@ -2610,6 +3636,7 @@ loc_52E63:
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl19_tiger:
+_obj_hndl1A_tiger:
 		LDA		#$04
 		STA		_tmp01
 		LDA		#$05
@@ -2690,6 +3717,7 @@ loc_52EF7:
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl1C_soldierA:
+_obj_hndl21_soldierA:
 		LDA		_tmp11
 		ORA		#$01
 		STA		_tmp11
@@ -2804,12 +3832,20 @@ _obj_hndl26_grenade_soldier:
 		LDA		_game._flags+1
 		AND		#$10
 		BEQ		_obj_hndl1D_soldierB
-		LDA		#$20
+		LDA		#_obj_hndl20_torture_room_soldier_idx
 		STA		_objsA._player._hndl_idx,X
 		JMP		_obj_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl1D_soldierB:
+_obj_hndl1E_soldierB:
+_obj_hndl1F_soldierB:
+_obj_hndl22_soldierB:
+_obj_hndl24_soldierB:
+_obj_hndl25_soldierB:
+_obj_hndl27_soldierB:
+_obj_hndl28_soldierB:
+_obj_hndl29_soldierB:
 		SEC
 		LDA		_objsA._player._hndl_idx,X
 		AND		#$3F
@@ -3095,9 +4131,9 @@ _obj_prize_deployB:
 		STA		_tmp03
 		LDA		_objsA._player._hndl_idx,X
 		AND		#$3F
-		CMP		#$26
+		CMP		#_obj_hndl26_grenade_soldier_idx
 		BEQ		loc_531E5
-		CMP		#$27
+		CMP		#_obj_hndl27_soldierB_idx
 		BEQ		loc_531FA
 		LDA		#$40
 		STA		_tmp06
@@ -3694,7 +4730,7 @@ _obj_hndl34_crouching_bomb_man:
 		LDA		_game._flags+1
 		AND		#$10
 		BEQ		loc_53643
-		LDA		#$35
+		LDA		#_obj_hndl35_guard_of_torture_room_idx
 		STA		_objsA._player._hndl_idx,X
 		JMP		_obj_flush_and_continue
 loc_53643:
@@ -4092,7 +5128,7 @@ loc_5393D:
 		STA		_tmp02
 		LDA		#$08
 		STA		_tmp03
-		LDA		_objsA,X
+		LDA		_objsA._player._hndl_idx,X
 		STA		_tmp00
 		LDA		#$04
 		STA		_tmp05
@@ -4538,7 +5574,7 @@ _heli_land_anim:
 		LDA		_game._flags+2
 		ORA		#$08
 		STA		_game._flags+2
-		LDA		#$00
+		LDA		#_obj_hndl00_rambo_idx
 		STA		_objsA._player._hndl_idx
 		LDA		_game._scr_idx
 		CMP		#$01
@@ -4692,7 +5728,7 @@ _obj_heli_active_zone_obj_insert:
 		STA		_tmp11
 		LDA		#$02
 		STA		_objsA._o7._dir
-		LDA		#$3E
+		LDA		#_obj_hndl3E_helicopterB_idx
 		STA		_objsA._o7._hndl_idx
 		LDA		#$F0
 		STA		_objsA._player._anim_phase_idx,X
@@ -4933,7 +5969,8 @@ loc_53F50:
 		RTS
 ; ---------------------------------------------------------------------------
 _obj_data_boss_projectile:
-		.BYTE $37,$F2,$00,$00,$00,$00,$C0,$2F,$00,$02,$00,$0A,$FF,$00,$15,$F0
+		.BYTE _obj_hndl37_boss_spider_idx
+		.BYTE $F2,$00,$00,$00,$00,$C0,$2F,$00,$02,$00,$0A,$FF,$00,$15,$F0
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_boss_spider_drone_proj_anim:
