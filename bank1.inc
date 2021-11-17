@@ -10,7 +10,7 @@ _location_room_map_libB:
 
 		SECTION_START
 		INCLUDE	"..\mus\apu_mus04.inc"
-		INCLUDE	"..\mus\apu_mus00.inc"
+		INCLUDE	"..\mus\apu_mus0E.inc"
 		INCLUDE	"..\mus\apu_mus02.inc"
 		INCLUDE	"..\mus\apu_mus09.inc"
 		SECTION_END "MUSIC DATA B"

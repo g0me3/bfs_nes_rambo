@@ -14,7 +14,7 @@
 		INCLUDE	"..\mus\apu_mus03.inc"
 		INCLUDE	"..\mus\apu_mus0D.inc"
 		INCLUDE	"..\mus\apu_mus0F.inc"
-		INCLUDE	"..\mus\apu_mus01.inc"
+		INCLUDE	"..\mus\apu_mus0A.inc"
 		INCLUDE	"..\mus\apu_mus0B.inc"
 		SECTION_END "MUSIC DATA A"
 

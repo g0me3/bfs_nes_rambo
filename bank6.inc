@@ -1855,7 +1855,7 @@ loc_521E5:
 		RTS
 ; ---------------------------------------------------------------------------
 _prize_apu_list:
-		.BYTE $02,$02,$05,$05,$03,$01,$01,$00,$06
+		.BYTE SEN02,SEN02,SEN05,SEN05,SEN03,SEN01,SEN01,$00,SEN06
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hor_targeting_to_player_common:
@@ -3171,7 +3171,7 @@ loc_52AFB:
 _obj_hndl11_landmine:
 		JSR		_obj_sub52085
 		BCC		loc_52B08
-		LDA		#$07
+		LDA		#SEN07
 		STA		_apu_se_noise_idx
 loc_52B08:
 		JMP		_obj_flush_and_continue
@@ -3345,7 +3345,7 @@ _obj_hndl15_grenades:
 		AND		#$04
 		BEQ		loc_52C55
 loc_52C4A:
-		LDA		#$07
+		LDA		#SEN07
 		STA		_apu_se_noise_idx
 		JSR		_obj_bomb_redeploy_and_explode
 		JMP		loc_52C64
@@ -5564,7 +5564,7 @@ _heli_not_landed:
 _heli_land_anim:
 		LDA		#$80
 		STA		_objsA._player._hndl_idx
-		LDA		#$07
+		LDA		#SEN07
 		STA		_apu_se_noise_idx
 		INC		_tmp0E
 		INC		_objsA._o7._y_pos
@@ -5612,7 +5612,7 @@ loc_53CC4:
 		LDA		#$00
 		STA		_objsA._player.field_7
 loc_53CD3:
-		LDA		#$07
+		LDA		#SEN07
 		STA		_apu_se_noise_idx
 		DEC		_tmp0E
 		DEC		_objsA._o7._y_pos
@@ -5827,7 +5827,7 @@ _special_head_prize:
 		BCS		loc_53EB4
 		LDA		_objsA._player._state,X
 		BPL		loc_53EB7
-		LDA		#$04
+		LDA		#SEP04
 		STA		_apu_se_pulse_idx
 		JSR		_rand
 		CMP		#$50

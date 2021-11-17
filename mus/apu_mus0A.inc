@@ -1,13 +1,13 @@
 
-_apu_mus01A:
+_apu_mus0AA:
 		.BYTE $00,$FF,$3C
 		.BYTE $FE
-_apu_mus01B:
+_apu_mus0AB:
 		.BYTE $00,$FF,$3C
 		.BYTE $FE
-_apu_mus01C:
+_apu_mus0AC:
 		.BYTE $00,$FF,$3C
 		.BYTE $FE
-_apu_mus01D:
+_apu_mus0AD:
 		.BYTE $00,$FF
 		.BYTE $FE

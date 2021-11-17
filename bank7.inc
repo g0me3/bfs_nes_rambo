@@ -74,8 +74,8 @@ _delay:
 		JSR		_mmc_prg_set
 		LDA		_ppu_ctrl_shadow
 		STA		_PPU_CTRL
-;		LDA		#$0E					; there is no MUS sith 0E idx, and it will
-;		JSR		_apu_cur_mus_load		; immediately overwritten with other music
+		LDA		#$0A					; load dummy
+		JSR		_apu_cur_mus_load
 _main_loop:
 		LDA		_nmi_flag
 		CMP		#$02
@@ -311,7 +311,7 @@ _ingame_start_select_handler:
 		LDA		_pad
 		AND		#$10
 		BEQ		loc_602EB
-		LDA		#$01
+		LDA		#SEP01
 		STA		_apu_se_pulse_idx
 		LDA		_ingame_pause_flag
 		EOR		#$FF
@@ -338,7 +338,7 @@ loc_602EB:
 		BCC		loc_602EC
 		INC		_game._life+1
 loc_602EC:
-		LDA		#$04
+		LDA		#SEP04
 		STA		_apu_se_pulse_idx
 		BNE		loc_60345
 loc_60326:
@@ -384,7 +384,7 @@ loc_60370:
 		STA		_PPU_CTRL
 		LDA		_apu_se_pulse_idx
 		BNE		loc_60388
-		LDA		#$02
+		LDA		#SEP02
 		STA		_apu_se_pulse_idx
 loc_60388:
 		JSR		_hud_cursor_spr_insert
@@ -442,7 +442,7 @@ loc_603DB:
 		STA		_game._exp
 		INC		_game._exp+1
 loc_6040E:
-		LDA		#$03
+		LDA		#SEP03
 		STA		_apu_se_pulse_idx
 		BNE		loc_603D3
 loc_6040F:
@@ -466,7 +466,7 @@ loc_6040F:
 		LDA		_game._potions
 		CMP		#$09
 		BCS		loc_60445
-		LDA		#$03
+		LDA		#SEP03
 		STA		_apu_se_pulse_idx
 		INC		_game._potions
 loc_60445:
@@ -1712,6 +1712,7 @@ _room_scroll_to_rom_ptr_calc:
 		AND		#$F0
 		STA		_tmp01
 		LDA		_tmp0F
+		AND		#$03
 		CLC
 		ADC		#>[_room_map_buf]
 		STA		_tmp02
@@ -1774,8 +1775,13 @@ loc_60DA3:
 		CLC
 		ADC		#$10
 		STA		_tmp01
-		BNE		loc_60DC5
-		INC		_tmp02
+		LDA		_tmp02
+		ADC		#$00
+		CMP		#>[_room_map_buf+[256*4]]
+		BNE		loc_60DC4
+		LDA		#>[_room_map_buf]
+loc_60DC4:
+		STA		_tmp02
 loc_60DC5:
 		INC		_tmp03
 		LDA		_tmp03
@@ -1803,9 +1809,10 @@ loc_60DE4:
 		CLC
 		ADC		#$20
 		STA		_tmp0E
-		BCC		loc_60DE5
-		INC		_tmp0F
-loc_60DE5:
+		LDA		_tmp0F
+		ADC		#$00
+		AND		#$03
+		STA		_tmp0F
 		DEC		_tmp00
 		BNE		loc_60DE4
 		RTS
@@ -2019,6 +2026,7 @@ _calc_room_nt_ofs:
 		STA		_tmp0E
 		LDA		_room_scroll_pos_x+1
 		ADC		#$01
+		AND		#$03
 		STA		_tmp0F
 		JMP		loc_60F6B
 loc_60F5A:
@@ -2029,6 +2037,7 @@ loc_60F5A:
 		STA		_tmp0E
 		LDA		_room_scroll_pos_x+1
 		SBC		#$00
+		AND		#$03
 		STA		_tmp0F
 loc_60F6B:
 		LDA		_room_scroll_pos_x
@@ -2494,7 +2503,7 @@ _game_values_update:
 		STA		_tmp03
 		JSR		_cmp_tmp00w_tmp02w
 		BCC		loc_61296
-		LDA		#$03
+		LDA		#SEP03
 		STA		_apu_se_pulse_idx
 		INC		_game._exp_level
 		LDA		_game._exp_level
@@ -2572,7 +2581,7 @@ loc_612F5:
 		CPY		#$06
 		BNE		loc_612F5
 loc_61302:
-		LDA		#$03
+		LDA		#SEP03
 		STA		_apu_se_pulse_idx
 		LDA		#$63
 		STA		_game._ammo_knife
@@ -4381,7 +4390,7 @@ loc_61F9E:
 		BNE		loc_61F9E
 		RTS
 loc_61FAD:
-		LDA		#$06
+		LDA		#SEN06
 		STA		_apu_se_noise_idx
 		LDA		#$80
 		SEC
@@ -4777,7 +4786,7 @@ _objB_hndl0A_heart:
 		LDA		_objsB._o0.field_7,X
 		CMP		#$18
 		BNE		_objB_animate_common
-		LDA		#$04
+		LDA		#SEP04
 		STA		_apu_se_pulse_idx
 		LDA		_game._life_level
 		CMP		#$07
@@ -4945,7 +4954,7 @@ _objB_sub62362:
 		STA		_tmp10
 		LDA		#$0F
 		STA		_tmp0F
-		LDA		#$06
+		LDA		#SEN06
 		STA		_apu_se_noise_idx
 		LDA		#$00
 		STA		_objsB._o0.field_5
@@ -4966,7 +4975,7 @@ _objB_sub62380:
 		AND		#$C0
 		ORA		#$31
 		STA		_tmp11
-		LDA		#$07
+		LDA		#SEN07
 		STA		_apu_se_noise_idx
 		JMP		_objB_flush_and_continue
 
@@ -6118,7 +6127,13 @@ _weapons_data_tbl:
 		.BYTE $0D,$06,$05,$00,$20,$81,$57,$20,$0E,$04,$05,$00,$10,$81,$57,$20
 		.BYTE $00,$06,$80,$00,$00,$00,$00,$00,$03,$04,$80,$00,$00,$00,$00,$00
 _weapon_se_tbl:
-		.BYTE $01,$02,$05,$85,$84,$81,$01
+		.BYTE SEN01
+		.BYTE SEN02
+		.BYTE SEN05
+		.BYTE SEN05
+		.BYTE SEN04|$80
+		.BYTE SEN01|$80
+		.BYTE SEN01
 _wapon_damage_tbl:
 		.BYTE $01,$02,$03,$06,$0C,$18,$30,$60,$C0
 
