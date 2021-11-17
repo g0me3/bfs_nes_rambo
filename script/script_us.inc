@@ -90,7 +90,7 @@ _script82:
 _script82_loc00:
 		frame_draw_custom	$2125, $17, $12
 		ptr_load			_script82_msg01
-		msg_printf			$2167	; [0 1	2 3 4 5	6 7 8 9\A B C D E F G H I J\K L M N O P Q R S T\U V W X Y Z\a b c d e f g h i j\k l m n o p q r s t\u v w x y z ? !\BS  SP  END]
+		msg_printf			$2167	; [0 1 2 3 4 5 6 7 8 9\A B C D E F G H I J\K L M N O P Q R S T\U V W X Y Z\a b c d e f g h i j\k l m n o p q r s t\u v w x y z ? !\BS  SP  END]
 		pass_input
 		jmpne_option		$01, _script82_loc01
 		checkpoint_set
@@ -203,23 +203,23 @@ _script85:
 		msg_draw_up			; [It's dangerous,but\you'll be free\if you succeed.]
 		ptr_load			_script85_msg03
 		msg_draw_up			; [Our men are still\missing]
-		ptr_load			_script85_msg04
+		ptr_load			_script85_msg03A
 		msg_draw_up			; [in a jungle\in Vietnam.We\believe they are\alive,prisoners of\the enemy.]
-		ptr_load			_script85_msg05
+		ptr_load			_script85_msg03B
 		msg_draw_up			; [Your mission is to\sneak into the\enemy camp and find\them.\Are you up to it?]
 _script85_loc00:
 		frame_draw_down		PORTRAIT00_RAMBO
 		input_2_options
-		ptr_load			_script85_msg06
+		ptr_load			_script85_msg04
 		msg_draw_down		; [I'm not afraid of\death.\ \I feel better in\prison.]
 		jmpne_option		$01, _script85_loc01
-		ptr_load			_script85_msg07
+		ptr_load			_script85_msg05
 		msg_draw_up			; [Good,I'll make the\arrangements.]
 		set_room_idx		$01
 		stop
 		------------------
 _script85_loc01:
-		ptr_load			_script85_msg08
+		ptr_load			_script85_msg06
 		msg_draw_up			; [But it's up to you.\The game doesn't\start until you\say YES.]
 		jump				_script85_loc00
 _script86:
@@ -229,15 +229,15 @@ _script86:
 		msg_draw_up			; [I'm\Commander Murdock.]
 		ptr_load			_script86_msg01
 		msg_draw_up			; [We want you to get\into enemy\territory and take\photographs of the\POW camp.]
-		ptr_load			_script86_msg02
+		ptr_load			_script86_msg01A
 		msg_draw_up			; [You're not to\engage the enemy.]
 		frame_draw_down		PORTRAIT00_RAMBO
-		ptr_load			_script86_msg03
+		ptr_load			_script86_msg02
 		msg_draw_down		; [Photos? Not rescue\them?]
-		ptr_load			_script86_msg04
-		msg_draw_up			; [I	repeat.You're not\to engage the\enemy.]
-		ptr_load			_script86_msg05
-		msg_draw_up			; [Go to the	weapons\center and\get ready.]
+		ptr_load			_script86_msg03
+		msg_draw_up			; [I repeat.You're not\to engage the\enemy.]
+		ptr_load			_script86_msg03A
+		msg_draw_up			; [Go to the weapons\center and\get ready.]
 		set_room_idx		$00
 		stop
 _script87:
@@ -278,15 +278,17 @@ _script88_loc00:
 		frame_draw_down		PORTRAIT00_RAMBO
 		ptr_load			_script88_msg01
 		msg_draw_up			; [Go to the	hangar.]
+;		ptr_load			_script88_msg02
+;		msg_draw_up			; [-MISSING-]
 		set_room_idx		$01
 		stop
 _script88_loc01:
-		ptr_load			_script88_msg02
+		ptr_load			_script88_msg03
 		msg_draw_up			; [There's a contact\man Co,over\there.He'll guide\you in the jungle.]
 		checkpoint_set
-		ptr_load			_script88_msg03
-		msg_draw_up			; [You've got 36 hours\to get in,complete\your assignment,\and get the hell\out.]
 		ptr_load			_script88_msg04
+		msg_draw_up			; [You've got 36 hours\to get in,complete\your assignment,\and get the hell\out.]
+		ptr_load			_script88_msg04A
 		msg_draw_up			; [If you get in\trouble,try to\reach the\extraction site\marked on the map.]
 		ptr_load			_script88_msg05
 		msg_draw_up			; [Rambo...\Good luck.]
@@ -304,54 +306,51 @@ _script89:
 		frame_draw_up		PORTRAIT03_CO
 		ptr_load			_script89_msg00
 		msg_draw_up			; [I'm Co.\You did not expect\a woman?]
-		ptr_load			_script89_msg01
+		ptr_load			_script89_msg00A
 		msg_draw_up			; [Would you	like to\know something?]
 		frame_draw_down		PORTRAIT00_RAMBO
 		input_2_options
-		ptr_load			_script89_msg02
+		ptr_load			_script89_msg01
 		msg_draw_down		; [Where is the camp?\ \ \What do you think\about me?]
 		jmpne_option		$02, _script89_loc00
 		sprite_draw_down	PORTRAIT02_RAMBO_HAPPY
 		sprite_draw_up		PORTRAIT04_CO_HAPPY
-		ptr_load			_script89_msg03
+		ptr_load			_script89_msg02
 		msg_draw_up			; [What?\You look good.]
 		------------------
 _script89_loc00:
-		ptr_load			_script89_msg04
+		ptr_load			_script89_msg03
 		msg_draw_up			; [The camp is located\in the jungle to\the East of the\river.]
-		ptr_load			_script89_msg05
+		ptr_load			_script89_msg03A
 		msg_draw_up			; [I've arranged\a boat.Let's go to\the dock.]
 		set_room_idx		$0a
 		stop
 _script8A:
 		checkpoint_set
 		jmp_flags_not_set	FLAG09_CO_TAKEN, _script8A_loc00
-		jump				_script8A_loc02
 		jmp_branch			_script8A_loc01
 _script8A_loc00:
 		frame_draw_up		PORTRAIT14_PIRATE
 		ptr_load			_script8A_msg00
 		msg_draw_up			; [You're outsiders,\aren't you.]
-		------------------
-_script8A_loc01:
-		ptr_load			_script8A_msg01
+		ptr_load			_script8A_msg00A
 		msg_draw_up			; [Sorry,we can't\allow strangers\to get on our boat.]
 		set_room_idx		$06
 		stop
-_script8A_loc02:
-		jmp_flags_not_set	FLAG0E_BOAT,	_script8A_loc03
+_script8A_loc01:
+		jmp_flags_not_set	FLAG0E_BOAT,	_script8A_loc02
 		frame_draw_up		PORTRAIT14_PIRATE
-		jump				_script8A_loc04
+		jump				_script8A_loc03
 		------------------
-_script8A_loc03:
+_script8A_loc02:
 		frame_draw_down		PORTRAIT03_CO
-		ptr_load			_script8A_msg02
+		ptr_load			_script8A_msg01
 		msg_draw_down		; [What? You	should\know us.We wanna\get on the boat.\Here's money.]
 		frame_draw_up		PORTRAIT14_PIRATE
-		ptr_load			_script8A_msg03
+		ptr_load			_script8A_msg02
 		msg_draw_up			; [OK]
-_script8A_loc04:
-		ptr_load			_script8A_msg04
+_script8A_loc03:
+		ptr_load			_script8A_msg03
 		msg_draw_up			; [Get on,hurry.]
 		game_flags_set		FLAG0E_BOAT
 		set_room_idx		$06
@@ -381,18 +380,26 @@ _script8B_loc02:
 		jump				_script8B_loc04
 		------------------
 _script8B_loc03:
+;		ptr_load			_script8B_msg03
+;		msg_draw_up			; [-MISSING-]
 		frame_draw_down		PORTRAIT00_RAMBO
-		ptr_load			_script8B_msg03
-		msg_draw_down		; [What does	this\pendant mean?]
+;		ptr_load			_script8B_msg04
+;		msg_draw_down		; [-MISSING-]
+;		ptr_load			_script8B_msg05
+;		msg_draw_up			; [-MISSING-]
+		ptr_load			_script8B_msg06
+		msg_draw_down		; [What does this\pendant mean?]
 		sprite_draw_up		PORTRAIT04_CO_HAPPY
-		ptr_load			_script8B_msg04
-		msg_draw_up			; [It brings	me good\luck.]
-		ptr_load			_script8B_msg05
+		ptr_load			_script8B_msg07
+		msg_draw_up			; [It brings me good\luck.]
+;		ptr_load			_script8B_msg08
+;		msg_draw_down		; [-MISSING-]
+		ptr_load			_script8B_msg09
 		msg_draw_up			; [Rambo,keep this\pendant.\Please take care\of it.]
 		life_restore
 		game_flags_set		FLAG11_PEDANT
 _script8B_loc04:
-		ptr_load			_script8B_msg06
+		ptr_load			_script8B_msg0a
 		msg_draw_up			; [Now,here we are.\We'll have to walk\from here\to the camp.]
 		set_room_idx		$0d
 		stop
@@ -427,7 +434,7 @@ _script8C_loc04:
 _script8C_loc05:
 		ptr_load			_script8C_msg03
 		msg_draw_up			; [But,we're late\for the contact\time.]
-		ptr_load			_script8C_msg04
+		ptr_load			_script8C_msg03A
 		msg_draw_up			; [The helicopter\won't come any\more.\We'd better hide\in the village.]
 		stop
 _script8D:
@@ -1391,28 +1398,28 @@ _script85_msg02:
 _script85_msg03:
 		.BYTE _O,_u,_r,__,_m,_e,_n,__,_a,_r,_e,__,_s,_t,_i,_l,_l,_eol
 		.BYTE _m,_i,_s,_s,_i,_n,_g,_eol,_eol
-_script85_msg04:
+_script85_msg03A:
 		.BYTE _i,_n,__,_a,__,_j,_u,_n,_g,_l,_e,_eol
 		.BYTE _i,_n,__,_V,_i,_e,_t,_n,_a,_m,_dot,_W,_e,_eol
 		.BYTE _b,_e,_l,_i,_e,_v,_e,__,_t,_h,_e,_y,__,_a,_r,_e,_eol
 		.BYTE _a,_l,_i,_v,_e,_col,_p,_r,_i,_s,_o,_n,_e,_r,_s,__,_o,_f,_eol
 		.BYTE _t,_h,_e,__,_e,_n,_e,_m,_y,_dot,_eol,_eol
-_script85_msg05:
+_script85_msg03B:
 		.BYTE _Y,_o,_u,_r,__,_m,_i,_s,_s,_i,_o,_n,__,_i,_s,__,_t,_o,_eol
 		.BYTE _s,_n,_e,_a,_k,__,_i,_n,_t,_o,__,_t,_h,_e,_eol
 		.BYTE _e,_n,_e,_m,_y,__,_c,_a,_m,_p,__,_a,_n,_d,__,_f,_i,_n,_d,_eol
 		.BYTE _t,_h,_e,_m,_dot,_eol
 		.BYTE _A,_r,_e,__,_y,_o,_u,__,_u,_p,__,_t,_o,__,_i,_t,_qe,_eol,_eol
-_script85_msg06:
+_script85_msg04:
 		.BYTE _I,_ap,_m,__,_n,_o,_t,__,_a,_f,_r,_a,_i,_d,__,_o,_f,_eol
 		.BYTE _d,_e,_a,_t,_h,_dot,_eol
 		.BYTE __,_eol
 		.BYTE _I,__,_f,_e,_e,_l,__,_b,_e,_t,_t,_e,_r,__,_i,_n,_eol
 		.BYTE _p,_r,_i,_s,_o,_n,_dot,_eol,_eol
-_script85_msg07:
+_script85_msg05:
 		.BYTE _G,_o,_o,_d,_col,_I,_ap,_l,_l,__,_m,_a,_k,_e,__,_t,_h,_e,_eol
 		.BYTE _a,_r,_r,_a,_n,_g,_e,_m,_e,_n,_t,_s,_dot,_eol,_eol
-_script85_msg08:
+_script85_msg06:
 		.BYTE _B,_u,_t,__,_i,_t,_ap,_s,__,_u,_p,__,_t,_o,__,_y,_o,_u,_dot,_eol
 		.BYTE _T,_h,_e,__,_g,_a,_m,_e,__,_d,_o,_e,_s,_n,_ap,_t,_eol
 		.BYTE _s,_t,_a,_r,_t,__,_u,_n,_t,_i,_l,__,_y,_o,_u,_eol
@@ -1426,17 +1433,17 @@ _script86_msg01:
 		.BYTE _t,_e,_r,_r,_i,_t,_o,_r,_y,__,_a,_n,_d,__,_t,_a,_k,_e,_eol
 		.BYTE _p,_h,_o,_t,_o,_g,_r,_a,_p,_h,_s,__,_o,_f,__,_t,_h,_e,_eol
 		.BYTE _P,_O,_W,__,_c,_a,_m,_p,_dot,_eol,_eol
-_script86_msg02:
+_script86_msg01A:
 		.BYTE _Y,_o,_u,_ap,_r,_e,__,_n,_o,_t,__,_t,_o,_eol
 		.BYTE _e,_n,_g,_a,_g,_e,__,_t,_h,_e,__,_e,_n,_e,_m,_y,_dot,_eol,_eol
-_script86_msg03:
+_script86_msg02:
 		.BYTE _P,_h,_o,_t,_o,_s,_qe,__,_N,_o,_t,__,_r,_e,_s,_c,_u,_e,_eol
 		.BYTE _t,_h,_e,_m,_qe,_eol,_eol
-_script86_msg04:
+_script86_msg03:
 		.BYTE _I,__,_r,_e,_p,_e,_a,_t,_dot,_Y,_o,_u,_ap,_r,_e,__,_n,_o,_t,_eol
 		.BYTE _t,_o,__,_e,_n,_g,_a,_g,_e,__,_t,_h,_e,_eol
 		.BYTE _e,_n,_e,_m,_y,_dot,_eol,_eol
-_script86_msg05:
+_script86_msg03A:
 		.BYTE _G,_o,__,_t,_o,__,_t,_h,_e,__,_w,_e,_a,_p,_o,_n,_s,_eol
 		.BYTE _c,_e,_n,_t,_e,_r,__,_a,_n,_d,_eol
 		.BYTE _g,_e,_t,__,_r,_e,_a,_d,_y,_dot,_eol,_eol
@@ -1460,18 +1467,18 @@ _script88_msg00:
 ;		.BYTE _eol
 _script88_msg01:
 		.BYTE _G,_o,__,_t,_o,__,_t,_h,_e,__,_h,_a,_n,_g,_a,_r,_dot,_eol,_eol
-_script88_msg02:
+_script88_msg03:
 		.BYTE _T,_h,_e,_r,_e,_ap,_s,__,_a,__,_c,_o,_n,_t,_a,_c,_t,_eol
 		.BYTE _m,_a,_n,__,_C,_o,_col,_o,_v,_e,_r,_eol
 		.BYTE _t,_h,_e,_r,_e,_dot,_H,_e,_ap,_l,_l,__,_g,_u,_i,_d,_e,_eol
 		.BYTE _y,_o,_u,__,_i,_n,__,_t,_h,_e,__,_j,_u,_n,_g,_l,_e,_dot,_eol,_eol
-_script88_msg03:
+_script88_msg04:
 		.BYTE _Y,_o,_u,_ap,_v,_e,__,_g,_o,_t,__,_3,_6,__,_h,_o,_u,_r,_s,_eol
 		.BYTE _t,_o,__,_g,_e,_t,__,_i,_n,_col,_c,_o,_m,_p,_l,_e,_t,_e,_eol
 		.BYTE _y,_o,_u,_r,__,_a,_s,_s,_i,_g,_n,_m,_e,_n,_t,_col,_eol
 		.BYTE _a,_n,_d,__,_g,_e,_t,__,_t,_h,_e,__,_h,_e,_l,_l,_eol
 		.BYTE _o,_u,_t,_dot,_eol,_eol
-_script88_msg04:
+_script88_msg04A:
 		.BYTE _I,_f,__,_y,_o,_u,__,_g,_e,_t,__,_i,_n,_eol
 		.BYTE _t,_r,_o,_u,_b,_l,_e,_col,_t,_r,_y,__,_t,_o,_eol
 		.BYTE _r,_e,_a,_c,_h,__,_t,_h,_e,_eol
@@ -1484,42 +1491,42 @@ _script89_msg00:
 		.BYTE _I,_ap,_m,__,_C,_o,_dot,_eol
 		.BYTE _Y,_o,_u,__,_d,_i,_d,__,_n,_o,_t,__,_e,_x,_p,_e,_c,_t,_eol
 		.BYTE _a,__,_w,_o,_m,_a,_n,_qe,_eol,_eol
-_script89_msg01:
+_script89_msg00A:
 		.BYTE _W,_o,_u,_l,_d,__,_y,_o,_u,__,_l,_i,_k,_e,__,_t,_o,_eol
 		.BYTE _k,_n,_o,_w,__,_s,_o,_m,_e,_t,_h,_i,_n,_g,_qe,_eol,_eol
-_script89_msg02:
+_script89_msg01:
 		.BYTE _W,_h,_e,_r,_e,__,_i,_s,__,_t,_h,_e,__,_c,_a,_m,_p,_qe,_eol
 		.BYTE __,_eol
 		.BYTE __,_eol
 		.BYTE _W,_h,_a,_t,__,_d,_o,__,_y,_o,_u,__,_t,_h,_i,_n,_k,_eol
 		.BYTE _a,_b,_o,_u,_t,__,_m,_e,_qe,_eol,_eol
-_script89_msg03:
+_script89_msg02:
 		.BYTE _W,_h,_a,_t,_qe,_eol
 		.BYTE _Y,_o,_u,__,_l,_o,_o,_k,__,_g,_o,_o,_d,_dot,_eol,_eol
-_script89_msg04:
+_script89_msg03:
 		.BYTE _T,_h,_e,__,_c,_a,_m,_p,__,_i,_s,__,_l,_o,_c,_a,_t,_e,_d,_eol
 		.BYTE _i,_n,__,_t,_h,_e,__,_j,_u,_n,_g,_l,_e,__,_t,_o,_eol
 		.BYTE _t,_h,_e,__,_E,_a,_s,_t,__,_o,_f,__,_t,_h,_e,_eol
 		.BYTE _r,_i,_v,_e,_r,_dot,_eol,_eol
-_script89_msg05:
+_script89_msg03A:
 		.BYTE _I,_ap,_v,_e,__,_a,_r,_r,_a,_n,_g,_e,_d,_eol
 		.BYTE _a,__,_b,_o,_a,_t,_dot,_L,_e,_t,_ap,_s,__,_g,_o,__,_t,_o,_eol
 		.BYTE _t,_h,_e,__,_d,_o,_c,_k,_dot,_eol,_eol
 _script8A_msg00:
 		.BYTE _Y,_o,_u,_ap,_r,_e,__,_o,_u,_t,_s,_i,_d,_e,_r,_s,_col,_eol
 		.BYTE _a,_r,_e,_n,_ap,_t,__,_y,_o,_u,_dot,_eol,_eol
-_script8A_msg01:
+_script8A_msg00A:
 		.BYTE _S,_o,_r,_r,_y,_col,_w,_e,__,_c,_a,_n,_ap,_t,_eol
 		.BYTE _a,_l,_l,_o,_w,__,_s,_t,_r,_a,_n,_g,_e,_r,_s,_eol
 		.BYTE _t,_o,__,_g,_e,_t,__,_o,_n,__,_o,_u,_r,__,_b,_o,_a,_t,_dot,_eol,_eol
-_script8A_msg02:
+_script8A_msg01:
 		.BYTE _W,_h,_a,_t,_qe,__,_Y,_o,_u,__,_s,_h,_o,_u,_l,_d,_eol
 		.BYTE _k,_n,_o,_w,__,_u,_s,_dot,_W,_e,__,_w,_a,_n,_n,_a,_eol
 		.BYTE _g,_e,_t,__,_o,_n,__,_t,_h,_e,__,_b,_o,_a,_t,_dot,_eol
 		.BYTE _H,_e,_r,_e,_ap,_s,__,_m,_o,_n,_e,_y,_dot,_eol,_eol
-_script8A_msg03:
+_script8A_msg02:
 		.BYTE _O,_K,_eol,_eol
-_script8A_msg04:
+_script8A_msg03:
 		.BYTE _G,_e,_t,__,_o,_n,_col,_h,_u,_r,_r,_y,_dot,_eol,_eol
 _script8B_msg00:
 		.BYTE _R,_a,_m,_b,_o,_col,_s,_o,_m,_e,_t,_h,_i,_n,_g,_ap,_s,_eol
@@ -1532,18 +1539,18 @@ _script8B_msg02:
 		.BYTE _R,_i,_g,_h,_t,_col,_W,_e,__,_d,_o,_eol
 		.BYTE _e,_v,_e,_r,_y,_t,_h,_i,_n,_g,__,_f,_o,_r,_eol
 		.BYTE _m,_o,_n,_e,_y,_dot,_D,_o,_n,_ap,_t,__,_m,_o,_v,_e,_dot,_eol,_eol
-_script8B_msg03:
+_script8B_msg06:
 		.BYTE _W,_h,_a,_t,__,_d,_o,_e,_s,__,_t,_h,_i,_s,_eol
 		.BYTE _p,_e,_n,_d,_a,_n,_t,__,_m,_e,_a,_n,_qe,_eol,_eol
-_script8B_msg04:
+_script8B_msg07:
 		.BYTE _I,_t,__,_b,_r,_i,_n,_g,_s,__,_m,_e,__,_g,_o,_o,_d,_eol
 		.BYTE _l,_u,_c,_k,_dot,_eol,_eol
-_script8B_msg05:
+_script8B_msg09:
 		.BYTE _R,_a,_m,_b,_o,_col,_k,_e,_e,_p,__,_t,_h,_i,_s,_eol
 		.BYTE _p,_e,_n,_d,_a,_n,_t,_dot,_eol
 		.BYTE _P,_l,_e,_a,_s,_e,__,_t,_a,_k,_e,__,_c,_a,_r,_e,_eol
 		.BYTE _o,_f,__,_i,_t,_dot,_eol,_eol
-_script8B_msg06:
+_script8B_msg0a:
 		.BYTE _N,_o,_w,_col,_h,_e,_r,_e,__,_w,_e,__,_a,_r,_e,_dot,_eol
 		.BYTE _W,_e,_ap,_l,_l,__,_h,_a,_v,_e,__,_t,_o,__,_w,_a,_l,_k,_eol
 		.BYTE _f,_r,_o,_m,__,_h,_e,_r,_e,_eol
@@ -1566,7 +1573,7 @@ _script8C_msg03:
 		.BYTE _B,_u,_t,_col,_w,_e,_ap,_r,_e,__,_l,_a,_t,_e,_eol
 		.BYTE _f,_o,_r,__,_t,_h,_e,__,_c,_o,_n,_t,_a,_c,_t,_eol
 		.BYTE _t,_i,_m,_e,_dot,_eol,_eol
-_script8C_msg04:
+_script8C_msg03A:
 		.BYTE _T,_h,_e,__,_h,_e,_l,_i,_c,_o,_p,_t,_e,_r,_eol
 		.BYTE _w,_o,_n,_ap,_t,__,_c,_o,_m,_e,__,_a,_n,_y,_eol
 		.BYTE _m,_o,_r,_e,_dot,_eol

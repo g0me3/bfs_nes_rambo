@@ -995,10 +995,10 @@ loc_44724:
 		BEQ		loc_44733
 		LDA		#$01
 		STA		_tmp13
-		LDA		#$A8
+		LDA		#$A4
 		BNE		loc_44735
 loc_44733:
-		LDA		#$B8
+		LDA		#$B4
 loc_44735:
 		STA		_spr_buf+$FC
 		LDA		#$FF

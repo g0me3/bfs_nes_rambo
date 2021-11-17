@@ -90,7 +90,7 @@ _script82:
 _script82_loc00:
 		frame_draw_custom	$2125, $17, $12
 		ptr_load			_script82_msg01
-		msg_printf			$2167	; [A B	C D E F	G H I J\K L M N O P Q R S T\U V W X Y Z\あ い う え お か き く け こ\さ し す せ そ た ち つ て と\な に ぬ ね の は ひ ふ へ ほ\ま み む め も や ゆ よ\モドル ススム オワリ]
+		msg_printf			$2167	; [A B C D E F G H I J\K L M N O P Q R S T\U V W X Y Z\あ い う え お か き く け こ\さ し す せ そ た ち つ て と\な に ぬ ね の は ひ ふ へ ほ\ま み む め も や ゆ よ\モドル ススム オワリ]
 		pass_input
 		jmpne_option		$01, _script82_loc01
 		checkpoint_set
@@ -119,7 +119,7 @@ _script83:
 		game_stats_draw
 		frame_draw_custom	$2525, $17, $0a
 		ptr_load			_script83_msg01
-		msg_printf			$252b	; [INVENTRY]
+		msg_printf			$252b	; [INVENTORY]
 		jmp_flags_not_set	FLAG09_CO_TAKEN, _script83_loc00
 		ptr_load			_script83_msg02
 		msg_printf			$2567	; [コ-]
