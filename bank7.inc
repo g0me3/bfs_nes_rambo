@@ -3,12 +3,7 @@
 
 		BANK_START $7
 
-;		INCBIN "..\copyrights.txt"
-
-; =============== S U B	R O U T	I N E =======================================
-IRQ:
-RESET:
-		JMP		_RESET
+		INCBIN "..\copyrights.txt"
 
 ; =============== S U B	R O U T	I N E =======================================
 _MAIN:
@@ -112,7 +107,8 @@ loc_600D5:
 		JMP		_main_loop
 
 ; =============== S U B	R O U T	I N E =======================================
-_RESET:
+IRQ:
+RESET:
 		CLD
 		LDX		#$FF
 		TXS
@@ -8107,16 +8103,7 @@ _apu_tbl2:
 		.BYTE $22,$12,$0C,$F8
 		.BYTE $2F,$3C,$0C,$F8
 		.BYTE $00,$00,$00,$00
-		.BYTE $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-		.BYTE $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-		.BYTE $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-		.BYTE $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-		.BYTE $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-		.BYTE $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-		.BYTE $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-		.BYTE $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-		.BYTE $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-		.BYTE $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
+
 ; =============== S U B	R O U T	I N E =======================================
 _scroller_screen:
 		TYA

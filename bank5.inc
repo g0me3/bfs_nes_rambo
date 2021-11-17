@@ -723,9 +723,9 @@ _scr_cmd19_pass_input:
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd1A_game_stats_draw:
 		LDA		_game._life
-		STA.W		_tmp00
+		STA		_tmp00
 		LDA		_game._life+1
-		STA.W		_tmp01
+		STA		_tmp01
 		JSR		_hex_to_dec_0
 		LDA		#$24
 		STA		_tmp00
@@ -734,9 +734,9 @@ _scr_cmd1A_game_stats_draw:
 		LDX		#_tmp05-1
 		JSR		_ppu_num_draw
 		LDA		_game._exp
-		STA.W		_tmp00
+		STA		_tmp00
 		LDA		_game._exp+1
-		STA.W		_tmp01
+		STA		_tmp01
 		JSR		_hex_to_dec_0
 		LDA		#$24
 		STA		_tmp00
@@ -748,10 +748,10 @@ _scr_cmd1A_game_stats_draw:
 		ASL
 		TAX
 		LDA		_max_life_list,X
-		STA.W		_tmp00
+		STA		_tmp00
 		INX
 		LDA		_max_life_list,X
-		STA.W		_tmp01
+		STA		_tmp01
 		JSR		_hex_to_dec_0
 		LDA		#$24
 		STA		_tmp00
@@ -763,10 +763,10 @@ _scr_cmd1A_game_stats_draw:
 		ASL
 		TAX
 		LDA		_next_exp_list,X
-		STA.W		_tmp00
+		STA		_tmp00
 		INX
 		LDA		_next_exp_list,X
-		STA.W		_tmp01
+		STA		_tmp01
 		JSR		_hex_to_dec_0
 		LDA		#$24
 		STA		_tmp00
@@ -775,9 +775,9 @@ _scr_cmd1A_game_stats_draw:
 		LDX		#_tmp05-1
 		JSR		_ppu_num_draw
 		LDA		_game._play_hours
-		STA.W		_tmp00
+		STA		_tmp00
 		LDA		#$00
-		STA.W		_tmp01
+		STA		_tmp01
 		JSR		_hex_to_dec_0
 		LDA		#$24
 		STA		_tmp00
@@ -786,12 +786,12 @@ _scr_cmd1A_game_stats_draw:
 		LDX		#_tmp03-1
 		JSR		_ppu_num_draw
 		LDA		_game._play_minutes
-		STA.W		_tmp00
+		STA		_tmp00
 		LDA		#$00
-		STA.W		_tmp01
+		STA		_tmp01
 		JSR		_hex_to_dec_0
 		LDA		#$0E
-		STA.W		_tmp04
+		STA		_tmp04
 		LDA		#$24
 		STA		_tmp00
 		LDA		#$EE
@@ -799,12 +799,12 @@ _scr_cmd1A_game_stats_draw:
 		LDX		#_tmp04-1
 		JSR		_ppu_num_draw
 		LDA		_play_seconds
-		STA.W		_tmp00
+		STA		_tmp00
 		LDA		#$00
-		STA.W		_tmp01
+		STA		_tmp01
 		JSR		_hex_to_dec_0
 		LDA		#$0E
-		STA.W		_tmp04
+		STA		_tmp04
 		LDA		#$24
 		STA		_tmp00
 		LDA		#$F1
@@ -841,7 +841,7 @@ _ppu_num_draw:
 		LDA		_tmp01
 		STA		_PPU_ADDR
 loc_445EF:
-		LDA.W		$0001,X
+		LDA		$0001,X
 		CLC
 		ADC		#$D8
 		STA		_PPU_DATA
@@ -2707,134 +2707,134 @@ _script_lib:
 		.WORD _scriptB0
 		.WORD _scriptB1
 _script80:
-		set_room_idx	  $81
-		ptr_load	  _script80_msg00
-		msg_printf	  $2063	; [RAMBO_ IS A	REGISTERED\TRADEMARK OF CAROLCO\PICTURES INC._ 1985,1988\CAROLCO.ALL RIGHTS RESERVED.]
-		ptr_load	  _script80_msg01
-		msg_printf	  $2163	; [UNAUTHORIZED DUPLICATION\IS STRICTLY PROHIBITED.]
-		ptr_load	  _script80_msg02
-		msg_printf	  $21e3	; [NINTENDO VERSION _ 1988\PACK-IN-VIDEO CO.,LTD.]
-		ptr_load	  _script80_msg03
-		msg_printf	  $2263	; [LICENCED AND CONTROLLED FOR\THE UNITED STATES AND CANADA\BY ACCLAIM ENTERTAINMENT,INC.]
-		ptr_load	  _script80_msg04
-		msg_printf	  $2323	; [LICENSED BY	NINTENDO OF\AMERICA,INC.]
-		sprite_draw_up	  _SPR_PACK_IN_TIME
+		set_room_idx		$81
+		ptr_load			_script80_msg00
+		msg_printf			$2063	; [RAMBO_ IS A	REGISTERED\TRADEMARK OF CAROLCO\PICTURES INC._ 1985,1988\CAROLCO.ALL RIGHTS RESERVED.]
+		ptr_load			_script80_msg01
+		msg_printf			$2163	; [UNAUTHORIZED DUPLICATION\IS STRICTLY PROHIBITED.]
+		ptr_load			_script80_msg02
+		msg_printf			$21e3	; [NINTENDO VERSION _ 1988\PACK-IN-VIDEO CO.,LTD.]
+		ptr_load			_script80_msg03
+		msg_printf			$2263	; [LICENCED AND CONTROLLED FOR\THE UNITED STATES AND CANADA\BY ACCLAIM ENTERTAINMENT,INC.]
+		ptr_load			_script80_msg04
+		msg_printf			$2323	; [LICENSED BY	NINTENDO OF\AMERICA,INC.]
+		sprite_draw_up		_SPR_PACK_IN_TIME
 		stop
 _script81:
-		ptr_load	  _script81_msg00
-		msg_printf	  $22ac	; [START\CONTINUE]
-		sprite_draw_up	  _SPR_TITLE_SCREEN
-		jmpne_option	  $01, _script81_loc00
+		ptr_load			_script81_msg00
+		msg_printf			$22ac	; [START\CONTINUE]
+		sprite_draw_up		_SPR_TITLE_SCREEN
+		jmpne_option		$01, _script81_loc00
 		checkpoint_reset
-		set_room_idx	  $85
+		set_room_idx		$85
 		checkpoint_set
 		scroller
 		stop
 		------------------
 _script81_loc00:
-		set_room_idx	  $82
+		set_room_idx		$82
 		stop
 _script82:
-		frame_draw_custom $2065, $17, $06
-		ptr_load	  _script82_msg00
-		msg_printf	  $2068	; [Input Mission Code]
+		frame_draw_custom	$2065, $17, $06
+		ptr_load			_script82_msg00
+		msg_printf			$2068	; [Input Mission Code]
 _script82_loc00:
-		frame_draw_custom $2125, $17, $12
-		ptr_load	  _script82_msg01
-		msg_printf	  $2167	; [0 1	2 3 4 5	6 7 8 9\A B C D E F G H I J\K L M N O P Q R S T\U V W X Y Z\a b c d e f g h i j\k l m n o p q r s t\u v w x y z ? !\BS  SP  END]
+		frame_draw_custom	$2125, $17, $12
+		ptr_load			_script82_msg01
+		msg_printf			$2167	; [0 1	2 3 4 5	6 7 8 9\A B C D E F G H I J\K L M N O P Q R S T\U V W X Y Z\a b c d e f g h i j\k l m n o p q r s t\u v w x y z ? !\BS  SP  END]
 		pass_input
-		jmpne_option	  $01, _script82_loc01
+		jmpne_option		$01, _script82_loc01
 		checkpoint_set
 		checkpoint_restore
 		stop
 		------------------
 _script82_loc01:
-		frame_draw_custom $2269, $0d, $06
-		ptr_load	  _script82_msg02
-		msg_printf	  $226b	; [Code Error]
-		set_room_idx	  $82
-		ptr_load	  _script82_msg03
-		msg_printf	  $22ac	; [START\CONTINUE]
+		frame_draw_custom	$2269, $0d, $06
+		ptr_load			_script82_msg02
+		msg_printf			$226b	; [Code Error]
+		set_room_idx		$82
+		ptr_load			_script82_msg03
+		msg_printf			$22ac	; [START\CONTINUE]
 		continue_cur_draw
-		jmpne_option	  $01, _script82_loc02
+		jmpne_option		$01, _script82_loc02
 		checkpoint_reset
-		set_room_idx	  $85
+		set_room_idx		$85
 		checkpoint_set
 		stop
 		------------------
 _script82_loc02:
-		jump		  _script82_loc00
+		jump				_script82_loc00
 _script83:
-		ptr_load	  _script83_msg00
-		msg_printf	  $2465	; [LIFE	(MAX	  )\EXP         (NEXT     )\TIME]
+		ptr_load			_script83_msg00
+		msg_printf			$2465	; [LIFE	(MAX	  )\EXP         (NEXT     )\TIME]
 		game_stats_draw
-		frame_draw_custom $2525, $17, $0a
-		ptr_load	  _script83_msg01
-		msg_printf	  $252b	; [INVENTORY]
-		jmp_flags_not_set _FLAG09_CO_TAKEN, _script83_loc00
-		ptr_load	  _script83_msg02
-		msg_printf	  $2567	; [CO]
+		frame_draw_custom	$2525, $17, $0a
+		ptr_load			_script83_msg01
+		msg_printf			$252b	; [INVENTORY]
+		jmp_flags_not_set	_FLAG09_CO_TAKEN, _script83_loc00
+		ptr_load			_script83_msg02
+		msg_printf			$2567	; [CO]
 		------------------
 _script83_loc00:
-		jmp_flags_not_set _FLAG0E_BOAT,	_script83_loc01
-		ptr_load	  _script83_msg03
-		msg_printf	  $25a7	; [BOAT]
+		jmp_flags_not_set	_FLAG0E_BOAT,	_script83_loc01
+		ptr_load			_script83_msg03
+		msg_printf			$25a7	; [BOAT]
 		------------------
 _script83_loc01:
-		jmp_flags_not_set _FLAG03_LAMP_ITEM, _script83_loc02
-		ptr_load	  _script83_msg04
-		msg_printf	  $25e7	; [LAMP]
+		jmp_flags_not_set	_FLAG03_LAMP_ITEM, _script83_loc02
+		ptr_load			_script83_msg04
+		msg_printf			$25e7	; [LAMP]
 		------------------
 _script83_loc02:
-		jmp_flags_not_set _FLAG04_KID_TAKEN, _script83_loc03
-		ptr_load	  _script83_msg05
-		msg_printf	  $2627	; [KID]
+		jmp_flags_not_set	_FLAG04_KID_TAKEN, _script83_loc03
+		ptr_load			_script83_msg05
+		msg_printf			$2627	; [KID]
 		------------------
 _script83_loc03:
-		jmp_flags_not_set _FLAG05_PHOTO_ITEM, _script83_loc04
-		ptr_load	  _script83_msg06
-		msg_printf	  $256c	; [PHOTO]
+		jmp_flags_not_set	_FLAG05_PHOTO_ITEM, _script83_loc04
+		ptr_load			_script83_msg06
+		msg_printf			$256c	; [PHOTO]
 		------------------
 _script83_loc04:
-		jmp_flags_not_set _FLAG06_POW_TAKEN, _script83_loc05
-		ptr_load	  _script83_msg07
-		msg_printf	  $25ac	; [POW]
+		jmp_flags_not_set	_FLAG06_POW_TAKEN, _script83_loc05
+		ptr_load			_script83_msg07
+		msg_printf			$25ac	; [POW]
 		------------------
 _script83_loc05:
-		jmp_flags_not_set _FLAG07_DRESS_ITEM, _script83_loc06
-		ptr_load	  _script83_msg08
-		msg_printf	  $25ec	; [DRESS]
+		jmp_flags_not_set	_FLAG07_DRESS_ITEM, _script83_loc06
+		ptr_load			_script83_msg08
+		msg_printf			$25ec	; [DRESS]
 		------------------
 _script83_loc06:
-		jmp_flags_not_set _FLAG10_HELI_KEY, _script83_loc07
-		ptr_load	  _script83_msg09
-		msg_printf	  $262c	; [KEY]
+		jmp_flags_not_set	_FLAG10_HELI_KEY, _script83_loc07
+		ptr_load			_script83_msg09
+		msg_printf			$262c	; [KEY]
 		------------------
 _script83_loc07:
-		jmp_flags_not_set _FLAG11_PEDANT, _script83_loc08
-		ptr_load	  _script83_msg0a
-		msg_printf	  $2573	; [PENDANT]
+		jmp_flags_not_set	_FLAG11_PEDANT, _script83_loc08
+		ptr_load			_script83_msg0a
+		msg_printf			$2573	; [PENDANT]
 		------------------
 _script83_loc08:
-		jmp_flags_not_set _FLAG12_BANDANA, _script83_loc09
-		ptr_load	  _script83_msg0b
-		msg_printf	  $25b3	; [BANDANA]
+		jmp_flags_not_set	_FLAG12_BANDANA, _script83_loc09
+		ptr_load			_script83_msg0b
+		msg_printf			$25b3	; [BANDANA]
 		------------------
 _script83_loc09:
-		frame_draw_custom $2685, $17, $06
-		ptr_load	  _script83_msg0c
-		msg_printf	  $268a	; [MISSION CODE]
+		frame_draw_custom	$2685, $17, $06
+		ptr_load			_script83_msg0c
+		msg_printf			$268a	; [MISSION CODE]
 		stop
 _script84:
-		ptr_load	  _script84_msg00
-		msg_printf	  $210b	; [GAME OVER]
-		sprite_draw_down  _PORTRAIT01_RAMBO_ANGRY
-		ptr_load	  _script84_msg01
-		msg_printf	  $22ac	; [CONTINUE\START]
+		ptr_load			_script84_msg00
+		msg_printf			$210b	; [GAME OVER]
+		sprite_draw_down	_PORTRAIT01_RAMBO_ANGRY
+		ptr_load			_script84_msg01
+		msg_printf			$22ac	; [CONTINUE\START]
 		continue_cur_draw
-		jmpne_option	  $02, _script84_loc00
+		jmpne_option		$02, _script84_loc00
 		checkpoint_reset
-		set_room_idx	  $85
+		set_room_idx		$85
 		checkpoint_set
 		stop
 		------------------
@@ -2842,1110 +2842,1110 @@ _script84_loc00:
 		checkpoint_restore
 		stop
 _script85:
-		player_pos_set	  $00, $d0
-		game_hours_set	  $0c
-		ptr_load	  _script85_msg00
-		msg_printf	  $20e7	; [Colonel Trautman\visits Rambo in the\military prison.]
+		player_pos_set		$00, $d0
+		game_hours_set		$0c
+		ptr_load			_script85_msg00
+		msg_printf			$20e7	; [Colonel Trautman\visits Rambo in the\military prison.]
 		msg_input_handler
-		frame_draw_up	  _PORTRAIT08_TRAUMAN1
-		ptr_load	  _script85_msg01
-		msg_draw_up	  ; [Rambo,I want to\send you on\a Mission.]
-		ptr_load	  _script85_msg02
-		msg_draw_up	  ; [It's dangerous,but\you'll be free\if you succeed.]
-		ptr_load	  _script85_msg03
-		msg_draw_up	  ; [Our men are still\missing]
-		ptr_load	  _script85_msg04
-		msg_draw_up	  ; [in a jungle\in Vietnam.We\believe they are\alive,prisoners of\the enemy.]
-		ptr_load	  _script85_msg05
-		msg_draw_up	  ; [Your mission is to\sneak into the\enemy camp and find\them.\Are you up to it?]
+		frame_draw_up		_PORTRAIT08_TRAUMAN1
+		ptr_load			_script85_msg01
+		msg_draw_up			; [Rambo,I want to\send you on\a Mission.]
+		ptr_load			_script85_msg02
+		msg_draw_up			; [It's dangerous,but\you'll be free\if you succeed.]
+		ptr_load			_script85_msg03
+		msg_draw_up			; [Our men are still\missing]
+		ptr_load			_script85_msg04
+		msg_draw_up			; [in a jungle\in Vietnam.We\believe they are\alive,prisoners of\the enemy.]
+		ptr_load			_script85_msg05
+		msg_draw_up			; [Your mission is to\sneak into the\enemy camp and find\them.\Are you up to it?]
 _script85_loc00:
-		frame_draw_down	  _PORTRAIT00_RAMBO
+		frame_draw_down		_PORTRAIT00_RAMBO
 		input_2_options
-		ptr_load	  _script85_msg06
-		msg_draw_down	  ; [I'm not afraid of\death.\ \I feel better in\prison.]
-		jmpne_option	  $01, _script85_loc01
-		ptr_load	  _script85_msg07
-		msg_draw_up	  ; [Good,I'll make the\arrangements.]
-		set_room_idx	  $01
+		ptr_load			_script85_msg06
+		msg_draw_down		; [I'm not afraid of\death.\ \I feel better in\prison.]
+		jmpne_option		$01, _script85_loc01
+		ptr_load			_script85_msg07
+		msg_draw_up			; [Good,I'll make the\arrangements.]
+		set_room_idx		$01
 		stop
 		------------------
 _script85_loc01:
-		ptr_load	  _script85_msg08
-		msg_draw_up	  ; [But it's up to you.\The game doesn't\start until you\say YES.]
-		jump		  _script85_loc00
+		ptr_load			_script85_msg08
+		msg_draw_up			; [But it's up to you.\The game doesn't\start until you\say YES.]
+		jump				_script85_loc00
 _script86:
-		game_flags_set	  _FLAG00_SYS
-		frame_draw_up	  _PORTRAIT09_MURDOCK
-		ptr_load	  _script86_msg00
-		msg_draw_up	  ; [I'm\Commander Murdock.]
-		ptr_load	  _script86_msg01
-		msg_draw_up	  ; [We want you to get\into enemy\territory and take\photographs of the\POW camp.]
-		ptr_load	  _script86_msg02
-		msg_draw_up	  ; [You're not to\engage the enemy.]
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _script86_msg03
-		msg_draw_down	  ; [Photos? Not rescue\them?]
-		ptr_load	  _script86_msg04
-		msg_draw_up	  ; [I	repeat.You're not\to engage the\enemy.]
-		ptr_load	  _script86_msg05
-		msg_draw_up	  ; [Go to the	weapons\center and\get ready.]
-		set_room_idx	  $00
+		game_flags_set		_FLAG00_SYS
+		frame_draw_up		_PORTRAIT09_MURDOCK
+		ptr_load			_script86_msg00
+		msg_draw_up			; [I'm\Commander Murdock.]
+		ptr_load			_script86_msg01
+		msg_draw_up			; [We want you to get\into enemy\territory and take\photographs of the\POW camp.]
+		ptr_load			_script86_msg02
+		msg_draw_up			; [You're not to\engage the enemy.]
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_script86_msg03
+		msg_draw_down		; [Photos? Not rescue\them?]
+		ptr_load			_script86_msg04
+		msg_draw_up			; [I	repeat.You're not\to engage the\enemy.]
+		ptr_load			_script86_msg05
+		msg_draw_up			; [Go to the	weapons\center and\get ready.]
+		set_room_idx		$00
 		stop
 _script87:
-		frame_draw_up	  _PORTRAIT0D_ERICSON
-		jmp_flags_not_set _FLAG00_SYS, _script87_loc00
-		jmp_branch	  _script87_loc01
+		frame_draw_up		_PORTRAIT0D_ERICSON
+		jmp_flags_not_set	_FLAG00_SYS, _script87_loc00
+		jmp_branch			_script87_loc01
 _script87_loc00:
-		ptr_load	  _script87_msg00
-		msg_draw_up	  ; [We can't give you\weapons without\Murdock's\permission.]
-		set_room_idx	  $00
+		ptr_load			_script87_msg00
+		msg_draw_up			; [We can't give you\weapons without\Murdock's\permission.]
+		set_room_idx		$00
 		stop
 		------------------
 _script87_loc01:
-		jmp_flags_not_set _FLAG08_SYS, _script87_loc02
-		jmp_branch	  _script87_loc03
+		jmp_flags_not_set	_FLAG08_SYS, _script87_loc02
+		jmp_branch			_script87_loc03
 _script87_loc02:
-		ptr_load	  _script87_msg01
-		msg_draw_up	  ; [I	picked some\weapons for\your mission.]
-		game_flags_set	  _FLAG08_SYS
+		ptr_load			_script87_msg01
+		msg_draw_up			; [I	picked some\weapons for\your mission.]
+		game_flags_set		_FLAG08_SYS
 		add_10_knifes
 		add_10_knifes
 		add_5_potions
 		------------------
 _script87_loc03:
-		game_hours_set	  $17
-		ptr_load	  _script87_msg02
-		msg_draw_up	  ; [Go to Trautman.]
-		set_room_idx	  $00
+		game_hours_set		$17
+		ptr_load			_script87_msg02
+		msg_draw_up			; [Go to Trautman.]
+		set_room_idx		$00
 		stop
 _script88:
-		frame_draw_up	  _PORTRAIT08_TRAUMAN1
-		jmp_flags_not_set _FLAG08_SYS, _script88_loc00
-		jump		  _script88_loc01
+		frame_draw_up		_PORTRAIT08_TRAUMAN1
+		jmp_flags_not_set	_FLAG08_SYS, _script88_loc00
+		jump				_script88_loc01
 		------------------
 _script88_loc00:
-		ptr_load	  _script88_msg00
-		msg_draw_up	  ; [Rambo,forget about\your absurd hand-to\-hand fighting.\Military technology\will work best.]
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _script88_msg01
-		msg_draw_up	  ; [Go to the	hangar.]
-		set_room_idx	  $01
+		ptr_load			_script88_msg00
+		msg_draw_up			; [Rambo,forget about\your absurd hand-to\-hand fighting.\Military technology\will work best.]
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_script88_msg01
+		msg_draw_up			; [Go to the	hangar.]
+		set_room_idx		$01
 		stop
 _script88_loc01:
-		ptr_load	  _script88_msg02
-		msg_draw_up	  ; [There's a contact\man Co,over\there.He'll guide\you in the jungle.]
+		ptr_load			_script88_msg02
+		msg_draw_up			; [There's a contact\man Co,over\there.He'll guide\you in the jungle.]
 		checkpoint_set
-		ptr_load	  _script88_msg03
-		msg_draw_up	  ; [You've got 36 hours\to get in,complete\your assignment,\and get the hell\out.]
-		ptr_load	  _script88_msg04
-		msg_draw_up	  ; [If you get in\trouble,try to\reach the\extraction site\marked on the map.]
-		ptr_load	  _script88_msg05
-		msg_draw_up	  ; [Rambo...\Good luck.]
-		game_hours_set	  $03
-		game_flags_toggle _FLAG00_SYS
-		game_flags_toggle _FLAG08_SYS
-		game_flags_toggle _FLAG13_SYS
-		anim_scene_set	  $00
-		set_room_idx	  $7c
-		player_pos_set	  $01, $50
+		ptr_load			_script88_msg03
+		msg_draw_up			; [You've got 36 hours\to get in,complete\your assignment,\and get the hell\out.]
+		ptr_load			_script88_msg04
+		msg_draw_up			; [If you get in\trouble,try to\reach the\extraction site\marked on the map.]
+		ptr_load			_script88_msg05
+		msg_draw_up			; [Rambo...\Good luck.]
+		game_hours_set		$03
+		game_flags_toggle	_FLAG00_SYS
+		game_flags_toggle	_FLAG08_SYS
+		game_flags_toggle	_FLAG13_SYS
+		anim_scene_set		$00
+		set_room_idx		$7c
+		player_pos_set		$01, $50
 		stop
 _script89:
 		checkpoint_set
-		game_flags_set	  _FLAG09_CO_TAKEN
-		frame_draw_up	  _PORTRAIT03_CO
-		ptr_load	  _script89_msg00
-		msg_draw_up	  ; [I'm Co.\You did not expect\a woman?]
-		ptr_load	  _script89_msg01
-		msg_draw_up	  ; [Would you	like to\know something?]
-		frame_draw_down	  _PORTRAIT00_RAMBO
+		game_flags_set		_FLAG09_CO_TAKEN
+		frame_draw_up		_PORTRAIT03_CO
+		ptr_load			_script89_msg00
+		msg_draw_up			; [I'm Co.\You did not expect\a woman?]
+		ptr_load			_script89_msg01
+		msg_draw_up			; [Would you	like to\know something?]
+		frame_draw_down		_PORTRAIT00_RAMBO
 		input_2_options
-		ptr_load	  _script89_msg02
-		msg_draw_down	  ; [Where is the camp?\ \ \What do you think\about me?]
-		jmpne_option	  $02, _script89_loc00
-		sprite_draw_down  _PORTRAIT02_RAMBO_HAPPY
-		sprite_draw_up	  _PORTRAIT04_CO_HAPPY
-		ptr_load	  _script89_msg03
-		msg_draw_up	  ; [What?\You look good.]
+		ptr_load			_script89_msg02
+		msg_draw_down		; [Where is the camp?\ \ \What do you think\about me?]
+		jmpne_option		$02, _script89_loc00
+		sprite_draw_down	_PORTRAIT02_RAMBO_HAPPY
+		sprite_draw_up		_PORTRAIT04_CO_HAPPY
+		ptr_load			_script89_msg03
+		msg_draw_up			; [What?\You look good.]
 		------------------
 _script89_loc00:
-		ptr_load	  _script89_msg04
-		msg_draw_up	  ; [The camp is located\in the jungle to\the East of the\river.]
-		ptr_load	  _script89_msg05
-		msg_draw_up	  ; [I've arranged\a boat.Let's go to\the dock.]
-		set_room_idx	  $0a
+		ptr_load			_script89_msg04
+		msg_draw_up			; [The camp is located\in the jungle to\the East of the\river.]
+		ptr_load			_script89_msg05
+		msg_draw_up			; [I've arranged\a boat.Let's go to\the dock.]
+		set_room_idx		$0a
 		stop
 _script8A:
 		checkpoint_set
-		jmp_flags_not_set _FLAG09_CO_TAKEN, _script8A_loc00
-		jump		  _script8A_loc02
-		jmp_branch	  _script8A_loc01
+		jmp_flags_not_set	_FLAG09_CO_TAKEN, _script8A_loc00
+		jump				_script8A_loc02
+		jmp_branch			_script8A_loc01
 _script8A_loc00:
-		frame_draw_up	  _PORTRAIT14_PIRATE
-		ptr_load	  _script8A_msg00
-		msg_draw_up	  ; [You're outsiders,\aren't you.]
+		frame_draw_up		_PORTRAIT14_PIRATE
+		ptr_load			_script8A_msg00
+		msg_draw_up			; [You're outsiders,\aren't you.]
 		------------------
 _script8A_loc01:
-		ptr_load	  _script8A_msg01
-		msg_draw_up	  ; [Sorry,we can't\allow strangers\to get on our boat.]
-		set_room_idx	  $06
+		ptr_load			_script8A_msg01
+		msg_draw_up			; [Sorry,we can't\allow strangers\to get on our boat.]
+		set_room_idx		$06
 		stop
 _script8A_loc02:
-		jmp_flags_not_set _FLAG0E_BOAT,	_script8A_loc03
-		frame_draw_up	  _PORTRAIT14_PIRATE
-		jump		  _script8A_loc04
+		jmp_flags_not_set	_FLAG0E_BOAT,	_script8A_loc03
+		frame_draw_up		_PORTRAIT14_PIRATE
+		jump				_script8A_loc04
 		------------------
 _script8A_loc03:
-		frame_draw_down	  _PORTRAIT03_CO
-		ptr_load	  _script8A_msg02
-		msg_draw_down	  ; [What? You	should\know us.We wanna\get on the boat.\Here's money.]
-		frame_draw_up	  _PORTRAIT14_PIRATE
-		ptr_load	  _script8A_msg03
-		msg_draw_up	  ; [OK]
+		frame_draw_down		_PORTRAIT03_CO
+		ptr_load			_script8A_msg02
+		msg_draw_down		; [What? You	should\know us.We wanna\get on the boat.\Here's money.]
+		frame_draw_up		_PORTRAIT14_PIRATE
+		ptr_load			_script8A_msg03
+		msg_draw_up			; [OK]
 _script8A_loc04:
-		ptr_load	  _script8A_msg04
-		msg_draw_up	  ; [Get on,hurry.]
-		game_flags_set	  _FLAG0E_BOAT
-		set_room_idx	  $06
+		ptr_load			_script8A_msg04
+		msg_draw_up			; [Get on,hurry.]
+		game_flags_set		_FLAG0E_BOAT
+		set_room_idx		$06
 		stop
 _script8B:
 		checkpoint_set
-		frame_draw_up	  _PORTRAIT03_CO
-		jmp_flags_not_set _FLAG01_SYS, _script8B_loc00
-		ptr_load	  _script8B_msg00
-		msg_draw_up	  ; [Rambo,something's\strange.]
-		jmp_branch	  _script8B_loc01
+		frame_draw_up		_PORTRAIT03_CO
+		jmp_flags_not_set	_FLAG01_SYS, _script8B_loc00
+		ptr_load			_script8B_msg00
+		msg_draw_up			; [Rambo,something's\strange.]
+		jmp_branch			_script8B_loc01
 _script8B_loc00:
-		jump		  _script8B_loc02
+		jump				_script8B_loc02
 		------------------
 _script8B_loc01:
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _script8B_msg01
-		msg_draw_down	  ; [Look! That's an\enemy boat.\You sold us!]
-		sprite_draw_up	  _PORTRAIT14_PIRATE
-		ptr_load	  _script8B_msg02
-		msg_draw_up	  ; [Right,We do\everything for\money.Don't move.]
-		game_flags_toggle _FLAG0E_BOAT
-		set_room_idx	  $60
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_script8B_msg01
+		msg_draw_down		; [Look! That's an\enemy boat.\You sold us!]
+		sprite_draw_up		_PORTRAIT14_PIRATE
+		ptr_load			_script8B_msg02
+		msg_draw_up			; [Right,We do\everything for\money.Don't move.]
+		game_flags_toggle	_FLAG0E_BOAT
+		set_room_idx		$60
 		stop
 _script8B_loc02:
-		jmp_flags_not_set _FLAG11_PEDANT, _script8B_loc03
-		jump		  _script8B_loc04
+		jmp_flags_not_set	_FLAG11_PEDANT, _script8B_loc03
+		jump				_script8B_loc04
 		------------------
 _script8B_loc03:
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _script8B_msg03
-		msg_draw_down	  ; [What does	this\pendant mean?]
-		sprite_draw_up	  _PORTRAIT04_CO_HAPPY
-		ptr_load	  _script8B_msg04
-		msg_draw_up	  ; [It brings	me good\luck.]
-		ptr_load	  _script8B_msg05
-		msg_draw_up	  ; [Rambo,keep this\pendant.\Please take care\of it.]
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_script8B_msg03
+		msg_draw_down		; [What does	this\pendant mean?]
+		sprite_draw_up		_PORTRAIT04_CO_HAPPY
+		ptr_load			_script8B_msg04
+		msg_draw_up			; [It brings	me good\luck.]
+		ptr_load			_script8B_msg05
+		msg_draw_up			; [Rambo,keep this\pendant.\Please take care\of it.]
 		life_restore
-		game_flags_set	  _FLAG11_PEDANT
+		game_flags_set		_FLAG11_PEDANT
 _script8B_loc04:
-		ptr_load	  _script8B_msg06
-		msg_draw_up	  ; [Now,here we are.\We'll have to walk\from here\to the camp.]
-		set_room_idx	  $0d
+		ptr_load			_script8B_msg06
+		msg_draw_up			; [Now,here we are.\We'll have to walk\from here\to the camp.]
+		set_room_idx		$0d
 		stop
 _script8C:
 		checkpoint_set
-		game_flags_set	  _FLAG09_CO_TAKEN
-		set_room_idx	  $0e
-		frame_draw_up	  _PORTRAIT03_CO
-		jmp_flags_not_set _FLAG02_KID_SAVED, _script8C_loc00
-		jmp_branch	  _script8C_loc01
+		game_flags_set		_FLAG09_CO_TAKEN
+		set_room_idx		$0e
+		frame_draw_up		_PORTRAIT03_CO
+		jmp_flags_not_set	_FLAG02_KID_SAVED, _script8C_loc00
+		jmp_branch			_script8C_loc01
 _script8C_loc00:
-		ptr_load	  _script8C_msg00
-		msg_draw_up	  ; [Let's go\search the village.\You'll find it\in the East.]
+		ptr_load			_script8C_msg00
+		msg_draw_up			; [Let's go\search the village.\You'll find it\in the East.]
 		stop
 		------------------
 _script8C_loc01:
-		jmp_flags_not_set _FLAG01_SYS, _script8C_loc02
-		jmp_branch	  _script8C_loc03
+		jmp_flags_not_set	_FLAG01_SYS, _script8C_loc02
+		jmp_branch			_script8C_loc03
 _script8C_loc02:
-		ptr_load	  _script8C_msg01
-		msg_draw_up	  ; [The camp is located\South from here.]
+		ptr_load			_script8C_msg01
+		msg_draw_up			; [The camp is located\South from here.]
 		stop
 		------------------
 _script8C_loc03:
-		ptr_load	  _script8C_msg02
-		msg_draw_up	  ; [Cross the	river\to the West,and\climb the hill,\then you'll find\the pick-up point.]
-		jmp_flags_not_set _FLAG0A_MISSION_TIME_OVER, _script8C_loc04
-		jmp_branch	  _script8C_loc05
+		ptr_load			_script8C_msg02
+		msg_draw_up			; [Cross the	river\to the West,and\climb the hill,\then you'll find\the pick-up point.]
+		jmp_flags_not_set	_FLAG0A_MISSION_TIME_OVER, _script8C_loc04
+		jmp_branch			_script8C_loc05
 _script8C_loc04:
 		stop
 		------------------
 _script8C_loc05:
-		ptr_load	  _script8C_msg03
-		msg_draw_up	  ; [But,we're late\for the contact\time.]
-		ptr_load	  _script8C_msg04
-		msg_draw_up	  ; [The helicopter\won't come any\more.\We'd better hide\in the village.]
+		ptr_load			_script8C_msg03
+		msg_draw_up			; [But,we're late\for the contact\time.]
+		ptr_load			_script8C_msg04
+		msg_draw_up			; [The helicopter\won't come any\more.\We'd better hide\in the village.]
 		stop
 _script8D:
 		checkpoint_set
-		frame_draw_up	  _PORTRAIT15_KID
-		ptr_load	  _script8D_msg00
-		msg_draw_up	  ; [AHHH...!\AHH...!]
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _script8D_msg01
-		msg_draw_down	  ; [I'll help you.]
-		game_flags_set	  _FLAG04_KID_TAKEN
-		set_room_idx	  $3c
+		frame_draw_up		_PORTRAIT15_KID
+		ptr_load			_script8D_msg00
+		msg_draw_up			; [AHHH...!\AHH...!]
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_script8D_msg01
+		msg_draw_down		; [I'll help you.]
+		game_flags_set		_FLAG04_KID_TAKEN
+		set_room_idx		$3c
 		stop
 _script8E:
-		jmp_flags_not_set _FLAG0C_SYS, _script8E_loc00
-		set_room_idx	  $0c
+		jmp_flags_not_set	_FLAG0C_SYS, _script8E_loc00
+		set_room_idx		$0c
 		stop
 		------------------
 _script8E_loc00:
-		set_room_idx	  $3f
+		set_room_idx		$3f
 		stop
 _script8F:
 		checkpoint_set
-		frame_draw_up	  _PORTRAIT03_CO
-		ptr_load	  _script8F_msg00
-		msg_draw_up	  ; [I'm so happy to\see you're safe.]
-		jmp_flags_not_set _FLAG06_POW_TAKEN, _script8F_loc00
-		ptr_load	  _script8F_msg01
-		msg_draw_up	  ; [What?\Did you take the\POW out?]
-		jmp_branch	  _script8F_loc01
+		frame_draw_up		_PORTRAIT03_CO
+		ptr_load			_script8F_msg00
+		msg_draw_up			; [I'm so happy to\see you're safe.]
+		jmp_flags_not_set	_FLAG06_POW_TAKEN, _script8F_loc00
+		ptr_load			_script8F_msg01
+		msg_draw_up			; [What?\Did you take the\POW out?]
+		jmp_branch			_script8F_loc01
 _script8F_loc00:
-		jump		  _script8F_loc02
+		jump				_script8F_loc02
 		------------------
 _script8F_loc01:
-		ptr_load	  _script8F_msg02
-		msg_draw_up	  ; [You were supposed\to take photos\only!]
+		ptr_load			_script8F_msg02
+		msg_draw_up			; [You were supposed\to take photos\only!]
 _script8F_loc02:
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _script8F_msg03
-		msg_draw_down	  ; [Let's get out of\here,now!]
-		set_room_idx	  $6c
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_script8F_msg03
+		msg_draw_down		; [Let's get out of\here,now!]
+		set_room_idx		$6c
 		stop
 _script90:
 		checkpoint_set
-		game_flags_set	  _FLAG01_SYS
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _script90_msg00
-		msg_draw_down	  ; [I'll go ahead by\myself.]
-		frame_draw_up	  _PORTRAIT03_CO
-		ptr_load	  _script90_msg01
-		msg_draw_up	  ; [I	see...]
-		set_room_idx	  $25
+		game_flags_set		_FLAG01_SYS
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_script90_msg00
+		msg_draw_down		; [I'll go ahead by\myself.]
+		frame_draw_up		_PORTRAIT03_CO
+		ptr_load			_script90_msg01
+		msg_draw_up			; [I	see...]
+		set_room_idx		$25
 		stop
 _script91:
-		frame_draw_down	  _PORTRAIT03_CO
-		ptr_load	  _script91_msg00
-		msg_draw_down	  ; [Did you call me?]
-		frame_draw_up	  _PORTRAIT11_SOLDIER2
-		jmp_flags_not_set _FLAG07_DRESS_ITEM, _script91_loc00
-		jmp_branch	  _script91_loc01
+		frame_draw_down		_PORTRAIT03_CO
+		ptr_load			_script91_msg00
+		msg_draw_down		; [Did you call me?]
+		frame_draw_up		_PORTRAIT11_SOLDIER2
+		jmp_flags_not_set	_FLAG07_DRESS_ITEM, _script91_loc00
+		jmp_branch			_script91_loc01
 _script91_loc00:
-		ptr_load	  _script91_msg01
-		msg_draw_up	  ; [This is no place\for villagers.]
-		set_room_idx	  $6f
+		ptr_load			_script91_msg01
+		msg_draw_up			; [This is no place\for villagers.]
+		set_room_idx		$6f
 		stop
 		------------------
 _script91_loc01:
-		ptr_load	  _script91_msg02
-		msg_draw_up	  ; [Aha.\This way to the\captain's quarters.]
-		set_room_idx	  $6e
+		ptr_load			_script91_msg02
+		msg_draw_up			; [Aha.\This way to the\captain's quarters.]
+		set_room_idx		$6e
 		stop
 _script92:
-		frame_draw_down	  _PORTRAIT03_CO
-		jmp_flags_not_set _FLAG00_SYS, _script92_loc00
-		jump		  _script92_loc02
+		frame_draw_down		_PORTRAIT03_CO
+		jmp_flags_not_set	_FLAG00_SYS, _script92_loc00
+		jump				_script92_loc02
 		------------------
 _script92_loc00:
-		ptr_load	  _script92_msg00
-		msg_draw_down	  ; [Good evening.]
-		frame_draw_up	  _PORTRAIT11_SOLDIER2
-		ptr_load	  _script92_msg01
-		msg_draw_up	  ; [You must be the\general's wife.]
+		ptr_load			_script92_msg00
+		msg_draw_down		; [Good evening.]
+		frame_draw_up		_PORTRAIT11_SOLDIER2
+		ptr_load			_script92_msg01
+		msg_draw_up			; [You must be the\general's wife.]
 		input_2_options
-		ptr_load	  _script92_msg02
-		msg_draw_down	  ; [No.I'm looking\for some.\ \Yes.]
-		jmpne_option	  $01, _script92_loc01
-		ptr_load	  _script92_msg03
-		msg_draw_up	  ; [Get out of here.]
-		set_room_idx	  $6e
+		ptr_load			_script92_msg02
+		msg_draw_down		; [No.I'm looking\for some.\ \Yes.]
+		jmpne_option		$01, _script92_loc01
+		ptr_load			_script92_msg03
+		msg_draw_up			; [Get out of here.]
+		set_room_idx		$6e
 		stop
 		------------------
 _script92_loc01:
-		ptr_load	  _script92_msg04
-		msg_draw_down	  ; [What happened\today?]
-		ptr_load	  _script92_msg05
-		msg_draw_up	  ; [I	caught a spy.]
-		ptr_load	  _script92_msg06
-		msg_draw_down	  ; [So,you have the key\to the room.]
-		sprite_draw_up	  _PORTRAIT_CLEAR
-		ptr_load	  _script92_msg07
-		msg_draw_up	  ; [Anything for the\general's wife.]
+		ptr_load			_script92_msg04
+		msg_draw_down		; [What happened\today?]
+		ptr_load			_script92_msg05
+		msg_draw_up			; [I	caught a spy.]
+		ptr_load			_script92_msg06
+		msg_draw_down		; [So,you have the key\to the room.]
+		sprite_draw_up		_PORTRAIT_CLEAR
+		ptr_load			_script92_msg07
+		msg_draw_up			; [Anything for the\general's wife.]
 _script92_loc02:
-		ptr_load	  _script92_msg08
-		msg_draw_down	  ; [I	got the	key.]
-		game_flags_set	  _FLAG00_SYS
-		set_room_idx	  $6e
+		ptr_load			_script92_msg08
+		msg_draw_down		; [I	got the	key.]
+		game_flags_set		_FLAG00_SYS
+		set_room_idx		$6e
 		stop
 _script93:
-		frame_draw_up	  _PORTRAIT10_SOLDIER1
-		ptr_load	  _script93_msg00
-		msg_draw_up	  ; [What are you doing\here?]
-		frame_draw_down	  _PORTRAIT03_CO
-		ptr_load	  _script93_msg01
-		msg_draw_down	  ; [Sorry.]
-		ptr_load	  _script93_msg02
-		msg_draw_up	  ; [Hey!Where	are you\going?\The exit is on the\right.]
-		ptr_load	  _script93_msg03
-		msg_draw_up	  ; [To the left is the\torture room.]
-		set_room_idx	  $6e
+		frame_draw_up		_PORTRAIT10_SOLDIER1
+		ptr_load			_script93_msg00
+		msg_draw_up			; [What are you doing\here?]
+		frame_draw_down		_PORTRAIT03_CO
+		ptr_load			_script93_msg01
+		msg_draw_down		; [Sorry.]
+		ptr_load			_script93_msg02
+		msg_draw_up			; [Hey!Where	are you\going?\The exit is on the\right.]
+		ptr_load			_script93_msg03
+		msg_draw_up			; [To the left is the\torture room.]
+		set_room_idx		$6e
 		stop
 _script94:
 		checkpoint_set
-		frame_draw_up	  _PORTRAIT03_CO
-		jmp_flags_not_set _FLAG00_SYS, _script94_loc00
-		ptr_load	  _script94_msg00
-		msg_draw_up	  ; [I'm opening\the door now.]
-		jmp_branch	  _script94_loc01
+		frame_draw_up		_PORTRAIT03_CO
+		jmp_flags_not_set	_FLAG00_SYS, _script94_loc00
+		ptr_load			_script94_msg00
+		msg_draw_up			; [I'm opening\the door now.]
+		jmp_branch			_script94_loc01
 _script94_loc00:
-		jump		  _script94_loc02
+		jump				_script94_loc02
 		------------------
 _script94_loc01:
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _script94_msg01
-		msg_draw_down	  ; [Thanks.]
-		ptr_load	  _script94_msg02
-		msg_draw_up	  ; [They've seen us.\Let's get out\of here now.]
-		game_flags_toggle _FLAG0C_SYS
-		set_room_idx	  $70
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_script94_msg01
+		msg_draw_down		; [Thanks.]
+		ptr_load			_script94_msg02
+		msg_draw_up			; [They've seen us.\Let's get out\of here now.]
+		game_flags_toggle	_FLAG0C_SYS
+		set_room_idx		$70
 		stop
 _script94_loc02:
-		ptr_load	  _script94_msg03
-		msg_draw_up	  ; [Rambo,it's me.\Wait a minute.\I'm going to look\for the key.]
-		frame_draw_down	  _PORTRAIT_CLEAR
-		ptr_load	  _script94_msg04
-		msg_draw_down	  ; [...]
-		set_room_idx	  $6d
+		ptr_load			_script94_msg03
+		msg_draw_up			; [Rambo,it's me.\Wait a minute.\I'm going to look\for the key.]
+		frame_draw_down		_PORTRAIT_CLEAR
+		ptr_load			_script94_msg04
+		msg_draw_down		; [...]
+		set_room_idx		$6d
 		stop
 _script95:
 		checkpoint_set
-		frame_draw_up	  _PORTRAIT03_CO
-		ptr_load	  _script95_msg00
-		msg_draw_up	  ; [Rambo,the	pick-up\point is ahead.]
-		jmp_flags_not_set _FLAG0A_MISSION_TIME_OVER, _script95_loc00
-		jmp_branch	  _script95_loc01
+		frame_draw_up		_PORTRAIT03_CO
+		ptr_load			_script95_msg00
+		msg_draw_up			; [Rambo,the	pick-up\point is ahead.]
+		jmp_flags_not_set	_FLAG0A_MISSION_TIME_OVER, _script95_loc00
+		jmp_branch			_script95_loc01
 _script95_loc00:
-		jump		  _script95_loc02
+		jump				_script95_loc02
 		------------------
 _script95_loc01:
-		ptr_load	  _script95_msg01
-		msg_draw_up	  ; [But the contact\time has already\passed.]
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _script95_msg02
-		msg_draw_down	  ; [Let's return to\the jungle.]
-		set_room_idx	  $18
-		player_pos_set	  $00, $c0
+		ptr_load			_script95_msg01
+		msg_draw_up			; [But the contact\time has already\passed.]
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_script95_msg02
+		msg_draw_down		; [Let's return to\the jungle.]
+		set_room_idx		$18
+		player_pos_set		$00, $c0
 		stop
 _script95_loc02:
-		jmp_flags_not_set _FLAG06_POW_TAKEN, _script95_loc03
-		jump		  _script95_loc05
+		jmp_flags_not_set	_FLAG06_POW_TAKEN, _script95_loc03
+		jump				_script95_loc05
 		------------------
 _script95_loc03:
-		jmp_flags_not_set _FLAG05_PHOTO_ITEM, _script95_loc04
-		jump		  _script95_loc05
+		jmp_flags_not_set	_FLAG05_PHOTO_ITEM, _script95_loc04
+		jump				_script95_loc05
 		------------------
 _script95_loc04:
-		ptr_load	  _script95_msg03
-		msg_draw_up	  ; [Are you going back\without doing\anything?]
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _script95_msg04
-		msg_draw_down	  ; [We still have\time to get to\the camp.]
-		ptr_load	  _script95_msg05
-		msg_draw_up	  ; [The camp is located\far South from\here.]
-		set_room_idx	  $18
-		player_pos_set	  $00, $c0
+		ptr_load			_script95_msg03
+		msg_draw_up			; [Are you going back\without doing\anything?]
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_script95_msg04
+		msg_draw_down		; [We still have\time to get to\the camp.]
+		ptr_load			_script95_msg05
+		msg_draw_up			; [The camp is located\far South from\here.]
+		set_room_idx		$18
+		player_pos_set		$00, $c0
 		stop
 _script95_loc05:
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _script95_msg06
-		msg_draw_down	  ; [Co,thanks	for\helping me.]
-		ptr_load	  _script95_msg07
-		msg_draw_up	  ; [Rambo,I want to go\to America with\you.]
-		jmp_flags_not_set _FLAG06_POW_TAKEN, _script95_loc06
-		ptr_load	  _script95_msg08
-		msg_draw_down	  ; [I'm sorry.I can't\take you.]
-		jump		  _script95_loc07
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_script95_msg06
+		msg_draw_down		; [Co,thanks	for\helping me.]
+		ptr_load			_script95_msg07
+		msg_draw_up			; [Rambo,I want to go\to America with\you.]
+		jmp_flags_not_set	_FLAG06_POW_TAKEN, _script95_loc06
+		ptr_load			_script95_msg08
+		msg_draw_down		; [I'm sorry.I can't\take you.]
+		jump				_script95_loc07
 		------------------
 _script95_loc06:
 		input_2_options
-		ptr_load	  _script95_msg09
-		msg_draw_down	  ; [I'm sorry.I can't\take you.\ \Then come back with\me.]
-		jmpne_option	  $02, _script95_loc07
-		sprite_draw_up	  _PORTRAIT04_CO_HAPPY
-		ptr_load	  _script95_msg0a
-		msg_draw_up	  ; [Thanks.\I'm so glad.\Let's go,they're\coming.Hurry up.]
-		game_flags_set	  _FLAG09_CO_TAKEN
-		set_room_idx	  $0b
-		player_pos_set	  $00, $a0
+		ptr_load			_script95_msg09
+		msg_draw_down		; [I'm sorry.I can't\take you.\ \Then come back with\me.]
+		jmpne_option		$02, _script95_loc07
+		sprite_draw_up		_PORTRAIT04_CO_HAPPY
+		ptr_load			_script95_msg0a
+		msg_draw_up			; [Thanks.\I'm so glad.\Let's go,they're\coming.Hurry up.]
+		game_flags_set		_FLAG09_CO_TAKEN
+		set_room_idx		$0b
+		player_pos_set		$00, $a0
 		stop
 		------------------
 _script95_loc07:
-		sprite_draw_up	  _PORTRAIT05_CO_SAD
-		ptr_load	  _script95_msg0b
-		msg_draw_up	  ; [I	won't see you\any more.\Good-bye.]
-		game_flags_toggle _FLAG09_CO_TAKEN
-		set_room_idx	  $0b
-		player_pos_set	  $00, $a0
+		sprite_draw_up		_PORTRAIT05_CO_SAD
+		ptr_load			_script95_msg0b
+		msg_draw_up			; [I	won't see you\any more.\Good-bye.]
+		game_flags_toggle	_FLAG09_CO_TAKEN
+		set_room_idx		$0b
+		player_pos_set		$00, $a0
 		stop
 _script96:
-		frame_draw_up	  _PORTRAIT0D_ERICSON
-		jmp_flags_not_set _FLAG06_POW_TAKEN, _script96_loc00
-		ptr_load	  _script96_msg00
-		msg_draw_up	  ; [Headquarters,\we found Rambo.\He's taking POW's\with him.]
-		jmp_branch	  _script96_loc01
+		frame_draw_up		_PORTRAIT0D_ERICSON
+		jmp_flags_not_set	_FLAG06_POW_TAKEN, _script96_loc00
+		ptr_load			_script96_msg00
+		msg_draw_up			; [Headquarters,\we found Rambo.\He's taking POW's\with him.]
+		jmp_branch			_script96_loc01
 _script96_loc00:
-		jump		  _script96_loc02
+		jump				_script96_loc02
 		------------------
 _script96_loc01:
-		frame_draw_down	  _PORTRAIT_CLEAR
-		ptr_load	  _script96_msg01
-		msg_draw_down	  ; [..Emergency\Stop the mission..]
-		sprite_draw_down  _PORTRAIT08_TRAUMAN1
-		ptr_load	  _script96_msg02
-		msg_draw_down	  ; [What?\I can't leave them\stranded.]
-		ptr_load	  _script96_msg03
-		msg_draw_up	  ; [I	have to	follow\orders.]
-		sprite_draw_down  _PORTRAIT0C_TRAUMAN2
-		ptr_load	  _script96_msg04
-		msg_draw_down	  ; [Mercenaries!]
-		set_room_idx	  $0b
-		anim_scene_set	  $a9
+		frame_draw_down		_PORTRAIT_CLEAR
+		ptr_load			_script96_msg01
+		msg_draw_down		; [..Emergency\Stop the mission..]
+		sprite_draw_down	_PORTRAIT08_TRAUMAN1
+		ptr_load			_script96_msg02
+		msg_draw_down		; [What?\I can't leave them\stranded.]
+		ptr_load			_script96_msg03
+		msg_draw_up			; [I	have to	follow\orders.]
+		sprite_draw_down	_PORTRAIT0C_TRAUMAN2
+		ptr_load			_script96_msg04
+		msg_draw_down		; [Mercenaries!]
+		set_room_idx		$0b
+		anim_scene_set		$a9
 		stop
 _script96_loc02:
-		ptr_load	  _script96_msg05
-		msg_draw_up	  ; [Headquarters,we've\found Rambo.We're\going in to rescue\him.]
-		ptr_load	  _script96_msg06
-		msg_draw_up	  ; [He's being chased\by the enemy.]
-		frame_draw_down	  _PORTRAIT_CLEAR
-		ptr_load	  _script96_msg07
-		msg_draw_down	  ; [.. Rescue	him ..]
-		sprite_draw_up	  _PORTRAIT08_TRAUMAN1
-		ptr_load	  _script96_msg08
-		msg_draw_up	  ; [Rambo,get	on,hurry\up.So long,jungle.]
-		set_room_idx	  $0b
-		anim_scene_set	  $7d
+		ptr_load			_script96_msg05
+		msg_draw_up			; [Headquarters,we've\found Rambo.We're\going in to rescue\him.]
+		ptr_load			_script96_msg06
+		msg_draw_up			; [He's being chased\by the enemy.]
+		frame_draw_down		_PORTRAIT_CLEAR
+		ptr_load			_script96_msg07
+		msg_draw_down		; [.. Rescue	him ..]
+		sprite_draw_up		_PORTRAIT08_TRAUMAN1
+		ptr_load			_script96_msg08
+		msg_draw_up			; [Rambo,get	on,hurry\up.So long,jungle.]
+		set_room_idx		$0b
+		anim_scene_set		$7d
 		stop
 _script97:
-		ptr_load	  _script97_msg00
-		msg_printf	  $20e7	; [At that time Rambo,\who was caught by\the enemy,was being\interrogated.]
+		ptr_load			_script97_msg00
+		msg_printf			$20e7	; [At that time Rambo,\who was caught by\the enemy,was being\interrogated.]
 		msg_input_handler
-		frame_draw_up	  _PORTRAIT0E_PADOVSKY
-		ptr_load	  _script97_msg01
-		msg_draw_up	  ; [I'm\Commander Padovsky.]
-		ptr_load	  _script97_msg02
-		msg_draw_up	  ; [You were sent here\in an effort to\free war criminals.]
-		ptr_load	  _script97_msg03
-		msg_draw_up	  ; [I	want all the\details of your\Mission.]
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _script97_msg04
-		msg_draw_down	  ; [...]
-		ptr_load	  _script97_msg05
-		msg_draw_up	  ; [I	want you to radio\your headquarters\and say that you\have been captured.]
-		ptr_load	  _script97_msg06
-		msg_draw_down	  ; [...]
-		sprite_draw_down  _PORTRAIT00_RAMBO
-		ptr_load	  _script97_msg07
-		msg_draw_up	  ; [You will not talk?\O.K.\Yashin!]
-		ptr_load	  _script97_msg08
-		msg_draw_up	  ; [You're only an\experimental\animal for sergeant\Yashin.]
-		sprite_draw_up	  _PORTRAIT0E_PADOVSKY
-		sprite_draw_down  _PORTRAIT00_RAMBO
-		ptr_load	  _script97_msg09
-		msg_draw_up	  ; [Your Command has\abandoned you.\Do you still\protect them?]
-		ptr_load	  _script97_msg0a
-		msg_draw_up	  ; [You must make\contact,otherwise\your friend will be\killed.]
+		frame_draw_up		_PORTRAIT0E_PADOVSKY
+		ptr_load			_script97_msg01
+		msg_draw_up			; [I'm\Commander Padovsky.]
+		ptr_load			_script97_msg02
+		msg_draw_up			; [You were sent here\in an effort to\free war criminals.]
+		ptr_load			_script97_msg03
+		msg_draw_up			; [I	want all the\details of your\Mission.]
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_script97_msg04
+		msg_draw_down		; [...]
+		ptr_load			_script97_msg05
+		msg_draw_up			; [I	want you to radio\your headquarters\and say that you\have been captured.]
+		ptr_load			_script97_msg06
+		msg_draw_down		; [...]
+		sprite_draw_down	_PORTRAIT00_RAMBO
+		ptr_load			_script97_msg07
+		msg_draw_up			; [You will not talk?\O.K.\Yashin!]
+		ptr_load			_script97_msg08
+		msg_draw_up			; [You're only an\experimental\animal for sergeant\Yashin.]
+		sprite_draw_up		_PORTRAIT0E_PADOVSKY
+		sprite_draw_down	_PORTRAIT00_RAMBO
+		ptr_load			_script97_msg09
+		msg_draw_up			; [Your Command has\abandoned you.\Do you still\protect them?]
+		ptr_load			_script97_msg0a
+		msg_draw_up			; [You must make\contact,otherwise\your friend will be\killed.]
 _script97_loc00:
-		ptr_load	  _script97_msg0b
-		msg_draw_up	  ; [Make a radio call.]
+		ptr_load			_script97_msg0b
+		msg_draw_up			; [Make a radio call.]
 		input_2_options
-		ptr_load	  _script97_msg0c
-		msg_draw_down	  ; [...\ \ \220...56..please]
-		jmpne_option	  $01, _script97_loc01
-		jump		  _script97_loc00
+		ptr_load			_script97_msg0c
+		msg_draw_down		; [...\ \ \220...56..please]
+		jmpne_option		$01, _script97_loc01
+		jump				_script97_loc00
 		------------------
 _script97_loc01:
-		sprite_draw_up	  _PORTRAIT_CLEAR
-		ptr_load	  _script97_msg0d
-		msg_draw_up	  ; [..Report your\position and\status..]
-		sprite_draw_up	  _PORTRAIT0E_PADOVSKY
-		ptr_load	  _script97_msg0e
-		msg_draw_up	  ; [Answer it,if you\don't wanna see\your friend die.]
-		sprite_draw_up	  _PORTRAIT_CLEAR
-		ptr_load	  _script97_msg0f
-		msg_draw_up	  ; [John,it's me.\Answer.]
-		ptr_load	  _script97_msg10
-		msg_draw_down	  ; [Where is Murdock?]
-		ptr_load	  _script97_msg11
-		msg_draw_up	  ; [He is here.\Give us the\position.We'll\come to pick\you up.]
-		sprite_draw_down  _PORTRAIT01_RAMBO_ANGRY
-		ptr_load	  _script97_msg12
-		msg_draw_down	  ; [I'm coming to\terminate you.]
-		set_room_idx	  $9f
+		sprite_draw_up		_PORTRAIT_CLEAR
+		ptr_load			_script97_msg0d
+		msg_draw_up			; [..Report your\position and\status..]
+		sprite_draw_up		_PORTRAIT0E_PADOVSKY
+		ptr_load			_script97_msg0e
+		msg_draw_up			; [Answer it,if you\don't wanna see\your friend die.]
+		sprite_draw_up		_PORTRAIT_CLEAR
+		ptr_load			_script97_msg0f
+		msg_draw_up			; [John,it's me.\Answer.]
+		ptr_load			_script97_msg10
+		msg_draw_down		; [Where is Murdock?]
+		ptr_load			_script97_msg11
+		msg_draw_up			; [He is here.\Give us the\position.We'll\come to pick\you up.]
+		sprite_draw_down	_PORTRAIT01_RAMBO_ANGRY
+		ptr_load			_script97_msg12
+		msg_draw_down		; [I'm coming to\terminate you.]
+		set_room_idx		$9f
 		stop
 _script98:
 		checkpoint_set
-		frame_draw_up	  _PORTRAIT12_VILLAGER1
-		jmp_flags_not_set _FLAG0C_SYS, _script98_loc00
-		jmp_branch	  _script98_loc01
+		frame_draw_up		_PORTRAIT12_VILLAGER1
+		jmp_flags_not_set	_FLAG0C_SYS, _script98_loc00
+		jmp_branch			_script98_loc01
 _script98_loc00:
-		ptr_load	  _script98_msg00
-		msg_draw_up	  ; [Hello!]
-		set_room_idx	  $0c
+		ptr_load			_script98_msg00
+		msg_draw_up			; [Hello!]
+		set_room_idx		$0c
 		stop
 		------------------
 _script98_loc01:
-		jmp_flags_not_set _FLAG07_DRESS_ITEM, _script98_loc02
-		jump		  _script98_loc03
+		jmp_flags_not_set	_FLAG07_DRESS_ITEM, _script98_loc02
+		jump				_script98_loc03
 		------------------
 _script98_loc02:
-		ptr_load	  _script98_msg01
-		msg_draw_up	  ; [Oh,what's on your\mind,just let me\know.Would you like\to buy this dress?]
-		frame_draw_down	  _PORTRAIT03_CO
+		ptr_load			_script98_msg01
+		msg_draw_up			; [Oh,what's on your\mind,just let me\know.Would you like\to buy this dress?]
+		frame_draw_down		_PORTRAIT03_CO
 		input_2_options
-		ptr_load	  _script98_msg02
-		msg_draw_down	  ; [I	can't go without\this rifle.\ \Oh,this is a\beautiful dress.]
-		jmpne_option	  $01, _script98_loc03
-		ptr_load	  _script98_msg03
-		msg_draw_up	  ; [Hmm,I'm sorry.]
-		set_room_idx	  $0c
+		ptr_load			_script98_msg02
+		msg_draw_down		; [I	can't go without\this rifle.\ \Oh,this is a\beautiful dress.]
+		jmpne_option		$01, _script98_loc03
+		ptr_load			_script98_msg03
+		msg_draw_up			; [Hmm,I'm sorry.]
+		set_room_idx		$0c
 		stop
 		------------------
 _script98_loc03:
-		ptr_load	  _script98_msg04
-		msg_draw_up	  ; [You look good in\the dress.]
-		game_flags_set	  _FLAG07_DRESS_ITEM
-		set_room_idx	  $0c
+		ptr_load			_script98_msg04
+		msg_draw_up			; [You look good in\the dress.]
+		game_flags_set		_FLAG07_DRESS_ITEM
+		set_room_idx		$0c
 		stop
 _script99:
 		checkpoint_set
-		frame_draw_up	  _PORTRAIT13_VILLAGER2
-		jmp_flags_not_set _FLAG02_KID_SAVED, _script99_loc00
-		jump		  _script99_loc02
+		frame_draw_up		_PORTRAIT13_VILLAGER2
+		jmp_flags_not_set	_FLAG02_KID_SAVED, _script99_loc00
+		jump				_script99_loc02
 		------------------
 _script99_loc00:
-		jmp_flags_not_set _FLAG04_KID_TAKEN, _script99_loc01
-		jump		  _script99_loc02
+		jmp_flags_not_set	_FLAG04_KID_TAKEN, _script99_loc01
+		jump				_script99_loc02
 		------------------
 _script99_loc01:
-		ptr_load	  _script99_msg00
-		msg_draw_up	  ; [A	kid is missing\in a cave to the\north.\Please find him.]
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _script99_msg01
-		msg_draw_down	  ; [...]
-		sprite_draw_up	  _PORTRAIT03_CO
-		ptr_load	  _script99_msg02
-		msg_draw_up	  ; [Rambo,please save\the kid.]
-		game_flags_set	  _FLAG00_SYS
-		set_room_idx	  $3a
+		ptr_load			_script99_msg00
+		msg_draw_up			; [A	kid is missing\in a cave to the\north.\Please find him.]
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_script99_msg01
+		msg_draw_down		; [...]
+		sprite_draw_up		_PORTRAIT03_CO
+		ptr_load			_script99_msg02
+		msg_draw_up			; [Rambo,please save\the kid.]
+		game_flags_set		_FLAG00_SYS
+		set_room_idx		$3a
 		stop
 _script99_loc02:
-		ptr_load	  _script99_msg03
-		msg_draw_up	  ; [Thank you	for\saving the kid.\Please rest.]
+		ptr_load			_script99_msg03
+		msg_draw_up			; [Thank you	for\saving the kid.\Please rest.]
 		life_restore
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _script99_msg04
-		msg_draw_down	  ; [I	can't stay here\for a long time.\I must go.]
-		game_flags_toggle _FLAG04_KID_TAKEN
-		game_flags_set	  _FLAG02_KID_SAVED
-		set_room_idx	  $3a
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_script99_msg04
+		msg_draw_down		; [I	can't stay here\for a long time.\I must go.]
+		game_flags_toggle	_FLAG04_KID_TAKEN
+		game_flags_set		_FLAG02_KID_SAVED
+		set_room_idx		$3a
 		stop
 _script9A:
 		checkpoint_set
-		frame_draw_up	  _PORTRAIT12_VILLAGER1
-		jmp_flags_not_set _FLAG0A_MISSION_TIME_OVER, _script9A_loc00
-		ptr_load	  _script9A_msg00
-		msg_draw_up	  ; [Why did you come\here?]
-		game_flags_set	  _FLAG13_SYS
-		set_room_idx	  $0c
+		frame_draw_up		_PORTRAIT12_VILLAGER1
+		jmp_flags_not_set	_FLAG0A_MISSION_TIME_OVER, _script9A_loc00
+		ptr_load			_script9A_msg00
+		msg_draw_up			; [Why did you come\here?]
+		game_flags_set		_FLAG13_SYS
+		set_room_idx		$0c
 		stop
 		------------------
 _script9A_loc00:
-		jmp_flags_not_set _FLAG03_LAMP_ITEM, _script9A_loc01
-		jump		  _script9A_loc03
+		jmp_flags_not_set	_FLAG03_LAMP_ITEM, _script9A_loc01
+		jump				_script9A_loc03
 		------------------
 _script9A_loc01:
-		ptr_load	  _script9A_msg00
-		msg_draw_up	  ; [Why did you come\here?]
-		jmp_flags_not_set _FLAG00_SYS, _script9A_loc02
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _script9A_msg02
-		msg_draw_down	  ; [I	want to	save the\kid in the cave.]
-		jmp_branch	  _script9A_loc03
+		ptr_load			_script9A_msg00
+		msg_draw_up			; [Why did you come\here?]
+		jmp_flags_not_set	_FLAG00_SYS, _script9A_loc02
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_script9A_msg02
+		msg_draw_down		; [I	want to	save the\kid in the cave.]
+		jmp_branch			_script9A_loc03
 _script9A_loc02:
-		set_room_idx	  $3a
+		set_room_idx		$3a
 		stop
 		------------------
 _script9A_loc03:
-		game_flags_set	  _FLAG03_LAMP_ITEM
-		ptr_load	  _script9A_msg03
-		msg_draw_up	  ; [Take this	lamp.]
-		set_room_idx	  $3a
+		game_flags_set		_FLAG03_LAMP_ITEM
+		ptr_load			_script9A_msg03
+		msg_draw_up			; [Take this	lamp.]
+		set_room_idx		$3a
 		stop
 _script9B:
 		checkpoint_set
-		frame_draw_up	  _PORTRAIT13_VILLAGER2
-		jmp_flags_not_set _FLAG0C_SYS, _script9B_loc00
-		ptr_load	  _script9B_msg00
-		msg_draw_up	  ; [An American spy was\caught.]
-		jmp_branch	  _script9B_loc01
+		frame_draw_up		_PORTRAIT13_VILLAGER2
+		jmp_flags_not_set	_FLAG0C_SYS, _script9B_loc00
+		ptr_load			_script9B_msg00
+		msg_draw_up			; [An American spy was\caught.]
+		jmp_branch			_script9B_loc01
 _script9B_loc00:
-		jump		  _script9B_loc04
+		jump				_script9B_loc04
 		------------------
 _script9B_loc01:
-		frame_draw_down	  _PORTRAIT03_CO
-		ptr_load	  _script9B_msg01
-		msg_draw_down	  ; [I	wanna take him\out.]
-		jmp_flags_not_set _FLAG0D_SYS, _script9B_loc02
-		jmp_branch	  _script9B_loc03
+		frame_draw_down		_PORTRAIT03_CO
+		ptr_load			_script9B_msg01
+		msg_draw_down		; [I	wanna take him\out.]
+		jmp_flags_not_set	_FLAG0D_SYS, _script9B_loc02
+		jmp_branch			_script9B_loc03
 _script9B_loc02:
 		add_5_potions
 		------------------
 _script9B_loc03:
-		game_flags_set	  _FLAG0D_SYS
-		ptr_load	  _script9B_msg02
-		msg_draw_up	  ; [Take this	medicine\and give it to him.]
-		set_room_idx	  $0c
+		game_flags_set		_FLAG0D_SYS
+		ptr_load			_script9B_msg02
+		msg_draw_up			; [Take this	medicine\and give it to him.]
+		set_room_idx		$0c
 		stop
 _script9B_loc04:
-		ptr_load	  _script9B_msg03
-		msg_draw_up	  ; [You look tired.\Rest here for a\while.]
-		frame_draw_down	  _PORTRAIT00_RAMBO
+		ptr_load			_script9B_msg03
+		msg_draw_up			; [You look tired.\Rest here for a\while.]
+		frame_draw_down		_PORTRAIT00_RAMBO
 		life_restore
-		ptr_load	  _script9B_msg04
-		msg_draw_down	  ; [Thanks.\I'm able to fight\again.]
-		set_room_idx	  $0c
+		ptr_load			_script9B_msg04
+		msg_draw_down		; [Thanks.\I'm able to fight\again.]
+		set_room_idx		$0c
 		stop
 _script9C:
 		checkpoint_set
-		frame_draw_up	  _PORTRAIT03_CO
-		ptr_load	  _script9C_msg00
-		msg_draw_up	  ; [We're safe for now.\What are you going\to do?\Going to Thailand?]
-		ptr_load	  _script9C_msg01
-		msg_draw_up	  ; [Then America?\Would you please\take me with you?]
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _script9C_msg02
-		msg_draw_down	  ; [You're in danger\here.Let's go back\together.]
-		sprite_draw_up	  _PORTRAIT04_CO_HAPPY
-		ptr_load	  _script9C_msg03
-		msg_draw_up	  ; [Thank you...\I'm so happy...\Let's go.They're\coming up behind\us.]
-		sprite_draw_up	  _PORTRAIT_CLEAR
-		ptr_load	  _script9C_msg04
-		msg_draw_up	  ; [Ugh!]
-		sprite_draw_up	  _PORTRAIT05_CO_SAD
-		ptr_load	  _script9C_msg05
-		msg_draw_down	  ; [Co.Are you all\right?]
-		ptr_load	  _script9C_msg06
-		msg_draw_up	  ; [Rambo,I can't go\with you.]
-		ptr_load	  _script9C_msg07
-		msg_draw_down	  ; [You're going with\me to the States.]
-		game_flags_set	  _FLAG12_BANDANA
-		sprite_draw_up	  _PORTRAIT06_CO_DEAD
-		ptr_load	  _script9C_msg08
-		msg_draw_up	  ; [Rambo,thank you.\Please don't forget\me.]
-		ptr_load	  _script9C_msg09
-		msg_draw_down	  ; [Co!]
-		game_flags_toggle _FLAG09_CO_TAKEN
-		set_room_idx	  $48
+		frame_draw_up		_PORTRAIT03_CO
+		ptr_load			_script9C_msg00
+		msg_draw_up			; [We're safe for now.\What are you going\to do?\Going to Thailand?]
+		ptr_load			_script9C_msg01
+		msg_draw_up			; [Then America?\Would you please\take me with you?]
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_script9C_msg02
+		msg_draw_down		; [You're in danger\here.Let's go back\together.]
+		sprite_draw_up		_PORTRAIT04_CO_HAPPY
+		ptr_load			_script9C_msg03
+		msg_draw_up			; [Thank you...\I'm so happy...\Let's go.They're\coming up behind\us.]
+		sprite_draw_up		_PORTRAIT_CLEAR
+		ptr_load			_script9C_msg04
+		msg_draw_up			; [Ugh!]
+		sprite_draw_up		_PORTRAIT05_CO_SAD
+		ptr_load			_script9C_msg05
+		msg_draw_down		; [Co.Are you all\right?]
+		ptr_load			_script9C_msg06
+		msg_draw_up			; [Rambo,I can't go\with you.]
+		ptr_load			_script9C_msg07
+		msg_draw_down		; [You're going with\me to the States.]
+		game_flags_set		_FLAG12_BANDANA
+		sprite_draw_up		_PORTRAIT06_CO_DEAD
+		ptr_load			_script9C_msg08
+		msg_draw_up			; [Rambo,thank you.\Please don't forget\me.]
+		ptr_load			_script9C_msg09
+		msg_draw_down		; [Co!]
+		game_flags_toggle	_FLAG09_CO_TAKEN
+		set_room_idx		$48
 		stop
 _script9D:
 		checkpoint_set
-		ptr_load	  _script9D_msg00
-		msg_printf	  $20e7	; [Rambo found	the key\to the helicopter.]
-		jmp_flags_not_set _FLAG10_HELI_KEY, _script9D_loc00
+		ptr_load			_script9D_msg00
+		msg_printf			$20e7	; [Rambo found	the key\to the helicopter.]
+		jmp_flags_not_set	_FLAG10_HELI_KEY, _script9D_loc00
 		msg_input_handler
-		set_room_idx	  $55
+		set_room_idx		$55
 		stop
 		------------------
 _script9D_loc00:
-		ptr_load	  _script9D_msg01
-		msg_printf	  $2127	; [Sergeant Yashin   \came up there.]
+		ptr_load			_script9D_msg01
+		msg_printf			$2127	; [Sergeant Yashin   \came up there.]
 		msg_input_handler
-		frame_draw_up	  _PORTRAIT0F_YUSIN
-		ptr_load	  _script9D_msg02
-		msg_draw_up	  ; [It's time for\you to die.]
-		game_flags_set	  _FLAG10_HELI_KEY
-		set_room_idx	  $55
+		frame_draw_up		_PORTRAIT0F_YUSIN
+		ptr_load			_script9D_msg02
+		msg_draw_up			; [It's time for\you to die.]
+		game_flags_set		_FLAG10_HELI_KEY
+		set_room_idx		$55
 		stop
 _script9E:
 		checkpoint_set
-		jmp_flags_not_set _FLAG10_HELI_KEY, _script9E_loc00
-		jmp_branch	  _script9E_loc01
+		jmp_flags_not_set	_FLAG10_HELI_KEY, _script9E_loc00
+		jmp_branch			_script9E_loc01
 _script9E_loc00:
-		ptr_load	  _script9E_msg00
-		msg_printf	  $20e7	; [You	can't fly\without the key to\the helicopter.]
+		ptr_load			_script9E_msg00
+		msg_printf			$20e7	; [You	can't fly\without the key to\the helicopter.]
 		msg_input_handler
-		set_room_idx	  $54
+		set_room_idx		$54
 		stop
 		------------------
 _script9E_loc01:
-		game_flags_set	  _FLAG08_SYS
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _script9E_msg01
-		msg_draw_down	  ; [Let's go to the\camp and rescue\them.]
-		jmp_flags_not_set _FLAG09_CO_TAKEN, _script9E_loc02
-		frame_draw_up	  _PORTRAIT03_CO
-		ptr_load	  _script9E_msg02
-		msg_draw_up	  ; [Rambo,jump on\quickly.]
+		game_flags_set		_FLAG08_SYS
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_script9E_msg01
+		msg_draw_down		; [Let's go to the\camp and rescue\them.]
+		jmp_flags_not_set	_FLAG09_CO_TAKEN, _script9E_loc02
+		frame_draw_up		_PORTRAIT03_CO
+		ptr_load			_script9E_msg02
+		msg_draw_up			; [Rambo,jump on\quickly.]
 		------------------
 _script9E_loc02:
-		game_flags_toggle _FLAG06_POW_TAKEN
-		player_pos_set	  $03, $80
-		set_room_idx	  $54
-		anim_scene_set	  $7f
+		game_flags_toggle	_FLAG06_POW_TAKEN
+		player_pos_set		$03, $80
+		set_room_idx		$54
+		anim_scene_set		$7f
 		stop
 _script9F:
-		ptr_load	  _script9F_msg00
-		msg_printf	  $20e7	; [Meanwhile,Co,\to save Rambo...]
+		ptr_load			_script9F_msg00
+		msg_printf			$20e7	; [Meanwhile,Co,\to save Rambo...]
 		msg_input_handler
-		game_flags_toggle _FLAG06_POW_TAKEN
-		game_flags_toggle _FLAG00_SYS
-		game_flags_set	  _FLAG0C_SYS
-		game_flags_set	  _FLAG09_CO_TAKEN
-		game_flags_set	  _FLAG13_SYS
-		set_room_idx	  $0c
-		player_pos_set	  $00, $d0
+		game_flags_toggle	_FLAG06_POW_TAKEN
+		game_flags_toggle	_FLAG00_SYS
+		game_flags_set		_FLAG0C_SYS
+		game_flags_set		_FLAG09_CO_TAKEN
+		game_flags_set		_FLAG13_SYS
+		set_room_idx		$0c
+		player_pos_set		$00, $d0
 		stop
 _scriptA0:
 		checkpoint_set
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _scriptA0_msg00
-		msg_draw_down	  ; [Are you alright?\I came here to get\you home.]
-		frame_draw_up	  _PORTRAIT07_BANKS_POW
-		ptr_load	  _scriptA0_msg01
-		msg_draw_up	  ; [I'm weak.\I think I'm dying.]
-		ptr_load	  _scriptA0_msg02
-		msg_draw_down	  ; [Be strong!\We can make it!\Hurry,let's get out\of here.]
-		game_flags_set	  _FLAG06_POW_TAKEN
-		set_room_idx	  $77
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_scriptA0_msg00
+		msg_draw_down		; [Are you alright?\I came here to get\you home.]
+		frame_draw_up		_PORTRAIT07_BANKS_POW
+		ptr_load			_scriptA0_msg01
+		msg_draw_up			; [I'm weak.\I think I'm dying.]
+		ptr_load			_scriptA0_msg02
+		msg_draw_down		; [Be strong!\We can make it!\Hurry,let's get out\of here.]
+		game_flags_set		_FLAG06_POW_TAKEN
+		set_room_idx		$77
 		stop
 _scriptA1:
 		checkpoint_set
-		frame_draw_up	  _PORTRAIT07_BANKS_POW
-		ptr_load	  _scriptA1_msg00
-		msg_draw_up	  ; [Please rescue me.]
-		frame_draw_down	  _PORTRAIT00_RAMBO
+		frame_draw_up		_PORTRAIT07_BANKS_POW
+		ptr_load			_scriptA1_msg00
+		msg_draw_up			; [Please rescue me.]
+		frame_draw_down		_PORTRAIT00_RAMBO
 		input_2_options
-		ptr_load	  _scriptA1_msg01
-		msg_draw_down	  ; [All right.\ \ \Sorry,my duty is\just to take photos.]
-		jmpne_option	  $02, _scriptA1_loc00
-		ptr_load	  _scriptA1_msg02
-		msg_draw_up	  ; [Didn't you come\here to save us.\Please take us out.]
-		game_flags_set	  _FLAG05_PHOTO_ITEM
-		set_room_idx	  $30
+		ptr_load			_scriptA1_msg01
+		msg_draw_down		; [All right.\ \ \Sorry,my duty is\just to take photos.]
+		jmpne_option		$02, _scriptA1_loc00
+		ptr_load			_scriptA1_msg02
+		msg_draw_up			; [Didn't you come\here to save us.\Please take us out.]
+		game_flags_set		_FLAG05_PHOTO_ITEM
+		set_room_idx		$30
 		stop
 		------------------
 _scriptA1_loc00:
-		ptr_load	  _scriptA1_msg03
-		msg_draw_up	  ; [I'm free.\There are some\more.]
-		game_flags_set	  _FLAG06_POW_TAKEN
+		ptr_load			_scriptA1_msg03
+		msg_draw_up			; [I'm free.\There are some\more.]
+		game_flags_set		_FLAG06_POW_TAKEN
 		------------------
-		ptr_load	  _scriptA1_msg04
-		msg_draw_down	  ; [I'll be back.\Let's get out of\here.\ \                    ]
-		set_room_idx	  $30
+		ptr_load			_scriptA1_msg04
+		msg_draw_down		; [I'll be back.\Let's get out of\here.\ \                    ]
+		set_room_idx		$30
 		stop
 _scriptA2:
 		checkpoint_set
-		game_flags_toggle _FLAG00_SYS
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		jmp_flags_not_set _FLAG06_POW_TAKEN, _scriptA2_loc00
-		ptr_load	  _scriptA2_msg00
-		msg_draw_down	  ; [Get on the chopper!\Quick!]
-		jmp_branch	  _scriptA2_loc01
+		game_flags_toggle	_FLAG00_SYS
+		frame_draw_down		_PORTRAIT00_RAMBO
+		jmp_flags_not_set	_FLAG06_POW_TAKEN, _scriptA2_loc00
+		ptr_load			_scriptA2_msg00
+		msg_draw_down		; [Get on the chopper!\Quick!]
+		jmp_branch			_scriptA2_loc01
 _scriptA2_loc00:
-		jump		  _scriptA2_loc02
+		jump				_scriptA2_loc02
 		------------------
 _scriptA2_loc01:
-		frame_draw_up	  _PORTRAIT07_BANKS_POW
-		ptr_load	  _scriptA2_msg01
-		msg_draw_up	  ; [Good-bye 'Nam.]
-		anim_scene_set	  $7e
-		set_room_idx	  $77
+		frame_draw_up		_PORTRAIT07_BANKS_POW
+		ptr_load			_scriptA2_msg01
+		msg_draw_up			; [Good-bye 'Nam.]
+		anim_scene_set		$7e
+		set_room_idx		$77
 		stop
 _scriptA2_loc02:
-		ptr_load	  _scriptA2_msg02
-		msg_draw_down	  ; [There must be some\more.\Let's take them\out.]
-		jmp_flags_not_set _FLAG09_CO_TAKEN, _scriptA2_loc03
-		frame_draw_up	  _PORTRAIT03_CO
-		ptr_load	  _scriptA2_msg03
-		msg_draw_up	  ; [I'll help you.]
-		jmp_branch	  _scriptA2_loc04
+		ptr_load			_scriptA2_msg02
+		msg_draw_down		; [There must be some\more.\Let's take them\out.]
+		jmp_flags_not_set	_FLAG09_CO_TAKEN, _scriptA2_loc03
+		frame_draw_up		_PORTRAIT03_CO
+		ptr_load			_scriptA2_msg03
+		msg_draw_up			; [I'll help you.]
+		jmp_branch			_scriptA2_loc04
 _scriptA2_loc03:
-		set_room_idx	  $77
+		set_room_idx		$77
 		stop
 		------------------
 _scriptA2_loc04:
-		ptr_load	  _scriptA2_msg04
-		msg_draw_down	  ; [You'd better stay\here in the\chopper.]
-		set_room_idx	  $77
+		ptr_load			_scriptA2_msg04
+		msg_draw_down		; [You'd better stay\here in the\chopper.]
+		set_room_idx		$77
 		stop
 _scriptA3:
-		frame_draw_up	  _PORTRAIT09_MURDOCK
-		jmp_flags_not_set _FLAG06_POW_TAKEN, _scriptA3_loc00
-		ptr_load	  _scriptA3_msg00
-		msg_draw_up	  ; [I	don't make\orders.I take them\just like you.]
-		jmp_branch	  _scriptA3_loc01
+		frame_draw_up		_PORTRAIT09_MURDOCK
+		jmp_flags_not_set	_FLAG06_POW_TAKEN, _scriptA3_loc00
+		ptr_load			_scriptA3_msg00
+		msg_draw_up			; [I	don't make\orders.I take them\just like you.]
+		jmp_branch			_scriptA3_loc01
 _scriptA3_loc00:
-		jump		  _scriptA3_loc02
+		jump				_scriptA3_loc02
 		------------------
 _scriptA3_loc01:
-		sprite_draw_up	  _PORTRAIT0B_MURDOCK_SAD
-		ptr_load	  _scriptA3_msg01
-		msg_draw_up	  ; [I	swear to God,\this wasn't\supposed to happen.]
-		ptr_load	  _scriptA3_msg02
-		msg_draw_up	  ; [It was just\supposed to be\another\assignment.]
-		frame_draw_down	  _PORTRAIT01_RAMBO_ANGRY
-		ptr_load	  _scriptA3_msg03
-		msg_draw_down	  ; [Mission\accomplished.]
-		sprite_draw_down  _PORTRAIT00_RAMBO
-		ptr_load	  _scriptA3_msg04
-		msg_draw_down	  ; [There are	more men\out there.\Find them,or I'll\find you.]
-		game_flags_set	  _FLAG00_SYS
-		set_room_idx	  $62
+		sprite_draw_up		_PORTRAIT0B_MURDOCK_SAD
+		ptr_load			_scriptA3_msg01
+		msg_draw_up			; [I	swear to God,\this wasn't\supposed to happen.]
+		ptr_load			_scriptA3_msg02
+		msg_draw_up			; [It was just\supposed to be\another\assignment.]
+		frame_draw_down		_PORTRAIT01_RAMBO_ANGRY
+		ptr_load			_scriptA3_msg03
+		msg_draw_down		; [Mission\accomplished.]
+		sprite_draw_down	_PORTRAIT00_RAMBO
+		ptr_load			_scriptA3_msg04
+		msg_draw_down		; [There are	more men\out there.\Find them,or I'll\find you.]
+		game_flags_set		_FLAG00_SYS
+		set_room_idx		$62
 		stop
 _scriptA3_loc02:
-		jmp_flags_not_set _FLAG05_PHOTO_ITEM, _scriptA3_loc03
-		ptr_load	  _scriptA3_msg05
-		msg_draw_up	  ; [Good job,Rambo.\I'm keeping our\deal,you can go\wherever you want.]
-		jmp_branch	  _scriptA3_loc04
+		jmp_flags_not_set	_FLAG05_PHOTO_ITEM, _scriptA3_loc03
+		ptr_load			_scriptA3_msg05
+		msg_draw_up			; [Good job,Rambo.\I'm keeping our\deal,you can go\wherever you want.]
+		jmp_branch			_scriptA3_loc04
 _scriptA3_loc03:
-		jump		  _scriptA3_loc05
+		jump				_scriptA3_loc05
 		------------------
 _scriptA3_loc04:
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _scriptA3_msg06
-		msg_draw_down	  ; [Aren't you going to\rescue the POW's?]
-		ptr_load	  _scriptA3_msg07
-		msg_draw_up	  ; [No,those photos\were useless as\evidence.]
-		set_room_idx	  $62
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_scriptA3_msg06
+		msg_draw_down		; [Aren't you going to\rescue the POW's?]
+		ptr_load			_scriptA3_msg07
+		msg_draw_up			; [No,those photos\were useless as\evidence.]
+		set_room_idx		$62
 		stop
 _scriptA3_loc05:
-		sprite_draw_up	  _PORTRAIT0A_MURDOCK_ANGRY
-		ptr_load	  _scriptA3_msg08
-		msg_draw_up	  ; [The mission was\a failure.I knew\you couldn't do it.]
-		set_room_idx	  $62
+		sprite_draw_up		_PORTRAIT0A_MURDOCK_ANGRY
+		ptr_load			_scriptA3_msg08
+		msg_draw_up			; [The mission was\a failure.I knew\you couldn't do it.]
+		set_room_idx		$62
 		stop
 _scriptA4:
-		frame_draw_up	  _PORTRAIT08_TRAUMAN1
-		jmp_flags_not_set _FLAG06_POW_TAKEN, _scriptA4_loc00
-		jmp_branch	  _scriptA4_loc01
+		frame_draw_up		_PORTRAIT08_TRAUMAN1
+		jmp_flags_not_set	_FLAG06_POW_TAKEN, _scriptA4_loc00
+		jmp_branch			_scriptA4_loc01
 _scriptA4_loc00:
-		jump		  _scriptA4_loc04
+		jump				_scriptA4_loc04
 		------------------
 _scriptA4_loc01:
-		jmp_flags_not_set _FLAG00_SYS, _scriptA4_loc02
-		jump		  _scriptA4_loc03
+		jmp_flags_not_set	_FLAG00_SYS, _scriptA4_loc02
+		jump				_scriptA4_loc03
 		------------------
 _scriptA4_loc02:
-		ptr_load	  _scriptA4_msg00
-		msg_draw_up	  ; [Good job,Rambo.]
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _scriptA4_msg01
-		msg_draw_down	  ; [...]
-		set_room_idx	  $61
+		ptr_load			_scriptA4_msg00
+		msg_draw_up			; [Good job,Rambo.]
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_scriptA4_msg01
+		msg_draw_down		; [...]
+		set_room_idx		$61
 		stop
 _scriptA4_loc03:
-		ptr_load	  _scriptA4_msg02
-		msg_draw_up	  ; [You're tougher\then I thought.Now,\you're free.]
-		ptr_load	  _scriptA4_msg03
-		msg_draw_up	  ; [John,where are you\going?]
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _scriptA4_msg04
-		msg_draw_down	  ; [I	don't know.]
-		ptr_load	  _scriptA4_msg05
-		msg_draw_up	  ; [This is a	second\Medal of Honor for\you.]
-		ptr_load	  _scriptA4_msg06
-		msg_draw_down	  ; [You should give it\to them.]
-		ptr_load	  _scriptA4_msg07
-		msg_draw_up	  ; [You're free now.\Come back with us.]
-		ptr_load	  _scriptA4_msg08
-		msg_draw_down	  ; [What's there for\me?\My friends died\here,and a piece of\me did to.]
-		ptr_load	  _scriptA4_msg09
-		msg_draw_up	  ; [The war,everything\that happened maybe\it's wrong.]
-		ptr_load	  _scriptA4_msg0a
-		msg_draw_up	  ; [Don't hate\your country for\what you've been\through.]
-		ptr_load	  _scriptA4_msg0b
-		msg_draw_down	  ; [Hate?\I'd die for it.]
-		ptr_load	  _scriptA4_msg0c
-		msg_draw_up	  ; [So,what do you\want.]
-		ptr_load	  _scriptA4_msg0d
-		msg_draw_down	  ; [I	want what they\want...\every other guy\who came over here,]
-		ptr_load	  _scriptA4_msg0e
-		msg_draw_down	  ; [I	want for\my country to love\me as much as\I love it.]
-		ptr_load	  _scriptA4_msg0f
-		msg_draw_down	  ; [That's what I want.]
-		ptr_load	  _scriptA4_msg10
-		msg_draw_up	  ; [What are you going\to do?]
-		ptr_load	  _scriptA4_msg11
-		msg_draw_down	  ; [Day by day.]
-		set_room_idx	  $b1
-		sprite_draw_up	  _PORTRAIT_CLEAR
-		sprite_draw_down  _PORTRAIT02_RAMBO_HAPPY
+		ptr_load			_scriptA4_msg02
+		msg_draw_up			; [You're tougher\then I thought.Now,\you're free.]
+		ptr_load			_scriptA4_msg03
+		msg_draw_up			; [John,where are you\going?]
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_scriptA4_msg04
+		msg_draw_down		; [I	don't know.]
+		ptr_load			_scriptA4_msg05
+		msg_draw_up			; [This is a	second\Medal of Honor for\you.]
+		ptr_load			_scriptA4_msg06
+		msg_draw_down		; [You should give it\to them.]
+		ptr_load			_scriptA4_msg07
+		msg_draw_up			; [You're free now.\Come back with us.]
+		ptr_load			_scriptA4_msg08
+		msg_draw_down		; [What's there for\me?\My friends died\here,and a piece of\me did to.]
+		ptr_load			_scriptA4_msg09
+		msg_draw_up			; [The war,everything\that happened maybe\it's wrong.]
+		ptr_load			_scriptA4_msg0a
+		msg_draw_up			; [Don't hate\your country for\what you've been\through.]
+		ptr_load			_scriptA4_msg0b
+		msg_draw_down		; [Hate?\I'd die for it.]
+		ptr_load			_scriptA4_msg0c
+		msg_draw_up			; [So,what do you\want.]
+		ptr_load			_scriptA4_msg0d
+		msg_draw_down		; [I	want what they\want...\every other guy\who came over here,]
+		ptr_load			_scriptA4_msg0e
+		msg_draw_down		; [I	want for\my country to love\me as much as\I love it.]
+		ptr_load			_scriptA4_msg0f
+		msg_draw_down		; [That's what I want.]
+		ptr_load			_scriptA4_msg10
+		msg_draw_up			; [What are you going\to do?]
+		ptr_load			_scriptA4_msg11
+		msg_draw_down		; [Day by day.]
+		set_room_idx		$b1
+		sprite_draw_up		_PORTRAIT_CLEAR
+		sprite_draw_down	_PORTRAIT02_RAMBO_HAPPY
 		stop
 _scriptA4_loc04:
-		ptr_load	  _scriptA4_msg12
-		msg_draw_up	  ; [Welcome back.\But the game is not\over.John,are you\satisfied?]
-		frame_draw_down	  _PORTRAIT00_RAMBO
+		ptr_load			_scriptA4_msg12
+		msg_draw_up			; [Welcome back.\But the game is not\over.John,are you\satisfied?]
+		frame_draw_down		_PORTRAIT00_RAMBO
 		input_2_options
-		ptr_load	  _scriptA4_msg13
-		msg_draw_down	  ; [Let me try again.\ \ \I don't want to do\that again.]
-		jmpne_option	  $02, _scriptA4_loc05
-		set_room_idx	  $61
+		ptr_load			_scriptA4_msg13
+		msg_draw_down		; [Let me try again.\ \ \I don't want to do\that again.]
+		jmpne_option		$02, _scriptA4_loc05
+		set_room_idx		$61
 		stop
 		------------------
 _scriptA4_loc05:
-		ptr_load	  _scriptA4_msg14
-		msg_draw_up	  ; [The real purpose of\the game is to save\the POW.]
-		jmp_flags_not_set _FLAG08_SYS, _scriptA4_loc06
-		set_room_idx	  $9e
-		player_pos_set	  $03, $d0
+		ptr_load			_scriptA4_msg14
+		msg_draw_up			; [The real purpose of\the game is to save\the POW.]
+		jmp_flags_not_set	_FLAG08_SYS, _scriptA4_loc06
+		set_room_idx		$9e
+		player_pos_set		$03, $d0
 		stop
 		------------------
 _scriptA4_loc06:
-		game_flags_toggle _FLAG13_SYS
-		game_flags_set	  _FLAG09_CO_TAKEN
-		set_room_idx	  $30
-		player_pos_set	  $01, $80
+		game_flags_toggle	_FLAG13_SYS
+		game_flags_set		_FLAG09_CO_TAKEN
+		set_room_idx		$30
+		player_pos_set		$01, $80
 		stop
 _scriptA5:
-		frame_draw_up	  _PORTRAIT03_CO
-		ptr_load	  _scriptA5_msg00
-		msg_draw_up	  ; [What are you doing?\Going to\the States?]
-		ptr_load	  _scriptA5_msg01
-		msg_draw_up	  ; [Warm people.\Warm city.\Warm days.]
-		ptr_load	  _scriptA5_msg02
-		msg_draw_up	  ; [I've been dreaming\of living in the\USA and having a\simple life.If you\don't mind...]
-		frame_draw_down	  _PORTRAIT00_RAMBO
-		ptr_load	  _scriptA5_msg03
-		msg_draw_down	  ; [I	think I	learned\something important\from you.I may be\able to live,\or love...]
-		sprite_draw_up	  _PORTRAIT04_CO_HAPPY
-		sprite_draw_down  _PORTRAIT02_RAMBO_HAPPY
-		ptr_load	  _scriptA5_msg04
-		msg_draw_up	  ; [Really?\I love you.]
+		frame_draw_up		_PORTRAIT03_CO
+		ptr_load			_scriptA5_msg00
+		msg_draw_up			; [What are you doing?\Going to\the States?]
+		ptr_load			_scriptA5_msg01
+		msg_draw_up			; [Warm people.\Warm city.\Warm days.]
+		ptr_load			_scriptA5_msg02
+		msg_draw_up			; [I've been dreaming\of living in the\USA and having a\simple life.If you\don't mind...]
+		frame_draw_down		_PORTRAIT00_RAMBO
+		ptr_load			_scriptA5_msg03
+		msg_draw_down		; [I	think I	learned\something important\from you.I may be\able to live,\or love...]
+		sprite_draw_up		_PORTRAIT04_CO_HAPPY
+		sprite_draw_down	_PORTRAIT02_RAMBO_HAPPY
+		ptr_load			_scriptA5_msg04
+		msg_draw_up			; [Really?\I love you.]
 		life_restore
-		set_room_idx	  $61
+		set_room_idx		$61
 		stop
 _scriptA6:
-		set_room_idx	  $62
-		player_pos_set	  $00, $d0
+		set_room_idx		$62
+		player_pos_set		$00, $d0
 		stop
 _scriptA7:
-		set_room_idx	  $77
-		player_pos_set	  $03, $d0
+		set_room_idx		$77
+		player_pos_set		$03, $d0
 		stop
 _scriptA8:
-		jmp_flags_not_set _FLAG0E_BOAT,	_scriptA8_loc00
-		set_room_idx	  $0d
+		jmp_flags_not_set	_FLAG0E_BOAT,	_scriptA8_loc00
+		set_room_idx		$0d
 		stop
 		------------------
 _scriptA8_loc00:
-		set_room_idx	  $13
+		set_room_idx		$13
 		stop
 _scriptA9:
-		set_room_idx	  $97
+		set_room_idx		$97
 		stop
 _scriptAA:
-		jmp_flags_not_set _FLAG09_CO_TAKEN, _scriptAA_loc00
-		jmp_branch	  _scriptAA_loc01
+		jmp_flags_not_set	_FLAG09_CO_TAKEN, _scriptAA_loc00
+		jmp_branch			_scriptAA_loc01
 _scriptAA_loc00:
-		set_room_idx	  $06
+		set_room_idx		$06
 		stop
 		------------------
 _scriptAA_loc01:
-		jmp_flags_not_set _FLAG0E_BOAT,	_scriptAA_loc02
-		ptr_load	  _scriptAA_msg00
-		msg_printf	  $20e7	; [Rambo and Co on\the boat...]
+		jmp_flags_not_set	_FLAG0E_BOAT,	_scriptAA_loc02
+		ptr_load			_scriptAA_msg00
+		msg_printf			$20e7	; [Rambo and Co on\the boat...]
 		msg_input_handler
-		set_room_idx	  $0d
-		player_pos_set	  $02, $b1
+		set_room_idx		$0d
+		player_pos_set		$02, $b1
 		stop
 		------------------
 _scriptAA_loc02:
-		set_room_idx	  $10
+		set_room_idx		$10
 		stop
 _scriptAB:
-		jmp_flags_not_set _FLAG01_SYS, _scriptAB_loc00
-		set_room_idx	  $10
+		jmp_flags_not_set	_FLAG01_SYS, _scriptAB_loc00
+		set_room_idx		$10
 		stop
 		------------------
 _scriptAB_loc00:
-		jmp_flags_not_set _FLAG0E_BOAT,	_scriptAB_loc01
-		set_room_idx	  $10
+		jmp_flags_not_set	_FLAG0E_BOAT,	_scriptAB_loc01
+		set_room_idx		$10
 		stop
 		------------------
 _scriptAB_loc01:
-		set_room_idx	  $06
+		set_room_idx		$06
 		stop
 _scriptAC:
-		frame_draw_up	  _PORTRAIT0D_ERICSON
-		jmp_flags_not_set _FLAG08_SYS, _scriptAC_loc00
-		jmp_branch	  _scriptAC_loc01
+		frame_draw_up		_PORTRAIT0D_ERICSON
+		jmp_flags_not_set	_FLAG08_SYS, _scriptAC_loc00
+		jmp_branch			_scriptAC_loc01
 _scriptAC_loc00:
-		ptr_load	  _scriptAC_msg00
-		msg_draw_up	  ; [I'm Ericson.\I'm glad to work\with you.]
-		set_room_idx	  $01
+		ptr_load			_scriptAC_msg00
+		msg_draw_up			; [I'm Ericson.\I'm glad to work\with you.]
+		set_room_idx		$01
 		stop
 		------------------
 _scriptAC_loc01:
-		ptr_load	  _scriptAC_msg01
-		msg_draw_up	  ; [We've no time.\Go to\Trautman soon.]
-		set_room_idx	  $01
+		ptr_load			_scriptAC_msg01
+		msg_draw_up			; [We've no time.\Go to\Trautman soon.]
+		set_room_idx		$01
 		stop
 _scriptAD:
-		frame_draw_up	  _PORTRAIT07_BANKS_POW
-		ptr_load	  _scriptAD_msg00
-		msg_draw_up	  ; [Thank you	Rambo.\We knew that\you would save\them.]
-		set_room_idx	  $62
+		frame_draw_up		_PORTRAIT07_BANKS_POW
+		ptr_load			_scriptAD_msg00
+		msg_draw_up			; [Thank you	Rambo.\We knew that\you would save\them.]
+		set_room_idx		$62
 		stop
 _scriptAE:
-		jmp_flags_not_set _FLAG0C_SYS, _scriptAE_loc00
-		ptr_load	  _scriptAE_msg00
-		msg_printf	  $20e7	; [Co went to the camp\to help Rambo.]
+		jmp_flags_not_set	_FLAG0C_SYS, _scriptAE_loc00
+		ptr_load			_scriptAE_msg00
+		msg_printf			$20e7	; [Co went to the camp\to help Rambo.]
 		msg_input_handler
-		set_room_idx	  $6f
+		set_room_idx		$6f
 		stop
 		------------------
 _scriptAE_loc00:
-		set_room_idx	  $34
+		set_room_idx		$34
 		stop
 _scriptAF:
-		game_flags_set	  _FLAG14_FLY_FORTRESS_DEAD
-		set_room_idx	  $77
-		player_pos_set	  $03, $d0
+		game_flags_set		_FLAG14_FLY_FORTRESS_DEAD
+		set_room_idx		$77
+		player_pos_set		$03, $d0
 		stop
 _scriptB0:
-		jmp_flags_not_set _FLAG14_FLY_FORTRESS_DEAD, _scriptB0_loc00
-		set_room_idx	  $77
-		player_pos_set	  $03, $d0
+		jmp_flags_not_set	_FLAG14_FLY_FORTRESS_DEAD, _scriptB0_loc00
+		set_room_idx		$77
+		player_pos_set		$03, $d0
 		stop
 		------------------
 _scriptB0_loc00:
-		jmp_flags_not_set _FLAG06_POW_TAKEN, _scriptB0_loc01
-		set_room_idx	  $ff
+		jmp_flags_not_set	_FLAG06_POW_TAKEN, _scriptB0_loc01
+		set_room_idx		$ff
 		stop
 		------------------
 _scriptB0_loc01:
-		set_room_idx	  $77
-		player_pos_set	  $03, $d0
+		set_room_idx		$77
+		player_pos_set		$03, $d0
 		stop
 _scriptB1:
-		frame_draw_up	  _PORTRAIT00_RAMBO
-		ptr_load	  _scriptB1_msg00
-		msg_printf	  $20aa	; [Rambo\ \ The battle is\ over,but...]
+		frame_draw_up		_PORTRAIT00_RAMBO
+		ptr_load			_scriptB1_msg00
+		msg_printf			$20aa	; [Rambo\ \ The battle is\ over,but...]
 		ending_anim
-		ptr_load	  _scriptB1_msg01
-		msg_printf	  $230d	; [Thank you\for trying.]
+		ptr_load			_scriptB1_msg01
+		msg_printf			$230d	; [Thank you\for trying.]
 		ending_anim
-		sprite_draw_down  _PORTRAIT02_RAMBO_HAPPY
-		set_room_idx	  $80
+		sprite_draw_down	_PORTRAIT02_RAMBO_HAPPY
+		set_room_idx		$80
 		scroller
 		stop
 _script80_msg00:
@@ -4790,43 +4790,5 @@ _scriptB1_msg00:
 _scriptB1_msg01:
 		.BYTE $6D,$7B,$74,$81,$7E,$F1,$8C,$82,$88,$FF
 		.BYTE $79,$82,$85,$F1,$87,$85,$8C,$7C,$81,$7A,$E4,$FF,$FF
-_trash:
-		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$04,$04,$05,$05,$07,$02
-		.BYTE $07,$01,$03,$03,$02,$02,$00,$01,$02,$7F,$3F,$3F,$7F,$73,$E0,$EF
-		.BYTE $FF,$FF,$FF,$FF,$BF,$BF,$7F,$7C,$7F,$FF,$FF,$FF,$FF,$F9,$61,$FD
-		.BYTE $FF,$FE,$BF,$BF,$BF,$FF,$FF,$7F,$3F,$20,$A0,$A0,$A0,$A0,$A0,$A0
-		.BYTE $C0,$C0,$40,$40,$40,$40,$40,$40,$00,$0F,$1F,$3F,$3F,$3F,$3F,$1F
-		.BYTE $1F,$00,$04,$03,$03,$06,$07,$0F,$07,$C0,$E0,$C0,$C0,$C0,$E0,$C0
-		.BYTE $C0,$00,$00,$80,$80,$80,$C0,$80,$80,$30,$1F,$10,$0F,$10,$10,$10
-		.BYTE $10,$0F,$00,$0F,$00,$0F,$0F,$0F,$0F,$78,$90,$48,$F8,$08,$44,$44
-		.BYTE $42,$80,$60,$B0,$00,$F0,$B8,$B8,$BC,$84,$84,$8C,$CC,$F8,$FC,$FE
-		.BYTE $7F,$78,$78,$70,$30,$00,$00,$00,$00,$86,$84,$8C,$CC,$F8,$FC,$7E
-		.BYTE $7F,$78,$78,$70,$30,$00,$00,$00,$00,$0F,$1F,$16,$10,$08,$04,$04
-		.BYTE $02,$07,$06,$09,$0F,$07,$03,$03,$01,$81,$00,$20,$10,$10,$18,$10
-		.BYTE $14,$7E,$FF,$DF,$EF,$EF,$E7,$E7,$E3,$00,$80,$40,$40,$20,$20,$20
-		.BYTE $10,$00,$00,$80,$80,$C0,$C0,$C0,$E0,$03,$0C,$10,$10,$20,$20,$40
-		.BYTE $40,$00,$03,$0F,$0F,$1F,$1F,$3F,$3F,$FF,$FF,$7F,$3F,$1F,$04,$02
-		.BYTE $02,$7F,$7E,$AF,$D3,$E0,$F8,$FC,$FC,$FE,$FC,$F8,$F0,$C0,$00,$00
-		.BYTE $00,$FC,$38,$F0,$C0,$00,$00,$00,$00,$07,$07,$07,$07,$03,$03,$03
-		.BYTE $03,$03,$03,$03,$03,$01,$01,$01,$01,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-		.BYTE $FF,$B1,$F1,$C7,$FF,$FF,$FF,$FF,$FE,$FF,$FF,$FF,$FF,$BF,$BF,$BF
-		.BYTE $FF,$B3,$B1,$3D,$FF,$FF,$FF,$FF,$FF,$C0,$E0,$E0,$E0,$E0,$C0,$80
-		.BYTE $80,$00,$C0,$C0,$40,$40,$00,$00,$00,$3F,$47,$F3,$89,$8F,$83,$80
-		.BYTE $40,$06,$3A,$0C,$76,$70,$7C,$7F,$3F,$E0,$7C,$FF,$FF,$FF,$3F,$3D
-		.BYTE $3D,$00,$80,$00,$00,$00,$DC,$D8,$D8,$00,$00,$0C,$FF,$FF,$F0,$E0
-		.BYTE $80,$00,$00,$00,$00,$00,$C0,$C0,$00,$10,$20,$21,$21,$43,$42,$42
-		.BYTE $E6,$0F,$1F,$1E,$1E,$3C,$3C,$3C,$18,$C2,$A1,$21,$39,$61,$42,$42
-		.BYTE $42,$3C,$1E,$1E,$06,$1E,$3C,$3C,$3C,$00,$00,$00,$00,$00,$00,$00
-		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$00,$02,$01,$02,$06,$07,$0F,$0F
-		.BYTE $0F,$01,$00,$01,$01,$00,$00,$00,$00,$13,$12,$14,$14,$A7,$CF,$CF
-		.BYTE $CF,$E0,$E1,$E3,$E3,$40,$00,$00,$00,$10,$10,$20,$40,$C0,$C0,$E0
-		.BYTE $E0,$E0,$E0,$C0,$80,$00,$00,$00,$00,$41,$42,$42,$26,$21,$23,$17
-		.BYTE $0F,$3E,$3D,$3D,$19,$1E,$1C,$0B,$06,$02,$82,$03,$03,$03,$1F,$E2
-		.BYTE $C1,$FC,$7C,$FD,$FD,$FD,$E0,$1C,$BE,$00,$00,$F0,$F8,$F8,$F8,$B0
-		.BYTE $00,$00,$00,$00,$F0,$D0,$B0,$00,$00,$03,$03,$01,$01,$01,$01,$01
-		.BYTE $01,$01,$01,$00,$00,$00,$00,$00,$00,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-		.BYTE $FF,$FD,$FE,$FB,$F7,$F6,$FD,$FB,$FC,$FF,$FF,$FF,$FF,$FF,$FF,$FF
-		.BYTE $FF,$FF,$6F,$9F,$FF,$0F,$F7,$EE,$1E,$80,$C0,$80,$80,$80,$80,$00
-		.BYTE $00,$00,$80,$00,$00,$00,$00,$00,$00
 
 		BANK_END 5,$C000
