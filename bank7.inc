@@ -61,36 +61,36 @@ loc_600F9:
 		LDA		#$10
 		STA		_objA_buf_shuffle_pos
 		JSR		_objs_reset
-_delay:
-		INC		_tmp04
-		BNE		_delay
-		INC		_tmp05
-		BNE		_delay
-		INC		_tmp06
-		LDA		_tmp06
-		CMP		#$02
-		BNE		_delay
+;_delay:
+;		INC		_tmp04
+;		BNE		_delay
+;		INC		_tmp05
+;		BNE		_delay
+;		INC		_tmp06
+;		LDA		_tmp06
+;		CMP		#$02
+;		BNE		_delay
 		LDA		#$06
 		JSR		_mmc_prg_set
 		LDA		_ppu_ctrl_shadow
 		STA		_PPU_CTRL
-		LDA		#$0A					; load dummy
+		LDA		#$0A					; load dummy music
 		JSR		_apu_cur_mus_load
 _main_loop:
-		LDA		_nmi_flag
+		LDA		_nmi_flag				; update once per 2 frames
 		CMP		#$02
 		BCC		_main_loop
 		LDA		#$00
 		STA		_nmi_flag
 loc_6003D:
-		LDA		_ppu_dequeue_idx
+		LDA		_ppu_dequeue_idx		; also wait for data flush
 		BNE		loc_6003D
 		LDA		#$14
 		STA		_spr_buf_pos
 		JSR		_read_pad_safeB
 		LDA		_ingame_pause_flag
 		BNE		loc_6005D
-		JSR		_level_draw_update
+		JSR		_screen_redraw_update
 		LDA		_game._redraw_req
 		BNE		loc_6005D
 		JSR		_engine_handlers
@@ -146,11 +146,25 @@ loc_600C0:
 loc_600C8:
 		LDA		_ppu_ctrl_shadow
 		STA		_PPU_CTRL
-;		LDA		_pad							; removed cheat leftovers.
+;		LDA		_pad					; removed cheat leftovers.
 ;		CMP		#$18
 ;		BNE		loc_600D5
 ;loc_600D5:
 		JMP		_main_loop
+
+; =============== S U B	R O U T	I N E =======================================
+_wait_for_vblank:
+		LDA		_tmp0D
+		PHA
+		LDA		_nmi_flag
+		STA		_tmp0D
+loc_6059F:
+		LDA		_nmi_flag
+		CMP		_tmp0D
+		BEQ		loc_6059F
+		PLA
+		STA		_tmp0D
+		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
 _render_off:
@@ -242,6 +256,10 @@ loc_60165:
 
 ; =============== S U B	R O U T	I N E =======================================
 _read_pad_safeB:
+		LDA		_tmp00
+		PHA
+		TXA
+		PHA
 		JSR		_read_pad_safe
 		LDA		_pad_tmp
 		AND		_pad
@@ -253,6 +271,11 @@ _read_pad_safeB:
 		ORA		_tmp00
 		AND		#$F8
 		STA		_pad_tmp
+		PLA
+		TAX
+		PLA
+		STA		_tmp00
+		LDA		_pad
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -269,8 +292,6 @@ _read_pad:
 		LDX		#$01
 		STX		_PAD0_REG
 		DEX
-		TXA
-		TAY
 		STX		_PAD0_REG
 loc_6029F:
 		LDA		_PAD0_REG
@@ -386,7 +407,7 @@ loc_60388:
 		TAY
 		LDA		_rambo_chr_weapon_tiles_ofs_list,Y
 		CLC
-		ADC		#$80
+		ADC		#>[_chr_rambo_weap0-$1A00]
 		STA		_chr_tiles_send_src+1
 		LDA		#$03
 		STA		_chr_tiles_send_dst+1
@@ -509,86 +530,61 @@ _hud_cursor_spr_insert:
 		STA		_spr_buf+$13
 		RTS
 
-; =============== S U B	R O U T	I N E =======================================
-_far_dialog_script_play:
-		LDA		_game._scr_idx			; no start if this is not dialog
-		BMI		loc_604A8
-		RTS
-loc_604A8:
-		JSR		_chr_bg_tiles_load		; load CHR data with fonts and portraits
-		JSR		_chr_spr_tiles_load
-		LDA		#$05
-		JSR		_mmc_prg_set
-		JMP		_dialog_script_play
+_cutscene_mus_list:
+		.BYTE $DD,$EB,$EE,$EE,$EE,$EE,$EE,$EC,$EE,$EE,$EE,$EE,$EE,$EE,$EE,$EE
+		.BYTE $EE,$EE,$EE,$CC,$EC,$CC,$EE,$CE,$FC,$FF,$FF
 
 ; =============== S U B	R O U T	I N E =======================================
-_level_draw_update:
+_screen_redraw_update:
 		LDA		_game._redraw_req
 		BNE		loc_604C1
 		RTS
 loc_604C1:
 		LDA		_game._scr_idx
-		BMI		loc_604C9
-		JMP		loc_6057F
-loc_604C9:
+		BPL		_level_redraw_update
 		CMP		#$FF
-		BNE		loc_604D0
-		JMP		loc_6057F
-loc_604D0:
+		BEQ		_level_redraw_update
+
+; !FALLTHROUGH!
+
+; =============== S U B	R O U T	I N E =======================================
+_cutscene_redraw_update:
 		LDA		#$00
 		STA		_ppu_mask_shadow
 		STA		_PPU_MASK
 		STA		_nmi_disable
 		LDA		#$80
 		STA		_nmi_disble_ppu_reset_req
-		LDA		#$0D
-		STA		_tmp0D
-		LDY		#$00
 		LDA		_game._scr_idx
-loc_604EA:
-		CMP		_level_mus_restore_tbl,Y
-		BEQ		loc_604F7
-		INY
-		CPY		#$0C
-		BNE		loc_604EA
-		BEQ		loc_60508
+		AND		#$7F
+		LSR
+		TAX
+		LDA		_cutscene_mus_list,X
+		BCC		loc_604F7
+		LSR
+		LSR
+		LSR
+		LSR
 loc_604F7:
-		DEC		_tmp0D
-		JMP		loc_60525
-; ---------------------------------------------------------------------------
-_level_mus_restore_tbl:
-		.BYTE $8E,$A6,$A7,$A8,$AA,$AB,$AF,$B0,$B0,$B0,$B0,$B0
-; ---------------------------------------------------------------------------
-loc_60508:
-		LDA		_game._scr_idx
-		CMP		#$82
-		BCC		loc_60525
-		DEC		_tmp0D
-		DEC		_tmp0D
-		CMP		#$82
-		BEQ		loc_60525
-		INC		_tmp0D
-		INC		_tmp0D
-		INC		_tmp0D
-		INC		_tmp0D
-		CMP		#$B1
-		BCS		loc_60525
-		DEC		_tmp0D
-loc_60525:
-		LDA		_apu_prev_mus_idx
-		CMP		_tmp0D
+		AND		#$0F
+		CMP		_apu_prev_mus_idx
 		BEQ		loc_60542
+		PHA
 		LDA		_ppu_ctrl_shadow
 		AND		#$7F
 		STA		_PPU_CTRL
-		LDA		_tmp0D
+		PLA
 		STA		_apu_prev_mus_idx
 		JSR		_apu_cur_mus_load
 		LDA		_ppu_ctrl_shadow
 		STA		_PPU_CTRL
 loc_60542:
-		JSR		_far_dialog_script_play
-		LDA		_game._scr_idx
+		JSR		_chr_bg_tiles_load		; load CHR data with fonts and portraits
+		JSR		_chr_spr_tiles_load
+		LDA		#$05
+		JSR		_mmc_prg_set
+		JSR		_dialog_script_play
+		LDA		_game._scr_idx			; may change upon executing script
 		BPL		loc_60551
 		CMP		#$FF
 		BNE		loc_60568
@@ -606,12 +602,10 @@ loc_60568:
 		JSR		_mmc_prg_set
 		LDA		#$00
 		STA		_ppu_dequeue_idx
-		JSR		_hud_cursor_spr_insert
-		LDA		_game._scr_idx
-		STA		_game_scr_idx_backup_unused
-locret_6057E:
-		RTS
-loc_6057F:
+		JMP		_hud_cursor_spr_insert
+
+; =============== S U B	R O U T	I N E =======================================
+_level_redraw_update:
 		LDA		#$00
 		STA		_nmi_disble_ppu_reset_req
 		JSR		_spr_clear
@@ -622,12 +616,7 @@ loc_6057F:
 		STA		_ppu_mask_shadow
 		LDA		_ppu_ctrl_shadow
 		STA		_PPU_CTRL
-		LDA		_nmi_flag
-		STA		_tmp0D
-loc_6059F:
-		LDA		_nmi_flag
-		CMP		_tmp0D
-		BEQ		loc_6059F
+		JSR		_wait_for_vblank
 		LDA		#$FF
 		STA		_nmi_disable
 		LDA		_game._scr_idx
@@ -654,48 +643,21 @@ loc_605B7:
 		STA		_cur_loc_warpB_pos
 		LDA		_location_prizes_list,X
 		STA		_cur_loc_prize_idx
-		LDA		_cur_loc_room_settings
+		LDA		_cur_loc_room_settings	; test for special palettes
 		AND		#$02
-		BEQ		_regular_day_light_palettes
-		LDA		_game._flags
+		BEQ		.regular_day_light_palettes
+		LDA		_game._flags			; palette for LAMP levels select
 		AND		#$08
-		BNE		_palette_with_lamp
-		LDA		_cur_loc_bg_pal_settings
-		AND		#$F0
-		LSR
-		LSR
-		LSR
-		LSR
-		ORA		#$80
-		STA		_cur_pal_bg_idx
-		LDA		_cur_loc_spr_pal_settings
-		AND		#$F0
-		LSR
-		LSR
-		LSR
-		LSR
-		ORA		#$80
-		STA		_cur_pal_spr_lib
-		JMP		loc_6066D
-_palette_with_lamp:
-		LDA		_cur_loc_bg_pal_settings
-		AND		#$0F
-		ORA		#$80
-		STA		_cur_pal_bg_idx
-		LDA		_cur_loc_spr_pal_settings
-		AND		#$0F
-		ORA		#$80
-		STA		_cur_pal_spr_lib
-		JMP		loc_6066D
-_regular_day_light_palettes:
-		LDA		_game._play_hours
+		BNE		.room_day_palette
+		BEQ		.room_night_palette
+.regular_day_light_palettes:
+		LDA		_game._play_hours		; regular timed palette select
 		CMP		#$15
-		BCS		_room_night_palette
+		BCS		.room_night_palette
 		CMP		#$04
-		BCS		_room_day_palette
-_room_night_palette:
+		BCS		.room_day_palette
+.room_night_palette:
 		LDA		_cur_loc_bg_pal_settings
-		AND		#$F0
 		LSR
 		LSR
 		LSR
@@ -703,15 +665,14 @@ _room_night_palette:
 		ORA		#$80
 		STA		_cur_pal_bg_idx
 		LDA		_cur_loc_spr_pal_settings
-		AND		#$F0
 		LSR
 		LSR
 		LSR
 		LSR
 		ORA		#$80
 		STA		_cur_pal_spr_lib
-		JMP		loc_6066D
-_room_day_palette:
+		BNE		.continue_redraw
+.room_day_palette:
 		LDA		_cur_loc_bg_pal_settings
 		AND		#$0F
 		ORA		#$80
@@ -720,7 +681,7 @@ _room_day_palette:
 		AND		#$0F
 		ORA		#$80
 		STA		_cur_pal_spr_lib
-loc_6066D:
+.continue_redraw:
 		JSR		_stage_objs_insert_manager
 		JSR		_level_room_data_unpack
 		JSR		_room_data_send_to_vram
@@ -732,11 +693,10 @@ loc_60679:
 		LDA		_game._scr_idx
 		CMP		#$FF
 		BNE		loc_6068E
-		LDA		#$03
+		LDA		#$03					; MUS idx
 		BNE		loc_6069C
 loc_6068E:
 		LDA		_cur_loc_room_settings
-		AND		#$F0
 		LSR
 		LSR
 		LSR
@@ -759,8 +719,6 @@ loc_606B3:
 		LDA		#$00
 		STA		_ppu_dequeue_idx
 		JSR		_hud_cursor_spr_insert
-		LDA		_game._scr_idx
-		STA		_game_scr_idx_backup_unused
 		LDA		#$1E
 		STA		_ppu_mask_shadow
 		LDA		_cur_pal_bg_idx
@@ -2649,12 +2607,7 @@ loc_61451:
 		STA		_ppu_mask_shadow
 		LDA		_ppu_ctrl_shadow
 		STA		_PPU_CTRL
-		LDA		_nmi_flag
-		STA		_tmp0C
-loc_6146F:
-		LDA		_nmi_flag
-		CMP		_tmp0C
-		BEQ		loc_6146F
+		JSR		_wait_for_vblank
 		JSR		_blank_screen
 		LDA		#$FF
 		STA		_game._redraw_req
@@ -4863,38 +4816,38 @@ _objB_sub62380:
 		JMP		_objB_flush_and_continue
 
 ; ---------------------------------------------------------------------------
-		OBJ_START	_objB_hndl_lib
-		OBJ_HNDL _objB_hndl00
-		OBJ_HNDL _objB_hndl01
-		OBJ_HNDL _objB_hndl02
-		OBJ_HNDL _objB_hndl03
-		OBJ_HNDL _objB_hndl04
-		OBJ_HNDL _objB_hndl05
-		OBJ_HNDL _objB_hndl06
-		OBJ_HNDL _objB_hndl07
-		OBJ_HNDL _objB_hndl08
-		OBJ_HNDL _objB_hndl09_animate
-		OBJ_HNDL _objB_hndl0A_heart
-		OBJ_HNDL _objB_hndl0B_knife_ammo
-		OBJ_HNDL _objB_hndl0C_arrow_ammo
-		OBJ_HNDL _objB_hndl0D_explo_arrow_ammo
-		OBJ_HNDL _objB_hndl0E_machinegun_ammo
-		OBJ_HNDL _objB_hndl0F_grenades_ammo
-		OBJ_HNDL _objB_hndl10_potions
-		OBJ_HNDL _objB_hndl11_hi_speed
-		OBJ_HNDL _objB_hndl12_hi_jump
-		OBJ_HNDL _objB_hndl13_invul	; unused
-		OBJ_HNDL _objB_hndl14_score_1
-		OBJ_HNDL _objB_hndl15_score_2
-		OBJ_HNDL _objB_hndl16_score_5
-		OBJ_HNDL _objB_hndl17_score_10
-		OBJ_HNDL _objB_hndl18_score_20
-		OBJ_HNDL _objB_hndl19_score_50
-		OBJ_HNDL _objB_hndl1A_score_100
-		OBJ_HNDL _objB_hndl1B_score_200
-		OBJ_HNDL _objB_hndl1C_score_500
-		OBJ_HNDL _objB_hndl1D
-		OBJ_HNDL _objB_hndl1E
+		IDX_START	_objB_hndl_lib
+		IDX _objB_hndl00
+		IDX _objB_hndl01
+		IDX _objB_hndl02
+		IDX _objB_hndl03
+		IDX _objB_hndl04
+		IDX _objB_hndl05
+		IDX _objB_hndl06
+		IDX _objB_hndl07
+		IDX _objB_hndl08
+		IDX _objB_hndl09_animate
+		IDX _objB_hndl0A_heart
+		IDX _objB_hndl0B_knife_ammo
+		IDX _objB_hndl0C_arrow_ammo
+		IDX _objB_hndl0D_explo_arrow_ammo
+		IDX _objB_hndl0E_machinegun_ammo
+		IDX _objB_hndl0F_grenades_ammo
+		IDX _objB_hndl10_potions
+		IDX _objB_hndl11_hi_speed
+		IDX _objB_hndl12_hi_jump
+		IDX _objB_hndl13_invul	; unused
+		IDX _objB_hndl14_score_1
+		IDX _objB_hndl15_score_2
+		IDX _objB_hndl16_score_5
+		IDX _objB_hndl17_score_10
+		IDX _objB_hndl18_score_20
+		IDX _objB_hndl19_score_50
+		IDX _objB_hndl1A_score_100
+		IDX _objB_hndl1B_score_200
+		IDX _objB_hndl1C_score_500
+		IDX _objB_hndl1D
+		IDX _objB_hndl1E
 
 ; =============== S U B	R O U T	I N E =======================================
 _spr_objsA_manager:

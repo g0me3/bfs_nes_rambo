@@ -73,8 +73,8 @@ PORTRAIT12_VILLAGER1	EQU	$A2
 PORTRAIT13_VILLAGER2	EQU	$AB
 PORTRAIT14_PIRATE		EQU	$B4
 PORTRAIT15_KID			EQU	$BD
-_SPR_PACK_IN_TIME		EQU	$C6
-_SPR_TITLE_SCREEN		EQU	$C8
+SPR_PACK_IN_TIME		EQU	[_spr_pack_int_time-_portraits_lib]
+SPR_TITLE_SCREEN		EQU	[_spr_title_anim-_portraits_lib]
 PORTRAIT_CLEAR			EQU	$D8
 
 FLAG00_SYS				EQU	$00
@@ -248,155 +248,165 @@ _tobjB.field_7			SET	_tobjB + 7
 	ENDM
 
 ;---------------S-C-R-I-P-T-S-------------------
+	MAC	BYTE_FETCH
+		LDA		(_tmp0D),Y
+		INY
+	ENDM
+
+	MAC	WORD_FETCH
+		BYTE_FETCH
+		TAX
+		BYTE_FETCH
+	ENDM
 
 	MAC	sprite_draw_up
-		.BYTE $00,{1}
+		.BYTE _scr_cmd00_portrait_draw_up_idx,{1}
 	ENDM
 
 	MAC	sprite_draw_down
-		.BYTE $01,{1}
+		.BYTE _scr_cmd01_portrait_draw_down_idx,{1}
 	ENDM
 
 	MAC	msg_draw_up
-		.BYTE $02
+		.BYTE _scr_cmd02_msg_draw_up_idx
 	ENDM
 
 	MAC	msg_draw_down
-		.BYTE $03
+		.BYTE _scr_cmd03_msg_draw_down_idx
 	ENDM
 
 	MAC	frame_draw_up
-		.BYTE $04,{1}
+		.BYTE _scr_cmd04_frame_draw_up_idx,{1}
 	ENDM
 
 	MAC	frame_draw_down
-		.BYTE $05,{1}
+		.BYTE _scr_cmd05_frame_draw_down_idx,{1}
 	ENDM
 
 	MAC	frame_draw_custom
-		.BYTE $06,{1}>>8,{1}&$FF,{2},{3}
+		.BYTE _scr_cmd06_frame_draw_custom_idx,{1}>>8,{1}&$FF,{2},{3}
 	ENDM
 
 	MAC	msg_input_handler
-		.BYTE $07
+		.BYTE _scr_cmd07_msg_input_handler_idx
 	ENDM
 
 	MAC	input_2_options
-		.BYTE $08
+		.BYTE _scr_cmd08_input_2_options_idx
 	ENDM
 
 	MAC	ptr_load
-		.BYTE $0B
+		.BYTE _scr_cmd0B_ptr_load_idx
 		.WORD {1}
 	ENDM
 
 	MAC	msg_printf
-		.BYTE $0C
+		.BYTE _scr_cmd0C_msg_draw_custom_idx
 		.WORD {1}
 	ENDM
 
 	MAC	game_flags_set
-		.BYTE $0D,{1}
+		.BYTE _scr_cmd0D_game_flags_set_idx,{1}
 	ENDM
 
 	MAC	game_flags_clear
-		.BYTE $0E,{1}
+		.BYTE _scr_cmd0E_game_flags_clear_idx,{1}
 	ENDM
 
 	MAC	jmp_flags_not_set
-		.BYTE $0F,{1}
+		.BYTE _scr_cmd0F_jmp_flag_not_set_idx,{1}
 	ENDM
 
 	MAC	jmpne_option
-		.BYTE $10,{1}
+		.BYTE _scr_cmd10_jmpne_option_idx,{1}
 	ENDM
 
 	MAC jmp_branch
-		.BYTE $11,$11
+		.BYTE _scr_cmd11_jmp_branch_idx,_scr_cmd11_jmp_branch_idx
 	ENDM
 
 	MAC	------------------
-		.BYTE $12,$12
+		.BYTE _scr_cmd12_nop_idx,_scr_cmd12_nop_idx
 	ENDM
 
 	MAC	jump
-		.BYTE $13
+		.BYTE _scr_cmd13_jump_idx
 		.WORD {1}
 	ENDM
 
 	MAC	stop
-		.BYTE $14
+		.BYTE _scr_cmd14_stop_idx
 	ENDM
 
-	MAC	set_room_idx
-		.BYTE $15,{1}
+	MAC	new_warp_set
+		.BYTE _scr_cmd15_new_warp_set_idx,{1}
 	ENDM
 
-	MAC	anim_scene_set
-		.BYTE $16,{1}
+	MAC	heli_warp_set
+		.BYTE _scr_cmd16_heli_warp_set_idx,{1}
 	ENDM
 
 	MAC	player_pos_set
-		.BYTE $17,{1},{2}
+		.BYTE _scr_cmd17_player_pos_set_idx,{2},{1}
 	ENDM
 
 	MAC	pass_input
-		.BYTE $19
+		.BYTE _scr_cmd19_pass_input_idx
 	ENDM
 
 	MAC	game_stats_draw
-		.BYTE $1A
+		.BYTE _scr_cmd1A_game_stats_draw_idx
 	ENDM
 
 	MAC	life_restore
-		.BYTE $1B
+		.BYTE _scr_cmd1B_life_restore_idx
 	ENDM
 
 	MAC	add_10_knifes
-		.BYTE $1C
+		.BYTE _scr_cmd1C_add_10_knifes_idx
 	ENDM
 
 	MAC	add_5_potions
-		.BYTE $21
+		.BYTE _scr_cmd21_add_5_potions_idx
 	ENDM
 
 	MAC	game_hours_set
-		.BYTE $23,{1}
+		.BYTE _scr_cmd23_game_hours_set_idx,{1}
 	ENDM
 
 	MAC	checkpoint_restore
-		.BYTE $24
+		.BYTE _scr_cmd24_checkpoint_restore_idx
 	ENDM
 
 	MAC	checkpoint_reset
-		.BYTE $25
+		.BYTE _scr_cmd25_checkpoint_reset_idx
 	ENDM
 
 	MAC	checkpoint_set
-		.BYTE $26
+		.BYTE _scr_cmd26_checkpoint_set_idx
 	ENDM
 
 	MAC	continue_cur_draw
-		.BYTE $27
+		.BYTE _scr_cmd27_continue_cur_draw_idx
 	ENDM
 
 	MAC	ending_anim
-		.BYTE $28
+		.BYTE _scr_cmd28_ending_anim_idx
 	ENDM
 
 	MAC	scroller
-		.BYTE $29
+		.BYTE _scr_cmd29_scroller_idx
 	ENDM
 
 ;---------G-A-M-E--S-P-E-C-I-F-I-C--------------
 
-	MAC	OBJ_START
+	MAC	IDX_START
 {1}			SET .
-OBJ_LIST_START	SET	{1}
+IDX_LIST_START	SET	{1}
 	ENDM
 
-	MAC	OBJ_HNDL
-{1}_idx		SET	[[.-OBJ_LIST_START]>>1]
+	MAC	IDX
+{1}_idx		SET	[[.-IDX_LIST_START]>>1]
 		.WORD {1}
 	ENDM
 
@@ -411,6 +421,18 @@ OBJ_LIST_START	SET	{1}
 #else
 		.BYTE [[{2}<<4]|{1}],[[{3}<<6]|$00]
 #endif
+	ENDM
+
+	MAC	PPU_PUT_CHAR
+#if {1}!=0
+		LDA		_PPU_STATUS
+		LDA		#>[{1}]
+		STA		_PPU_ADDR
+		LDA		#<[{1}]
+		STA		_PPU_ADDR
+#endif
+		LDA		#{2}
+		STA		_PPU_DATA
 	ENDM
 
 	MAC	PPU_FILL_LINEY

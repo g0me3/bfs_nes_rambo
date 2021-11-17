@@ -8,9 +8,9 @@ _scroller_screen:
 		JSR		_render_off_ex
 		PPU_FILL_RECT	$2000, $FE, $1E, $20
 #if LANGUAGE == LANG_US
-; since in us version they changed the small font color, default
-; palette does not fit here, so they put another one with one color
-; and has to refill attrs with another palette
+; since in us version they changed small font color, default
+; palette does not fit here, so they put another one with one
+; color and has to refill attrs with another palette
 		PPU_FILL_LINEY	$23C0, $FF, $10
 		PPU_FILL_LINEY	    0, $00, $30
 #endif
@@ -41,21 +41,14 @@ _the_bio_scroller:
 		STA		_tmp05
 		LDA		#<[_tlm_scroller_heli_with_bio-1]
 		STA		_tmp04
-		LDA		#$C8
+		LDA		#SPR_TITLE_SCREEN
 		STA		_tmp0A
-.scroller_anim_loop:
-		TYA
-		PHA
+.bio_scroll_loop:
 		TXA
-		PHA
 		AND		#$03
 		BNE		loc_63A26
 		JSR		_scroller_spr_title_insert
 loc_63A26:
-		PLA
-		TAX
-		PLA
-		TAY
 		JSR		_render_off
 		LDY		#[_tlm_scroller_heli_with_bio-_tlm_scroller_heli_blades]
 		JSR		_scroller_heli_blades_draw
@@ -68,15 +61,15 @@ loc_63A26:
 		BEQ		loc_63A43
 		LDY		#$00
 		JSR		_scroller_heli_blades_draw
-		JMP		.scroller_anim_loop
+		JMP		.bio_scroll_loop
 loc_63A43:
 		JSR		_scroller_draw_line
-		JMP		.scroller_anim_loop
+		JMP		.bio_scroll_loop
 loc_63A49:
 		JSR		_scroll_reload_render_on
 		STX		_tmp14
 		JMP		loc_63A5D
-.scroller_static_loop:
+.bio_static_loop:
 		JSR		_render_off
 		LDY		#[_tlm_scroller_heli_with_bio-_tlm_scroller_heli_blades]
 		JSR		_scroller_heli_blades_draw
@@ -84,10 +77,6 @@ loc_63A49:
 		LDY		#$00
 		JSR		_scroller_heli_blades_draw
 loc_63A5D:
-		TXA
-		PHA
-		TYA
-		PHA
 		INC		_tmp14
 		LDA		_tmp14
 		AND		#$03
@@ -95,12 +84,7 @@ loc_63A5D:
 		JSR		_scroller_spr_title_insert
 loc_63A6C:
 		JSR		_read_pad_safeB
-		PLA
-		TAY
-		PLA
-		TAX
-		LDA		_pad
-		BEQ		.scroller_static_loop
+		BEQ		.bio_static_loop
 		PLA
 		TAX
 		PLA
@@ -219,12 +203,7 @@ loc_B7B73:
 		JSR		_scroll_reload_render_on
 .end_static_loop:
 		JSR		_render_toggle
-		TXA
-		PHA
 		JSR		_read_pad_safeB
-		PLA
-		TAX
-		LDA		_pad
 		BEQ		.end_static_loop
 		PLA
 		TAX
@@ -260,6 +239,10 @@ loc_B7B9E:
 
 ; =============== S U B	R O U T	I N E =======================================
 _scroller_spr_title_insert:
+		TYA
+		PHA
+		TXA
+		PHA
 		LDA		_tmp00
 		PHA
 		LDA		_tmp01
@@ -278,9 +261,9 @@ _scroller_spr_title_insert:
 		INY
 		STA		_tmp04
 		JSR		_spr_sheet_title_insert
-		CPY		#$DD
+		CPY		#[SPR_TITLE_SCREEN+3*7]
 		BNE		loc_63BA2
-		LDY		#$C8
+		LDY		#SPR_TITLE_SCREEN
 loc_63BA2:
 		TYA
 		STA		_tmp0A
@@ -296,6 +279,10 @@ loc_63BA2:
 		STA		_tmp01
 		PLA
 		STA		_tmp00
+		PLA
+		TAX
+		PLA
+		TAY
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -323,7 +310,8 @@ loc_63AF5:
 		STA		_PPU_ADDR
 		PLA
 		STA		_tmp00
-		JMP		_scroll_reload_render_on
+
+; !FALLTHROUGH!
 
 ; =============== S U B	R O U T	I N E =======================================
 _scroll_reload_render_on:

@@ -2,84 +2,84 @@ _script85:
 		player_pos_set		$00, $d0
 		game_hours_set		$0c
 		msg_draw_ex		_script85_msg00,$20e7
-[Colonel Trautman
- visits Rambo in the
- military prison.]
+		[Colonel Trautman
+		 visits Rambo in the
+		 military prison.]
 		msg_input_handler
 		frame_draw_up		PORTRAIT08_TRAUMAN1
 		msg_draw_up		_script85_msg01
-[Rambo,I want to
- send you on
- a Mission.]
+		[Rambo,I want to
+		 send you on
+		 a Mission.]
 		msg_draw_up		_script85_msg01A
-[It's dangerous,but
- you'll be free
- if you succeed.]
+		[It's dangerous,but
+		 you'll be free
+		 if you succeed.]
 		msg_draw_up		_script85_msg02
-[Our men are still
-missing]
+		[Our men are still
+		 missing]
 		msg_draw_up		_script85_msg02A
-[in a jungle
-in Vietnam.We
-believe they are
-alive,prisoners of
-the enemy.]
+		[in a jungle
+		 in Vietnam.We
+		 believe they are
+		 alive,prisoners of
+		 the enemy.]
 		msg_draw_up		_script85_msg03
-[Your mission is to
-sneak into the
-enemy camp and find
-them.
-Are you up to it?]
-_script85_loc00:
+		[Your mission is to
+		 sneak into the
+		 enemy camp and find
+		 them.
+		 Are you up to it?]
+		_script85_loc00:
 		frame_draw_down		PORTRAIT00_RAMBO
 		input_2_options
 		msg_draw_down		_script85_msg04
-[ I'm not afraid of
-  death.
+		[ I'm not afraid of
+		  death.
 
-  I feel better in
-  prison.]
+		  I feel better in
+		  prison.]
 		jmpne_option		$01, _script85_loc01
 		msg_draw_up		_script85_msg05
-[Good,I'll make the
-arrangements.]
+		[Good,I'll make the
+		arrangements.]
 		set_room_idx		$01
 		stop
 		------------------
 _script85_loc01:
 		msg_draw_up		_script85_msg06
-[But it's up to you.
-The game doesn't
-start until you
-say YES.]
+		[But it's up to you.
+		The game doesn't
+		start until you
+		say YES.]
 		jump			_script85_loc00
 _script86:
 		game_flags_set		FLAG00_SYS
 		frame_draw_up		PORTRAIT09_MURDOCK
 		msg_draw_up		_script86_msg00
-[I'm
-Commander Murdock.]
+		[I'm
+		Commander Murdock.]
 		msg_draw_up		_script86_msg01
-[We want you to get
-into enemy
-territory and take
-photographs of the
-POW camp.]
-		msg_draw_up		_script86_msg01A
-[You're not to
-engage the enemy.]
+		[We want you to get
+		into enemy
+		territory and take
+		photographs of the
+		POW camp.]
+		msg_draw_up			_script86_msg01A
+		[You're not to
+		engage the enemy.]
 		frame_draw_down		PORTRAIT00_RAMBO
 		msg_draw_down		_script86_msg02
-[Photos? Not rescue
-them?]
+		[Photos? Not rescue
+		them?]
 		msg_draw_up		_script86_msg03
-[I repeat.You're not
-to engage the
-enemy.]
+		[I repeat.You're not
+		to engage the
+		enemy.]
 		msg_draw_up		_script86_msg03A
-[Go to the weapons
-center and
-get ready.]
+		[Go to the weapons
+		center and
+		get ready.]
 		set_room_idx		$00
 		stop
 _script87:
@@ -88,10 +88,10 @@ _script87:
 		jmp_branch		_script87_loc01
 _script87_loc00:
 		msg_draw_up		_script87_msg00
-[We can't give you
-weapons without
-Murdock's
-permission.]
+		[We can't give you
+		weapons without
+		Murdock's
+		permission.]
 		set_room_idx		$00
 		stop
 		------------------
@@ -128,7 +128,7 @@ _script88_loc00:
 		will work best.]
 		frame_draw_down		PORTRAIT00_RAMBO
 ;		msg_draw_down		_script88_msg01
-;[-MISSING-]
+		;[-MISSING-]
 		msg_draw_up		_script88_msg02
 		[Go to the hangar.]
 		set_room_idx		$01

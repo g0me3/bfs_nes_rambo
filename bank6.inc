@@ -2163,7 +2163,7 @@ _obj_rambo_shout_deploy_test:
 		BEQ		loc_52357
 		CMP		#$0B
 		BNE		locret_52361
-		LDA		_obj_heli_tmp_flag
+		LDA		_helicopter_warp_idx
 		BEQ		locret_52361
 loc_52357:
 		LDA		_game._flags
@@ -2287,71 +2287,71 @@ _cur_obj_direction_up_set:
 		STA		_tmp11
 		RTS
 ; ---------------------------------------------------------------------------
-		OBJ_START	_obj_hndl_lib
-		OBJ_HNDL _obj_hndl00_rambo
-		OBJ_HNDL _obj_hndl01_npcA
-		OBJ_HNDL _obj_hndl02_npcB
-		OBJ_HNDL _obj_hndl03_npcC
-		OBJ_HNDL _obj_hndl04_npcD
-		OBJ_HNDL _obj_hndl05_bee
-		OBJ_HNDL _obj_hndl06_snake
-		OBJ_HNDL _obj_hndl07_fish
-		OBJ_HNDL _obj_hndl08_bubbles
-		OBJ_HNDL _obj_hndl09_ceiling_bat
-		OBJ_HNDL _obj_hndl0A_stalaktit
-		OBJ_HNDL _obj_hndl0B_skull
-		OBJ_HNDL _obj_hndl0C_bird
-		OBJ_HNDL _obj_hndl0D_waterfall_logs
-		OBJ_HNDL _obj_hndl0E_small_bat
-		OBJ_HNDL _obj_hndl0F_spider
-		OBJ_HNDL _obj_hndl10_floor_turret
-		OBJ_HNDL _obj_hndl11_landmine
-		OBJ_HNDL _obj_hndl12_ceiling_turret
-		OBJ_HNDL _obj_hndl13_jumping_ball
-		OBJ_HNDL _obj_hndl14_rocks
-		OBJ_HNDL _obj_hndl15_grenades
-		OBJ_HNDL _obj_hndl16_cobra
-		OBJ_HNDL _obj_hndl17_pelikan
-		OBJ_HNDL _obj_hndl18_gorilla
-		OBJ_HNDL _obj_hndl19_tiger
-		OBJ_HNDL _obj_hndl1A_tiger
-		OBJ_HNDL _obj_hndl1B_kid
-		OBJ_HNDL _obj_hndl1C_soldierA
-		OBJ_HNDL _obj_hndl1D_soldierB
-		OBJ_HNDL _obj_hndl1E_soldierB
-		OBJ_HNDL _obj_hndl1F_soldierB
-		OBJ_HNDL _obj_hndl20_torture_room_soldier
-		OBJ_HNDL _obj_hndl21_soldierA
-		OBJ_HNDL _obj_hndl22_soldierB
-		OBJ_HNDL _obj_hndl23_soldierC
-		OBJ_HNDL _obj_hndl24_soldierB
-		OBJ_HNDL _obj_hndl25_soldierB
-		OBJ_HNDL _obj_hndl26_grenade_soldier
-		OBJ_HNDL _obj_hndl27_soldierB
-		OBJ_HNDL _obj_hndl28_soldierB
-		OBJ_HNDL _obj_hndl29_soldierB
-		OBJ_HNDL _obj_hndl2A_pirate
-		OBJ_HNDL _obj_hndl2B_boss_pirate
-		OBJ_HNDL _obj_hndl2C_dubina_man
-		OBJ_HNDL _obj_hndl2D_spectre
-		OBJ_HNDL _obj_hndl2E_armored_man
-		OBJ_HNDL _obj_hndl2F_strong_man
-		OBJ_HNDL _obj_hndl30_burning_man
-		OBJ_HNDL _obj_hndl31_machete_man
-		OBJ_HNDL _obj_hndl32_skull_monkey
-		OBJ_HNDL _obj_hndl33_shield_man
-		OBJ_HNDL _obj_hndl34_crouching_bomb_man
-		OBJ_HNDL _obj_hndl35_guard_of_torture_room
-		OBJ_HNDL _obj_hndl36_boss_fire_tiger
-		OBJ_HNDL _obj_hndl37_boss_spider
-		OBJ_HNDL _obj_hndl38_boss_motorcycle
-		OBJ_HNDL _obj_hndl39_boss_drone
-		OBJ_HNDL _obj_hndl3A_boss_yusin
-		OBJ_HNDL _obj_hndl3B_boss_padovski
-		OBJ_HNDL _obj_hndl3C_plane
-		OBJ_HNDL _obj_hndl3D_helicopterA
-		OBJ_HNDL _obj_hndl3E_helicopterB
-		OBJ_HNDL _obj_hndl3F_multipurpose
+		IDX_START	_obj_hndl_lib
+		IDX _obj_hndl00_rambo
+		IDX _obj_hndl01_npcA
+		IDX _obj_hndl02_npcB
+		IDX _obj_hndl03_npcC
+		IDX _obj_hndl04_npcD
+		IDX _obj_hndl05_bee
+		IDX _obj_hndl06_snake
+		IDX _obj_hndl07_fish
+		IDX _obj_hndl08_bubbles
+		IDX _obj_hndl09_ceiling_bat
+		IDX _obj_hndl0A_stalaktit
+		IDX _obj_hndl0B_skull
+		IDX _obj_hndl0C_bird
+		IDX _obj_hndl0D_waterfall_logs
+		IDX _obj_hndl0E_small_bat
+		IDX _obj_hndl0F_spider
+		IDX _obj_hndl10_floor_turret
+		IDX _obj_hndl11_landmine
+		IDX _obj_hndl12_ceiling_turret
+		IDX _obj_hndl13_jumping_ball
+		IDX _obj_hndl14_rocks
+		IDX _obj_hndl15_grenades
+		IDX _obj_hndl16_cobra
+		IDX _obj_hndl17_pelikan
+		IDX _obj_hndl18_gorilla
+		IDX _obj_hndl19_tiger
+		IDX _obj_hndl1A_tiger
+		IDX _obj_hndl1B_kid
+		IDX _obj_hndl1C_soldierA
+		IDX _obj_hndl1D_soldierB
+		IDX _obj_hndl1E_soldierB
+		IDX _obj_hndl1F_soldierB
+		IDX _obj_hndl20_torture_room_soldier
+		IDX _obj_hndl21_soldierA
+		IDX _obj_hndl22_soldierB
+		IDX _obj_hndl23_soldierC
+		IDX _obj_hndl24_soldierB
+		IDX _obj_hndl25_soldierB
+		IDX _obj_hndl26_grenade_soldier
+		IDX _obj_hndl27_soldierB
+		IDX _obj_hndl28_soldierB
+		IDX _obj_hndl29_soldierB
+		IDX _obj_hndl2A_pirate
+		IDX _obj_hndl2B_boss_pirate
+		IDX _obj_hndl2C_dubina_man
+		IDX _obj_hndl2D_spectre
+		IDX _obj_hndl2E_armored_man
+		IDX _obj_hndl2F_strong_man
+		IDX _obj_hndl30_burning_man
+		IDX _obj_hndl31_machete_man
+		IDX _obj_hndl32_skull_monkey
+		IDX _obj_hndl33_shield_man
+		IDX _obj_hndl34_crouching_bomb_man
+		IDX _obj_hndl35_guard_of_torture_room
+		IDX _obj_hndl36_boss_fire_tiger
+		IDX _obj_hndl37_boss_spider
+		IDX _obj_hndl38_boss_motorcycle
+		IDX _obj_hndl39_boss_drone
+		IDX _obj_hndl3A_boss_yusin
+		IDX _obj_hndl3B_boss_padovski
+		IDX _obj_hndl3C_plane
+		IDX _obj_hndl3D_helicopterA
+		IDX _obj_hndl3E_helicopterB
+		IDX _obj_hndl3F_multipurpose
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl01_talk_idx_select:
@@ -5624,7 +5624,7 @@ loc_53C4A:
 		LDA		#$60
 		STA		_objA_buf_shuffle_pos
 loc_53C56:
-		LDA		_obj_heli_tmp_flag
+		LDA		_helicopter_warp_idx
 		BNE		_heli_flight_up
 		LDA		_game._flags+2
 		AND		#$08
@@ -5654,7 +5654,7 @@ _heli_land_anim:
 		CMP		#$01
 		BNE		loc_53C9A
 		LDA		#$01
-		STA		_obj_heli_tmp_flag
+		STA		_helicopter_warp_idx
 loc_53C9A:
 		LDA		_game._scr_idx
 		CMP		#$62
@@ -5697,15 +5697,15 @@ loc_53CD3:
 		CMP		#$01
 		BNE		loc_53CF5
 		LDA		#$00
-		STA		_obj_heli_tmp_flag
+		STA		_helicopter_warp_idx
 		LDA		#$80
 		STA		_objsA._o7._hndl_idx
 		JMP		_obj_kill_and_continue
 loc_53CF5:
-		LDA		_obj_heli_tmp_flag
+		LDA		_helicopter_warp_idx
 		STA		_game._scr_idx
 		LDA		#$00
-		STA		_obj_heli_tmp_flag
+		STA		_helicopter_warp_idx
 		LDA		#$01
 		STA		_game._redraw_req
 		LDA		#$03
@@ -5731,7 +5731,7 @@ _heli_already_landed:
 		BNE		loc_53D3D
 loc_53D31:
 		LDA		#$00
-		STA		_obj_heli_tmp_flag
+		STA		_helicopter_warp_idx
 		LDA		#$80
 		STA		_objsA._o7._hndl_idx
 		JMP		_obj_kill_and_continue

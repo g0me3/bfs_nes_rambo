@@ -13,12 +13,12 @@ _dialog_script_play:
 		LDX		#$00					; switch NT pages directly, only pass
 		LDA		#$F8					; is redrawn every time there.
 loc_4400C:
-		STA		_spr_buf,X				; clear all sprites for some reason
-		INX								; actually the ITEM screen will disable
-		INX								; sprite render via PPU directly
-		INX								; also this function is a dupe of the
-		INX								; system one with one exception, it
-		BNE		loc_4400C				; clear zero sprite as well.
+		STA		_spr_buf,X				; clear all sprites including spr0
+		INX								; as against other system func to do
+		INX								; the same
+		INX
+		INX
+		BNE		loc_4400C
 		JSR		_ppu_screen_clear
 		LDA		_game._scr_idx			; backup currently selected script idx
 		PHA
@@ -102,11 +102,22 @@ _ppu_set_ofs_and_add20:
 
 ; =============== S U B	R O U T	I N E =======================================
 _script_lib_player:
-		JSR		_time_is_over_test		; constantly check for extraction time
-		LDA		#$00					; internal script state flags reset
+		LDA		_game._play_days		; constantly check for extraction time
+		BEQ		loc_44793				; internal script state flags reset
+		CMP		#$02
+		BCS		loc_4478B
+		LDA		_game._play_hours
+		CMP		#$0C
+		BCC		loc_44793
+loc_4478B:
+		LDA		_game._flags+1
+		ORA		#$04
+		STA		_game._flags+1
+loc_44793:
+		LDA		#$00
 		STA		_tmp11
 		STA		_tmp12
-		LDA		_game._scr_idx			; script under 84 are game init scripts
+		LDA		_game._scr_idx			; scripts under 84 are game init scripts
 		CMP		#$84					; with its own palettes
 		BCC		loc_441B3				; the rest uses fixed palette for all
 		LDA		#$00
@@ -131,8 +142,7 @@ _script_cmd_fetch:
 		BEQ		loc_441CD
 		RTS
 loc_441CD:
-		LDA		(_tmp0D),Y
-		INY
+		BYTE_FETCH
 		ASL
 		TAX
 		LDA		_script_cmd_lib,X
@@ -141,69 +151,60 @@ loc_441CD:
 		STA		_tmp10
 		JMP		(_tmp0F)
 ; ---------------------------------------------------------------------------
-_script_cmd_lib:
-		.WORD _scr_cmd00_portrait_draw_up
-		.WORD _scr_cmd01_portrait_draw_down
-		.WORD _scr_cmd02_msg_draw_up
-		.WORD _scr_cmd03_msg_draw_down
-		.WORD _scr_cmd04_frame_draw_up
-		.WORD _scr_cmd05_frame_draw_down
-		.WORD _scr_cmd06_frame_draw_custom
-		.WORD _scr_cmd07_msg_input_handler
-		.WORD _scr_cmd08_input_2_options
-		.WORD _scr_cmd09_input_3_options_unused
-		.WORD _scr_cmd0A_input_4_options_unused
-		.WORD _scr_cmd0B_ptr_load
-		.WORD _scr_cmd0C_msg_draw_custom
-		.WORD _scr_cmd0D_game_flags_set
-		.WORD _scr_cmd0E_game_flags_clear
-		.WORD _scr_cmd0F_jmp_flag_not_set
-		.WORD _scr_cmd10_jmpne_option
-		.WORD _scr_cmd11_jmp_branch
-		.WORD _scr_cmd12_nop
-		.WORD _scr_cmd13_jump
-		.WORD _scr_cmd14_stop
-		.WORD _scr_cmd15_set_room_idx
-		.WORD _scr_cmd16_anim_scene_set
-		.WORD _scr_cmd17_player_pos_set
-		.WORD _scr_cmd18_mem_write_unused
-		.WORD _scr_cmd19_pass_input
-		.WORD _scr_cmd1A_game_stats_draw
-		.WORD _scr_cmd1B_life_restore
-		.WORD _scr_cmd1C_add_10_knifes
-		.WORD _scr_cmd21_add_5_potions
-		.WORD _scr_cmd21_add_5_potions
-		.WORD _scr_cmd21_add_5_potions
-		.WORD _scr_cmd21_add_5_potions
-		.WORD _scr_cmd21_add_5_potions
-		.WORD _scr_cmd22_inc_exp_level_unused
-		.WORD _scr_cmd23_game_hours_set
-		.WORD _scr_cmd24_checkpoint_restore
-		.WORD _scr_cmd25_checkpoint_reset
-		.WORD _scr_cmd26_checkpoint_set
-		.WORD _scr_cmd27_continue_cur_draw
-		.WORD _scr_cmd28_ending_anim
-		.WORD _scr_cmd29_scroller
+		IDX_START	_script_cmd_lib
+		IDX _scr_cmd00_portrait_draw_up
+		IDX _scr_cmd01_portrait_draw_down
+		IDX _scr_cmd02_msg_draw_up
+		IDX _scr_cmd03_msg_draw_down
+		IDX _scr_cmd04_frame_draw_up
+		IDX _scr_cmd05_frame_draw_down
+		IDX _scr_cmd06_frame_draw_custom
+		IDX _scr_cmd07_msg_input_handler
+		IDX _scr_cmd08_input_2_options
+		IDX _scr_cmd0B_ptr_load
+		IDX _scr_cmd0C_msg_draw_custom
+		IDX _scr_cmd0D_game_flags_set
+		IDX _scr_cmd0E_game_flags_clear
+		IDX _scr_cmd0F_jmp_flag_not_set
+		IDX _scr_cmd10_jmpne_option
+		IDX _scr_cmd11_jmp_branch
+		IDX _scr_cmd12_nop
+		IDX _scr_cmd13_jump
+		IDX _scr_cmd14_stop
+		IDX _scr_cmd15_new_warp_set
+		IDX _scr_cmd16_heli_warp_set
+		IDX _scr_cmd17_player_pos_set
+		IDX _scr_cmd19_pass_input
+		IDX _scr_cmd1A_game_stats_draw
+		IDX _scr_cmd1B_life_restore
+		IDX _scr_cmd1C_add_10_knifes
+		IDX _scr_cmd21_add_5_potions
+		IDX _scr_cmd23_game_hours_set
+		IDX _scr_cmd24_checkpoint_restore
+		IDX _scr_cmd25_checkpoint_reset
+		IDX _scr_cmd26_checkpoint_set
+		IDX _scr_cmd27_continue_cur_draw
+		IDX _scr_cmd28_ending_anim
+		IDX _scr_cmd29_scroller
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd00_portrait_draw_up:
-		LDA		(_tmp0D),Y
-		STA		_tmp04
-		INY
 		LDA		_tmp11
 		ORA		#$40
-		STA		_tmp11
-		JSR		_sprite_insert
-		JMP		_script_cmd_fetch
+		BNE		_scr_cmd_portrait_draw_ex
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd01_portrait_draw_down:
-		LDA		(_tmp0D),Y
-		STA		_tmp04
-		INY
 		LDA		_tmp11
 		AND		#$BF
+
+; !FALLTHROUGH!
+
+; =============== S U B	R O U T	I N E =======================================
+_scr_cmd_portrait_draw_ex:
 		STA		_tmp11
+		BYTE_FETCH
+		STA		_tmp04
 		JSR		_sprite_insert
 		JMP		_script_cmd_fetch
 
@@ -214,22 +215,15 @@ _scr_cmd02_msg_draw_up:
 		BEQ		loc_4420B
 		JSR		_msg_wnd_clear_down
 loc_4420B:
-		LDA		_tmp11
-		AND		#$FC
-		ORA		#$01
-		STA		_tmp11
 		JSR		_msg_wnd_clear_up
 		LDA		#>[MSG_UP_OFS]
 		STA		_tmp00
 		LDA		#<[MSG_UP_OFS]
 		STA		_tmp01
-		LDA		#$01
-		STA		_tmp14
 		LDA		_tmp11
-		ORA		#$40
-		STA		_tmp11
-		JSR		_msg_draw_ex
-		JMP		_scr_cmd07_msg_input_handler
+		AND		#$BC
+		ORA		#$41
+		BNE		_scr_cmd_msg_draw_ex
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd03_msg_draw_down:
@@ -238,20 +232,22 @@ _scr_cmd03_msg_draw_down:
 		BEQ		loc_44237
 		JSR		_msg_wnd_clear_up
 loc_44237:
-		LDA		_tmp11
-		AND		#$FC
-		ORA		#$02
-		STA		_tmp11
 		JSR		_msg_wnd_clear_down
 		LDA		#>[MSG_DOWN_OFS]
 		STA		_tmp00
 		LDA		#<[MSG_DOWN_OFS]
 		STA		_tmp01
+		LDA		_tmp11
+		AND		#$BC
+		ORA		#$02
+
+; !FALLTHROUGH!
+
+; =============== S U B	R O U T	I N E =======================================
+_scr_cmd_msg_draw_ex:
+		STA		_tmp11
 		LDA		#$01
 		STA		_tmp14
-		LDA		_tmp11
-		AND		#$BF
-		STA		_tmp11
 		JSR		_msg_draw_ex
 		JMP		_scr_cmd07_msg_input_handler
 
@@ -260,12 +256,7 @@ _scr_cmd04_frame_draw_up:
 		LDA		#>[FRAME_UP_OFS]
 		STA		_tmp00
 		LDA		#<[FRAME_UP_OFS]
-		STA		_tmp01
-		LDA		#FRAME_WIDTH
-		STA		_tmp02
-		LDA		#FRAME_HEIGHT
-		STA		_tmp03
-		JSR		_frame_draw
+		JSR		_scr_cmd_frame_draw_ex
 		JMP		_scr_cmd00_portrait_draw_up
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -273,27 +264,25 @@ _scr_cmd05_frame_draw_down:
 		LDA		#>[FRAME_DOWN_OFS]
 		STA		_tmp00
 		LDA		#<[FRAME_DOWN_OFS]
+		JSR		_scr_cmd_frame_draw_ex
+		JMP		_scr_cmd01_portrait_draw_down
+
+; =============== S U B	R O U T	I N E =======================================
+_scr_cmd_frame_draw_ex:
 		STA		_tmp01
 		LDA		#FRAME_WIDTH
 		STA		_tmp02
 		LDA		#FRAME_HEIGHT
 		STA		_tmp03
-		JSR		_frame_draw
-		JMP		_scr_cmd01_portrait_draw_down
+		JMP		_frame_draw
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd06_frame_draw_custom:
-		LDA		(_tmp0D),Y
-		INY
-		STA		_tmp00
-		LDA		(_tmp0D),Y
-		INY
+		WORD_FETCH
+		STX		_tmp00
 		STA		_tmp01
-		LDA		(_tmp0D),Y
-		INY
-		STA		_tmp02
-		LDA		(_tmp0D),Y
-		INY
+		WORD_FETCH
+		STX		_tmp02
 		STA		_tmp03
 		JSR		_frame_draw
 		JMP		_script_cmd_fetch
@@ -303,36 +292,22 @@ _scr_cmd07_msg_input_handler:
 		TYA
 		PHA
 loc_442A2:
-		LDA		#$01
-		STA		_tmp13
-		LDA		_tmp11
+		LDA		_tmp11					; has option to choose
 		AND		#$08
-		BNE		_input_2_options
-		LDA		_tmp11
-		AND		#$10
-		BNE		_input_3_options
-		LDA		_tmp11
-		AND		#$20
-		BNE		_input_4_options
-loc_442B8:
-		JSR		_msg_wait_for_input
+		BNE		.input_2_options
+.no_options:
+		JSR		_msg_wait_for_input		; if no options, just wait
 		LDA		_pad
 		AND		#$80
-		BEQ		loc_442B8
-		BNE		_select_is_over
-_input_2_options:
-		LDA		#$00
-		BEQ		loc_442D3
-_input_3_options:
-		LDA		#$03
-		BNE		loc_442D3
-_input_4_options:
-		LDA		#$07
-loc_442D3:
-		TAY
+		BEQ		.no_options
+		BNE		.select_is_over
+.input_2_options:
+		LDA		#$01
+		STA		_tmp13
+		LDY		#$00
 loc_442D4:
 		LDA		_msg_option_pos_list,Y
-		BEQ		loc_442A2
+		BEQ		.input_2_options
 		STA		_spr_buf+$FC
 		LDA		#$FF
 		STA		_spr_buf+$FD
@@ -343,14 +318,14 @@ loc_442D4:
 		JSR		_msg_wait_for_input
 		LDA		_pad
 		AND		#$80
-		BNE		_select_is_over
+		BNE		.select_is_over
 		LDA		_pad
 		AND		#$0F
 		BEQ		loc_442D4
 		INC		_tmp13
 		INY
 		JMP		loc_442D4
-_select_is_over:
+.select_is_over:
 		LDA		_tmp11
 		AND		#$C7
 		STA		_tmp11
@@ -361,8 +336,6 @@ _select_is_over:
 		JMP		_script_cmd_fetch
 _msg_option_pos_list:
 		.BYTE $84,$B4,$00
-		.BYTE $84,$A4,$C4,$00
-		.BYTE $84,$94,$A4,$B4,$C4,$00
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd08_input_2_options:
@@ -372,257 +345,167 @@ _scr_cmd08_input_2_options:
 		JMP		_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
-_scr_cmd09_input_3_options_unused:
-		LDA		_tmp11
-		ORA		#$10
-		STA		_tmp11
-		JMP		_script_cmd_fetch
-
-; =============== S U B	R O U T	I N E =======================================
-_scr_cmd0A_input_4_options_unused:
-		LDA		_tmp11
-		ORA		#$20
-		STA		_tmp11
-		JMP		_script_cmd_fetch
-
-; =============== S U B	R O U T	I N E =======================================
 _scr_cmd0B_ptr_load:
-		LDA		(_tmp0D),Y
-		STA		_tmp04
-		INY
-		LDA		(_tmp0D),Y
+		WORD_FETCH
+		STX		_tmp04
 		STA		_tmp05
-		INY
 		JMP		_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd0C_msg_draw_custom:
-		LDA		(_tmp0D),Y
-		STA		_tmp01
-		INY
-		LDA		(_tmp0D),Y
+		WORD_FETCH
+		STX		_tmp01
 		STA		_tmp00
-		INY
 		JSR		_msg_draw_ex
 		JMP		_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
-_scr_cmd0D_game_flags_set:
-		LDA		(_tmp0D),Y
-		INY
-		ASL
-		ASL
+_game_flags_fetch:
+		BYTE_FETCH
+		PHA
+		AND		#$07
 		TAX
 		LDA		_bitmasks,X
-		ORA		_game._flags
-		STA		_game._flags
-		LDA		_bitmasks+1,X
-		ORA		_game._flags+1
-		STA		_game._flags+1
-		LDA		_bitmasks+2,X
-		ORA		_game._flags+2
-		STA		_game._flags+2
+		STA		_tmp00
+		PLA
+		LSR
+		LSR
+		LSR
+		TAX
+		LDA		_tmp00
+		RTS
+
+; =============== S U B	R O U T	I N E =======================================
+_scr_cmd0D_game_flags_set:
+		JSR		_game_flags_fetch
+		ORA		_game._flags,X
+		STA		_game._flags,X
 		JMP		_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd0E_game_flags_clear:
-		LDA		(_tmp0D),Y
-		INY
-		ASL
-		ASL
-		TAX
-		LDA		_bitmasks,X
+		JSR		_game_flags_fetch
 		EOR		#$FF
-		AND		_game._flags
-		STA		_game._flags
-		LDA		_bitmasks+1,X
-		EOR		#$FF
-		AND		_game._flags+1
-		STA		_game._flags+1
-		LDA		_bitmasks+2,X
-		EOR		#$FF
-		AND		_game._flags+2
-		STA		_game._flags+2
+		AND		_game._flags,X
+		STA		_game._flags,X
 		JMP		_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd0F_jmp_flag_not_set:
-		LDA		(_tmp0D),Y
-		INY
-		ASL
-		ASL
-		TAX
-		LDA		_bitmasks,X
-		AND		_game._flags
+		JSR		_game_flags_fetch
+		AND		_game._flags,X
 		BNE		loc_443C6
-		LDA		_bitmasks+1,X
-		AND		_game._flags+1
-		BNE		loc_443C6
-		LDA		_bitmasks+2,X
-		AND		_game._flags+2
-		BNE		loc_443C6
-		JMP		_script_look_for_rets
+		JMP		_script_branch
 loc_443C6:
 		JMP		_script_cmd_fetch
-
 _bitmasks:
-		.BYTE $01,$00,$00,$00
-		.BYTE $02,$00,$00,$00
-		.BYTE $04,$00,$00,$00
-		.BYTE $08,$00,$00,$00
-		.BYTE $10,$00,$00,$00
-		.BYTE $20,$00,$00,$00
-		.BYTE $40,$00,$00,$00
-		.BYTE $80,$00,$00,$00
-		.BYTE $00,$01,$00,$00
-		.BYTE $00,$02,$00,$00
-		.BYTE $00,$04,$00,$00
-		.BYTE $00,$08,$00,$00
-		.BYTE $00,$10,$00,$00
-		.BYTE $00,$20,$00,$00
-		.BYTE $00,$40,$00,$00
-		.BYTE $00,$80,$00,$00
-		.BYTE $00,$00,$01,$00
-		.BYTE $00,$00,$02,$00
-		.BYTE $00,$00,$04,$00
-		.BYTE $00,$00,$08,$00
-		.BYTE $00,$00,$10,$00
-		.BYTE $00,$00,$20,$00
-		.BYTE $00,$00,$40,$00
-		.BYTE $00,$00,$80,$00
+		.BYTE $01,$02,$04,$08,$10,$20,$40,$80
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd10_jmpne_option:
-		LDA		(_tmp0D),Y
-		INY
+		BYTE_FETCH
 		CMP		_tmp13
 		BEQ		_j_script_cmd_fetch
 
 ; !FALLTHROUGH!
 
 ; =============== S U B	R O U T	I N E =======================================
-_script_look_for_rets:
-		LDA		(_tmp0D),Y
-		INY
-		CMP		#$11
+_script_branch:
+		BYTE_FETCH
+		CMP		#_scr_cmd11_jmp_branch_idx
 		BEQ		loc_44448
-		CMP		#$12
+		CMP		#_scr_cmd12_nop_idx
 		BEQ		loc_4443E
-		JMP		_script_look_for_rets
+		JMP		_script_branch
 loc_4443E:
-		LDA		(_tmp0D),Y
-		INY
-		CMP		#$12
-		BNE		_script_look_for_rets
-		JMP		_script_cmd_fetch
+		BYTE_FETCH
+		CMP		#_scr_cmd12_nop_idx
+		BNE		_script_branch
+		BEQ		_j_script_cmd_fetch
 loc_44448:
-		LDA		(_tmp0D),Y
-		INY
-		CMP		#$11
-		BNE		_script_look_for_rets
-
-; !FAALLTHROUGH!
-
-; =============== S U B	R O U T	I N E =======================================
-_j_script_cmd_fetch:
-		JMP		_script_cmd_fetch
+		BYTE_FETCH
+		CMP		#_scr_cmd11_jmp_branch_idx
+		BNE		_script_branch
+		BEQ		_j_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd11_jmp_branch:
-		LDA		(_tmp0D),Y
-		INY
-		CMP		#$12
+		BYTE_FETCH
+		CMP		#_scr_cmd12_nop_idx
 		BNE		_scr_cmd11_jmp_branch
-		LDA		(_tmp0D),Y
-		INY
-		CMP		#$12
+		BYTE_FETCH
+		CMP		#_scr_cmd12_nop_idx
 		BNE		_scr_cmd11_jmp_branch
-		JMP		_script_cmd_fetch
+
+; !FALLTHROUGH!
 
 ; =============== S U B	R O U T	I N E =======================================
+_j_script_cmd_fetch:
 _scr_cmd12_nop:
 		JMP		_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd13_jump:
-		LDA		(_tmp0D),Y
-		TAX
-		INY
-		LDA		(_tmp0D),Y
+		WORD_FETCH
+		STX		_tmp0D
 		STA		_tmp0E
-		TXA
-		STA		_tmp0D
 		LDY		#$00
-		JMP		_script_cmd_fetch
+		BEQ		_j_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd14_stop:
 		LDA		_tmp11
 		ORA		#$04
 		STA		_tmp11
-		JMP		_script_cmd_fetch
+		BNE		_j_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
-_scr_cmd15_set_room_idx:
-		LDA		(_tmp0D),Y
+_scr_cmd15_new_warp_set:
+		BYTE_FETCH
 		STA		_game._scr_idx
-		INY
 		LDA		#$01
 		STA		_game._redraw_req
-		JMP		_script_cmd_fetch
+		BNE		_j_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
-_scr_cmd16_anim_scene_set:
-		LDA		(_tmp0D),Y
-		STA		_obj_heli_tmp_flag
-		INY
+_scr_cmd16_heli_warp_set:
+		BYTE_FETCH
+		STA		_helicopter_warp_idx
 		JMP		_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd17_player_pos_set:
-		LDA		(_tmp0D),Y
-		STA		_objsA._player._room_num
-		STA		_room_scroll_pos_x+1
-		INY
-		LDA		#$78
-		STA		_objsA._player._x_pos
-		LDA		#$00
-		STA		_room_scroll_pos_x
+		BYTE_FETCH
+		STA		_objsA._player._y_pos
 		LDA		_objsA._player._dir
 		AND		#$BF
 		STA		_objsA._player._dir
-		LDA		(_tmp0D),Y
-		STA		_objsA._player._y_pos
-		INY
-		JMP		_script_cmd_fetch
-
-; =============== S U B	R O U T	I N E =======================================
-_scr_cmd18_mem_write_unused:
-		LDA		(_tmp0D),Y
-		INY
-		STA		_tmp04
-		LDA		(_tmp0D),Y
-		INY
-		STA		_tmp05
-		LDA		(_tmp0D),Y
-		INY
-		LDX		#$00
-		STA		(_tmp04,X)
-		JMP		_script_cmd_fetch
+		BYTE_FETCH
+		JMP		_player_pos_x_set
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd19_pass_input:
 		JSR		_pass_input_screen
+
+; !FALLTHROUGH!
+
+; =============== S U B	R O U T	I N E =======================================
+_player_pos_set:
 		LDA		_game._start_y
 		STA		_objsA._player._y_pos
 		LDA		_game._start_room
+
+; !FALLTHROUGH!
+
+; =============== S U B	R O U T	I N E =======================================
+_player_pos_x_set:
 		STA		_objsA._player._room_num
 		STA		_room_scroll_pos_x+1
 		LDA		#$78
 		STA		_objsA._player._x_pos
 		LDA		#$00
 		STA		_room_scroll_pos_x
-		JMP		_script_cmd_fetch
+		BEQ		_j_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd1A_game_stats_draw:
@@ -704,7 +587,7 @@ _ppu_num_draw:
 		STY		_PPU_ADDR
 		LDX		_tmp00
 loc_445EF:
-		LDA		$01,X
+		LDA		_tmp01,X
 		CLC
 		ADC		#$D8
 		STA		_PPU_DATA
@@ -726,6 +609,7 @@ _scr_cmd1B_life_restore:
 		STA		_game._life+1
 		LDX		#$00
 loc_44613:
+		JSR		_render_on
 		JSR		_render_off
 		INX
 		TXA
@@ -733,31 +617,11 @@ loc_44613:
 		BEQ		loc_44676
 		AND		#$02
 		BNE		loc_4464B
-#if LANGUAGE == LANG_JP
-		PPU_FILL_LINEY	$3F00, $02, $0F
-#endif
-#if LANGUAGE == LANG_US
-		PPU_FILL_LINEY	$3F00, $02, $0E
-		LDA		#$30
-		STA		_PPU_DATA
-#endif
-		LDA		#$30
-		STA		_PPU_DATA
-		JSR		_render_on
-		JMP		loc_44613
+		PPU_PUT_CHAR	$3F00, $02
+		BNE		loc_44613
 loc_4464B:
-#if LANGUAGE == LANG_JP
-		PPU_FILL_LINEY	$3F00, $0F, $0F
-#endif
-#if LANGUAGE == LANG_US
-		PPU_FILL_LINEY	$3F00, $0F, $0E
-		LDA		#$30
-		STA		_PPU_DATA
-#endif
-		LDA		#$30
-		STA		_PPU_DATA
-		JSR		_render_on
-		JMP		loc_44613
+		PPU_PUT_CHAR	$3F00, $0F
+		BNE		loc_44613
 loc_44676:
 		PLA
 		TAY
@@ -781,15 +645,9 @@ _scr_cmd21_add_5_potions:
 		JMP		_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
-_scr_cmd22_inc_exp_level_unused:
-		INC		_game._exp_level
-		JMP		_script_cmd_fetch
-
-; =============== S U B	R O U T	I N E =======================================
 _scr_cmd23_game_hours_set:
-		LDA		(_tmp0D),Y
+		BYTE_FETCH
 		STA		_game._play_hours
-		INY
 		LDA		#$00
 		STA		_game._play_days
 		JMP		_script_cmd_fetch
@@ -819,27 +677,17 @@ loc_446E2:
 		STA		_game._life
 		LDA		#$01
 		STA		_game._redraw_req
-		LDA		_game._start_y
-		STA		_objsA._player._y_pos
-		LDA		_game._start_room
-		STA		_objsA._player._room_num
-		STA		_room_scroll_pos_x+1
-		LDA		#$78
-		STA		_objsA._player._x_pos
-		LDA		#$00
-		STA		_room_scroll_pos_x
-		JMP		_script_cmd_fetch
+		JMP		_player_pos_set
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd25_checkpoint_reset:
-		LDX		#$00
+		LDX		#$23
 		LDA		#$00
 loc_4470A:
 		STA		_game,X
-		INX
-		CPX		#$24
-		BNE		loc_4470A
-		LDA		#$64
+		DEX
+		BPL		loc_4470A
+		LDA		#100
 		STA		_game._life
 		JMP		_script_cmd_fetch
 
@@ -875,7 +723,7 @@ loc_44735:
 		AND		#$10
 		BNE		loc_4475D
 		LDA		_pad
-		AND		#$20
+		AND		#$2C
 		BEQ		loc_44724
 		INC		_tmp13
 		JMP		loc_44724
@@ -899,22 +747,6 @@ loc_44766:
 _scr_cmd29_scroller:
 		JSR		_scroller_screen
 		JMP		_script_cmd_fetch
-
-; =============== S U B	R O U T	I N E =======================================
-_time_is_over_test:
-		LDA		_game._play_days
-		BEQ		locret_44793
-		CMP		#$02
-		BCS		loc_4478B
-		LDA		_game._play_hours
-		CMP		#$0C
-		BCC		locret_44793
-loc_4478B:
-		LDA		_game._flags+1
-		ORA		#$04
-		STA		_game._flags+1
-locret_44793:
-		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
 _msg_wnd_clear_up:
@@ -987,13 +819,7 @@ _msg_display_inventory_screen:
 ; when return to the title screen it will restore regular white coloring
 #if LANGUAGE == LANG_US
 		JSR		_render_off
-		LDA		_PPU_STATUS
-		LDA		#$3F
-		STA		_PPU_ADDR
-		LDA		#$0E
-		STA		_PPU_ADDR
-		LDA		#$22
-		STA		_PPU_DATA
+		PPU_PUT_CHAR	$3F0E, $22
 		JSR		_render_on
 #endif
 		JSR		_cur_game_vars_backup
@@ -1006,13 +832,7 @@ loc_44817:
 		JSR		_render_on_ex_ex
 #if LANGUAGE == LANG_US
 		JSR		_render_off
-		LDA		_PPU_STATUS
-		LDA		#$3F
-		STA		_PPU_ADDR
-		LDA		#$0E
-		STA		_PPU_ADDR
-		LDA		#$30
-		STA		_PPU_DATA
+		PPU_PUT_CHAR	$3F0E, $30
 		JSR		_render_on
 #endif
 		RTS
@@ -1166,22 +986,18 @@ _cur_game_vars_backup:
 
 ; =============== S U B	R O U T	I N E =======================================
 _script_sprite_anim:
+		TYA
+		PHA
 		LDA		_nmi_flag
-		BNE		loc_4496B
-		RTS
-loc_4496B:
+		BEQ		.anim_exit
 		LDA		#$00
 		STA		_nmi_flag
 		LDA		_tmp14
-		BNE		loc_44977
-		RTS
-loc_44977:
+		BEQ		.anim_exit
 		INC		_tmp14
 		LDA		_tmp14
 		AND		#$0F
-		BEQ		loc_44982
-		RTS
-loc_44982:
+		BNE		.anim_exit
 		LDA		_tmp14
 		AND		#$10
 		BEQ		loc_449C0
@@ -1190,57 +1006,49 @@ loc_44982:
 		BNE		loc_449A7
 		LDA		_tmp12
 		AND		#$02
-		BEQ		locret_449F8
-		LDX		#$B0
-		LDA		#$F8
-		JSR		_spr_nibble_fill
-		LDX		#$E0
-		LDA		#MOUTH_DOWN_Y
-		JMP		_spr_nibble_fill
+		BEQ		.anim_exit
+		LDX		#00
+		BEQ		.spr_nibble_fill
 loc_449A7:
 		LDA		_tmp12
 		AND		#$01
-		BEQ		locret_449F8
-		LDX		#$30
-		LDA		#$F8
-		JSR		_spr_nibble_fill
-		LDX		#$60
-		LDA		#MOUTH_UP_Y
-		JMP		_spr_nibble_fill
+		BEQ		.anim_exit
+		LDX		#02
+		BNE		.spr_nibble_fill
 loc_449C0:
 		LDA		_tmp11
 		AND		#$40
 		BNE		loc_449DF
 		LDA		_tmp12
 		AND		#$02
-		BEQ		locret_449F8
-		LDX		#$B0
-		LDA		#MOUTH_DOWN_Y
-		JSR		_spr_nibble_fill
-		LDX		#$E0
-		LDA		#$F8
-		JMP		_spr_nibble_fill
+		BEQ		.anim_exit
+		LDX		#01
+		BNE		.spr_nibble_fill
 loc_449DF:
 		LDA		_tmp12
 		AND		#$01
-		BEQ		locret_449F8
-		LDX		#$30
-		LDA		#MOUTH_UP_Y
-		JSR		_spr_nibble_fill
-		LDX		#$60
-		LDA		#$F8
-		JMP		_spr_nibble_fill
-locret_449F8:
+		BEQ		.anim_exit
+		LDX		#03
+.spr_nibble_fill:
+		LDA		_anim_data0,X
+		TAY
+		LDA		_anim_data1,X
+		STA		_spr_buf,Y
+		STA		_spr_buf+4,Y
+		STA		_spr_buf+8,Y
+		LDA		_anim_data1+1,X
+		STA		_spr_buf+$30,Y
+		STA		_spr_buf+$34,Y
+		STA		_spr_buf+$38,Y
+.anim_exit:
+		PLA
+		TAY
 		RTS
+_anim_data0:
+		.BYTE $B0,$B0,$30,$30
+_anim_data1:
+		.BYTE $F8,MOUTH_DOWN_Y,$F8,MOUTH_UP_Y,$F8
 
-; =============== S U B	R O U T	I N E =======================================
-_spr_nibble_fill:
-		STA		_spr_buf,X
-		STA		_spr_buf+4,X
-		STA		_spr_buf+8,X
-		RTS
-
-#if LANGUAGE == LANG_US
 ; =============== S U B	R O U T	I N E =======================================
 _msg_draw_ex:
 		TYA
@@ -1252,9 +1060,38 @@ loc_44ADC:
 		LDA		(_tmp04),Y
 		CMP		#$FF
 		BEQ		loc_44AE9
+#if LANGUAGE == LANG_JP
+		CMP		#$F5
+		BCS		loc_80A9B
+#endif
 		STA		_PPU_DATA
 		INY
+#if LANGUAGE == LANG_JP
+		INC		_tmp03
+#endif
 		JMP		loc_44ADC
+#if LANGUAGE == LANG_JP
+loc_80A9B:
+		PHA
+		LDA		_PPU_STATUS
+		LDA		_tmp03
+		SEC
+		SBC		#$21
+		TAX
+		LDA		_tmp02
+		SBC		#$00
+		STA		_PPU_ADDR
+		STX		_PPU_ADDR
+		PLA
+		STA		_PPU_DATA
+		INY
+		LDA		_PPU_STATUS
+		LDA		_tmp02
+		STA		_PPU_ADDR
+		LDA		_tmp03
+		STA		_PPU_ADDR
+		JMP		loc_44ADC
+#endif
 loc_44AE9:
 		JSR		_render_on
 		INY
@@ -1270,8 +1107,14 @@ _ppu_set_ofs_and_add40:
 		JSR		_render_off
 		LDA		_PPU_STATUS
 		LDA		_tmp00
+#if LANGUAGE == LANG_JP
+		STA		_tmp02
+#endif
 		STA		_PPU_ADDR
 		LDA		_tmp01
+#if LANGUAGE == LANG_JP
+		STA		_tmp03
+#endif
 		STA		_PPU_ADDR
 		CLC
 		ADC		#$40
@@ -1280,90 +1123,6 @@ _ppu_set_ofs_and_add40:
 		INC		_tmp00
 loc_44AFD:
 		RTS
-#endif
-
-#if LANGUAGE == LANG_JP
-; =============== S U B	R O U T	I N E =======================================
-_msg_draw_ex:
-		TYA
-		PHA
-		JSR		_render_off
-		LDA		_PPU_STATUS
-		LDA		_tmp00
-		STA		_PPU_ADDR
-		STA		_tmp02
-		LDA		_tmp01
-		STA		_PPU_ADDR
-		STA		_tmp03
-		LDY		#$00
-loc_80A88:
-		LDA		(_tmp04),Y
-		CMP		#$FF
-		BEQ		loc_80AD4
-		CMP		#$F5
-		BCS		loc_80A9B
-		STA		_PPU_DATA
-		INY
-		INC		_tmp03
-		JMP		loc_80A88
-loc_80A9B:
-		LDA		_PPU_STATUS
-		SEC
-		LDA		_tmp03
-		SBC		#$21
-		STA		_tmp03
-		LDA		_tmp02
-		SBC		#$00
-		STA		_tmp02
-		STA		_PPU_ADDR
-		LDA		_tmp03
-		STA		_PPU_ADDR
-		LDA		(_tmp04),Y
-		STA		_PPU_DATA
-		INY
-		LDA		_PPU_STATUS
-		LDA		_tmp03
-		CLC
-		ADC		#$21
-		STA		_tmp03
-		LDA		_tmp02
-		ADC		#$00
-		STA		_tmp02
-		STA		_PPU_ADDR
-		LDA		_tmp03
-		STA		_PPU_ADDR
-		JMP		loc_80A88
-loc_80AD4:
-		JSR		_render_on
-		INY
-		LDA		(_tmp04),Y
-		CMP		#$FF
-		BEQ		loc_80AE7
-		JSR		_render_off
-		JSR		_ppu_set_ofs_and_add40
-		JMP		loc_80A88
-loc_80AE7:
-		PLA
-		TAY
-		RTS
-
-; =============== S U B	R O U T	I N E =======================================
-_ppu_set_ofs_and_add40:
-		LDA		_PPU_STATUS
-		LDA		_tmp01
-		CLC
-		ADC		#$40
-		STA		_tmp01
-		LDA		_tmp00
-		ADC		#$00
-		STA		_tmp00
-		STA		_PPU_ADDR
-		STA		_tmp02
-		LDA		_tmp01
-		STA		_PPU_ADDR
-		STA		_tmp03
-		RTS
-#endif
 
 ; =============== S U B	R O U T	I N E =======================================
 _sprite_insert:
@@ -1372,15 +1131,15 @@ _sprite_insert:
 		TXA
 		PHA
 		LDA		_tmp04
-		CMP		#$D8
+		CMP		#PORTRAIT_CLEAR
 		BNE		loc_44B5D
 		JMP		_portrait_clear
 loc_44B5D:
-		CMP		#$C6
+		CMP		#SPR_PACK_IN_TIME
 		BNE		loc_44B64
 		JMP		_pack_in_time_spr_insert
 loc_44B64:
-		CMP		#$C8
+		CMP		#SPR_TITLE_SCREEN
 		BNE		_portrait_spr_insert
 		JMP		_title_screen_spr_anim_menu_input
 
@@ -1402,9 +1161,7 @@ _portrait_spr_insert:
 		LDA		#PORTRAIT_DOWN_X
 		STA		_tmp01
 		LDX		#$80
-		LDA		_tmp12
-		ORA		#$02
-		STA		_tmp12
+		LDA		#$02
 		BNE		loc_44BA3
 loc_44B93:
 		LDA		#PORTRAIT_UP_Y
@@ -1412,10 +1169,10 @@ loc_44B93:
 		LDA		#PORTRAIT_UP_X
 		STA		_tmp01
 		LDX		#$00
-		LDA		_tmp12
-		ORA		#$01
-		STA		_tmp12
+		LDA		#$01
 loc_44BA3:
+		ORA		_tmp12
+		STA		_tmp12
 		JSR		_sprite_sheet_insert
 		LDA		_portraits_lib,Y
 		INY
@@ -1427,18 +1184,18 @@ loc_44BA3:
 		LDA		_tmp11
 		AND		#$40
 		BNE		loc_44BC7
-		LDX		#$E0
 		LDA		#MOUTH_DOWN_Y
 		STA		_tmp00
 		LDA		#MOUTH_DOWN_X
 		STA		_tmp01
+		LDX		#$E0
 		BNE		loc_44BD1
 loc_44BC7:
-		LDX		#$60
 		LDA		#MOUTH_UP_Y
 		STA		_tmp00
 		LDA		#MOUTH_UP_X
 		STA		_tmp01
+		LDX		#$60
 loc_44BD1:
 		JSR		_sprite_sheet_insert
 		PLA
@@ -1456,15 +1213,13 @@ _portrait_clear:
 		BNE		loc_44BEE
 		LDX		#$80
 		LDA		#$FD
-		AND		_tmp12
-		STA		_tmp12
-		JMP		loc_44BF6
+		BNE		loc_44BF6
 loc_44BEE:
 		LDX		#$00
 		LDA		#$FE
+loc_44BF6:
 		AND		_tmp12
 		STA		_tmp12
-loc_44BF6:
 		LDA		#$F8
 		STA		_spr_buf,X
 		INX
@@ -1524,18 +1279,7 @@ loc_44C1A:
 ; =============== S U B	R O U T	I N E =======================================
 _title_screen_spr_anim_menu_input:
 		JSR		_render_off
-		LDA		_PPU_STATUS
-		LDA		#$23
-		STA		_PPU_ADDR
-		LDA		#$D8
-		STA		_PPU_ADDR
-		LDY		#$00
-		LDA		#$AA
-loc_44C3D:
-		STA		_PPU_DATA
-		INY
-		CPY		#$10
-		BNE		loc_44C3D
+		PPU_FILL_LINEY	$23D8, $AA, $10
 		JSR		_render_on
 		LDA		#$05
 		STA		_tmp0A
@@ -1595,7 +1339,7 @@ loc_44CB3:
 		AND		#$10
 		BNE		loc_44CCE
 		LDA		_pad
-		AND		#$20
+		AND		#$2C
 		BEQ		loc_44CCB
 		INC		_tmp13
 loc_44CCB:
@@ -1775,13 +1519,12 @@ loc_44EB0:
 		ASL
 		ASL
 		TAY
-		LDX		#$00
+		LDX		#$10
 loc_44EC4:
 		LDA		_pal_portrait_lib,Y
 		INY
 		STA		_PPU_DATA
-		INX
-		CPX		#$10
+		DEX
 		BNE		loc_44EC4
 		LDA		#$3F
 		STA		_PPU_ADDR
@@ -1796,15 +1539,15 @@ loc_44EC4:
 		TAY
 		RTS
 ; ---------------------------------------------------------------------------
-_pal_bg_default:
-		.BYTE $0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$16,$0F,$0F,$30,$30
 _pal_portrait_lib:
 		.BYTE $0F,$10,$36,$0A,$0F,$16,$36,$17,$0F,$1A,$36,$37,$0F,$1C,$36,$30
 		.BYTE $0F,$0F,$0F,$0F,$0F,$0F,$0F,$06,$0F,$12,$16,$30,$0F,$2A,$16,$30
 		.BYTE $0F,$0F,$0F,$06,$0F,$0F,$06,$16,$0F,$0F,$0F,$0F,$0F,$0F,$30,$30
 		.BYTE $0F,$0F,$06,$16,$0F,$06,$16,$27,$0F,$0F,$0F,$0F,$0F,$0F,$30,$30
 		.BYTE $0F,$06,$16,$27,$0F,$16,$27,$37,$0F,$0F,$0F,$0F,$0F,$0F,$30,$30
-		.BYTE $0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$30,$30
+_pal_bg_default:
+		.BYTE $0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$16,$0F,$0F,$30,$30
+;		.BYTE $0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$30,$30
 
 ; =============== S U B	R O U T	I N E =======================================
 _pass_input_screen:

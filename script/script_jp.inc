@@ -54,7 +54,7 @@
 		.WORD _scriptB4
 		.WORD _scriptB5
 _script80:
-		set_room_idx		$81
+		new_warp_set		$81
 		ptr_load			_script80_msg00
 		msg_printf			$2087	; [ _ 1985 BY CAROLCO\ INTERNATIONAL N.V.\ALL RIGHTS RESERVED.]
 		ptr_load			_script80_msg01
@@ -63,7 +63,7 @@ _script80:
 		msg_printf			$2183	; [RAMBO_FIRST BLOOD PART II]
 		ptr_load			_script80_msg03
 		msg_printf			$21e4	; [_ A REGISTERED TRADEMARK,\TM A TRADEMARK,ARE OWNED\ BY CAROLCO INTERNATIONAL\     N.V.AND USED BY\  PACK-IN-VIDEO CO.,LTD.\   UNDER AUTHORIZATION.]
-		sprite_draw_up		_SPR_PACK_IN_TIME
+		sprite_draw_up		SPR_PACK_IN_TIME
 		stop
 _script81:
 		ptr_load			_script81_msg00
@@ -72,16 +72,16 @@ _script81:
 		msg_printf			$22ac	; [START\CONTINUE]
 		ptr_load			_script81_msg02
 		msg_printf			$2B65	; [_2021 CAH4E3 BFS GMBH]
-		sprite_draw_up		_SPR_TITLE_SCREEN
+		sprite_draw_up		SPR_TITLE_SCREEN
 		jmpne_option		$01, _script81_loc00
 		checkpoint_reset
-		set_room_idx		$85
+		new_warp_set		$85
 		checkpoint_set
 		scroller
 		stop
 		------------------
 _script81_loc00:
-		set_room_idx		$82
+		new_warp_set		$82
 		stop
 _script82:
 		frame_draw_custom	$2065, $17, $06
@@ -101,13 +101,13 @@ _script82_loc01:
 		frame_draw_custom	$2269, $0d, $06
 		ptr_load			_script82_msg02
 		msg_printf			$226b	; [コ-ドがちがいます]
-		set_room_idx		$82
+		new_warp_set		$82
 		ptr_load			_script82_msg03
 		msg_printf			$22ac	; [START\CONTINUE]
 		continue_cur_draw
 		jmpne_option		$01, _script82_loc02
 		checkpoint_reset
-		set_room_idx		$85
+		new_warp_set		$85
 		checkpoint_set
 		stop
 		------------------
@@ -183,7 +183,7 @@ _script84:
 		continue_cur_draw
 		jmpne_option		$02, _script84_loc00
 		checkpoint_reset
-		set_room_idx		$85
+		new_warp_set		$85
 		checkpoint_set
 		stop
 		------------------
@@ -211,7 +211,7 @@ _script85_loc00:
 		jmpne_option		$01, _script85_loc01
 		ptr_load			_script85_msg05
 		msg_draw_up			; [けっこう。さっそくテハイしよう。\キミを ここからだしたいのだ。]
-		set_room_idx		$01
+		new_warp_set		$01
 		stop
 		------------------
 _script85_loc01:
@@ -230,7 +230,7 @@ _script86:
 		msg_draw_down		; [シャシンを？ きゅうしゅつせずに？]
 		ptr_load			_script86_msg03
 		msg_draw_up			; [くりかえす、コウセンはゆるさん。\では ブキコにいって\みじたくをしてくれ。\コウウンを いのっている。]
-		set_room_idx		$00
+		new_warp_set		$00
 		stop
 _script87:
 		frame_draw_up		PORTRAIT0D_ERICSON
@@ -239,7 +239,7 @@ _script87:
 _script87_loc00:
 		ptr_load			_script87_msg00
 		msg_draw_up			; [マ-ドックしれいかんのキョカを\もらっていないと\ブキを わたすわけにはいかないんだ。]
-		set_room_idx		$00
+		new_warp_set		$00
 		stop
 		------------------
 _script87_loc01:
@@ -257,7 +257,7 @@ _script87_loc03:
 		game_hours_set		$17
 		ptr_load			_script87_msg02
 		msg_draw_up			; [しゅっぱつまで ジカンがない。\はやく トラウトマンたいさのところへ\いけ！]
-		set_room_idx		$00
+		new_warp_set		$00
 		stop
 _script88:
 		frame_draw_up		PORTRAIT08_TRAUMAN1
@@ -272,7 +272,7 @@ _script88_loc00:
 		msg_draw_down		; [おれもベトナムも いきています。]
 		ptr_load			_script88_msg02
 		msg_draw_up			; [カクノウコへ いってくれ。\マ-ドックしれいかんが まっている。]
-		set_room_idx		$01
+		new_warp_set		$01
 		stop
 _script88_loc01:
 		ptr_load			_script88_msg03
@@ -286,8 +286,8 @@ _script88_loc01:
 		game_flags_clear	FLAG00_SYS
 		game_flags_clear	FLAG08_SYS
 		game_flags_clear	FLAG13_SYS
-		anim_scene_set		$00
-		set_room_idx		$7c
+		heli_warp_set		$00
+		new_warp_set		$7c
 		player_pos_set		$01, $50
 		stop
 _script89:
@@ -309,7 +309,7 @@ _script89:
 _script89_loc00:
 		ptr_load			_script89_msg03
 		msg_draw_up			; [シュウヨウジョは カワのひがしの\ジャングルに あるわ。\ミツユギョウシャと\はなしをつけてあるから、はやく\ふなつきばへ いきましょう。]
-		set_room_idx		$0a
+		new_warp_set		$0a
 		stop
 _script8A:
 		checkpoint_set
@@ -319,7 +319,7 @@ _script8A_loc00:
 		frame_draw_up		PORTRAIT14_PIRATE
 		ptr_load			_script8A_msg00
 		msg_draw_up			; [なんだ、アンタ。みかけないヤツだな。\あいにく オレたちは\ゼンリョウな アキンドでね。\ヘンなヤツを フネにのせるわけには\いかないんだよ。]
-		set_room_idx		$06
+		new_warp_set		$06
 		stop
 		------------------
 _script8A_loc01:
@@ -338,7 +338,7 @@ _script8A_loc03:
 		ptr_load			_script8A_msg03
 		msg_draw_up			; [カネさえもらえば、フネだろうと\なんだろうと のせてやるぜ。\・・・・はやくのりな。]
 		game_flags_set		FLAG0E_BOAT
-		set_room_idx		$06
+		new_warp_set		$06
 		stop
 _script8B:
 		checkpoint_set
@@ -358,7 +358,7 @@ _script8B_loc01:
 		ptr_load			_script8B_msg02
 		msg_draw_up			; [そうだ。\カネになれば なんでもするのさ。\おとなしく してもらおうか。]
 		game_flags_clear	FLAG0E_BOAT
-		set_room_idx		$60
+		new_warp_set		$60
 		stop
 _script8B_loc02:
 		jmp_flags_not_set	FLAG11_PEDANT, _script8B_loc03
@@ -386,12 +386,12 @@ _script8B_loc03:
 _script8B_loc04:
 		ptr_load			_script8B_msg0a
 		msg_draw_up			; [やっと ついたみたい。\ここから シュウヨウジョまでは\あるかないといけないわ。]
-		set_room_idx		$0d
+		new_warp_set		$0d
 		stop
 _script8C:
 		checkpoint_set
 		game_flags_set		FLAG09_CO_TAKEN
-		set_room_idx		$0e
+		new_warp_set		$0e
 		frame_draw_up		PORTRAIT03_CO
 		jmp_flags_not_set	FLAG02_KID_SAVED, _script8C_loc00
 		jmp_branch			_script8C_loc01
@@ -429,15 +429,15 @@ _script8D:
 		ptr_load			_script8D_msg01
 		msg_draw_down		; [あんしんしろ。たすけてやるぞ。]
 		game_flags_set		FLAG04_KID_TAKEN
-		set_room_idx		$3c
+		new_warp_set		$3c
 		stop
 _script8E:
 		jmp_flags_not_set	FLAG0C_SYS, _script8E_loc00
-		set_room_idx		$0c
+		new_warp_set		$0c
 		stop
 		------------------
 _script8E_loc00:
-		set_room_idx		$3f
+		new_warp_set		$3f
 		stop
 _script8F:
 		checkpoint_set
@@ -452,7 +452,7 @@ _script8F_loc00:
 		frame_draw_down		PORTRAIT00_RAMBO
 		ptr_load			_script8F_msg02
 		msg_draw_down		; [いそいでもどろう。ここで やられたら\もともこもない。]
-		set_room_idx		$6c
+		new_warp_set		$6c
 		stop
 _script90:
 		checkpoint_set
@@ -463,7 +463,7 @@ _script90:
 		frame_draw_up		PORTRAIT03_CO
 		ptr_load			_script90_msg01
 		msg_draw_up			; [そう・・・。しかたないわね。\オトにきをつけて。\オトのでるブキは テキを\あつめてしまうから。]
-		set_room_idx		$25
+		new_warp_set		$25
 		stop
 _script91:
 		frame_draw_down		PORTRAIT03_CO
@@ -475,13 +475,13 @@ _script91:
 _script91_loc00:
 		ptr_load			_script91_msg01
 		msg_draw_up			; [ここは むらのやつらがくるところじゃ\ないんだ。\ケガしないうちに かえりな。]
-		set_room_idx		$6f
+		new_warp_set		$6f
 		stop
 		------------------
 _script91_loc01:
 		ptr_load			_script91_msg02
 		msg_draw_up			; [いや、おれじゃねえよ。\たぶん タイチョウだろう。\タイチョウのオンナずきにも\こまったものだ。\もたもたしねえで さっさとはいりな。]
-		set_room_idx		$6e
+		new_warp_set		$6e
 		stop
 _script92:
 		frame_draw_down		PORTRAIT03_CO
@@ -500,7 +500,7 @@ _script92_loc00:
 		jmpne_option		$01, _script92_loc01
 		ptr_load			_script92_msg03
 		msg_draw_up			; [なにすんだよ、こいつ！\とっとと かえれ！]
-		set_room_idx		$6e
+		new_warp_set		$6e
 		stop
 		------------------
 _script92_loc01:
@@ -517,7 +517,7 @@ _script92_loc02:
 		ptr_load			_script92_msg08
 		msg_draw_down		; [やっと カギをてにいれたわ。\これで ランボ-をたすけだせるわ。]
 		game_flags_set		FLAG00_SYS
-		set_room_idx		$6e
+		new_warp_set		$6e
 		stop
 _script93:
 		frame_draw_up		PORTRAIT10_SOLDIER1
@@ -528,7 +528,7 @@ _script93:
 		msg_draw_down		; [・・・ごめんなさい。]
 		ptr_load			_script93_msg02
 		msg_draw_up			; [おい、どこにいくんだ。\でぐちは ミギだ。\ヒダリは、ゴウモンゴヤがあるんだぞ。\それとも、ゴウモンしてほしいのか？]
-		set_room_idx		$6e
+		new_warp_set		$6e
 		stop
 _script94:
 		checkpoint_set
@@ -547,7 +547,7 @@ _script94_loc01:
 		ptr_load			_script94_msg02
 		msg_draw_up			; [てきが きづいたみたい。\いそいで にげましょう。]
 		game_flags_clear	FLAG0C_SYS
-		set_room_idx		$70
+		new_warp_set		$70
 		stop
 _script94_loc02:
 		ptr_load			_script94_msg03
@@ -555,7 +555,7 @@ _script94_loc02:
 		frame_draw_down		PORTRAIT_CLEAR
 		ptr_load			_script94_msg04
 		msg_draw_down		; [・・・・。]
-		set_room_idx		$6d
+		new_warp_set		$6d
 		stop
 _script95:
 		checkpoint_set
@@ -573,7 +573,7 @@ _script95_loc01:
 		frame_draw_down		PORTRAIT00_RAMBO
 		ptr_load			_script95_msg02
 		msg_draw_down		; [しょうがない。\ジャングルに もどろう。]
-		set_room_idx		$18
+		new_warp_set		$18
 		player_pos_set		$00, $c0
 		stop
 _script95_loc02:
@@ -592,7 +592,7 @@ _script95_loc04:
 		msg_draw_down		; [そうだな。まだじかんがあるし\シュウヨウジョに いってみよう。]
 		ptr_load			_script95_msg05
 		msg_draw_up			; [シュウヨウジョは ここから\ずっと ミナミよ。]
-		set_room_idx		$18
+		new_warp_set		$18
 		player_pos_set		$00, $c0
 		stop
 _script95_loc05:
@@ -615,7 +615,7 @@ _script95_loc06:
 		ptr_load			_script95_msg0a
 		msg_draw_up			; [ありがとう・・・とてもうれしいの・・・\はやく いきましょう。\おってが すぐそこまできているわ。]
 		game_flags_set		FLAG09_CO_TAKEN
-		set_room_idx		$0b
+		new_warp_set		$0b
 		player_pos_set		$00, $a0
 		stop
 		------------------
@@ -624,7 +624,7 @@ _script95_loc07:
 		ptr_load			_script95_msg0b
 		msg_draw_up			; [ざんねんだわ。\もうこれで あえないのね。\さようなら。きをつけて。]
 		game_flags_clear	FLAG09_CO_TAKEN
-		set_room_idx		$0b
+		new_warp_set		$0b
 		player_pos_set		$00, $a0
 		stop
 _script96:
@@ -648,8 +648,8 @@ _script96_loc01:
 		sprite_draw_down	PORTRAIT0C_TRAUMAN2
 		ptr_load			_script96_msg04
 		msg_draw_down		; [やとわれヘイめが。\みかたを みすてるのか！]
-		set_room_idx		$0b
-		anim_scene_set		$a9
+		new_warp_set		$0b
+		heli_warp_set		$a9
 		stop
 _script96_loc02:
 		ptr_load			_script96_msg05
@@ -660,8 +660,8 @@ _script96_loc02:
 		sprite_draw_up		PORTRAIT08_TRAUMAN1
 		ptr_load			_script96_msg07
 		msg_draw_up			; [ランボ-。はやくのれ。\よしっ、これでこんなぶっそうな\ジャングルとも おさらばだ。\ジョウショウしろ！]
-		set_room_idx		$0b
-		anim_scene_set		$7d
+		new_warp_set		$0b
+		heli_warp_set		$7d
 		stop
 _script97:
 		ptr_load			_script97_msg00
@@ -718,7 +718,7 @@ _script97_loc01:
 		sprite_draw_down	PORTRAIT01_RAMBO_ANGRY
 		ptr_load			_script97_msg11
 		msg_draw_down		; [・・・・。\マ-ドック、いのちをもらいにいくぜ！！]
-		set_room_idx		$9f
+		new_warp_set		$9f
 		stop
 _script98:
 		checkpoint_set
@@ -728,7 +728,7 @@ _script98:
 _script98_loc00:
 		ptr_load			_script98_msg00
 		msg_draw_up			; [むらで めんどうを\おこしてもらっては こまる。\はやく でていってくれ。]
-		set_room_idx		$0c
+		new_warp_set		$0c
 		stop
 		------------------
 _script98_loc01:
@@ -745,14 +745,14 @@ _script98_loc02:
 		jmpne_option		$01, _script98_loc03
 		ptr_load			_script98_msg03
 		msg_draw_up			; [そうか、ざんねんだ。\きが かわったらまたきてくれ。]
-		set_room_idx		$0c
+		new_warp_set		$0c
 		stop
 		------------------
 _script98_loc03:
 		ptr_load			_script98_msg04
 		msg_draw_up			; [チャイナドレスが よくにあっているよ。]
 		game_flags_set		FLAG07_DRESS_ITEM
-		set_room_idx		$0c
+		new_warp_set		$0c
 		stop
 _script99:
 		checkpoint_set
@@ -774,7 +774,7 @@ _script99_loc01:
 		ptr_load			_script99_msg02
 		msg_draw_up			; [ランボ-。たすけだしてあげて。]
 		game_flags_set		FLAG00_SYS
-		set_room_idx		$3a
+		new_warp_set		$3a
 		stop
 _script99_loc02:
 		ptr_load			_script99_msg03
@@ -785,7 +785,7 @@ _script99_loc02:
 		msg_draw_down		; [あまり、ゆっくりしてられないんだ。\よし、がんばるぞ。]
 		game_flags_clear	FLAG04_KID_TAKEN
 		game_flags_set		FLAG02_KID_SAVED
-		set_room_idx		$3a
+		new_warp_set		$3a
 		stop
 _script9A:
 		checkpoint_set
@@ -794,7 +794,7 @@ _script9A:
 		ptr_load			_script9A_msg00
 		msg_draw_up			; [おや おまえはアメリカじんだな。\こんなやまおくに なにしにきた。]
 		game_flags_set		FLAG13_SYS
-		set_room_idx		$0c
+		new_warp_set		$0c
 		stop
 		------------------
 _script9A_loc00:
@@ -810,14 +810,14 @@ _script9A_loc01:
 		msg_draw_down		; [どうくつにいって\こどもを たすけだしたいんだ。]
 		jmp_branch			_script9A_loc03
 _script9A_loc02:
-		set_room_idx		$3a
+		new_warp_set		$3a
 		stop
 		------------------
 _script9A_loc03:
 		game_flags_set		FLAG03_LAMP_ITEM
 		ptr_load			_script9A_msg03
 		msg_draw_up			; [ランプを かしてあげよう。\ランプがなければ どうくつは\とてもきけんだからな。]
-		set_room_idx		$3a
+		new_warp_set		$3a
 		stop
 _script9B:
 		checkpoint_set
@@ -842,7 +842,7 @@ _script9B_loc03:
 		game_flags_set		FLAG0D_SYS
 		ptr_load			_script9B_msg02
 		msg_draw_up			; [クスリを わけてあげよう。\これを カレにのませてあげなさい。]
-		set_room_idx		$0c
+		new_warp_set		$0c
 		stop
 _script9B_loc04:
 		ptr_load			_script9B_msg03
@@ -851,7 +851,7 @@ _script9B_loc04:
 		life_restore
 		ptr_load			_script9B_msg04
 		msg_draw_down		; [ありがとう。\これで、もうひとあばれ できそうだ。]
-		set_room_idx		$0c
+		new_warp_set		$0c
 		stop
 _script9C:
 		checkpoint_set
@@ -881,7 +881,7 @@ _script9C:
 		ptr_load			_script9C_msg08
 		msg_draw_down		; [コ-！]
 		game_flags_clear	FLAG09_CO_TAKEN
-		set_room_idx		$48
+		new_warp_set		$48
 		stop
 _script9D:
 		checkpoint_set
@@ -889,7 +889,7 @@ _script9D:
 		msg_printf			$20e7	; [ランボ-は、ヘリコプタ-のカギをみつけた。]
 		jmp_flags_not_set	FLAG10_HELI_KEY, _script9D_loc00
 		msg_input_handler
-		set_room_idx		$55
+		new_warp_set		$55
 		stop
 		------------------
 _script9D_loc00:
@@ -900,7 +900,7 @@ _script9D_loc00:
 		ptr_load			_script9D_msg02
 		msg_draw_up			; [じっくり りょうりしてやろう！\せいぜい あばれるがいい。]
 		game_flags_set		FLAG10_HELI_KEY
-		set_room_idx		$55
+		new_warp_set		$55
 		stop
 _script9E:
 		checkpoint_set
@@ -910,7 +910,7 @@ _script9E_loc00:
 		ptr_load			_script9E_msg00
 		msg_printf			$20e7	; [カギをもっていないと\ヘリコプタ-には のれないぞ。]
 		msg_input_handler
-		set_room_idx		$54
+		new_warp_set		$54
 		stop
 		------------------
 _script9E_loc01:
@@ -926,8 +926,8 @@ _script9E_loc01:
 _script9E_loc02:
 		game_flags_clear	FLAG06_POW_TAKEN
 		player_pos_set		$03, $80
-		set_room_idx		$54
-		anim_scene_set		$7f
+		new_warp_set		$54
+		heli_warp_set		$7f
 		stop
 _script9F:
 		ptr_load			_script9F_msg00
@@ -938,7 +938,7 @@ _script9F:
 		game_flags_set		FLAG0C_SYS
 		game_flags_set		FLAG09_CO_TAKEN
 		game_flags_set		FLAG13_SYS
-		set_room_idx		$0c
+		new_warp_set		$0c
 		player_pos_set		$00, $d0
 		stop
 _scriptA0:
@@ -952,7 +952,7 @@ _scriptA0:
 		ptr_load			_scriptA0_msg02
 		msg_draw_down		; [あたりまえじゃないか。げんきだせ。\もうすこしの しんぼうだ。\いそいでにげよう。]
 		game_flags_set		FLAG06_POW_TAKEN
-		set_room_idx		$77
+		new_warp_set		$77
 		stop
 _scriptA1:
 		checkpoint_set
@@ -967,7 +967,7 @@ _scriptA1:
 		ptr_load			_scriptA1_msg02
 		msg_draw_up			; [たすけに きてくれたのではないのか。\おねがいだ たすけてくれ！]
 		game_flags_set		FLAG05_PHOTO_ITEM
-		set_room_idx		$30
+		new_warp_set		$30
 		stop
 		------------------
 _scriptA1_loc00:
@@ -977,7 +977,7 @@ _scriptA1_loc00:
 		------------------
 		ptr_load			_scriptA1_msg04
 		msg_draw_down		; [またもどる。\いそいで にげよう。]
-		set_room_idx		$30
+		new_warp_set		$30
 		stop
 _scriptA2:
 		checkpoint_set
@@ -994,8 +994,8 @@ _scriptA2_loc01:
 		frame_draw_up		PORTRAIT07_BANKS_POW
 		ptr_load			_scriptA2_msg01
 		msg_draw_up			; [やったぜ。ベトナムとも\これで おさらばだ。]
-		anim_scene_set		$7e
-		set_room_idx		$77
+		heli_warp_set		$7e
+		new_warp_set		$77
 		stop
 _scriptA2_loc02:
 		ptr_load			_scriptA2_msg02
@@ -1006,13 +1006,13 @@ _scriptA2_loc02:
 		msg_draw_up			; [わたしも てつだうわ。]
 		jmp_branch			_scriptA2_loc04
 _scriptA2_loc03:
-		set_room_idx		$77
+		new_warp_set		$77
 		stop
 		------------------
 _scriptA2_loc04:
 		ptr_load			_scriptA2_msg04
 		msg_draw_down		; [きみは、ヘリでまっていたほうが\いいだろう。]
-		set_room_idx		$77
+		new_warp_set		$77
 		stop
 _scriptA3:
 		frame_draw_up		PORTRAIT09_MURDOCK
@@ -1036,7 +1036,7 @@ _scriptA3_loc01:
 		ptr_load			_scriptA3_msg04
 		msg_draw_down		; [まだ、おうぜいのっこっているはずだ。\ころされたくないなら、\ぜいいん きゅうしゅつしろ！]
 		game_flags_set		FLAG00_SYS
-		set_room_idx		$62
+		new_warp_set		$62
 		stop
 _scriptA3_loc02:
 		jmp_flags_not_set	FLAG05_PHOTO_ITEM, _scriptA3_loc03
@@ -1052,13 +1052,13 @@ _scriptA3_loc04:
 		msg_draw_down		; [ホリョきゅうしゅつに いかないのか？]
 		ptr_load			_scriptA3_msg07
 		msg_draw_up			; [だめだ。\あのシャシンが、ショウコに\ならなかったんだ。]
-		set_room_idx		$62
+		new_warp_set		$62
 		stop
 _scriptA3_loc05:
 		sprite_draw_up		PORTRAIT0A_MURDOCK_ANGRY
 		ptr_load			_scriptA3_msg08
 		msg_draw_up			; [サクセンは しっぱいだ。\わたしは さいしょから\キミには むりなことだと\おもっていた。]
-		set_room_idx		$62
+		new_warp_set		$62
 		stop
 _scriptA4:
 		frame_draw_up		PORTRAIT08_TRAUMAN1
@@ -1077,7 +1077,7 @@ _scriptA4_loc02:
 		frame_draw_down		PORTRAIT00_RAMBO
 		ptr_load			_scriptA4_msg01
 		msg_draw_down		; [・・・・・・・]
-		set_room_idx		$61
+		new_warp_set		$61
 		stop
 _scriptA4_loc03:
 		ptr_load			_scriptA4_msg02
@@ -1109,7 +1109,7 @@ _scriptA4_loc03:
 		msg_draw_up			; [このさきは？]
 		ptr_load			_scriptA4_msg0f
 		msg_draw_down		; [ひびを いきます。]
-		set_room_idx		$b1
+		new_warp_set		$b1
 		sprite_draw_up		PORTRAIT_CLEAR
 		sprite_draw_down	PORTRAIT02_RAMBO_HAPPY
 		stop
@@ -1121,21 +1121,21 @@ _scriptA4_loc04:
 		ptr_load			_scriptA4_msg11
 		msg_draw_down		; [ へりに のるところから\ もういちど やらせてくれ。\ \ もうあんな あぶないめに\ あいたくない。]
 		jmpne_option		$02, _scriptA4_loc05
-		set_room_idx		$61
+		new_warp_set		$61
 		stop
 		------------------
 _scriptA4_loc05:
 		ptr_load			_scriptA4_msg12
 		msg_draw_up			; [ほんとうの ゲ-ムのもくてきは\ホリョきゅうしゅつ なんだよ。]
 		jmp_flags_not_set	FLAG08_SYS, _scriptA4_loc06
-		set_room_idx		$9e
+		new_warp_set		$9e
 		player_pos_set		$03, $d0
 		stop
 		------------------
 _scriptA4_loc06:
 		game_flags_clear	FLAG13_SYS
 		game_flags_set		FLAG09_CO_TAKEN
-		set_room_idx		$95
+		new_warp_set		$95
 		stop
 _scriptA5:
 		frame_draw_up		PORTRAIT03_CO
@@ -1151,23 +1151,23 @@ _scriptA5:
 		ptr_load			_scriptA5_msg03
 		msg_draw_up			; [ほんとう？！\ランボ-、だいすきよっ。CHU！]
 		life_restore
-		set_room_idx		$61
+		new_warp_set		$61
 		stop
 _scriptA6:
-		set_room_idx		$62
+		new_warp_set		$62
 		player_pos_set		$00, $d0
 		stop
 _scriptA7:
-		set_room_idx		$77
+		new_warp_set		$77
 		player_pos_set		$03, $d0
 		stop
 _scriptA8:
 		jmp_flags_not_set	FLAG0E_BOAT,	_scriptA8_loc00
-		set_room_idx		$0d
+		new_warp_set		$0d
 		stop
 		------------------
 _scriptA8_loc00:
-		set_room_idx		$13
+		new_warp_set		$13
 		stop
 _scriptA9:
 		ptr_load			_scriptA9_msg00
@@ -1193,13 +1193,13 @@ _scriptA9:
 		msg_draw_up			; [なぜかね？]
 		ptr_load			_scriptA9_msg08
 		msg_draw_down		; [・・・・・・・・\ランボ-だよ。]
-		set_room_idx		$97
+		new_warp_set		$97
 		stop
 _scriptAA:
 		jmp_flags_not_set	FLAG09_CO_TAKEN, _scriptAA_loc00
 		jmp_branch			_scriptAA_loc01
 _scriptAA_loc00:
-		set_room_idx		$06
+		new_warp_set		$06
 		stop
 		------------------
 _scriptAA_loc01:
@@ -1207,25 +1207,25 @@ _scriptAA_loc01:
 		ptr_load			_scriptAA_msg00
 		msg_printf			$20e7	; [ミツユギョウシャのふねを\やとった ランボ-とコ-は・・・・]
 		msg_input_handler
-		set_room_idx		$0d
+		new_warp_set		$0d
 		player_pos_set		$02, $b1
 		stop
 		------------------
 _scriptAA_loc02:
-		set_room_idx		$10
+		new_warp_set		$10
 		stop
 _scriptAB:
 		jmp_flags_not_set	FLAG01_SYS, _scriptAB_loc00
-		set_room_idx		$10
+		new_warp_set		$10
 		stop
 		------------------
 _scriptAB_loc00:
 		jmp_flags_not_set	FLAG0E_BOAT,	_scriptAB_loc01
-		set_room_idx		$10
+		new_warp_set		$10
 		stop
 		------------------
 _scriptAB_loc01:
-		set_room_idx		$06
+		new_warp_set		$06
 		stop
 _scriptAC:
 		frame_draw_up		PORTRAIT0D_ERICSON
@@ -1234,49 +1234,49 @@ _scriptAC:
 _scriptAC_loc00:
 		ptr_load			_scriptAC_msg00
 		msg_draw_up			; [ごくろう。わたしはエリクソンだ。\きみが うわさのおとこか。\ベトナムでは でんせつだぜ。\キミとはたらけて こうえいだ。\キョウセイロウドウより マシだろ？]
-		set_room_idx		$01
+		new_warp_set		$01
 		stop
 		------------------
 _scriptAC_loc01:
 		ptr_load			_scriptAC_msg01
 		msg_draw_up			; [しゅっぱつまで ジカンがない。\はやく トラウトマンたいさのところへ\いけ！]
-		set_room_idx		$01
+		new_warp_set		$01
 		stop
 _scriptAD:
 		frame_draw_up		PORTRAIT07_BANKS_POW
 		ptr_load			_scriptAD_msg00
 		msg_draw_up			; [ありがとう。ランボ-。\きみなら かならず\きゅうしゅつ してくれると\おもっていた。]
-		set_room_idx		$62
+		new_warp_set		$62
 		stop
 _scriptAE:
 		jmp_flags_not_set	FLAG0C_SYS, _scriptAE_loc00
 		ptr_load			_scriptAE_msg00
 		msg_printf			$20e7	; [コ-は、ランボ-をたすけるために\シュウヨウジョに むかった。]
 		msg_input_handler
-		set_room_idx		$6f
+		new_warp_set		$6f
 		stop
 		------------------
 _scriptAE_loc00:
-		set_room_idx		$34
+		new_warp_set		$34
 		stop
 _scriptAF:
 		game_flags_set		FLAG14_FLY_FORTRESS_DEAD
-		set_room_idx		$77
+		new_warp_set		$77
 		player_pos_set		$03, $d0
 		stop
 _scriptB0:
 		jmp_flags_not_set	FLAG14_FLY_FORTRESS_DEAD, _scriptB0_loc00
-		set_room_idx		$77
+		new_warp_set		$77
 		player_pos_set		$03, $d0
 		stop
 		------------------
 _scriptB0_loc00:
 		jmp_flags_not_set	FLAG06_POW_TAKEN, _scriptB0_loc01
-		set_room_idx		$ff
+		new_warp_set		$ff
 		stop
 		------------------
 _scriptB0_loc01:
-		set_room_idx		$77
+		new_warp_set		$77
 		player_pos_set		$03, $d0
 		stop
 _scriptB1:
@@ -1296,7 +1296,7 @@ _scriptB1:
 		ptr_load			_scriptB1_msg03
 		msg_printf			$2224	; [エリクソン\ \ よっ！ えいゆう。]
 		ending_anim
-		set_room_idx		$b2
+		new_warp_set		$b2
 		stop
 _scriptB2:
 		frame_draw_up		PORTRAIT03_CO
@@ -1315,7 +1315,7 @@ _scriptB2:
 		ptr_load			_scriptB2_msg03
 		msg_printf			$2224	; [こども\ \ ランボ-のおじちゃん\ ありがとう。]
 		ending_anim
-		set_room_idx		$b3
+		new_warp_set		$b3
 		stop
 _scriptB3:
 		frame_draw_up		PORTRAIT10_SOLDIER1
@@ -1334,7 +1334,7 @@ _scriptB3:
 		ptr_load			_scriptB3_msg03
 		msg_printf			$2224	; [むらびと2\ \ ちょっとやすんでいかない？]
 		ending_anim
-		set_room_idx		$b4
+		new_warp_set		$b4
 		stop
 _scriptB4:
 		frame_draw_up		PORTRAIT0E_PADOVSKY
@@ -1345,14 +1345,14 @@ _scriptB4:
 		ptr_load			_scriptB4_msg01
 		msg_printf			$2224	; [ユ-シンぐんそう\ \ へへへ・・・。]
 		ending_anim
-		set_room_idx		$b5
+		new_warp_set		$b5
 		stop
 _scriptB5:
 		ptr_load			_scriptB5_msg00
 		msg_printf			$2312	; [おつかれさまでした。]
 		ending_anim
 		sprite_draw_down	PORTRAIT02_RAMBO_HAPPY
-		set_room_idx		$80
+		new_warp_set		$80
 		scroller
 		stop
 _script80_msg00:

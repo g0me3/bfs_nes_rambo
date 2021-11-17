@@ -194,9 +194,7 @@ _pad_tmp:
 		.BYTE 0
 _rand_seed:
 		.BYTE 0
-_game_scr_idx_backup_unused:
-		.BYTE 0
-_obj_heli_tmp_flag:
+_helicopter_warp_idx:
 		.BYTE 0
 _prev_weapon_selected:
 		.BYTE 0
