@@ -3,6 +3,8 @@
 
 		BANK_START $06
 
+		SECTION_START
+
 _location_room_settings:
 		.BYTE $20,$20,$40,$40,$40,$40,$20,$40,$40,$40,$20,$40,$20,$21,$20,$40
 		.BYTE $41,$41,$41,$41,$40,$40,$40,$40,$40,$40,$40,$41,$41,$41,$41,$41
@@ -468,6 +470,11 @@ _obj_params_lib:
 		.BYTE $F0,$00,$00,$0C,$00,$10,$14,$00	; $3D
 		.BYTE $F0,$3F,$00,$0E,$00,$10,$94,$00	; $3E
 		.BYTE $F0,$0C,$00,$03,$00,$01,$94,$00	; $3F
+
+		SECTION_END "GAME DATA"
+
+		SECTION_START
+
 _obj_anim_lib:
 		.WORD _obj_anim00
 		.WORD _obj_anim01
@@ -1826,6 +1833,11 @@ _spr_prize_tile08:
 		.BYTE $F7
 _spr_prize_tile09:
 		.BYTE $FF
+
+		SECTION_END "SPRITES DATA"
+
+		SECTION_START
+
 ; =============== S U B	R O U T	I N E =======================================
 _objA_manager:
 		JSR		_obj_special_bonus_test_handler
@@ -6619,5 +6631,7 @@ loc_53FC3:
 _boss_spider_drone_proj_anim_tbl:
 		.BYTE $30,$31,$31,$32,$32,$22,$22,$22,$22,$22,$22,$23,$23,$13,$13,$03
 		.BYTE $03,$13,$13,$23,$23,$22,$22,$22,$22,$22,$22,$32,$32,$31,$31,$30
+
+		SECTION_END "OBJECTS PROGRAM"
 
 		BANK_END 6,$C000
