@@ -7,18 +7,18 @@
 
 ; =============== S U B	R O U T	I N E =======================================
 _dialog_script_play:
-		LDA		#$90
-		STA		_PPU_CTRL
-		JSR		_palette_off
-		LDX		#$00
-		LDA		#$F8
+		LDA		#$90					; here we go when any dialog sarts
+		STA		_PPU_CTRL				; we need to draw ITEMS screen before
+		JSR		_palette_off			; because when you press START you jut
+		LDX		#$00					; switch NT pages directly, only pass
+		LDA		#$F8					; is redrawn every time there.
 loc_4400C:
-		STA		_spr_buf,X
-		INX
-		INX
-		INX
-		INX
-		BNE		loc_4400C
+		STA		_spr_buf,X				; clear all sprites for some reason
+		INX								; actually the ITEM screen will disable
+		INX								; sprite render via PPU directly
+		INX								; also this function is a dupe of the
+		INX								; system one with one exception, it
+		BNE		loc_4400C				; clear zero sprite as well.
 		JSR		_ppu_screen_clear
 		LDA		_game._scr_idx			; backup currently selected script idx
 		PHA
@@ -40,9 +40,9 @@ _palette_off:
 ; =============== S U B	R O U T	I N E =======================================
 _ppu_screen_clear:
 		JSR		_render_off_ex
-		PPU_FILL_RECT	$2400, $FE, $1E, $20
 		PPU_FILL_RECT	$2000, $FE, $1E, $20
 		PPU_FILL_LINEY	$23C0, $FF, $40
+		PPU_FILL_RECT	$2400, $FE, $1E, $20
 		PPU_FILL_LINEY	$27C0, $FF, $40
 		JMP		_render_on
 
@@ -102,13 +102,13 @@ _ppu_set_ofs_and_add20:
 
 ; =============== S U B	R O U T	I N E =======================================
 _script_lib_player:
-		JSR		_time_is_over_test
-		LDA		#$00
+		JSR		_time_is_over_test		; constantly check for extraction time
+		LDA		#$00					; internal script state flags reset
 		STA		_tmp11
 		STA		_tmp12
-		LDA		_game._scr_idx
-		CMP		#$84
-		BCC		loc_441B3
+		LDA		_game._scr_idx			; script under 84 are game init scripts
+		CMP		#$84					; with its own palettes
+		BCC		loc_441B3				; the rest uses fixed palette for all
 		LDA		#$00
 		STA		_tmp0A
 		JSR		_msg_pal_lib_load
@@ -154,7 +154,7 @@ _script_cmd_lib:
 		.WORD _scr_cmd09_input_3_options_unused
 		.WORD _scr_cmd0A_input_4_options_unused
 		.WORD _scr_cmd0B_ptr_load
-		.WORD _scr_cmd0C_msg_printf
+		.WORD _scr_cmd0C_msg_draw_custom
 		.WORD _scr_cmd0D_game_flags_set
 		.WORD _scr_cmd0E_game_flags_clear
 		.WORD _scr_cmd0F_jmp_flag_not_set
@@ -169,7 +169,7 @@ _script_cmd_lib:
 		.WORD _scr_cmd18_mem_write_unused
 		.WORD _scr_cmd19_pass_input
 		.WORD _scr_cmd1A_game_stats_draw
-		.WORD _scr_cmd1B_life_resore
+		.WORD _scr_cmd1B_life_restore
 		.WORD _scr_cmd1C_add_10_knifes
 		.WORD _scr_cmd21_add_5_potions
 		.WORD _scr_cmd21_add_5_potions
@@ -270,9 +270,9 @@ _scr_cmd04_frame_draw_up:
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd05_frame_draw_down:
-		LDA		#$21
+		LDA		#>[FRAME_DOWN_OFS]
 		STA		_tmp00
-		LDA		#$E2
+		LDA		#<[FRAME_DOWN_OFS]
 		STA		_tmp01
 		LDA		#FRAME_WIDTH
 		STA		_tmp02
@@ -396,7 +396,7 @@ _scr_cmd0B_ptr_load:
 		JMP		_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
-_scr_cmd0C_msg_printf:
+_scr_cmd0C_msg_draw_custom:
 		LDA		(_tmp0D),Y
 		STA		_tmp01
 		INY
@@ -735,7 +735,7 @@ loc_445EF:
 		JMP		_render_on
 
 ; =============== S U B	R O U T	I N E =======================================
-_scr_cmd1B_life_resore:
+_scr_cmd1B_life_restore:
 		TYA
 		PHA
 		LDA		_game._life_level

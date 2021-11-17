@@ -394,11 +394,10 @@ loc_60388:
 		CLC
 		ADC		#$80
 		STA		_chr_tiles_send_src+1
-		LDA		#$00
-		STA		_chr_tiles_send_src
 		LDA		#$03
 		STA		_chr_tiles_send_dst+1
 		LDA		#$00
+		STA		_chr_tiles_send_src
 		STA		_chr_tiles_send_dst
 		LDA		_ppu_ctrl_shadow
 		STA		_PPU_CTRL
@@ -440,6 +439,7 @@ loc_603DB:
 		CLC
 		ADC		#$0F
 		STA		_game._exp
+		BCC		loc_6040E
 		INC		_game._exp+1
 loc_6040E:
 		LDA		#SEP03
@@ -517,11 +517,11 @@ _hud_cursor_spr_insert:
 
 ; =============== S U B	R O U T	I N E =======================================
 _far_dialog_script_play:
-		LDA		_game._scr_idx
+		LDA		_game._scr_idx			; no start if this is not dialog
 		BMI		loc_604A8
 		RTS
 loc_604A8:
-		JSR		_chr_bg_tiles_load
+		JSR		_chr_bg_tiles_load		; load CHR data with fonts and portraits
 		JSR		_chr_spr_tiles_load
 		LDA		#$05
 		JSR		_mmc_prg_set
@@ -1311,21 +1311,22 @@ loc_60AD9:
 
 ; =============== S U B	R O U T	I N E =======================================
 _chr_bg_tiles_load:
-		LDA		_game._scr_idx
-		BPL		loc_60AF4
+		LDA		_game._scr_idx			; check what kind of tiles needed
+		BPL		loc_60AF4				; <$80 are level room tiles
 		CMP		#$FF
-		BNE		loc_60AEA
+		BNE		loc_60AEA				; >$80 are dialog cutscenes tiles
 		LDA		#$09
-		BNE		loc_60AF9
+		BNE		loc_60AF9				; $FF is a special tiles for BOSS
 loc_60AEA:
-		SEC
-		SBC		#$80
-		TAY
-		LDA		_cutscene_chr_tbl,Y
-		BNE		loc_60AF7
+;		AND		#$7F					; cutscene bg tiles in additional lookup
+;		TAY								; able
+;		LDA		_cutscene_chr_list,Y
+;		BNE		loc_60AF7
+		LDA		#$08					; note, all low nibble
+		BNE		loc_60AF9				; here is $08, no need to fetch this
 loc_60AF4:
 		LDA		_cur_level_chr_idx
-loc_60AF7:
+;loc_60AF7:
 		AND		#$0F
 loc_60AF9:
 		ASL
@@ -1338,20 +1339,18 @@ loc_60AF9:
 		LDA		#$00
 		ADC		#>[_chr_bg_table_lib]
 		STA		_tmp0F
-		LDA		#<[_chr_bg_data]
-		STA		_tmp02
+		LDY		#$00					; actually is #<[_chr_bg_data]
+		STY		_tmp02					; but by the fact is $00
 		LDA		_PPU_STATUS
 		LDA		#$10
 		STA		_PPU_ADDR
-		LDA		#$00
-		STA		_PPU_ADDR
+		STY		_PPU_ADDR
 		LDX		#$10
-		LDY		#$00
 loc_60B1D:
 		LDA		(_tmp0E),Y
 		CLC
-		ADC		#>[_chr_bg_data]
-		STA		_tmp03
+		ADC		#$80					; actually is #>[_chr_bg_data]
+		STA		_tmp03					; but by the fac is $80
 		LDA		#$02
 		JSR		_mmc_prg_set
 		TYA
@@ -1377,17 +1376,15 @@ _chr_spr_tiles_load:
 		BPL		loc_60B67
 		CMP		#$FF
 		BNE		loc_60B5D
-		LDA		#$00
+		LDA		#<[_chr_spr_table_lib+256]
 		STA		_tmp0E
-		LDA		#$85
+		LDA		#>[_chr_spr_table_lib+256]
 		STA		_tmp0F
-		INC		_tmp0F
 		JMP		loc_60B77
 loc_60B5D:
-		SEC
-		SBC		#$80
+		AND		#$7F
 		TAY
-		LDA		_cutscene_chr_tbl,Y
+		LDA		_cutscene_chr_list,Y
 		BNE		loc_60B6A
 loc_60B67:
 		LDA		_cur_level_chr_idx
@@ -1400,15 +1397,12 @@ loc_60B6A:
 		ADC		#>[_chr_spr_table_lib]
 		STA		_tmp0F
 loc_60B77:
-		LDA		#$00
-		STA		_tmp02
+		LDY		#$00				; actually is #<[_chr_spr_data]
+		STY		_tmp02				; but by the fact is $00
 		LDA		_PPU_STATUS
-		LDA		#$00
-		STA		_PPU_ADDR
-		LDA		#$00
-		STA		_PPU_ADDR
+		STY		_PPU_ADDR
+		STY		_PPU_ADDR
 		LDX		#$10
-		LDY		#$00
 loc_60B8C:
 		LDA		#$03
 		STA		_cur_prg_bank
@@ -1420,8 +1414,8 @@ loc_60B8C:
 		SBC		#$40
 loc_60B9D:
 		CLC
-		ADC		#>[_chr_spr_dataA]
-		STA		_tmp03
+		ADC		#$80				; actually is #>[_chr_spr_data]
+		STA		_tmp03				; but by the fact is $00
 		JSR		_mmc_prg
 		TYA
 		PHA
@@ -2371,9 +2365,9 @@ _tmp0Cw_sub10:
 		LDA		_tmp0C
 		SBC		#$10
 		STA		_tmp0C
-		LDA		_tmp0D
-		SBC		#$00
-		STA		_tmp0D
+		BCS		.sub10
+		DEC		_tmp0D
+.sub10:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -2382,9 +2376,9 @@ _tmp0Cw_add10:
 		LDA		_tmp0C
 		ADC		#$10
 		STA		_tmp0C
-		LDA		#$00
-		ADC		_tmp0D
-		STA		_tmp0D
+		BCC		.add10
+		INC		_tmp0D
+.add10:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -2396,14 +2390,15 @@ _coll_sub611A0:
 		BEQ		loc_611C0
 		CPX		#$08
 		BEQ		loc_611C0
-		JSR		_adc01
-		JSR		_adc01
+		CLC
+		ADC		#$02
 		CPY		#$00
 		BEQ		locret_611BF
 		CPY		#$08
 		BEQ		locret_611BF
 loc_611BC:
-		JSR		_adc01
+		CLC
+		ADC		#$01
 locret_611BF:
 		RTS
 loc_611C0:
@@ -2412,12 +2407,6 @@ loc_611C0:
 		CPY		#$08
 		BEQ		locret_611BF
 		JMP		loc_611BC
-
-; =============== S U B	R O U T	I N E =======================================
-_adc01:
-		CLC
-		ADC		#$01
-		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
 _game_values_to_decimal:
@@ -2560,17 +2549,22 @@ loc_612D3:
 loc_612DF:
 		DEY
 		BNE		loc_612D3
+
+; !FALLTHROUGH!
+
+; =============== S U B	R O U T	I N E =======================================
+_secret_values_cheat_test:
 		LDY		#$04
 loc_612E4:
-		LDA		_game._ammo_knife-1,Y
+		LDA		_game._ammo_knife-1,Y		; all ammo values are 77
 		CMP		#$4D
 		BNE		loc_612F1
 		DEY
 		BNE		loc_612E4
 		BEQ		loc_61302
 loc_612F1:
-		LDY		#$00
-		LDA		#$01
+		LDY		#$00						; or all values are
+		LDA		#$01						; sequence 1 2 3 4 5 6
 loc_612F5:
 		CMP		_game._exp_level,Y
 		BNE		locret_6131D
@@ -2581,8 +2575,8 @@ loc_612F5:
 		CPY		#$06
 		BNE		loc_612F5
 loc_61302:
-		LDA		#SEP03
-		STA		_apu_se_pulse_idx
+		LDA		#SEP03						; sound play
+		STA		_apu_se_pulse_idx			; refill all to 99/9
 		LDA		#$63
 		STA		_game._ammo_knife
 		STA		_game._ammo_spear

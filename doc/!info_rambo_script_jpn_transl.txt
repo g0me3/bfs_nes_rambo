@@ -277,7 +277,8 @@ _script8C:
 		jmp_branch		_script8C_loc01
 _script8C_loc00:
 		msg_draw_up		_script8C_msg00
-[むらへ　ようすをさぐりにいきましょう。ヒガシへ　いけばいきつくわ。]
+[Let's go to the village to explore the situation.
+If you go east, you'll get there.]
 		stop
 		------------------
 _script8C_loc01:
@@ -285,12 +286,12 @@ _script8C_loc01:
 		jmp_branch		_script8C_loc03
 _script8C_loc02:
 		msg_draw_up		_script8C_msg01
-[しゅうようじょは　ここからミナミへ　いったところよ。]
+[The camp is from here to the south.]
 		stop
 		------------------
 _script8C_loc03:
 		msg_draw_up		_script8C_msg02
-[ニシのかわを　わたってやまを　のぼったところがヘリコプターのピックアップポいんトよ。]
+[The helicopter pickup point is where you cross the river in the west and climb the mountain.]
 		jmp_flags_not_set	FLAG0A_MISSION_TIME_OVER, _script8C_loc04
 		jmp_branch		_script8C_loc05
 _script8C_loc04:
@@ -298,16 +299,18 @@ _script8C_loc04:
 		------------------
 _script8C_loc05:
 		msg_draw_up		_script8C_msg03
-[でも、やくそくのじかんは　もうとっくに　すぎてしまったわ。ヘリコプターは　むかえにこないわ。むらへ　いってかくれましょう。]
+[But the promised time has already passed.
+Helicopters don't come back.
+Let's go to the spot.]
 		stop
 _script8D:
 		checkpoint_set
 		frame_draw_up		PORTRAIT15_KID
 		msg_draw_up		_script8D_msg00
-[エーン　エーンヒック　ヒック]
+[Ahn Ahn, Hick Hick.]
 		frame_draw_down		PORTRAIT00_RAMBO
 		msg_draw_down		_script8D_msg01
-[あんしんしろ。たすけてやるぞ。]
+[Do not worry. I'll help you.]
 		game_flags_set		FLAG04_KID_TAKEN
 		set_room_idx		$3c
 		stop
@@ -323,15 +326,18 @@ _script8F:
 		checkpoint_set
 		frame_draw_up		PORTRAIT03_CO
 		msg_draw_up		_script8F_msg00
-[よかったわ　ぶじで。てきが　きづいたみたいよ。]
+[I'm glad I'm safe.
+It looks like you've noticed it.]
 		jmp_flags_not_set	FLAG06_POW_TAKEN, _script8F_loc00
 		msg_draw_up		_script8F_msg01
-[え！ほりょを　つれてきたの。しゃしんを　とるだけのはずではなかったの。]
+[Eh! I brought a prisoner.
+It wasn't just about taking pictures.]
 		------------------
 _script8F_loc00:
 		frame_draw_down		PORTRAIT00_RAMBO
 		msg_draw_down		_script8F_msg02
-[いそいでもどろう。ここで　やられたらもともこもない。]
+[Let's hurry back.
+ここで　やられたらもともこもない。]
 		set_room_idx		$6c
 		stop
 _script90:
@@ -339,28 +345,37 @@ _script90:
 		game_flags_set		FLAG01_SYS
 		frame_draw_down		PORTRAIT00_RAMBO
 		msg_draw_down		_script90_msg00
-[ここからさきは　おれひとりでいく。きけんだから　ついてくるな。]
+[From here on, I'll go alone.
+Don't follow me because I'm abstaining.]
 		frame_draw_up		PORTRAIT03_CO
 		msg_draw_up		_script90_msg01
-[そう・・・。しかたないわね。オトにきをつけて。オトのでるぶきは　てきをあつめてしまうから。]
+[Yes···.
+It can't be helped.
+Attach an adult.
+Weapons that come out of adults gather enemies and put them away.]
 		set_room_idx		$25
 		stop
 _script91:
 		frame_draw_down		PORTRAIT03_CO
 		msg_draw_down		_script91_msg00
-[こんばんは。わたしをよびだしたのは　あなた？]
+[Good evening.
+Who called me?]
 		frame_draw_up		PORTRAIT11_SOLDIER2
 		jmp_flags_not_set	FLAG07_DRESS_ITEM, _script91_loc00
 		jmp_branch		_script91_loc01
 _script91_loc00:
 		msg_draw_up		_script91_msg01
-[ここは　むらのやつらがくるところじゃないんだ。ケガしないうちに　かえりな。]
+[This is not where the village guys come.
+Return before you get hurt.]
 		set_room_idx		$6f
 		stop
 		------------------
 _script91_loc01:
 		msg_draw_up		_script91_msg02
-[いや、おれじゃねえよ。たぶん　タイチョウだろう。タイチョウのオンナずきにもこまったものだ。もたもたしねえで　さっさとはいりな。]
+[No, not me.
+Probably in good physical condition.
+It's also a woman who is in good physical condition.
+It's not good and it's quick.]
 		set_room_idx		$6e
 		stop
 _script92:
@@ -370,26 +385,26 @@ _script92:
 		------------------
 _script92_loc00:
 		msg_draw_down		_script92_msg00
-[こんばんは。]
+[Good evening.]
 		frame_draw_up		PORTRAIT11_SOLDIER2
 		msg_draw_up		_script92_msg01
-[おっ、なかなかいいオンナじゃないか。こっちこいよ。ヘヘヘ。]
+[Oh, isn't it a pretty good woman? This is it. Hehehe.]
 		input_2_options
 		msg_draw_down		_script92_msg02
-[　いやーね、エッチ！　バシ！　　ふふふ。コヤのなかにはいって、　イイコト　しましょうよん。]
+[　No, naughty! Bashi!　　Fufufu. Let's go inside the hut and do something good.]
 		jmpne_option		$01, _script92_loc01
 		msg_draw_up		_script92_msg03
-[なにすんだよ、こいつ！とっとと　かえれ！]
+[What are you doing, this guy!]
 		set_room_idx		$6e
 		stop
 		------------------
 _script92_loc01:
 		msg_draw_down		_script92_msg04
-[きょうなにか　あったみたいね。]
+[It looks like something happened today.]
 		msg_draw_up		_script92_msg05
-[ああ。スパイをつかまえたんだ。さっきまで　ごうもんしてたんだがのびちまったんだ。]
+[Oh. I caught a spy. I was torturing until a while ago, but it has spread.]
 		msg_draw_down		_script92_msg06
-[ゴウモンゴヤのカギはあなたが　もっているというわけね！]
+[You have the key to torture room!]
 		sprite_draw_up		PORTRAIT_CLEAR
 		msg_draw_up		_script92_msg07
 [そんなことより　ヘヘヘ。ゴキ！　バタン！・・・]
