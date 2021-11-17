@@ -201,8 +201,8 @@ _tobjB.field_3			SET	_tobjB + 3
 {1}.field_3:			.BYTE 0
 _tobjB.field_4			SET	_tobjB + 4
 {1}.field_4:			.BYTE 0
-_tobjB.field_5			SET	_tobjB + 5
-{1}.field_5:			.BYTE 0
+_tobjB._damage			SET	_tobjB + 5
+{1}._damage:			.BYTE 0
 _tobjB.field_6			SET	_tobjB + 6
 {1}.field_6:			.BYTE 0
 _tobjB.field_7			SET	_tobjB + 7

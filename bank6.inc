@@ -29,10 +29,8 @@ _location_chr_list:
 ; dialog cutscene CHR tiles library offsets
 ; note, low nibble is always $08
 _cutscene_chr_list:
-		.BYTE $B8,$B8,$B8,$C8,$C8,$C8,$C8,$C8,$C8,$D8,$D8,$D8,$D8,$D8,$C8,$D8
-		.BYTE $D8,$E8,$E8,$E8,$E8,$E8,$C8,$F8,$E8,$E8,$E8,$E8,$D8,$F8,$D8,$D8
-		.BYTE $D8,$D8,$D8,$C8,$C8,$D8,$C8,$C8,$C8,$C8,$C8,$C8,$C8,$D8,$C8,$D8
-		.BYTE $C8,$C8,$D8,$E8,$F8,$C8
+		.BYTE $BB,$CB,$CC,$CC,$DC,$DD,$DD,$DC,$ED,$EE,$EE,$FC,$EE,$EE,$FD,$DD
+		.BYTE $DD,$CD,$DC,$CC,$CC,$CC,$DC,$DC,$CC,$ED,$CF
 _location_bg_pal_settings:
 		.BYTE $A0,$AD,$A2,$A2,$A2,$A2,$A2,$A2,$A2,$A2,$A2,$A2,$A2,$A4,$A2,$A8
 		.BYTE $A4,$A4,$A4,$A4,$A2,$A2,$A5,$A5,$A5,$A5,$A5,$A4,$A4,$A4,$A4,$A4
@@ -1725,7 +1723,7 @@ loc_5210E:
 		ASL
 		ASL
 		TAX
-		LDA		_objsB,X
+		LDA		_objsB._o0._hndl_idx,X
 		BPL		loc_52140
 		LDA		_tmp00
 		STA		_objsB._o0._hndl_idx,X
@@ -1738,7 +1736,7 @@ loc_5210E:
 		LDA		_tmp04
 		STA		_objsB._o0.field_4,X
 		LDA		_tmp05
-		STA		_objsB._o0.field_5,X
+		STA		_objsB._o0._damage,X
 		LDA		_tmp06
 		STA		_objsB._o0.field_6,X
 		LDA		_tmp07
@@ -1768,15 +1766,15 @@ _obj_sub5214B:
 		STA		_tmp11
 		LDA		#$0B
 		STA		_objsA._player._timer,X
-		LDA		_objsA,X
+		LDA		_objsA._player._hndl_idx,X
 		AND		#$3F
-		CMP		#$3A
+		CMP		#_obj_hndl3A_boss_yusin_idx
 		BEQ		loc_52173
-		CMP		#$3B
+		CMP		#_obj_hndl3B_boss_padovski_idx
 		BEQ		loc_52173
-		CMP		#$1C
+		CMP		#_obj_hndl1C_soldierA_idx
 		BCC		loc_52177
-		CMP		#$2A
+		CMP		#_obj_hndl2A_pirate_idx
 		BCS		loc_52177
 loc_52173:
 		LDA		#$02
@@ -1791,11 +1789,11 @@ loc_5217E:
 		LDA		_tmp11
 		AND		#$DF
 		STA		_tmp11
-		LDA		_objsA,X
+		LDA		_objsA._player._hndl_idx,X
 		AND		#$3F
-		CMP		#$1C
+		CMP		#_obj_hndl1C_soldierA_idx
 		BCC		locret_52198
-		CMP		#$2A
+		CMP		#_obj_hndl2A_pirate_idx
 		BCS		locret_52198
 		LDA		#$00
 		STA		_tmp0B
@@ -2511,9 +2509,9 @@ loc_5261B:
 		LDA		_game._scr_idx
 		CMP		#$62
 		BNE		loc_5263F
-		LDA		_objsA,X
+		LDA		_objsA._player._hndl_idx,X
 		AND		#$3F
-		CMP		#$03
+		CMP		#_obj_hndl03_npcC_idx
 		BNE		loc_5263F
 		LDA		_game._flags
 		AND		#$40
@@ -3385,7 +3383,7 @@ loc_52C93:
 		LDA		_objsA._player._timer,X
 		BNE		loc_52C9D
 loc_52C97:
-		LDA		_objsA,X
+		LDA		_objsA._player._hndl_idx,X
 		AND		#$40
 		BNE		loc_52CA0
 loc_52C9D:
@@ -5077,7 +5075,7 @@ loc_538C9:
 loc_538DF:
 		LDA		_tmp0B
 		BEQ		loc_538FA
-		LDA		_objsA,X
+		LDA		_objsA._player._hndl_idx,X
 		AND		#$40
 		BNE		loc_538F2
 		LDA		_objsA._player.field_2,X
@@ -5849,7 +5847,7 @@ loc_53E88:
 loc_53E95:
 		CLC
 		LDA		_game._life
-		ADC		#$64
+		ADC		#100
 		STA		_game._life
 		BCC		loc_53E96
 		INC		_game._life+1
@@ -5902,7 +5900,7 @@ _obj_boss_projectile_insert:
 		PHA
 		LDX		#$00
 loc_53EEC:
-		LDA		_objsA,X
+		LDA		_objsA._player._hndl_idx,X
 		BPL		loc_53F47
 		LDY		#$00
 loc_53EF2:

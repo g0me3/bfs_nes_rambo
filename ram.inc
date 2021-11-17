@@ -55,7 +55,7 @@ _tmp17:
 		.BYTE 0
 _tmp18:
 		.BYTE 0
-_ppu_room_line_pos:
+_tmp19:
 		.BYTE 0,0
 _ppu_room_line_ptr:
 		.BYTE 0,0

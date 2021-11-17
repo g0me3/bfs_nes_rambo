@@ -43,9 +43,9 @@ loc_600F9:
 		STA		_ppu_queue_buf_ofs
 		LDA		#>[_ppu_queue_buf]
 		STA		_ppu_queue_buf_ofs+1
-		LDA		#$C8
+		LDA		#<[200]					; BUT WHY?!
 		STA		_game._life
-		LDA		#$00
+		LDA		#>[200]
 		STA		_game._life+1
 		LDA		#$78
 		STA		_objsA._player._x_pos
@@ -333,7 +333,7 @@ loc_602EB:
 		DEC		_game._potions
 		LDA		_game._life
 		CLC
-		ADC		#$64
+		ADC		#100
 		STA		_game._life
 		BCC		loc_602EC
 		INC		_game._life+1
@@ -1311,84 +1311,65 @@ loc_60AD9:
 
 ; =============== S U B	R O U T	I N E =======================================
 _chr_bg_tiles_load:
-		LDA		_game._scr_idx			; check what kind of tiles needed
+		LDY		_game._scr_idx			; check what kind of tiles needed
 		BPL		loc_60AF4				; <$80 are level room tiles
-		CMP		#$FF
-		BNE		loc_60AEA				; >$80 are dialog cutscenes tiles
-		LDA		#$09
-		BNE		loc_60AF9				; $FF is a special tiles for BOSS
-loc_60AEA:
-;		AND		#$7F					; cutscene bg tiles in additional lookup
-;		TAY								; able
-;		LDA		_cutscene_chr_list,Y
-;		BNE		loc_60AF7
-		LDA		#$08					; note, all low nibble
+		LDA		#$80					; >$80 are dialog cutscenes tiles
+		CPY		#$FF					; note, all low nibble
 		BNE		loc_60AF9				; here is $08, no need to fetch this
+		LDA		#$90					; $FF is a special tiles for BOSS
+		BNE		loc_60AF9				; the chr lib ofs is $09 here
 loc_60AF4:
-		LDA		_cur_level_chr_idx
-;loc_60AF7:
-		AND		#$0F
+		LDA		_cur_level_chr_idx		; extract lower 4-nibble
+		ASL
+		ASL
+		ASL
+		ASL
 loc_60AF9:
-		ASL
-		ASL
-		ASL
-		ASL
 		CLC
 		ADC		#<[_chr_bg_table_lib]
 		STA		_tmp0E
 		LDA		#$00
+		TAY
 		ADC		#>[_chr_bg_table_lib]
 		STA		_tmp0F
-		LDY		#$00					; actually is #<[_chr_bg_data]
-		STY		_tmp02					; but by the fact is $00
-		LDA		_PPU_STATUS
+		STY		_tmp02					; actually is #<[_chr_bg_data]
+		LDA		_PPU_STATUS				; but by the fact is $00
 		LDA		#$10
-		STA		_PPU_ADDR
+		STA		_PPU_ADDR				; 4K page $1000 selected
 		STY		_PPU_ADDR
-		LDX		#$10
+		LDX		#$10					; 16 blocks x256 bytes = 4K page
 loc_60B1D:
+		LDA		#$02					; bg tiles alwys in bank 2
+		STA		_cur_prg_bank
 		LDA		(_tmp0E),Y
-		CLC
-		ADC		#$80					; actually is #>[_chr_bg_data]
-		STA		_tmp03					; but by the fac is $80
-		LDA		#$02
-		JSR		_mmc_prg_set
-		TYA
-		PHA
-		LDY		#$00
-loc_60B30:
-		LDA		(_tmp02),Y
-		STA		_PPU_DATA
-		INY
-		BNE		loc_60B30
-		PLA
-		TAY
-		LDA		#$06
-		JSR		_mmc_prg_set
-		INY
-		DEX
-		BNE		loc_60B1D
+		JSR		_chr_chunk_send			; result of this routine
+		BNE		loc_60B1D				; is stop flag for code here
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
 _chr_spr_tiles_load:
-		LDA		_game._scr_idx
-		BPL		loc_60B67
-		CMP		#$FF
-		BNE		loc_60B5D
+		LDA		_cur_level_chr_idx		; default load level chr idx
+		LDY		_game._scr_idx			; check if we need to load cutscene chr
+		BPL		loc_60B67				; if no, just jump to ofs calc instantly
+		CPY		#$FF					; check for special boss data OFS
+		BNE		loc_60B5D				; if yes, manually load it.
 		LDA		#<[_chr_spr_table_lib+256]
 		STA		_tmp0E
 		LDA		#>[_chr_spr_table_lib+256]
 		STA		_tmp0F
-		JMP		loc_60B77
+		BNE		loc_60B77				; high nibble here alwys >0!
 loc_60B5D:
-		AND		#$7F
-		TAY
+		TYA
+		AND		#$7F					; the rest is for calc cutscene CHR
+		ROR								; lib offset out from 4-bit nibbles
+		TAY								; table
 		LDA		_cutscene_chr_list,Y
-		BNE		loc_60B6A
+		BCS		loc_60B67				; carry from ROR,
+		ASL								; if clear, shift low nibble up
+		ASL
+		ASL
+		ASL
 loc_60B67:
-		LDA		_cur_level_chr_idx
-loc_60B6A:
 		AND		#$F0
 		CLC
 		ADC		#<[_chr_spr_table_lib]
@@ -1397,41 +1378,45 @@ loc_60B6A:
 		ADC		#>[_chr_spr_table_lib]
 		STA		_tmp0F
 loc_60B77:
-		LDY		#$00				; actually is #<[_chr_spr_data]
-		STY		_tmp02				; but by the fact is $00
+		LDY		#$00					; actually is #<[_chr_spr_data]
+		STY		_tmp02					; but by the fact is $00
 		LDA		_PPU_STATUS
 		STY		_PPU_ADDR
 		STY		_PPU_ADDR
-		LDX		#$10
+		LDX		#$10					; same 16 chunk x 256b each = 4K
 loc_60B8C:
-		LDA		#$03
-		STA		_cur_prg_bank
-		LDA		(_tmp0E),Y
+		LDA		#$03					; sprites are in two banks 3 and 4
+		STA		_cur_prg_bank			; chunks may be in any order
+		LDA		(_tmp0E),Y				; fetch cht tiles chunk idx in ROM
 		CMP		#$40
-		BCC		loc_60B9D
-		INC		_cur_prg_bank
-		SEC
-		SBC		#$40
+		BCC		loc_60B9D				; chunks with idx < $$0 in bank 3
+		INC		_cur_prg_bank			; the rest in bank 4, adjust offset
+		AND		#$3F					; and bank number
 loc_60B9D:
+		JSR		_chr_chunk_send			; result of this routine
+		BNE		loc_60B8C				; is stop flag for code here
+		RTS
+
+; =============== S U B	R O U T	I N E =======================================
+_chr_chunk_send:
 		CLC
-		ADC		#$80				; actually is #>[_chr_spr_data]
-		STA		_tmp03				; but by the fact is $00
-		JSR		_mmc_prg
-		TYA
+		ADC		#$80					; chr data is alwys starts at $80
+		STA		_tmp03
+		JSR		_mmc_prg				; set the previously selected prg bank
+		TYA								; backup outside Y list counter
 		PHA
 		LDY		#$00
 loc_60BA9:
-		LDA		(_tmp02),Y
+		LDA		(_tmp02),Y				; copy data
 		STA		_PPU_DATA
 		INY
 		BNE		loc_60BA9
 		PLA
 		TAY
-		LDA		#$06
+		LDA		#$06					; restore main outside list bank
 		JSR		_mmc_prg_set
 		INY
-		DEX
-		BNE		loc_60B8C
+		DEX								; decrement outide loop counter
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -1442,8 +1427,7 @@ _level_room_data_unpack:
 		AND		#$3F
 		CMP		#$20
 		BCC		loc_60BD4
-		SEC
-		SBC		#$20
+		AND		#$1F
 		INC		_cur_prg_bank
 loc_60BD4:
 		STA		_tmp09
@@ -1486,7 +1470,7 @@ _room_nt_data_unpack:
 		STA		_tmp0F
 		LDA		#$00
 		STA		_tmp01
-		LDX		#$00
+		TAX
 loc_60C28:
 		INC		_tmp0E
 		INC		_tmp0E
@@ -2004,9 +1988,9 @@ _room_macro_adjust:
 		STA		_tmp0E
 		JSR		_room_scroll_to_ppu_ptr_calc
 		LDA		_tmp04
-		STA		_ppu_room_line_pos
+		STA		_tmp19
 		LDA		_tmp03
-		STA		_ppu_room_line_pos+1
+		STA		_tmp19+1
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -2111,14 +2095,14 @@ loc_60FEA:
 		STA		_tmp16
 		STA		_tmp17
 		STA		_tmp18
-		STA		_ppu_room_line_pos
+		STA		_tmp19
 		JMP		loc_6112F
 loc_60FF7:
 		LDA		#$FF
 		STA		_tmp16
 		STA		_tmp17
 		STA		_tmp18
-		STA		_ppu_room_line_pos
+		STA		_tmp19
 		LDA		_tmp07
 		BPL		loc_6101E
 		AND		#$7F
@@ -2217,7 +2201,7 @@ loc_610AE:
 		LDX		_tmp02
 		JSR		_coll_look_for_macro
 		LDA		_tmp05
-		STA		_ppu_room_line_pos
+		STA		_tmp19
 		LDA		_tmp0E
 		STA		_tmp0C
 		LDA		_tmp0F
@@ -2420,16 +2404,14 @@ loc_611D6:
 		BEQ		loc_611FF
 		LDA		_game._life,Y
 		STA		_tmp00
-		INY
-		LDA		_game._life,Y
+		LDA		_game._life+1,Y
 		STA		_tmp01
 		JSR		_hex_to_dec
 		LDA		_tmp05
 		STA		_tmp07
 		LDA		_tmp04
 		STA		_tmp06
-		JSR		_truncate
-		STA		_hud_decimals_buf,X
+		JSR		_dec_compress
 		INX
 		JMP		loc_6120B
 loc_611FF:
@@ -2443,8 +2425,7 @@ loc_6120B:
 		STA		_tmp07
 		LDA		_tmp02
 		STA		_tmp06
-		JSR		_truncate
-		STA		_hud_decimals_buf,X
+		JSR		_dec_compress
 		JMP		loc_6122D
 loc_6121C:
 		LDA		_game._life,Y
@@ -2462,7 +2443,7 @@ loc_6122D:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_truncate:
+_dec_compress:
 		LDA		_tmp07
 		ASL
 		ASL
@@ -2472,6 +2453,7 @@ _truncate:
 		LDA		_tmp06
 		AND		#$0F
 		ORA		_tmp07
+		STA		_hud_decimals_buf,X
 		RTS
 ; ---------------------------------------------------------------------------
 _hud_decimal_values_length_list:
@@ -2784,7 +2766,7 @@ loc_61489:
 		LDA		_tobjA._state,X
 		AND		#$00
 		STA		_tobjA._state,X
-		LDA		_tobjA,X
+		LDA		_tobjA._hndl_idx,X
 		BMI		loc_614FD
 		LDA		_tobjA.field_7,X
 		BPL		loc_614FD
@@ -2947,7 +2929,7 @@ loc_615A6:
 		STA		_tmp14
 loc_615AE:
 		LDX		_tmp14
-		LDA		_tobjB,X
+		LDA		_tobjB._hndl_idx,X
 		BMI		loc_615FA
 		LDA		_tobjB.field_4,X
 		AND		#$F7
@@ -3045,7 +3027,7 @@ loc_6164D:
 		LDA		_tobjA._dir,X
 		AND		#$40
 		BNE		loc_6166E
-		LDA		_ppu_room_line_pos
+		LDA		_tmp19
 		CMP		#$59
 		BCS		loc_6168F
 		LDA		#$01
@@ -3156,7 +3138,7 @@ _obj_sub6170D:
 		BEQ		locret_6171E
 		CMP		_tmp16
 		BEQ		locret_6171E
-		CMP		_ppu_room_line_pos
+		CMP		_tmp19
 		BEQ		locret_6171E
 		CMP		_tmp18
 locret_6171E:
@@ -3170,7 +3152,7 @@ _obj_to_room_collision_testA:
 		LDA		_tobjA._dir,X
 		AND		#$40
 		BNE		loc_6174C
-		LDA		_ppu_room_line_pos
+		LDA		_tmp19
 		CMP		#$59
 		BCS		loc_6177B
 		CMP		#$38
@@ -3308,11 +3290,11 @@ loc_617FB:
 		STA		_tobjB._hndl_idx,X
 		LDA		#$00
 		STA		_tobjB.field_4,X
-		STA		_tobjB.field_5,X
+		STA		_tobjB._damage,X
 		STA		_tobjB.field_7,X
 		LDA		#$F2
 		STA		_tobjB.field_6,X
-		LDX		_ppu_room_line_pos
+		LDX		_tmp19
 		BIT		_objsA._player._dir
 		BVC		loc_6182A
 		LDX		_tmp18
@@ -3440,7 +3422,7 @@ loc_618E0:
 		BCS		loc_618F9
 		BCC		loc_618F3
 loc_618ED:
-		LDA		_ppu_room_line_pos
+		LDA		_tmp19
 		CMP		#$59
 		BCS		loc_618F9
 loc_618F3:
@@ -3549,7 +3531,7 @@ loc_619C6:
 		STA		_tmp15
 loc_619CE:
 		LDX		_tmp14
-		LDA		_tobjB,X
+		LDA		_tobjB._hndl_idx,X
 		BPL		loc_619D7
 		JMP		loc_61A7A
 loc_619D7:
@@ -3574,8 +3556,8 @@ loc_619D7:
 		LDA		_tobjA.field_C,X
 		BEQ		loc_61A2A
 		LDX		_tmp14
-		LDA		_tobjB.field_5,X
-		STA		_ppu_room_line_pos
+		LDA		_tobjB._damage,X
+		STA		_tmp19
 		LDX		_tmp12
 		LDA		_tobjA._hndl_idx,X
 		AND		#$3F
@@ -3586,7 +3568,7 @@ loc_619D7:
 loc_61A17:
 		LDA		_tobjA.field_C,X
 		SEC
-		SBC		_ppu_room_line_pos
+		SBC		_tmp19
 		STA		_tobjA.field_C,X
 		BCS		loc_61A24
 		LDA		#$00
@@ -3616,8 +3598,8 @@ loc_61A2A:
 		LDA		_tobjA.field_C,X
 		BEQ		loc_61A7A
 		LDX		_tmp14
-		LDA		_tobjB.field_5,X
-		STA		_ppu_room_line_pos
+		LDA		_tobjB._damage,X
+		STA		_tmp19
 		LDX		_tmp12
 		LDA		_tobjA._hndl_idx,X
 		AND		#$3F
@@ -3628,7 +3610,7 @@ loc_61A2A:
 loc_61A67:
 		LDA		_tobjA.field_C,X
 		SEC
-		SBC		_ppu_room_line_pos
+		SBC		_tmp19
 		STA		_tobjA.field_C,X
 		BCS		loc_61A74
 		LDA		#$00
@@ -3661,25 +3643,26 @@ loc_61A96:
 		STA		_tmp15
 loc_61AA1:
 		LDX		_tmp14
-		LDA		_tobjB,X
+		LDA		_tobjB._hndl_idx,X
 		BMI		loc_61AF6
 		LDA		_objsA._player.field_7
 		AND		#$07
-		AND		_tobjA._x_pos,X
+		AND		_tobjB.field_4,X
 		BEQ		loc_61AF6
 		JSR		_obj_col_testB_calcD
 		JSR		_obj_col_testB_calcF
 		LDA		_tmp16
 		BEQ		loc_61AF6
-		LDA		_tobjA._x_pos,X
+		LDA		_tobjB.field_4,X
 		ORA		#$08
-		STA		_tobjA._x_pos,X
+		STA		_tobjB.field_4,X
 		LDA		_objsA._player.field_7
 		AND		#$07
-		AND		_tobjA._x_pos,X
+		AND		_tobjB.field_4,X
 		BEQ		loc_61AF6
-		LDA		_tobjA._y_pos,X
-		STA		_ppu_room_line_pos
+
+		LDA		_tobjB._damage,X
+		STA		_tmp19
 		LDA		_objsA._player._state
 		ORA		#$80
 		STA		_objsA._player._state
@@ -3688,17 +3671,16 @@ loc_61AA1:
 		BEQ		loc_61AF6
 		LDA		_game._life
 		SEC
-		SBC		_ppu_room_line_pos
+		SBC		_tmp19
 		STA		_game._life
 		BCS		loc_61AF6
-		LDA		_game._life+1
-		SBC		#$00
-		STA		_game._life+1
-		BCS		loc_61AF6
+		DEC		_game._life+1
+		BPL		loc_61AF6
 		LDA		#$00
 		STA		_game._life
 		STA		_game._life+1
 loc_61AF6:
+
 		LDA		_tmp14
 		CLC
 		ADC		#$08
@@ -3727,9 +3709,9 @@ loc_61AF6:
 		STA		_tmp06
 loc_61B29:
 		LDX		_tmp14
-		LDA		_tobjB,X
+		LDA		_tobjB._hndl_idx,X
 		BMI		loc_61B5E
-		LDA		_tobjB,X
+		LDA		_tobjB._hndl_idx,X
 		AND		#$0F
 		CMP		#$05
 		BNE		loc_61B5E
@@ -3776,10 +3758,10 @@ _obj_collision_testB_subA:
 		LDA		_tobjA._dir,X
 		ASL
 		AND		#$80
-		STA		_ppu_room_line_pos
+		STA		_tmp19
 		LDA		_tobjA._room_num,X
 		AND		#$03
-		ORA		_ppu_room_line_pos
+		ORA		_tmp19
 		STA		_tmp05
 		LDA		_tobjA._x_pos,X
 		STA		_tmp06
@@ -3832,7 +3814,7 @@ loc_61BDB:
 		ASL
 		ASL
 		STA		_tmp07
-		LDA		_tobjB.field_5,X
+		LDA		_tobjB._damage,X
 		SEC
 		SBC		_tmp07
 		STA		_tmp07
@@ -3874,10 +3856,10 @@ _obj_col_testB_calcA:
 		LDA		_objsA._player._dir
 		ASL
 		AND		#$80
-		STA		_ppu_room_line_pos
+		STA		_tmp19
 		LDA		_objsA._player._room_num
 		AND		#$03
-		ORA		_ppu_room_line_pos
+		ORA		_tmp19
 		STA		_tmp00
 		LDA		_objsA._player._x_pos
 		STA		_tmp01
@@ -3976,10 +3958,10 @@ _obj_col_testB_calcC:
 		LDA		_tobjB.field_4,X
 		ASL
 		AND		#$80
-		STA		_ppu_room_line_pos
+		STA		_tmp19
 		LDA		_tobjB.field_1,X
 		AND		#$03
-		ORA		_ppu_room_line_pos
+		ORA		_tmp19
 		STA		_tmp00
 		LDA		_tobjB.field_2,X
 		STA		_tmp01
@@ -4009,10 +3991,10 @@ _obj_col_testB_calcD:
 		LDA		_tobjB.field_4,X
 		ASL
 		AND		#$80
-		STA		_ppu_room_line_pos
+		STA		_tmp19
 		LDA		_tobjB.field_1,X
 		AND		#$03
-		ORA		_ppu_room_line_pos
+		ORA		_tmp19
 		STA		_tmp05
 		LDA		_tobjB.field_2,X
 		STA		_tmp06
@@ -4025,8 +4007,9 @@ _obj_col_testB_calcE:
 		LDA		_tmp17
 		AND		#$20
 		BEQ		loc_61D49
+
 		LDA		_tobjA._damage,X
-		STA		_ppu_room_line_pos
+		STA		_tmp19
 		LDA		_objsA._player._state
 		ORA		#$80
 		STA		_objsA._player._state
@@ -4035,22 +4018,21 @@ _obj_col_testB_calcE:
 		BEQ		loc_61D49
 		LDA		_game._life
 		SEC
-		SBC		_ppu_room_line_pos
+		SBC		_tmp19
 		STA		_game._life
 		BCS		loc_61D49
-		LDA		_game._life+1
-		SBC		#$00
-		STA		_game._life+1
-		BCS		loc_61D49
+		DEC		_game._life+1
+		BPL		loc_61D49
 		LDA		#$00
 		STA		_game._life+1
 		STA		_game._life
 loc_61D49:
+
 		LDA		_tmp17
 		AND		#$10
 		BEQ		locret_61D77
 		LDA		_objsA._player._damage
-		STA		_ppu_room_line_pos
+		STA		_tmp19
 		LDA		_tobjA._state,X
 		ORA		#$80
 		STA		_tobjA._state,X
@@ -4065,7 +4047,7 @@ loc_61D49:
 loc_61D6A:
 		LDA		_tobjA.field_C,X
 		SEC
-		SBC		_ppu_room_line_pos
+		SBC		_tmp19
 		STA		_tobjA.field_C,X
 		BCS		locret_61D77
 		LDA		#$00
@@ -4374,7 +4356,7 @@ loc_61F93:
 		LDX		#$C0
 		LDY		#$08
 loc_61F9E:
-		LDA		_tobjB,X
+		LDA		_tobjB._hndl_idx,X
 		BMI		loc_61FAD
 		TXA
 		CLC
@@ -4403,10 +4385,10 @@ loc_61FAD:
 		LDA		#$00
 		STA		_tobjB.field_1,X
 		LDA		#$1E
-		STA		_tobjB,X
+		STA		_tobjB._hndl_idx,X
 		LDA		#$00
 		STA		_tobjB.field_4,X
-		STA		_tobjB.field_5,X
+		STA		_tobjB._damage,X
 		STA		_tobjB.field_7,X
 		LDA		#$F2
 		STA		_tobjB.field_6,X
@@ -4490,7 +4472,7 @@ _objB_handlers_exec:
 		ASL
 		ASL
 		TAX
-		LDA		_objsB,X
+		LDA		_objsB._o0._hndl_idx,X
 		BMI		_objB_continue
 		AND		#$3F
 		ASL
@@ -4749,7 +4731,7 @@ _objB_hndl07:
 		BNE		loc_62216
 loc_62212:
 		LDA		#$80
-		STA		_objsB,X
+		STA		_objsB._o0._hndl_idx,X
 loc_62216:
 		JMP		_objB_flush_and_continue
 
@@ -4928,7 +4910,7 @@ loc_62348:
 ; =============== S U B	R O U T	I N E =======================================
 _objB_hndl1E:
 		LDA		#$00
-		STA		_objsB._o0.field_5
+		STA		_objsB._o0._damage
 		LDA		_tmp11
 		AND		#$F0
 		STA		_tmp11
@@ -4951,7 +4933,7 @@ _objB_sub62362:
 		LDA		#SEN06
 		STA		_apu_se_noise_idx
 		LDA		#$00
-		STA		_objsB._o0.field_5
+		STA		_objsB._o0._damage
 		LDA		_tmp11
 		AND		#$F0
 		STA		_tmp11
@@ -5733,8 +5715,7 @@ loc_6289E:
 		AND		#$DF
 		STA		_tmp11
 		LDA		_game._life
-		BNE		loc_628D5
-		LDA		_game._life+1
+		ORA		_game._life+1
 		BNE		loc_628D5
 		LDA		_game._flags+2
 		AND		#$80
@@ -6031,7 +6012,7 @@ loc_62AEF:
 
 ; =============== S U B	R O U T	I N E =======================================
 _player_weapon_projectile_deploy:
-		LDA		_cur_weapon_selected
+		LDA		_cur_weapon_selected		; get selecte weapon idx
 		ASL
 		ASL
 		ASL
@@ -6039,7 +6020,7 @@ _player_weapon_projectile_deploy:
 		CLC
 		ADC		_tmp00
 		TAY
-		LDA		_weapons_data_tbl,Y
+		LDA		_weapons_data_tbl,Y			; fetch weapon param
 		STA		_tmp0B
 		LDA		#$FE
 		STA		_objsA._player.field_7
@@ -6049,23 +6030,19 @@ _player_weapon_projectile_deploy:
 		STA		_objsA._player.field_9
 		LDA		_cur_weapon_selected
 		CMP		#$06
-		BNE		locret_62B45
-		TAY
-		LDA		_game._exp_level,Y
+		BNE		locret_62B45				; test if selected item is POTIONS
+		LDA		_game._potions				; test if there are some potions
 		BEQ		loc_62B40
-		LDA		_cur_weapon_selected
-		TAX
-		DEC		_game._exp_level,X
-		LDX		#$00
-		LDA		_game._life
+		DEC		_game._potions				; decrement
+		LDA		_game._life					; increment life
 		CLC
-		ADC		#$64
+		ADC		#100
 		STA		_game._life
 		BCC		loc_62B40
 		INC		_game._life+1
 loc_62B40:
 		LDA		#$00
-		STA		_cur_weapon_selected
+		STA		_cur_weapon_selected		; return back to initial items pos
 locret_62B45:
 		RTS
 
@@ -6094,7 +6071,7 @@ loc_62B4C:
 		LDA		_tmp04
 		STA		_objsB._o0.field_4,X
 		LDA		_tmp05
-		STA		_objsB._o0.field_5,X
+		STA		_objsB._o0._damage,X
 		LDA		_tmp06
 		STA		_objsB._o0.field_6,X
 		LDA		_tmp07
@@ -6405,6 +6382,13 @@ loc_62DE3:
 _hud_num_idx_adjust_lo:
 		AND		#$0F
 		JMP		_hud_num_idx_adjust_ex
+
+; =============== S U B	R O U T	I N E =======================================
+_hex_to_dec_xy
+		STX		_tmp00
+		STY		_tmp01
+
+; !FALLTHROUGH!
 
 ; =============== S U B	R O U T	I N E =======================================
 _hex_to_dec:
@@ -6749,9 +6733,9 @@ loc_63046:
 		STA		_PPU_CTRL
 		LDY		#$00
 		LDA		_PPU_STATUS
-		LDA		_ppu_room_line_pos
+		LDA		_tmp19
 		STA		_PPU_ADDR
-		LDA		_ppu_room_line_pos+1
+		LDA		_tmp19+1
 		STA		_PPU_ADDR
 loc_6305B:
 		LDA		(_ppu_room_line_ptr),Y
@@ -6764,9 +6748,9 @@ loc_6305B:
 		CPY		#$0D
 		BNE		loc_6305B
 		LDA		_PPU_STATUS
-		LDA		_ppu_room_line_pos
+		LDA		_tmp19
 		STA		_PPU_ADDR
-		LDY		_ppu_room_line_pos+1
+		LDY		_tmp19+1
 		INY
 		STY		_PPU_ADDR
 		LDY		#$00

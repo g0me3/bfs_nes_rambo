@@ -626,107 +626,85 @@ _scr_cmd19_pass_input:
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd1A_game_stats_draw:
-		LDA		_game._life
-		STA		_tmp00
-		LDA		_game._life+1
-		STA		_tmp01
-		JSR		_hex_to_dec
-		LDA		#$24
-		STA		_tmp00
-		LDA		#$6C
-		STA		_tmp01
-		LDX		#_tmp05-1
+		TYA
+		PHA
+		LDX		_game._life
+		LDY		_game._life+1
+		JSR		_hex_to_dec_xy
+		LDX		#$24
+		LDY		#$6C
+		LDA		#_tmp05-1
 		JSR		_ppu_num_draw
-		LDA		_game._exp
-		STA		_tmp00
-		LDA		_game._exp+1
-		STA		_tmp01
-		JSR		_hex_to_dec
-		LDA		#$24
-		STA		_tmp00
-		LDA		#$AC
-		STA		_tmp01
-		LDX		#_tmp05-1
+		LDX		_game._exp
+		LDY		_game._exp+1
+		JSR		_hex_to_dec_xy
+		LDX		#$24
+		LDY		#$AC
+		LDA		#_tmp05-1
 		JSR		_ppu_num_draw
 		LDA		_game._life_level
 		ASL
 		TAX
+		LDA		_max_life_list+1,X
+		TAY
 		LDA		_max_life_list,X
-		STA		_tmp00
-		INX
-		LDA		_max_life_list,X
-		STA		_tmp01
-		JSR		_hex_to_dec
-		LDA		#$24
-		STA		_tmp00
-		LDA		#$77
-		STA		_tmp01
-		LDX		#_tmp05-1
+		TAX
+		JSR		_hex_to_dec_xy
+		LDX		#$24
+		LDY		#$77
+		LDA		#_tmp05-1
 		JSR		_ppu_num_draw
 		LDA		_game._exp_level
 		ASL
 		TAX
+		LDA		_next_exp_list+1,X
+		TAY
 		LDA		_next_exp_list,X
-		STA		_tmp00
-		INX
-		LDA		_next_exp_list,X
-		STA		_tmp01
-		JSR		_hex_to_dec
-		LDA		#$24
-		STA		_tmp00
-		LDA		#$B7
-		STA		_tmp01
-		LDX		#_tmp05-1
+		TAX
+		JSR		_hex_to_dec_xy
+		LDX		#$24
+		LDY		#$B7
+		LDA		#_tmp05-1
 		JSR		_ppu_num_draw
-		LDA		_game._play_hours
-		STA		_tmp00
-		LDA		#$00
-		STA		_tmp01
-		JSR		_hex_to_dec
-		LDA		#$24
-		STA		_tmp00
-		LDA		#$EC
-		STA		_tmp01
-		LDX		#_tmp03-1
+		LDX		_game._play_hours
+		LDY		#$00
+		JSR		_hex_to_dec_xy
+		LDX		#$24
+		LDY		#$EC
+		LDA		#_tmp03-1
 		JSR		_ppu_num_draw
-		LDA		_game._play_minutes
-		STA		_tmp00
-		LDA		#$00
-		STA		_tmp01
-		JSR		_hex_to_dec
+		LDX		_game._play_minutes
+		LDY		#$00
+		JSR		_hex_to_dec_xy
 		LDA		#$0E
 		STA		_tmp04
-		LDA		#$24
-		STA		_tmp00
-		LDA		#$EE
-		STA		_tmp01
-		LDX		#_tmp04-1
+		LDX		#$24
+		LDY		#$EE
+		LDA		#_tmp04-1
 		JSR		_ppu_num_draw
-		LDA		_play_seconds
-		STA		_tmp00
-		LDA		#$00
-		STA		_tmp01
-		JSR		_hex_to_dec
+		LDX		_play_seconds
+		LDY		#$00
+		JSR		_hex_to_dec_xy
 		LDA		#$0E
 		STA		_tmp04
-		LDA		#$24
-		STA		_tmp00
-		LDA		#$F1
-		STA		_tmp01
-		LDX		#_tmp04-1
+		LDX		#$24
+		LDY		#$F1
+		LDA		#_tmp04-1
 		JSR		_ppu_num_draw
+		PLA
+		TAY
 		JMP		_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
 _ppu_num_draw:
+		STA		_tmp00
 		JSR		_render_off
 		LDA		_PPU_STATUS
-		LDA		_tmp00
-		STA		_PPU_ADDR
-		LDA		_tmp01
-		STA		_PPU_ADDR
+		STX		_PPU_ADDR
+		STY		_PPU_ADDR
+		LDX		_tmp00
 loc_445EF:
-		LDA		$0001,X
+		LDA		$01,X
 		CLC
 		ADC		#$D8
 		STA		_PPU_DATA
