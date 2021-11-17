@@ -215,7 +215,7 @@ _script85_loc00:
 		frame_draw_down		PORTRAIT00_RAMBO
 		input_2_options
 		ptr_load			_script85_msg04
-		msg_draw_down		; [I'm not afraid of\death.\ \I feel better in\prison.]
+		msg_draw_down		; [ I'm not afraid of\death.\ \ I feel better in\prison.]
 		jmpne_option		$01, _script85_loc01
 		ptr_load			_script85_msg05
 		msg_draw_up			; [Good,I'll make the\arrangements.]
@@ -315,7 +315,7 @@ _script89:
 		frame_draw_down		PORTRAIT00_RAMBO
 		input_2_options
 		ptr_load			_script89_msg01
-		msg_draw_down		; [Where is the camp?\ \ \What do you think\about me?]
+		msg_draw_down		; [ Where is the camp?\ \ \ What do you think\ about me?]
 		jmpne_option		$02, _script89_loc00
 		sprite_draw_down	PORTRAIT02_RAMBO_HAPPY
 		sprite_draw_up		PORTRAIT04_CO_HAPPY
@@ -519,7 +519,7 @@ _script92_loc00:
 		msg_draw_up			; [You must be the\general's wife.] [-DIFFERENT MEANING-]
 		input_2_options
 		ptr_load			_script92_msg02
-		msg_draw_down		; [No.I'm looking\for some.\ \Yes.] [-DIFFERENT MEANING-]
+		msg_draw_down		; [ No.I'm looking\ for some.\ \ Yes.] [-DIFFERENT MEANING-]
 		jmpne_option		$01, _script92_loc01
 		ptr_load			_script92_msg03
 		msg_draw_up			; [Get out of here.] [-DIFFERENT MEANING-]
@@ -634,7 +634,7 @@ _script95_loc05:
 _script95_loc06:
 		input_2_options
 		ptr_load			_script95_msg09
-		msg_draw_down		; [I'm sorry.I can't\take you.\ \Then come back with\me.]
+		msg_draw_down		; [ I'm sorry.I can't\ take you.\ \ Then come back with\ me.]
 		jmpne_option		$02, _script95_loc07
 		sprite_draw_up		PORTRAIT04_CO_HAPPY
 		ptr_load			_script95_msg0a
@@ -730,7 +730,7 @@ _script97_loc00:
 		msg_draw_up			; [Make a radio call.]
 		input_2_options
 		ptr_load			_script97_msg0b
-		msg_draw_down		; [...\ \ \220...56..please]
+		msg_draw_down		; [ ...\ \ \ 220...56..please]
 		jmpne_option		$01, _script97_loc01
 		jump				_script97_loc00
 		------------------
@@ -774,7 +774,7 @@ _script98_loc02:
 		frame_draw_down		PORTRAIT03_CO
 		input_2_options
 		ptr_load			_script98_msg02
-		msg_draw_down		; [I can't go without\this rifle.\ \Oh,this is a\beautiful dress.]
+		msg_draw_down		; [ I can't go without\ this rifle.\ \ Oh,this is a\ beautiful dress.]
 		jmpne_option		$01, _script98_loc03
 		ptr_load			_script98_msg03
 		msg_draw_up			; [Hmm,I'm sorry.] [-MORE TEXT-]
@@ -1005,7 +1005,7 @@ _scriptA1:
 		frame_draw_down		PORTRAIT00_RAMBO
 		input_2_options
 		ptr_load			_scriptA1_msg01
-		msg_draw_down		; [All right.\ \ \Sorry,my duty is\just to take photos.]
+		msg_draw_down		; [ All right.\ \ \ Sorry,my duty is\ just to take photos.]
 		jmpne_option		$02, _scriptA1_loc00
 		ptr_load			_scriptA1_msg02
 		msg_draw_up			; [Didn't you come\here to save us.\Please take us out.]
@@ -1166,7 +1166,7 @@ _scriptA4_loc04:
 		frame_draw_down		PORTRAIT00_RAMBO
 		input_2_options
 		ptr_load			_scriptA4_msg11
-		msg_draw_down		; [Let me try again.\ \ \I don't want to do\that again.]
+		msg_draw_down		; [ Let me try again.\ \ \ I don't want to do\ that again.]
 		jmpne_option		$02, _scriptA4_loc05
 		set_room_idx		$61
 		stop
@@ -1550,11 +1550,11 @@ _script85_msg03:
 		.BYTE _A,_r,_e,__,_y,_o,_u,__,_u,_p,__,_t,_o,__,_i,_t,_qe,_eol
 		.BYTE _eof
 _script85_msg04:
-		.BYTE _I,_ap,_m,__,_n,_o,_t,__,_a,_f,_r,_a,_i,_d,__,_o,_f,_eol
-		.BYTE _d,_e,_a,_t,_h,_dot,_eol
+		.BYTE __,_I,_ap,_m,__,_n,_o,_t,__,_a,_f,_r,_a,_i,_d,__,_o,_f,_eol
+		.BYTE __,_d,_e,_a,_t,_h,_dot,_eol
 		.BYTE __,_eol
-		.BYTE _I,__,_f,_e,_e,_l,__,_b,_e,_t,_t,_e,_r,__,_i,_n,_eol
-		.BYTE _p,_r,_i,_s,_o,_n,_dot,_eol
+		.BYTE __,_I,__,_f,_e,_e,_l,__,_b,_e,_t,_t,_e,_r,__,_i,_n,_eol
+		.BYTE __,_p,_r,_i,_s,_o,_n,_dot,_eol
 		.BYTE _eof
 _script85_msg05:
 		.BYTE _G,_o,_o,_d,_col,_I,_ap,_l,_l,__,_m,_a,_k,_e,__,_t,_h,_e,_eol
@@ -1653,11 +1653,11 @@ _script89_msg00A:
 		.BYTE _k,_n,_o,_w,__,_s,_o,_m,_e,_t,_h,_i,_n,_g,_qe,_eol
 		.BYTE _eof
 _script89_msg01:
-		.BYTE _W,_h,_e,_r,_e,__,_i,_s,__,_t,_h,_e,__,_c,_a,_m,_p,_qe,_eol
+		.BYTE __,_W,_h,_e,_r,_e,__,_i,_s,__,_t,_h,_e,__,_c,_a,_m,_p,_qe,_eol
 		.BYTE __,_eol
 		.BYTE __,_eol
-		.BYTE _W,_h,_a,_t,__,_d,_o,__,_y,_o,_u,__,_t,_h,_i,_n,_k,_eol
-		.BYTE _a,_b,_o,_u,_t,__,_m,_e,_qe,_eol
+		.BYTE __,_W,_h,_a,_t,__,_d,_o,__,_y,_o,_u,__,_t,_h,_i,_n,_k,_eol
+		.BYTE __,_a,_b,_o,_u,_t,__,_m,_e,_qe,_eol
 		.BYTE _eof
 _script89_msg02:
 		.BYTE _W,_h,_a,_t,_qe,_eol
@@ -1810,10 +1810,10 @@ _script92_msg01:
 		.BYTE _g,_e,_n,_e,_r,_a,_l,_ap,_s,__,_w,_i,_f,_e,_dot,_eol
 		.BYTE _eof
 _script92_msg02:
-		.BYTE _N,_o,_dot,_I,_ap,_m,__,_l,_o,_o,_k,_i,_n,_g,_eol
-		.BYTE _f,_o,_r,__,_s,_o,_m,_e,_dot,_eol
+		.BYTE __,_N,_o,_dot,_I,_ap,_m,__,_l,_o,_o,_k,_i,_n,_g,_eol
+		.BYTE __,_f,_o,_r,__,_s,_o,_m,_e,_dot,_eol
 		.BYTE __,_eol
-		.BYTE _Y,_e,_s,_dot,_eol
+		.BYTE __,_Y,_e,_s,_dot,_eol
 		.BYTE _eof
 _script92_msg03:
 		.BYTE _G,_e,_t,__,_o,_u,_t,__,_o,_f,__,_h,_e,_r,_e,_dot,_eol
@@ -1916,11 +1916,11 @@ _script95_msg08:
 		.BYTE _t,_a,_k,_e,__,_y,_o,_u,_dot,_eol
 		.BYTE _eof
 _script95_msg09:
-		.BYTE _I,_ap,_m,__,_s,_o,_r,_r,_y,_dot,_I,__,_c,_a,_n,_ap,_t,_eol
-		.BYTE _t,_a,_k,_e,__,_y,_o,_u,_dot,_eol
+		.BYTE __,_I,_ap,_m,__,_s,_o,_r,_r,_y,_dot,_I,__,_c,_a,_n,_ap,_t,_eol
+		.BYTE __,_t,_a,_k,_e,__,_y,_o,_u,_dot,_eol
 		.BYTE __,_eol
-		.BYTE _T,_h,_e,_n,__,_c,_o,_m,_e,__,_b,_a,_c,_k,__,_w,_i,_t,_h,_eol
-		.BYTE _m,_e,_dot,_eol
+		.BYTE __,_T,_h,_e,_n,__,_c,_o,_m,_e,__,_b,_a,_c,_k,__,_w,_i,_t,_h,_eol
+		.BYTE __,_m,_e,_dot,_eol
 		.BYTE _eof
 _script95_msg0a:
 		.BYTE _T,_h,_a,_n,_k,_s,_dot,_eol
@@ -2031,10 +2031,10 @@ _script97_msg0a:
 		.BYTE _M,_a,_k,_e,__,_a,__,_r,_a,_d,_i,_o,__,_c,_a,_l,_l,_dot,_eol
 		.BYTE _eof
 _script97_msg0b:
-		.BYTE _dtt,_dtt,_dtt,_eol
+		.BYTE __,_dtt,_dtt,_dtt,_eol
 		.BYTE __,_eol
 		.BYTE __,_eol
-		.BYTE _2,_2,_0,_dtt,_dtt,_dtt,_5,_6,_dtt,_dtt,_p,_l,_e,_a,_s,_e,_eol
+		.BYTE __,_2,_2,_0,_dtt,_dtt,_dtt,_5,_6,_dtt,_dtt,_p,_l,_e,_a,_s,_e,_eol
 		.BYTE _eof
 _script97_msg0c:
 		.BYTE _dtt,_dtt,_R,_e,_p,_o,_r,_t,__,_y,_o,_u,_r,_eol
@@ -2074,11 +2074,11 @@ _script98_msg01:
 		.BYTE _t,_o,__,_b,_u,_y,__,_t,_h,_i,_s,__,_d,_r,_e,_s,_s,_qe,_eol
 		.BYTE _eof
 _script98_msg02:
-		.BYTE _I,__,_c,_a,_n,_ap,_t,__,_g,_o,__,_w,_i,_t,_h,_o,_u,_t,_eol
-		.BYTE _t,_h,_i,_s,__,_r,_i,_f,_l,_e,_dot,_eol
+		.BYTE __,_I,__,_c,_a,_n,_ap,_t,__,_g,_o,__,_w,_i,_t,_h,_o,_u,_t,_eol
+		.BYTE __,_t,_h,_i,_s,__,_r,_i,_f,_l,_e,_dot,_eol
 		.BYTE __,_eol
-		.BYTE _O,_h,_col,_t,_h,_i,_s,__,_i,_s,__,_a,_eol
-		.BYTE _b,_e,_a,_u,_t,_i,_f,_u,_l,__,_d,_r,_e,_s,_s,_dot,_eol
+		.BYTE __,_O,_h,_col,_t,_h,_i,_s,__,_i,_s,__,_a,_eol
+		.BYTE __,_b,_e,_a,_u,_t,_i,_f,_u,_l,__,_d,_r,_e,_s,_s,_dot,_eol
 		.BYTE _eof
 _script98_msg03:
 		.BYTE _H,_m,_m,_col,_I,_ap,_m,__,_s,_o,_r,_r,_y,_dot,_eol
@@ -2238,11 +2238,11 @@ _scriptA1_msg00:
 		.BYTE _P,_l,_e,_a,_s,_e,__,_r,_e,_s,_c,_u,_e,__,_m,_e,_dot,_eol
 		.BYTE _eof
 _scriptA1_msg01:
-		.BYTE _A,_l,_l,__,_r,_i,_g,_h,_t,_dot,_eol
+		.BYTE __,_A,_l,_l,__,_r,_i,_g,_h,_t,_dot,_eol
 		.BYTE __,_eol
 		.BYTE __,_eol
-		.BYTE _S,_o,_r,_r,_y,_col,_m,_y,__,_d,_u,_t,_y,__,_i,_s,_eol
-		.BYTE _j,_u,_s,_t,__,_t,_o,__,_t,_a,_k,_e,__,_p,_h,_o,_t,_o,_s,_dot,_eol
+		.BYTE __,_S,_o,_r,_r,_y,_col,_m,_y,__,_d,_u,_t,_y,__,_i,_s,_eol
+		.BYTE __,_j,_u,_s,_t,__,_t,_o,__,_t,_a,_k,_e,__,_p,_h,_o,_t,_o,_s,_dot,_eol
 		.BYTE _eof
 _scriptA1_msg02:
 		.BYTE _D,_i,_d,_n,_ap,_t,__,_y,_o,_u,__,_c,_o,_m,_e,_eol
@@ -2412,11 +2412,11 @@ _scriptA4_msg10:
 		.BYTE _s,_a,_t,_i,_s,_f,_i,_e,_d,_qe,_eol
 		.BYTE _eof
 _scriptA4_msg11:
-		.BYTE _L,_e,_t,__,_m,_e,__,_t,_r,_y,__,_a,_g,_a,_i,_n,_dot,_eol
+		.BYTE __,_L,_e,_t,__,_m,_e,__,_t,_r,_y,__,_a,_g,_a,_i,_n,_dot,_eol
 		.BYTE __,_eol
 		.BYTE __,_eol
-		.BYTE _I,__,_d,_o,_n,_ap,_t,__,_w,_a,_n,_t,__,_t,_o,__,_d,_o,_eol
-		.BYTE _t,_h,_a,_t,__,_a,_g,_a,_i,_n,_dot,_eol
+		.BYTE __,_I,__,_d,_o,_n,_ap,_t,__,_w,_a,_n,_t,__,_t,_o,__,_d,_o,_eol
+		.BYTE __,_t,_h,_a,_t,__,_a,_g,_a,_i,_n,_dot,_eol
 		.BYTE _eof
 _scriptA4_msg12:
 		.BYTE _T,_h,_e,__,_r,_e,_a,_l,__,_p,_u,_r,_p,_o,_s,_e,__,_o,_f,_eol

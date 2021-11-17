@@ -145,6 +145,50 @@ loc_441CD:
 		LDA		_script_cmd_lib+1,X
 		STA		_tmp10
 		JMP		(_tmp0F)
+; ---------------------------------------------------------------------------
+_script_cmd_lib:
+		.WORD _scr_cmd00_portrait_draw_up
+		.WORD _scr_cmd01_portrait_draw_down
+		.WORD _scr_cmd02_msg_draw_up
+		.WORD _scr_cmd03_msg_draw_down
+		.WORD _scr_cmd04_frame_draw_up
+		.WORD _scr_cmd05_frame_draw_down
+		.WORD _scr_cmd06_frame_draw_custom
+		.WORD _scr_cmd07_msg_input_handler
+		.WORD _scr_cmd08_input_2_options
+		.WORD _scr_cmd09_input_3_options_unused
+		.WORD _scr_cmd0A_input_4_options_unused
+		.WORD _scr_cmd0B_ptr_load
+		.WORD _scr_cmd0C_msg_printf
+		.WORD _scr_cmd0D_game_flags_set
+		.WORD _scr_cmd0E_game_flags_clear
+		.WORD _scr_cmd0F_jmp_flag_not_set
+		.WORD _scr_cmd10_jmpne_option
+		.WORD _scr_cmd11_jmp_branch
+		.WORD _scr_cmd12_nop
+		.WORD _scr_cmd13_jump
+		.WORD _scr_cmd14_stop
+		.WORD _scr_cmd15_set_room_idx
+		.WORD _scr_cmd16_anim_scene_set
+		.WORD _scr_cmd17_player_pos_set
+		.WORD _scr_cmd18_mem_write_unused
+		.WORD _scr_cmd19_pass_input
+		.WORD _scr_cmd1A_game_stats_draw
+		.WORD _scr_cmd1B_life_resore
+		.WORD _scr_cmd1C_add_10_knifes
+		.WORD _scr_cmd21_add_5_potions
+		.WORD _scr_cmd21_add_5_potions
+		.WORD _scr_cmd21_add_5_potions
+		.WORD _scr_cmd21_add_5_potions
+		.WORD _scr_cmd21_add_5_potions
+		.WORD _scr_cmd22_inc_exp_level_unused
+		.WORD _scr_cmd23_game_hours_set
+		.WORD _scr_cmd24_checkpoint_restore
+		.WORD _scr_cmd25_checkpoint_reset
+		.WORD _scr_cmd26_checkpoint_set
+		.WORD _scr_cmd27_continue_cur_draw
+		.WORD _scr_cmd28_ending_anim
+		.WORD _scr_cmd29_scroller
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd00_portrait_draw_up:
@@ -180,16 +224,16 @@ loc_4420B:
 		ORA		#$01
 		STA		_tmp11
 		JSR		_msg_wnd_clear_up
-		LDA		#$20
+		LDA		#>[MSG_UP_OFS]
 		STA		_tmp00
-		LDA		#$AA
+		LDA		#<[MSG_UP_OFS]
 		STA		_tmp01
 		LDA		#$01
 		STA		_tmp14
 		LDA		_tmp11
 		ORA		#$40
 		STA		_tmp11
-		JSR		_ppu_res_draw
+		JSR		_msg_draw_ex
 		JMP		_scr_cmd07_msg_input_handler
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -204,27 +248,27 @@ loc_44237:
 		ORA		#$02
 		STA		_tmp11
 		JSR		_msg_wnd_clear_down
-		LDA		#$22
+		LDA		#>[MSG_DOWN_OFS]
 		STA		_tmp00
-		LDA		#$24
+		LDA		#<[MSG_DOWN_OFS]
 		STA		_tmp01
 		LDA		#$01
 		STA		_tmp14
 		LDA		_tmp11
 		AND		#$BF
 		STA		_tmp11
-		JSR		_ppu_res_draw
+		JSR		_msg_draw_ex
 		JMP		_scr_cmd07_msg_input_handler
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd04_frame_draw_up:
-		LDA		#$20
+		LDA		#>[FRAME_UP_OFS]
 		STA		_tmp00
-		LDA		#$62
+		LDA		#<[FRAME_UP_OFS]
 		STA		_tmp01
-		LDA		#$1C
+		LDA		#FRAME_WIDTH
 		STA		_tmp02
-		LDA		#$0C
+		LDA		#FRAME_HEIGHT
 		STA		_tmp03
 		JSR		_frame_draw
 		JMP		_scr_cmd00_portrait_draw_up
@@ -235,9 +279,9 @@ _scr_cmd05_frame_draw_down:
 		STA		_tmp00
 		LDA		#$E2
 		STA		_tmp01
-		LDA		#$1C
+		LDA		#FRAME_WIDTH
 		STA		_tmp02
-		LDA		#$0C
+		LDA		#FRAME_HEIGHT
 		STA		_tmp03
 		JSR		_frame_draw
 		JMP		_scr_cmd01_portrait_draw_down
@@ -358,14 +402,14 @@ _scr_cmd0B_ptr_load:
 		JMP		_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
-_scr_cmd0C_msg_raw_display:
+_scr_cmd0C_msg_printf:
 		LDA		(_tmp0D),Y
 		STA		_tmp01
 		INY
 		LDA		(_tmp0D),Y
 		STA		_tmp00
 		INY
-		JSR		_ppu_res_draw
+		JSR		_msg_draw_ex
 		JMP		_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -902,16 +946,16 @@ locret_44793:
 
 ; =============== S U B	R O U T	I N E =======================================
 _msg_wnd_clear_up:
-		LDA		#$20
+		LDA		#>[CLEAR_UP_OFS]
 		STA		_tmp00
-		LDA		#$8A
+		LDA		#<[CLEAR_UP_OFS]
 		BNE		_msg_wnd_clear_ex
 
 ; =============== S U B	R O U T	I N E =======================================
 _msg_wnd_clear_down:
-		LDA		#$22
+		LDA		#>[CLEAR_DOWN_OFS]
 		STA		_tmp00
-		LDA		#$04
+		LDA		#<[CLEAR_DOWN_OFS]
 
 ; !FALLTHROUGH!
 
@@ -922,14 +966,14 @@ _msg_wnd_clear_ex:
 		PHA
 		TXA
 		PHA
-		LDY		#$0A
+		LDY		#CLEAR_HEIGHT
 loc_440E5:
 		JSR		_render_off
 		JSR		_ppu_set_ofs_and_add20
-		LDA		#$FE
-		LDX		#$14					; little fix allow up to 20 chars in
-loc_440E7:								; one line to be cleared, fixes at least
-		STA		_PPU_DATA				; one problem in scripts.
+		LDA		#$F1
+		LDX		#CLEAR_WIDTH
+loc_440E7:
+		STA		_PPU_DATA
 		DEX
 		BNE		loc_440E7
 		JSR		_render_on
@@ -1182,7 +1226,7 @@ loc_44982:
 		LDA		#$F8
 		JSR		_spr_nibble_fill
 		LDX		#$E0
-		LDA		#$A8
+		LDA		#MOUTH_DOWN_Y
 		JMP		_spr_nibble_fill
 loc_449A7:
 		LDA		_tmp12
@@ -1192,7 +1236,7 @@ loc_449A7:
 		LDA		#$F8
 		JSR		_spr_nibble_fill
 		LDX		#$60
-		LDA		#$48
+		LDA		#MOUTH_UP_Y
 		JMP		_spr_nibble_fill
 loc_449C0:
 		LDA		_tmp11
@@ -1202,7 +1246,7 @@ loc_449C0:
 		AND		#$02
 		BEQ		locret_449F8
 		LDX		#$B0
-		LDA		#$A8
+		LDA		#MOUTH_DOWN_Y
 		JSR		_spr_nibble_fill
 		LDX		#$E0
 		LDA		#$F8
@@ -1212,7 +1256,7 @@ loc_449DF:
 		AND		#$01
 		BEQ		locret_449F8
 		LDX		#$30
-		LDA		#$48
+		LDA		#MOUTH_UP_Y
 		JSR		_spr_nibble_fill
 		LDX		#$60
 		LDA		#$F8
@@ -1223,74 +1267,18 @@ locret_449F8:
 ; =============== S U B	R O U T	I N E =======================================
 _spr_nibble_fill:
 		STA		_spr_buf,X
-		INX
-		INX
-		INX
-		INX
-		STA		_spr_buf,X
-		INX
-		INX
-		INX
-		INX
-		STA		_spr_buf,X
+		STA		_spr_buf+4,X
+		STA		_spr_buf+8,X
 		RTS
-; ---------------------------------------------------------------------------
-_script_cmd_lib:
-		.WORD _scr_cmd00_portrait_draw_up
-		.WORD _scr_cmd01_portrait_draw_down
-		.WORD _scr_cmd02_msg_draw_up
-		.WORD _scr_cmd03_msg_draw_down
-		.WORD _scr_cmd04_frame_draw_up
-		.WORD _scr_cmd05_frame_draw_down
-		.WORD _scr_cmd06_frame_draw_custom
-		.WORD _scr_cmd07_msg_input_handler
-		.WORD _scr_cmd08_input_2_options
-		.WORD _scr_cmd09_input_3_options_unused
-		.WORD _scr_cmd0A_input_4_options_unused
-		.WORD _scr_cmd0B_ptr_load
-		.WORD _scr_cmd0C_msg_raw_display
-		.WORD _scr_cmd0D_game_flags_set
-		.WORD _scr_cmd0E_game_flags_clear
-		.WORD _scr_cmd0F_jmp_flag_not_set
-		.WORD _scr_cmd10_jmpne_option
-		.WORD _scr_cmd11_jmp_branch
-		.WORD _scr_cmd12_nop
-		.WORD _scr_cmd13_jump
-		.WORD _scr_cmd14_stop
-		.WORD _scr_cmd15_set_room_idx
-		.WORD _scr_cmd16_anim_scene_set
-		.WORD _scr_cmd17_player_pos_set
-		.WORD _scr_cmd18_mem_write_unused
-		.WORD _scr_cmd19_pass_input
-		.WORD _scr_cmd1A_game_stats_draw
-		.WORD _scr_cmd1B_life_resore
-		.WORD _scr_cmd1C_add_10_knifes
-		.WORD _scr_cmd21_add_5_potions
-		.WORD _scr_cmd21_add_5_potions
-		.WORD _scr_cmd21_add_5_potions
-		.WORD _scr_cmd21_add_5_potions
-		.WORD _scr_cmd21_add_5_potions
-		.WORD _scr_cmd22_inc_exp_level_unused
-		.WORD _scr_cmd23_game_hours_set
-		.WORD _scr_cmd24_checkpoint_restore
-		.WORD _scr_cmd25_checkpoint_reset
-		.WORD _scr_cmd26_checkpoint_set
-		.WORD _scr_cmd27_continue_cur_draw
-		.WORD _scr_cmd28_ending_anim
-		.WORD _scr_cmd29_scroller
 
 #if LANGUAGE == LANG_US
 ; =============== S U B	R O U T	I N E =======================================
-_ppu_res_draw:
+_msg_draw_ex:
 		TYA
 		PHA
-		JSR		_render_off
-		LDA		_PPU_STATUS
-		LDA		_tmp00
-		STA		_PPU_ADDR
-		LDA		_tmp01
-		STA		_PPU_ADDR
 		LDY		#$00
+loc_44ADB:
+		JSR		_ppu_set_ofs_and_add40
 loc_44ADC:
 		LDA		(_tmp04),Y
 		CMP		#$FF
@@ -1303,34 +1291,31 @@ loc_44AE9:
 		INY
 		LDA		(_tmp04),Y
 		CMP		#$FF
-		BEQ		loc_44AFC
-		JSR		_render_off
-		JSR		_ppu_res_ofs_add64
-		JMP		loc_44ADC
-loc_44AFC:
+		BNE		loc_44ADB
 		PLA
 		TAY
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_ppu_res_ofs_add64:
+_ppu_set_ofs_and_add40:
+		JSR		_render_off
 		LDA		_PPU_STATUS
+		LDA		_tmp00
+		STA		_PPU_ADDR
 		LDA		_tmp01
+		STA		_PPU_ADDR
 		CLC
 		ADC		#$40
 		STA		_tmp01
-		LDA		_tmp00
-		ADC		#$00
-		STA		_tmp00
-		STA		_PPU_ADDR
-		LDA		_tmp01
-		STA		_PPU_ADDR
+		BCC		loc_44AFD
+		INC		_tmp00
+loc_44AFD:
 		RTS
 #endif
 
 #if LANGUAGE == LANG_JP
 ; =============== S U B	R O U T	I N E =======================================
-_ppu_res_draw:
+_msg_draw_ex:
 		TYA
 		PHA
 		JSR		_render_off
@@ -1386,7 +1371,7 @@ loc_80AD4:
 		CMP		#$FF
 		BEQ		loc_80AE7
 		JSR		_render_off
-		JSR		_ppu_res_ofs_add64
+		JSR		_ppu_set_ofs_and_add40
 		JMP		loc_80A88
 loc_80AE7:
 		PLA
@@ -1394,7 +1379,7 @@ loc_80AE7:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_ppu_res_ofs_add64:
+_ppu_set_ofs_and_add40:
 		LDA		_PPU_STATUS
 		LDA		_tmp01
 		CLC
@@ -1443,9 +1428,9 @@ _portrait_spr_insert:
 		LDA		_tmp11
 		AND		#$40
 		BNE		loc_44B93
-		LDA		#$90
+		LDA		#PORTRAIT_DOWN_Y
 		STA		_tmp00
-		LDA		#$C0
+		LDA		#PORTRAIT_DOWN_X
 		STA		_tmp01
 		LDX		#$80
 		LDA		_tmp12
@@ -1453,9 +1438,9 @@ _portrait_spr_insert:
 		STA		_tmp12
 		BNE		loc_44BA3
 loc_44B93:
-		LDA		#$30
+		LDA		#PORTRAIT_UP_Y
 		STA		_tmp00
-		LDA		#$20
+		LDA		#PORTRAIT_UP_X
 		STA		_tmp01
 		LDX		#$00
 		LDA		_tmp12
@@ -1474,16 +1459,16 @@ loc_44BA3:
 		AND		#$40
 		BNE		loc_44BC7
 		LDX		#$E0
-		LDA		#$A8
+		LDA		#MOUTH_DOWN_Y
 		STA		_tmp00
-		LDA		#$C0
+		LDA		#MOUTH_DOWN_X
 		STA		_tmp01
 		BNE		loc_44BD1
 loc_44BC7:
 		LDX		#$60
-		LDA		#$48
+		LDA		#MOUTH_UP_Y
 		STA		_tmp00
-		LDA		#$20
+		LDA		#MOUTH_UP_X
 		STA		_tmp01
 loc_44BD1:
 		JSR		_sprite_sheet_insert

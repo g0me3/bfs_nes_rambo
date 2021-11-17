@@ -19,7 +19,7 @@ loc_60184:
 		LDX		_apu_cur_mus_idx
 		LDA		_apu_mus_prg_list,X
 		STA		_apu_cur_mus_prg
-		LDA		_apu_cur_mus_idx
+		TXA
 		ASL
 		ASL
 		ASL

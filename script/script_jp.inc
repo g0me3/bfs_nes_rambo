@@ -207,7 +207,7 @@ _script85_loc00:
 		frame_draw_down		PORTRAIT00_RAMBO
 		input_2_options
 		ptr_load			_script85_msg04
-		msg_draw_down		; [どうせいちどはジゴクをみたオレだ。\しぬことなど こわくはない。\ \ケイムショぐらしのほうが\きがらくだ。ここはキグロウがない。]
+		msg_draw_down		; [ どうせいちどはジゴクをみたオレだ。\ しぬことなど こわくはない。\ \ ケイムショぐらしのほうが\ きがらくだ。ここはキグロウがない。]
 		jmpne_option		$01, _script85_loc01
 		ptr_load			_script85_msg05
 		msg_draw_up			; [けっこう。さっそくテハイしよう。\キミを ここからだしたいのだ。]
@@ -299,7 +299,7 @@ _script89:
 		frame_draw_down		PORTRAIT00_RAMBO
 		input_2_options
 		ptr_load			_script89_msg01
-		msg_draw_down		; [シュウヨウジョ のことを\なにか しらないか？\ \オレのこと どうおもう？]
+		msg_draw_down		; [ シュウヨウジョ のことを\ なにか しらないか？\ \ オレのこと どうおもう？]
 		jmpne_option		$02, _script89_loc00
 		sprite_draw_down	PORTRAIT02_RAMBO_HAPPY
 		sprite_draw_up		PORTRAIT04_CO_HAPPY
@@ -496,7 +496,7 @@ _script92_loc00:
 		msg_draw_up			; [おっ、なかなかいいオンナじゃないか。\こっちこいよ。ヘヘヘ。]
 		input_2_options
 		ptr_load			_script92_msg02
-		msg_draw_down		; [いや-ね、エッチ！\バシ！\ \ふふふ。コヤのなかにはいって、\イイコト しましょうよん。]
+		msg_draw_down		; [ いや-ね、エッチ！\ バシ！\ \ ふふふ。コヤのなかにはいって、\ イイコト しましょうよん。]
 		jmpne_option		$01, _script92_loc01
 		ptr_load			_script92_msg03
 		msg_draw_up			; [なにすんだよ、こいつ！\とっとと かえれ！]
@@ -609,7 +609,7 @@ _script95_loc05:
 _script95_loc06:
 		input_2_options
 		ptr_load			_script95_msg09
-		msg_draw_down		; [キミを アメリカにつれてかえるわけには\いかない。\ \キミも ここにいてはあぶない。\いっしょに かえろう。]
+		msg_draw_down		; [ キミを アメリカにつれてかえるわけには\ いかない。\ \ キミも ここにいてはあぶない。\ いっしょに かえろう。]
 		jmpne_option		$02, _script95_loc07
 		sprite_draw_up		PORTRAIT04_CO_HAPPY
 		ptr_load			_script95_msg0a
@@ -697,7 +697,7 @@ _script97_loc00:
 		msg_draw_up			; [ムセンキを つかって、\キチに れんらくしろ。]
 		input_2_options
 		ptr_load			_script97_msg0b
-		msg_draw_down		; [・・・・。\ \ \220・・・56・・どうぞ。]
+		msg_draw_down		; [ ・・・・。\ \ \ 220・・・56・・どうぞ。]
 		jmpne_option		$01, _script97_loc01
 		jump				_script97_loc00
 		------------------
@@ -741,7 +741,7 @@ _script98_loc02:
 		frame_draw_down		PORTRAIT03_CO
 		input_2_options
 		ptr_load			_script98_msg02
-		msg_draw_down		; [ざんねんだわ、このライフルは\てばなせないのよ。\ \あら、きれいなチャイナドレス\まえからほしかったのよ。]
+		msg_draw_down		; [ ざんねんだわ、このライフルは\ てばなせないのよ。\ \ あら、きれいなチャイナドレス\ まえからほしかったのよ。]
 		jmpne_option		$01, _script98_loc03
 		ptr_load			_script98_msg03
 		msg_draw_up			; [そうか、ざんねんだ。\きが かわったらまたきてくれ。]
@@ -962,7 +962,7 @@ _scriptA1:
 		frame_draw_down		PORTRAIT00_RAMBO
 		input_2_options
 		ptr_load			_scriptA1_msg01
-		msg_draw_down		; [だいじょうぶだ。おれはみかただ。\いまなわを ほどくから。\ \すまない。\シャシンをとるのが ニンムなんだ。]
+		msg_draw_down		; [ だいじょうぶだ。おれはみかただ。\ いまなわを ほどくから。\ \ すまない。\ シャシンをとるのが ニンムなんだ。]
 		jmpne_option		$02, _scriptA1_loc00
 		ptr_load			_scriptA1_msg02
 		msg_draw_up			; [たすけに きてくれたのではないのか。\おねがいだ たすけてくれ！]
@@ -1119,7 +1119,7 @@ _scriptA4_loc04:
 		frame_draw_down		PORTRAIT00_RAMBO
 		input_2_options
 		ptr_load			_scriptA4_msg11
-		msg_draw_down		; [へりに のるところから\もういちど やらせてくれ。\ \もうあんな あぶないめに\あいたくない。]
+		msg_draw_down		; [ へりに のるところから\ もういちど やらせてくれ。\ \ もうあんな あぶないめに\ あいたくない。]
 		jmpne_option		$02, _scriptA4_loc05
 		set_room_idx		$61
 		stop
@@ -1449,11 +1449,11 @@ _script85_msg03:
 		.BYTE $7D,$F5,$6C,$6F,$81,$EA,$73,$82,$C0,$D7,$AC,$D6,$CD,$97,_eol
 		.BYTE $84,$70,$6C,$72,$92,__,$75,$F5,$75,$96,$83,$6A,$92,$6F,$E8,_eol,_eol
 _script85_msg04:
-		.BYTE $7D,$F5,$6C,$77,$6B,$7A,$7D,$F5,$83,$AC,$F5,$AA,$F5,$A8,$97,$89,$79,$A5,$CA,$79,$F5,$EA,_eol
-		.BYTE $75,$80,$73,$7D,$7E,$7D,$F5,__,$73,$95,$71,$83,$7E,$6B,$EA,_eol
+		.BYTE __,$7D,$F5,$6C,$77,$6B,$7A,$7D,$F5,$83,$AC,$F5,$AA,$F5,$A8,$97,$89,$79,$A5,$CA,$79,$F5,$EA,_eol
+		.BYTE __,$75,$80,$73,$7D,$7E,$7D,$F5,__,$73,$95,$71,$83,$7E,$6B,$EA,_eol
 		.BYTE __,_eol
-		.BYTE $A9,$A2,$C1,$AC,$D6,$71,$F5,$90,$75,$82,$87,$6C,$6F,$F5,_eol
-		.BYTE $70,$6F,$F5,$90,$71,$79,$F5,$EA,$73,$73,$83,$A7,$A8,$F5,$CB,$A3,$6F,$F5,$7E,$6B,$EA,_eol,_eol
+		.BYTE __,$A9,$A2,$C1,$AC,$D6,$71,$F5,$90,$75,$82,$87,$6C,$6F,$F5,_eol
+		.BYTE __,$70,$6F,$F5,$90,$71,$79,$F5,$EA,$73,$73,$83,$A7,$A8,$F5,$CB,$A3,$6F,$F5,$7E,$6B,$EA,_eol,_eol
 _script85_msg05:
 		.BYTE $72,$A0,$73,$6C,$EA,$74,$A0,$78,$71,$B3,$BA,$A2,$75,$8F,$6C,$EA,_eol
 		.BYTE $A7,$C0,$97,__,$73,$73,$6F,$90,$79,$F5,$75,$79,$6B,$82,$79,$F5,$EA,_eol,_eol
@@ -1465,7 +1465,7 @@ _script86_msg00:
 		.BYTE $C7,$CD,$BE,$F5,$E7,$ED,$8F,$71,$70,$7C,$71,$93,$79,$EA,_eol
 		.BYTE $AB,$A8,$AE,$CD,$AC,$A7,$A6,$CD,$82,$BF,$E7,$B4,$F5,$D7,$A8,$79,$F5,$EA,_eol,_eol
 _script86_msg01:
-		.BYTE $A9,$F5,$CD,$B1,$86,__,$AE,$CD,$B6,$D5,$A3,$75,$ED,$8C,$75,$8C,__,_eol
+		.BYTE $A9,$F5,$CD,$B1,$86,__,$AE,$CD,$B6,$D5,$A3,$75,$ED,$8C,$75,$8C,_eol
 		.BYTE $BE,$C8,$D6,$6F,$F5,__,$AC,$D5,$A3,$C6,$A3,$74,$93,$7C,$6B,$79,$7E,$90,$83,$F5,$ED,_eol
 		.BYTE $78,$82,$AC,$D6,$A3,$AA,$AC,$D4,$AC,$CD,$97,__,$8C,$7A,$6F,$6D,$92,$82,$6F,$F5,_eol
 		.BYTE $75,$73,$F5,$7D,$79,$F5,$EA,_eol
@@ -1523,10 +1523,10 @@ _script89_msg00:
 		.BYTE $6E,$96,$7E,$7C,$F5,__,$84,$F5,$A0,$71,$91,$75,$79,$E8,_eol
 		.BYTE $7E,$7F,$6F,__,$70,$6B,$7C,$6E,$71,$73,$7D,$83,$7E,$6B,$E8,_eol,_eol
 _script89_msg01:
-		.BYTE $AC,$D5,$A3,$C6,$A3,$AC,$F5,$D6,__,$82,$73,$7D,$97,_eol
-		.BYTE $7E,$7F,$6F,__,$75,$90,$7E,$6B,$6F,$E8,_eol
+		.BYTE __,$AC,$D5,$A3,$C6,$A3,$AC,$F5,$D6,__,$82,$73,$7D,$97,_eol
+		.BYTE __,$7E,$7F,$6F,__,$75,$90,$7E,$6B,$6F,$E8,_eol
 		.BYTE __,_eol
-		.BYTE $A5,$CA,$82,$73,$7D,__,$7D,$F5,$6C,$6E,$8C,$6C,$E8,_eol,_eol
+		.BYTE __,$A5,$CA,$82,$73,$7D,__,$7D,$F5,$6C,$6E,$8C,$6C,$E8,_eol,_eol
 _script89_msg02:
 		.BYTE $EE,$EE,$EE,$6D,$A0,$E8,_eol
 		.BYTE $79,$71,$88,$75,$71,$7C,$ED,$AD,$EE,$B3,$EE,$A7,$EA,_eol,_eol
@@ -1617,7 +1617,6 @@ _script8D_msg00:
 		.BYTE $BB,$D7,$A8,__,$BB,$D7,$A8,_eol,_eol
 _script8D_msg01:
 		.BYTE $6A,$96,$75,$96,$75,$94,$EA,$79,$76,$72,$7C,$8D,$92,$78,$F5,$EA,_eol,_eol
-		.BYTE _eol		; *--
 _script8F_msg00:
 		.BYTE $8F,$6F,$A0,$79,$95,__,$85,$F5,$75,$F5,$7C,$F5,$EA,_eol
 		.BYTE $7C,$70,$6F,$F5,__,$70,$7B,$F5,$6B,$79,$89,$79,$6B,$8F,$EA,_eol,_eol
@@ -1656,11 +1655,11 @@ _script92_msg01:
 		.BYTE $6E,$A0,$ED,$7E,$6F,$7E,$6F,$6B,$6B,$A5,$CD,$B5,$75,$F5,$9D,$7E,$6B,$6F,$EA,_eol
 		.BYTE $73,$A0,$7A,$73,$6B,$8F,$EA,$BD,$BD,$BD,$EA,_eol,_eol
 _script92_msg02:
-		.BYTE $6B,$8D,$E7,$81,$ED,$A4,$D7,$B1,$E9,_eol
-		.BYTE $BA,$F5,$AC,$E9,_eol
+		.BYTE __,$6B,$8D,$E7,$81,$ED,$A4,$D7,$B1,$E9,_eol
+		.BYTE __,$BA,$F5,$AC,$E9,_eol
 		.BYTE __,_eol
-		.BYTE $85,$85,$85,$EA,$AA,$C4,$82,$7E,$6F,$7F,$83,$6B,$A0,$7C,$ED,_eol
-		.BYTE $A2,$A2,$AA,$B4,__,$75,$88,$75,$9F,$6C,$8F,$96,$EA,_eol,_eol
+		.BYTE __,$85,$85,$85,$EA,$AA,$C4,$82,$7E,$6F,$7F,$83,$6B,$A0,$7C,$ED,_eol
+		.BYTE __,$A2,$A2,$AA,$B4,__,$75,$88,$75,$9F,$6C,$8F,$96,$EA,_eol,_eol
 _script92_msg03:
 		.BYTE $7E,$7F,$76,$96,$79,$F5,$8F,$ED,$73,$6B,$7B,$E9,_eol
 		.BYTE $7D,$A0,$7D,$7D,__,$6F,$6D,$93,$E9,_eol,_eol
@@ -1738,11 +1737,11 @@ _script95_msg08:
 		.BYTE $A7,$C0,$97,__,$A1,$C2,$C8,$A6,$7F,$7B,$93,$7C,$6F,$6D,$92,$95,$72,$7F,$83,_eol
 		.BYTE $6B,$6F,$7E,$6B,$EA,_eol,_eol
 _script95_msg09:
-		.BYTE $A7,$C0,$97,__,$A1,$C2,$C8,$A6,$7F,$7B,$93,$7C,$6F,$6D,$92,$95,$72,$7F,$83,_eol
-		.BYTE $6B,$6F,$7E,$6B,$EA,_eol
+		.BYTE __,$A7,$C0,$97,__,$A1,$C2,$C8,$A6,$7F,$7B,$93,$7C,$6F,$6D,$92,$95,$72,$7F,$83,_eol
+		.BYTE __,$6B,$6F,$7E,$6B,$EA,_eol
 		.BYTE __,_eol
-		.BYTE $A7,$C0,$8C,__,$73,$73,$7F,$6B,$7C,$83,$6A,$85,$F5,$7E,$6B,$EA,_eol
-		.BYTE $6B,$A0,$75,$9F,$7F,__,$6F,$6D,$94,$6C,$EA,_eol,_eol
+		.BYTE __,$A7,$C0,$8C,__,$73,$73,$7F,$6B,$7C,$83,$6A,$85,$F5,$7E,$6B,$EA,_eol
+		.BYTE __,$6B,$A0,$75,$9F,$7F,__,$6F,$6D,$94,$6C,$EA,_eol,_eol
 _script95_msg0a:
 		.BYTE $6A,$91,$6F,$F5,$7D,$6C,$EE,$EE,$EE,$7D,$7C,$8C,$6C,$93,$75,$6B,$82,$EE,$EE,$EE,_eol
 		.BYTE $83,$8D,$71,__,$6B,$70,$88,$75,$9F,$6C,$EA,_eol
@@ -1824,10 +1823,10 @@ _script97_msg0a:
 		.BYTE $C1,$AE,$CD,$A7,$97,__,$7B,$6F,$A0,$7C,$ED,_eol
 		.BYTE $A7,$B1,$7F,__,$93,$96,$90,$71,$75,$94,$EA,_eol,_eol
 _script97_msg0b:
-		.BYTE $EE,$EE,$EE,$EE,$EA,_eol
+		.BYTE __,$EE,$EE,$EE,$EE,$EA,_eol
 		.BYTE __,_eol
 		.BYTE __,_eol
-		.BYTE _2,_2,_0,$EE,$EE,$EE,_5,_6,$EE,$EE,$7D,$F5,$6C,$78,$F5,$EA,_eol,_eol
+		.BYTE __,_2,_2,_0,$EE,$EE,$EE,_5,_6,$EE,$EE,$7D,$F5,$6C,$78,$F5,$EA,_eol,_eol
 _script97_msg0c:
 		.BYTE $EF,$BE,$CD,$BC,$F5,$6F,$90,$82,$C1,$AE,$CD,$F0,_eol
 		.BYTE $EE,$EE,__,$A9,$F5,$CD,$AB,$F5,$A2,$B1,$7D,$ED,$75,$F5,$9F,$6C,$70,$9F,$6C,$97,_eol
@@ -1857,11 +1856,11 @@ _script98_msg01:
 		.BYTE $78,$82,$C7,$A2,$BC,$C9,$7D,$ED,$73,$82,$B1,$D4,$A2,$B5,$B4,$F5,$CA,$AD,$7D,_eol
 		.BYTE $73,$6C,$6F,$96,$75,$7C,$71,$93,$7E,$6B,$6F,$EA,_eol,_eol
 _script98_msg02:
-		.BYTE $74,$F5,$96,$81,$96,$79,$F5,$95,$ED,$73,$82,$C7,$A2,$BC,$C9,$83,_eol
-		.BYTE $7C,$83,$F5,$7E,$77,$7E,$6B,$82,$8F,$EA,_eol
+		.BYTE __,$74,$F5,$96,$81,$96,$79,$F5,$95,$ED,$73,$82,$C7,$A2,$BC,$C9,$83,_eol
+		.BYTE __,$7C,$83,$F5,$7E,$77,$7E,$6B,$82,$8F,$EA,_eol
 		.BYTE __,_eol
-		.BYTE $6A,$90,$ED,$70,$93,$6B,$7E,$B1,$D4,$A2,$B5,$B4,$F5,$CA,$AD,_eol
-		.BYTE $88,$6D,$6F,$90,$87,$75,$6F,$A0,$79,$82,$8F,$EA,_eol,_eol
+		.BYTE __,$6A,$90,$ED,$70,$93,$6B,$7E,$B1,$D4,$A2,$B5,$B4,$F5,$CA,$AD,_eol
+		.BYTE __,$88,$6D,$6F,$90,$87,$75,$6F,$A0,$79,$82,$8F,$EA,_eol,_eol
 _script98_msg03:
 		.BYTE $78,$6C,$6F,$ED,$74,$F5,$96,$81,$96,$79,$F5,$EA,_eol
 		.BYTE $70,$6F,$F5,__,$6F,$95,$A0,$79,$90,$88,$79,$70,$7C,$71,$93,$EA,_eol,_eol
@@ -1972,11 +1971,11 @@ _scriptA0_msg02:
 _scriptA1_msg00:
 		.BYTE $6E,$81,$6F,$F5,$6B,$79,$F5,__,$73,$94,$74,$7E,$6B,$7C,$F5,$71,$93,$EA,_eol,_eol
 _scriptA1_msg01:
-		.BYTE $79,$F5,$6B,$75,$F5,$9F,$6C,$85,$F5,$79,$F5,$EA,$6E,$93,$83,$89,$6F,$79,$79,$F5,$EA,_eol
-		.BYTE $6B,$88,$7E,$95,$97,__,$87,$7D,$F5,$71,$6F,$90,$EA,_eol
+		.BYTE __,$79,$F5,$6B,$75,$F5,$9F,$6C,$85,$F5,$79,$F5,$EA,$6E,$93,$83,$89,$6F,$79,$79,$F5,$EA,_eol
+		.BYTE __,$6B,$88,$7E,$95,$97,__,$87,$7D,$F5,$71,$6F,$90,$EA,_eol
 		.BYTE __,_eol
-		.BYTE $76,$88,$7E,$6B,$EA,_eol
-		.BYTE $AC,$D4,$AC,$CD,$97,$7D,$92,$82,$6F,$F5,__,$B6,$CD,$C1,$7E,$96,$79,$F5,$EA,_eol,_eol
+		.BYTE __,$76,$88,$7E,$6B,$EA,_eol
+		.BYTE __,$AC,$D4,$AC,$CD,$97,$7D,$92,$82,$6F,$F5,__,$B6,$CD,$C1,$7E,$96,$79,$F5,$EA,_eol,_eol
 _scriptA1_msg02:
 		.BYTE $79,$76,$72,$7F,__,$70,$7C,$71,$93,$79,$82,$7C,$F5,$83,$7E,$6B,$82,$6F,$EA,_eol
 		.BYTE $6E,$81,$6F,$F5,$6B,$79,$F5,__,$79,$76,$72,$7C,$71,$93,$E9,_eol,_eol
@@ -2033,7 +2032,6 @@ _scriptA3_msg08:
 		.BYTE $95,$79,$75,$83,__,$74,$6B,$75,$9F,$6F,$90,_eol
 		.BYTE $A7,$C0,$7F,$83,__,$8A,$91,$7E,$73,$7D,$79,$F5,$7D,_eol
 		.BYTE $6E,$8C,$A0,$7C,$6B,$79,$EA,_eol,_eol
-		.BYTE _eol		; *--
 _scriptA4_msg00:
 		.BYTE $73,$F5,$71,$94,$6C,$79,$F5,$A0,$79,$EA,_eol
 		.BYTE $C7,$CD,$BE,$F5,$E7,_eol,_eol
@@ -2084,12 +2082,11 @@ _scriptA4_msg10:
 		.BYTE $75,$9E,$6C,$91,$9F,$6C,$75,$7C,$6B,$7E,$6B,$EA,_eol
 		.BYTE $AC,$F5,$D6,$CD,$ED,$73,$93,$7C,$F5,$88,$96,$78,$F5,$71,$6F,$E8,_eol,_eol
 _scriptA4_msg11:
-		.BYTE $86,$91,$7F,__,$82,$92,$7D,$73,$94,$6F,$90,_eol
-		.BYTE $8C,$6C,$6B,$7A,$7D,$F5,__,$8D,$90,$77,$7C,$71,$93,$EA,_eol
+		.BYTE __,$86,$91,$7F,__,$82,$92,$7D,$73,$94,$6F,$90,_eol
+		.BYTE __,$8C,$6C,$6B,$7A,$7D,$F5,__,$8D,$90,$77,$7C,$71,$93,$EA,_eol
 		.BYTE __,_eol
-		.BYTE $8C,$6C,$6A,$96,$7E,__,$6A,$85,$F5,$7E,$6B,$8B,$7F,_eol
-		.BYTE $6A,$6B,$79,$71,$7E,$6B,$EA,_eol,_eol
-		.BYTE _eol		; *--
+		.BYTE __,$8C,$6C,$6A,$96,$7E,__,$6A,$85,$F5,$7E,$6B,$8B,$7F,_eol
+		.BYTE __,$6A,$6B,$79,$71,$7E,$6B,$EA,_eol,_eol
 _scriptA4_msg12:
 		.BYTE $87,$96,$7D,$6C,$82,__,$A9,$F5,$E7,$C1,$82,$8C,$71,$7C,$70,$83,_eol
 		.BYTE $BE,$C8,$D6,$70,$9E,$6C,$75,$9E,$7B,__,$7E,$96,$79,$F5,$8F,$EA,_eol,_eol
@@ -2112,9 +2109,6 @@ _scriptA5_msg02:
 _scriptA5_msg03:
 		.BYTE $87,$96,$7D,$6C,$E8,$E9,_eol
 		.BYTE $C7,$CD,$BE,$F5,$E7,$ED,$79,$F5,$6B,$76,$70,$8F,$A0,$EA,_C,_H,_U,$E9,_eol,_eol
-		.BYTE _eol		; *--
-		.BYTE _eol		; *--
-		.BYTE _eol		; *--
 _scriptA9_msg00:
 		.BYTE $B0,$A2,$82,$AB,$A8,$AE,$CD,$BE,$CD,$BC,$F5,$7F,$8C,$7D,$F5,$A0,$79,_eol
 		.BYTE $B4,$C7,$A3,$B4,$BF,$CD,$83,__,$BF,$E7,$B4,$F5,$D7,$A8,$7D,_eol
@@ -2149,12 +2143,9 @@ _scriptA9_msg07:
 _scriptA9_msg08:
 		.BYTE $EE,$EE,$EE,$EE,$EE,$EE,$EE,$EE,_eol
 		.BYTE $C7,$CD,$BE,$F5,$E7,$79,$F5,$8F,$EA,_eol,_eol
-		.BYTE _eol		; *--
 _scriptAA_msg00:
 		.BYTE $C0,$B2,$C5,$A7,$F5,$D6,$A3,$AC,$D4,$82,$85,$81,$97,_eol
 		.BYTE $8D,$7D,$A0,$79,__,$C7,$CD,$BE,$F5,$E7,$7D,$AA,$E7,$83,$EE,$EE,$EE,$EE,_eol,_eol
-		.BYTE _eol		; *--
-		.BYTE _eol		; *--
 _scriptAC_msg00:
 		.BYTE $73,$F5,$71,$94,$6C,$EA,$95,$79,$75,$83,$A4,$C8,$A8,$AF,$CD,$79,$F5,$EA,_eol
 		.BYTE $70,$89,$6F,$F5,__,$6C,$95,$74,$82,$6E,$7D,$73,$6F,$EA,_eol
@@ -2173,9 +2164,6 @@ _scriptAD_msg00:
 _scriptAE_msg00:
 		.BYTE $AA,$E7,$83,$ED,$C7,$CD,$BE,$F5,$E7,$97,$79,$76,$72,$92,$79,$8B,$7F,_eol
 		.BYTE $AC,$D5,$A3,$C6,$A3,$AC,$F5,$D6,$7F,__,$8A,$6F,$A0,$79,$EA,_eol,_eol
-		.BYTE _eol		; *--
-		.BYTE _eol		; *--
-		.BYTE _eol		; *--
 _scriptB1_msg00:
 		.BYTE $AC,$F5,$D6,$CD,$EE,$C7,$CD,$BE,$F5,$E7,_eol
 		.BYTE __,_eol
