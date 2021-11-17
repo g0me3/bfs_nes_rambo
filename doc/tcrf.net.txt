@@ -1,0 +1,117 @@
+﻿{{Bob
+| bobscreen= Rambo (USA)-Title.png
+| title= Rambo
+| developer= Pack-In-Video
+| publishers= {{publisher|Pack-In-Video}} (JP), {{publisher|Acclaim Entertainment}} (US)
+| system= NES
+| japan= {{date|1987|December|4}}
+| usa= {{date|1988|May|nocat=true}}
+| revision= y
+| region= y
+}}
+A game "based" on Rambo: First Blood Part II. Note the quotes around "based".
+
+==Revisional Differences==
+{{compare
+| leftt = Revision 0
+| rightt = Revision 1
+| left = [[File:Rambo (USA)-PRG0.png]]
+| right = [[File:Rambo (USA) PRG1.png]]
+}}
+Trautman slipped in possibly the first swear into an US NES game. This was changed in a later revision.
+
+==Regional Differences==
+===Japanese Text===
+The US version still has the Japanese hiragana and katakana text. It is unused for... well... obvious reasons.
+
+===Password System===
+The password system was changed a little bit between versions, not only in terms of character replacement, but also in terms of input data permutations. The game uses a decipher routine machine code along with following data as a xor table to cypher and decrypt the password. Although these routines are the same between versions, the following data is a little bit different which causes different password permutation as well as partial incompatibility between passwords (some portions of the table match just fine, so not all passwords are incompatible).
+
+One of the side effects of this is that the US version introduces a bugged password by entering all 0s, which doesn't work in the Japanese version. Surprisingly enough, first {{hex|$18}} bytes of the password decipher routines are different just in one byte, but only in the US version, all these bytes being XORed on each other will give you exactly {{hex|$00}}, allowing to pass the control sum check.
+
+===Copyright Screen===
+{{todo|Screenshots. Note differences.}}
+{{compare
+| leftt = Japan
+| rightt = USA
+| left = [[File:Rambo_-_FC_-_Copyright_Screen.png|256px]]
+| right = [[File:Rambo_-_NES_-_Copyright_Screen.png|256px]]
+}}
+* The Japanese version's text is centered, while the US version's left aligned.
+* The Pack-In-Video logo was removed in the US version, probably due to there being much more copyright text.
+
+===Title Screen===
+{{compare
+| leftt = Japan
+| rightt = USA
+| left = [[File:Rambo_Title_Japan.png]]
+| right = [[File:Rambo_Title_USA.png]]
+}}
+The Japanese title screen contains the text "REND THE FEELINGS THE HEART WITH PAINFUL FEELINGS", which was removed in the US release. The quote was probably meant to say "Rend the feelings OF the heart with painful feelings."
+
+===Dialogue Portraits===
+{| class="wikitable"
+! ''Japan''
+! ''US''
+|-
+| [[File:Rambo_Portait_Japan.png|64px]]
+| [[File:Rambo Portait USA.png|64px]]
+|-
+| [[File:Rambo COPortait Japan.png|64px]]
+| [[File:Rambo COPortait US.png|64px]]
+|}
+The palette was altered in the US version, primarily to correct an issue where Rambo's and Co Bao's hair were green. This affects all the character portraits in the game as they all use the same palette.
+
+===Staff Roll===
+[[File:Rambo_-_FC_-_Staff_Roll_01.png|256px]]
+[[File:Rambo_-_FC_-_Staff_Roll_02.png|256px]]
+
+The Japanese version features a staff roll which was omitted from the US release, which simply contains a “THE END” screen. There are two staff lists; one for the main staff, and a special thanks list, complete with programming, art, and sound credits. Rambo also kindly asks you to think about what real liberty is. Aw, how cute.
+
+Below is a translation of the text, and what it ''may'' have looked like if it was left in the US version:
+<pre>
+
+       S T A F F
+
+
+   PRODUCER OKUCHAN
+
+   DIRECTER IHTOMAKIMAKI YAMACHAN
+
+   SCENARIO MISA NARITA
+
+   DESIGNER FUKUCHAN TOKITA
+
+      MUSIC TOHRU HASEBE
+
+ PROGRAMMER AAZ
+
+ PROGRAMMER PHILIP MIYAZAWA
+
+ PROGRAMMER NTT SHIROTA
+
+
+    SPECIAL THANKS
+
+
+SOUNDEFFECT RUSHIRUSHI SHIMAZAKI
+
+   DESIGNER YOSHI TOYOKAWA
+
+      MUSIC MINKY MOTOYAMA
+
+    ADVISER OZ
+
+   PROMOTER NANIWANO SASAKI
+
+   PROMOTER TSUU
+
+</pre>
+
+Note, the dakuten and handakuten symbols are missing above some of the Japanese characters. For example, Tohru Hasehe (とおる はせへ) should actually be Tohru Hasabe (とおる はせべ), and Firiffu Miyasawa (フィリッフ みやさわ) should actually be Philip Miyazawa (フィリップ みやざわ), an alias for Tohru Miyazawa.
+
+Althought these symbols are present in the CHR table (tiles {{hex|F5}} and {{hex|F6}}) and may be displayed at the empty room between text lines, the additional lines with extra symbols wouldn't fit into the existing ROM space, so most likely they were just dropped.
+
+The reason for its omission in the US version is due to the fact that the ROM area that’s used for the staff text (very end of the last bank) is also used for storing the intro message. In the US version this text is much longer and takes up most of the space for the credits as well, meaning there simply wasn’t enough space for the credits.
+
+{{Rambo series}}

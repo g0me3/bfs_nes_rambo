@@ -930,8 +930,8 @@ loc_44ADC:
 		CMP		#$FF
 		BEQ		loc_44AE9
 #if LANGUAGE == LANG_JP
-		CMP		#$F5
-		BCS		loc_80A9B
+		CMP		#$F5					; nigori/panigori symbols are F5 and F6
+		BCS		loc_80A9B				; perform some dakuten magic from here
 #endif
 		STA		_PPU_DATA
 		INY
@@ -942,9 +942,9 @@ loc_44ADC:
 #if LANGUAGE == LANG_JP
 loc_80A9B:
 		PHA
-		LDA		_PPU_STATUS
-		LDA		_tmp03
-		SEC
+		LDA		_PPU_STATUS				; current ppu write offset shadow
+		LDA		_tmp03					; decrease to point to a upper line
+		SEC								; above previous character
 		SBC		#$21
 		TAX
 		LDA		_tmp02
@@ -952,20 +952,20 @@ loc_80A9B:
 		STA		_PPU_ADDR
 		STX		_PPU_ADDR
 		PLA
-		STA		_PPU_DATA
+		STA		_PPU_DATA				; then put dakuten above it
 		INY
-		LDA		_PPU_STATUS
+		LDA		_PPU_STATUS				; restore current back ppu offset
 		LDA		_tmp02
 		STA		_PPU_ADDR
 		LDA		_tmp03
 		STA		_PPU_ADDR
-		JMP		loc_44ADC
+		JMP		loc_44ADC				; and return to main loop
 #endif
 loc_44AE9:
 		JSR		_render_on
 		INY
-		LDA		(_tmp04),Y
-		CMP		#$FF
+		LDA		(_tmp04),Y				; two stop symbols in row means end of
+		CMP		#$FF					; message
 		BNE		loc_44ADB
 		PLA
 		TAY
@@ -995,12 +995,12 @@ loc_44AFD:
 
 ; =============== S U B	R O U T	I N E =======================================
 _sprite_insert:
-		TYA
-		PHA
-		TXA
-		PHA
-		LDA		_tmp04
-		CMP		#PORTR_CLEAR
+		TYA								; this selector at the ame time used
+		PHA								; to draw and erase portrait sprites
+		TXA								; as well as other static non-ingme
+		PHA								; sprites. also for the title screen
+		LDA		_tmp04					; and pac-in-time sprites do some
+		CMP		#PORTR_CLEAR			; input control work
 		BNE		loc_44B5D
 		JMP		_portrait_clear
 loc_44B5D:
@@ -1017,21 +1017,21 @@ _portrait_spr_insert:
 		TAY
 		LDA		_portraits_lib,Y		; draw sprite sheet for head and
 		INY								; shoulders
-		STA		_tmp04
-		LDA		#$04
+		STA		_tmp04					; here goes idx of tarting tile
+		LDA		#$04					; here width and height in tiles
 		STA		_tmp02
 		LDA		#$06
 		STA		_tmp03
-		LDA		_tmp11
+		LDA		_tmp11					; test flag which position used
 		AND		#$40
-		BNE		loc_44B93
+		BNE		loc_44B93				; 40 meand UP, 00 means DOWN
 		LDA		#PORTR_DOWN_Y
 		STA		_tmp00
 		LDA		#PORTR_DOWN_X
 		STA		_tmp01
-		LDX		#$80
-		LDA		#$02
-		BNE		loc_44BA3
+		LDX		#$80					; X = sprite RAM offset. only 2
+		LDA		#$02					; portraits is possible at the same
+		BNE		loc_44BA3				; at the same time 128 tiles for each
 loc_44B93:
 		LDA		#PORTR_UP_Y
 		STA		_tmp00
@@ -1045,10 +1045,10 @@ loc_44BA3:
 		JSR		_sprite_sheet_insert
 		LDA		_portraits_lib,Y		; put additional sprites for mouth
 		INY
-		STA		_tmp04
-		LDA		#$03
-		STA		_tmp02
-		LDA		#$01
+		STA		_tmp04					; additional mouth is stored as out
+		LDA		#$03					; of screen tiles, and will swapped
+		STA		_tmp02					; with already visible mouth tiles
+		LDA		#$01					; during aniation
 		STA		_tmp03
 		LDA		_tmp11
 		AND		#$40
@@ -1110,9 +1110,9 @@ _pack_in_time_spr_insert:
 		INY
 		STA		_tmp04
 ; INSERT JP ICON BACK
-		LDA     #$02
-		STA     _tmp02
-		LDA     #$02
+		LDA     #$02					; removed from the US version, but
+		STA     _tmp02					; still present in the CHR data
+		LDA     #$02					; why not to redisplay it here?
 		STA     _tmp03
 #if LANGUAGE == LANG_US
 		LDA     #$D0
@@ -1148,14 +1148,14 @@ loc_44C1A:
 ; =============== S U B	R O U T	I N E =======================================
 _title_screen_spr_anim_menu_input:
 		JSR		_render_off
-		PPU_FILL_LINEY	$23D8, $AA, $10	; fill bottom portion of the title screen
-		JSR		_render_on				; for RED message attributes
+		PPU_FILL_LINEY	$23D8, $AA, $10	; fill bottom portion of the title
+		JSR		_render_on				; screen with RED attributes
 		LDA		#$05
-		STA		_tmp0A
-		JSR		_msg_pal_lib_load
+		STA		_tmp0A					; title start with blck palette for
+		JSR		_msg_pal_lib_load		; sprites
 		LDA		#$01
-		STA		_tmp0A
-		LDA		#$00
+		STA		_tmp0A					; then animation slowly reveals more
+		LDA		#$00					; colors of the logo
 		STA		_tmp14
 		LDA		_tmp04
 		TAY
@@ -1172,7 +1172,7 @@ loc_44C5E:
 		BNE		loc_44C73
 		JSR		_title_screen_spr_animate
 loc_44C73:
-		LDA		_tmp13
+		LDA		_tmp13					; title menu cursor animated here
 		CMP		#$02
 		BEQ		loc_44C82
 		LDA		#$01
@@ -1205,7 +1205,7 @@ loc_44CB3:
 		JSR		_read_pad_safeA
 		BEQ		loc_44C9E
 		LDA		_pad
-		AND		#$10
+		AND		#$90
 		BNE		loc_44CCE
 		LDA		_pad
 		AND		#$2C
@@ -1320,7 +1320,7 @@ _portraits_lib:
 ; 0        FACE TILES offset in 128-byte units
 ; 1-6      FACE ATTRS 2-bit each, 6x4 sheets
 ; 7        MOUTH TILES -//-
-; 8        MOUTH ATTRS -//-, 1x4 sheets
+; 8        MOUTH ATTRS -//-, 3x1 sheets
 		.BYTE $00,$55,$55,$55,$55,$00,$00,$F0,$55; $00
 		.BYTE $18,$55,$55,$55,$5A,$08,$00,$24,$5A; $09
 		.BYTE $30,$55,$55,$55,$5A,$00,$00,$3C,$5A; $12
@@ -1343,7 +1343,7 @@ _portraits_lib:
 		.BYTE $D8,$00,$00,$00,$00,$C3,$FF,$E4,$00; $AB
 		.BYTE $C0,$FF,$FF,$1A,$AA,$AA,$AA,$F9,$AA; $B4
 		.BYTE $D8,$00,$00,$00,$00,$00,$00,$FC,$AA; $BD
-; 4x4 sprite sheet
+; 2x2 sprite sheet
 _spr_pack_int_time:
 		.BYTE $48,$EE
 ; 8x3 sprite sheets
@@ -1354,6 +1354,8 @@ _spr_title_anim:
 
 ; =============== S U B	R O U T	I N E =======================================
 _read_pad_safeA:
+		LDA		_tmp00
+		PHA
 		LDA		_tmp03
 		PHA
 		TYA
@@ -1367,6 +1369,8 @@ _read_pad_safeA:
 		TAY
 		PLA
 		STA		_tmp03
+		PLA
+		STA		_tmp00
 		LDA		_pad
 		RTS
 
@@ -1423,161 +1427,118 @@ _pal_portrait_lib:
 		.BYTE $0F,$06,$16,$27,$0F,$16,$27,$37,$0F,$0F,$0F,$0F,$0F,$0F,$30,$30
 _pal_bg_default:
 		.BYTE $0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$16,$0F,$0F,$30,$30
-;		.BYTE $0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$30,$30
 
 ; =============== S U B	R O U T	I N E =======================================
 _pass_input_screen:
 		LDA		#$00
 		STA		_tmp0A
 		JSR		_msg_pal_lib_load
-		LDA		#$00
+		LDA		#$00					; pass col row init
 		STA		_tmp03
 		STA		_tmp04
-		LDA		#$20
+		LDA		#$20					; pass ppu draw offset
 		STA		_tmp05
 		LDA		#$A7
 		STA		_tmp06
 .pass_input_loop:
 		LDA		#$00
 		STA		_pad
-		JSR		_pass_input_control
-		BIT		_pad
-		BVS		.pass_bs_cmd
-		AND		#$10
-		BEQ		.pass_press_a
+		JSR		_pass_input_control		; the cursor move controls are inside.
+		CMP		#$40					; exit when either A, B or START is
+		BEQ		.pass_bs_cmd			; pressed. A works as usual, B
+		CMP		#$10					; dubbing BACKSPACE option, START
+		BNE		.pass_press_a			; also dubbing END option for covinience
 		JMP		_pass_decode
 .pass_press_a:
-		LDA		_tmp01
-		STA		_tmp02
-		BEQ		loc_44F84
-		LDA		#$00
+		LDA		#$00					; calculate character IDX
+		DEC		_tmp01					; first multiply ROW to 10
+		BMI		loc_44F84				; if zero, do nothing
 loc_44F7D:
 		CLC
 		ADC		#$0A
-		DEC		_tmp02
-		BNE		loc_44F7D
+		DEC		_tmp01
+		BMI		loc_44F7D
 loc_44F84:
-		CLC
+		CLC								; calc ROW * 10 + COL
 		ADC		_tmp00
-		STA		_tmp02
-		CMP		#$24
+		CMP		#PASS_CHAR_GAP			; adjust for gap between two char blocks
 		BCC		loc_44F94
 		SEC
-		LDA		_tmp02
 		SBC		#$04
-		STA		_tmp02
 loc_44F94:
-		CMP		#$40
+		STA		_tmp02					; store for now
+		CMP		#$40					; check for special commands
 		BCC		.pass_put_char
-		CMP		#$46
-		BNE		loc_44F9F
-		JMP		_pass_decode
-loc_44F9F:
+		CMP		#$42
+		BEQ		.pass_bs_cmd
 		CMP		#$44
 		BEQ		.pass_sp_cmd
+		JMP		_pass_decode
 .pass_bs_cmd:
-		DEC		_tmp06
-		LDA		_tmp06
-		AND		#$1F
-		CMP		#$0B
-		BEQ		.pass_bs_cmd
-		CMP		#$10
-		BEQ		.pass_bs_cmd
-		CMP		#$15
+		DEC		_tmp06					; BACKSPACE logic here
+		JSR		_pass_ppu_gap_check
 		BEQ		.pass_bs_cmd
 		CMP		#$06
-		BNE		loc_4500B
+		BNE		.pass_input_loop
 		LDA		_tmp06
 		SEC
 		SBC		#$2D
-		STA		_tmp06
 		CMP		#$79
-		BNE		loc_4500B
+		BNE		.pass_input_set
 		LDA		#$A7
-		STA		_tmp06
-		BNE		.pass_input_loop
+		BNE		.pass_input_set
 .pass_put_char:
-		JSR		_render_off
-		LDA		_PPU_STATUS
-		LDA		_tmp05
-		STA		_PPU_ADDR
-		LDA		_tmp06
-		STA		_PPU_ADDR
-		LDA		_tmp02
-		CLC
-		ADC		#$50
-		STA		_PPU_DATA
+		JSR		_pass_write_ppu_char	; input pass char here
 		JSR		_render_on
 .pass_sp_cmd:
-		INC		_tmp06
-		LDA		_tmp06
-		AND		#$1F
-		CMP		#$0B
-		BEQ		.pass_sp_cmd
-		CMP		#$10
-		BEQ		.pass_sp_cmd
-		CMP		#$15
+		INC		_tmp06					; then FORWARD cursor here
+		JSR		_pass_ppu_gap_check
 		BEQ		.pass_sp_cmd
 		CMP		#$1A
-		BNE		loc_4500B
+		BNE		.pass_input_loop
 		LDA		_tmp06
 		CLC
 		ADC		#$2D
-		STA		_tmp06
 		CMP		#$27
-		BNE		loc_4500B
+		BNE		.pass_input_set
 		LDA		#$F9
+.pass_input_set:
 		STA		_tmp06
-loc_4500B:
 		JMP		.pass_input_loop
 
 ; =============== S U B	R O U T	I N E =======================================
-_pass_input_control:
-		LDX		_tmp04
-		STX		_tmp01
-		LDA		_tmp03
-		CPX		#$07
-		BNE		loc_45023
-		AND		#$FE
-loc_45023:
-		STA		_tmp00
-		LDA		_tmp01
-		CMP		#$03
-		BEQ		loc_45034
-		CMP		#$06
-		BEQ		loc_45041
-		CMP		#$07
-		BEQ		loc_4504E
-		BNE		loc_45058
-loc_45034:
-		LDA		_tmp00
-		CMP		#$06
-		BCC		loc_45058
-		LDA		#$05
-		BNE		loc_45057
-loc_45041:
-		LDA		_tmp00
-		CMP		#$08
-		BCC		loc_45058
-		LDA		#$07
-		BNE		loc_45057
-loc_4504E:
-		LDA		_tmp00
-		CMP		#$06
-		BCC		loc_45058
-		LDA		#$04
-loc_45057:
-		STA		_tmp00
-loc_45058:
-		LDA		_pad
-		AND		#$D0
-		BEQ		loc_45062
+_pass_ppu_gap_check:
+		LDA		_tmp06
+		AND		#$1F
+		CMP		#$0B
+		BEQ		.gap_check
+		CMP		#$10
+		BEQ		.gap_check
+		CMP		#$15
+.gap_check:
 		RTS
-loc_45062:
-		LDA		_tmp00
-		ASL
-		ASL
-		ASL
+
+; =============== S U B	R O U T	I N E =======================================
+_pass_input_control:
+		LDA		_tmp04					; adjust cursor position when
+		STA		_tmp01					; row position is changed, now in
+		ASL								; _tmp01 stored real character
+		TAX								; position.
+		LDA		_pass_wrap_list+1,X
+		EOR		#$FF
+		CLC
+		ADC		#$01
+		AND		_tmp03
+		CMP		_pass_wrap_list,X
+		BCC		.pass_cur_draw
+		LDA		_pass_wrap_list,X
+		SEC
+		SBC		_pass_wrap_list+1,X
+.pass_cur_draw:
+		STA		_tmp00					; store col position to be able to
+		ASL								; get the character idx outside of this
+		ASL								; routine, then calculate cursor
+		ASL								; sprite position.
 		ASL
 		CLC
 		ADC		#$30
@@ -1616,24 +1577,23 @@ loc_450B1:
 		STA		_spr_buf+$FE
 		PLA
 		STA		_spr_buf+$FF
-		LDA		#$00
+		LDA		#$00					; input wait loop starts here
 		STA		_tmp14
 loc_450C9:
-		LDA		_nmi_flag
-		BEQ		loc_450DB
-		LDA		#$00
-		STA		_nmi_flag
-		INC		_tmp14
-		LDA		_tmp14
-		AND		#$10
-		BNE		.pass_wait_input
-loc_450DB:
-		JSR		_read_pad_safeA
-		BNE		loc_450C9
-.pass_wait_input:
-		JSR		_read_pad_safeA
-		LDA		_pad
-		BEQ		.pass_wait_input
+		LDA		_nmi_flag				; when between frames, go to check
+		BEQ		.pass_wait_release		; all buttons are released
+		LDA		#$00					; when nmi occurs, unpade the auto
+		STA		_nmi_flag				; repeat timer. every N frames
+		INC		_tmp14					; when button is not released,
+		LDA		_tmp14					; pass it to the main control loop
+		AND		#$08					; here is the default speed but
+		BNE		.pass_wait_press		; you may press faster
+.pass_wait_release:
+		JSR		_read_pad_safeA			; if pads are effectively released
+		BNE		loc_450C9				; go to the input wait loop
+.pass_wait_press:
+		JSR		_read_pad_safeA			; input wait loop run until any
+		BEQ		.pass_wait_press		; button is pressed, then parse it
 		LSR
 		BCS		.pass_input_right
 		LSR
@@ -1642,111 +1602,53 @@ loc_450DB:
 		BCS		.pass_input_down
 		LSR
 		BCS		.pass_input_up
-		JMP		_pass_input_control
-.pass_input_right:
-		INC		_tmp03
-		LDA		_tmp04
-		CMP		#$03
-		BEQ		loc_4516C
-		CMP		#$06
-		BEQ		loc_45175
-		CMP		#$07
-		BNE		loc_4511C
-		INC		_tmp03
-		JMP		loc_4517E
-loc_4511C:
-		LDA		_tmp03
-		CMP		#$0A
-		BCC		_j_pass_input_control
-loc_45122:
-		LDA		#$00
-		STA		_tmp03
-		BEQ		_j_pass_input_control
-.pass_input_left:
-		DEC		_tmp03
-		LDA		_tmp04
-		CMP		#$03
-		BEQ		loc_45187
-		CMP		#$06
-		BEQ		loc_4519D
-		CMP		#$07
-		BNE		loc_4513E
-		DEC		_tmp03
-		JMP		loc_451B3
-loc_4513E:
-		LDA		_tmp03
-		AND		#$80
-		BEQ		_j_pass_input_control
-		LDA		#$09
-		STA		_tmp03
-		BNE		_j_pass_input_control
+		LDA		_pad
+		AND		#$D0
+		BEQ		.pass_wait_press
+		RTS
 .pass_input_up:
 		DEC		_tmp04
-		LDA		_tmp04
-		AND		#$80
-		BEQ		_j_pass_input_control
-		LDA		#$07
-		BNE		.pass_tmp04_set
+		JMP		.pass_row_set
 .pass_input_down:
 		INC		_tmp04
+.pass_row_set:
 		LDA		_tmp04
-		CMP		#$08
-		BCC		_j_pass_input_control
-		LDA		#$00
-.pass_tmp04_set:
+		AND		#$07
 		STA		_tmp04
-_j_pass_input_control:
 		JMP		_pass_input_control
-loc_4516C:
+.pass_input_right:
+		LDA		_pass_wrap_list+1,X
+		CLC
+		ADC		_tmp03
+		CMP		_pass_wrap_list,X
+		BCC		.pass_col_set
+		LDA		#$00
+		BEQ		.pass_col_set
+.pass_input_left:
 		LDA		_tmp03
-		CMP		#$06
-		BCC		_j_pass_input_control
-		BCS		loc_45122
-loc_45175:
-		LDA		_tmp03
-		CMP		#$08
-		BCC		_j_pass_input_control
-		BCS		loc_45122
-loc_4517E:
-		LDA		_tmp03
-		CMP		#$06
-		BCC		_j_pass_input_control
-		BCS		loc_45122
-loc_45187:
-		LDA		_tmp03
-		CMP		#$06
-		BCC		_j_pass_input_control
-		AND		#$80
-		BEQ		loc_45196
-		LDA		#$05
-		BNE		.pass_tmp03_set
-loc_45196:
-		LDA		#$04
-		BNE		.pass_tmp03_set
-loc_4519D:
-		LDA		_tmp03
-		CMP		#$08
-		BCC		_j_pass_input_control
-		AND		#$80
-		BEQ		loc_451AC
-		LDA		#$07
-		BNE		.pass_tmp03_set
-loc_451AC:
-		LDA		#$06
-		BNE		.pass_tmp03_set
-loc_451B3:
-		LDA		_tmp03
-		CMP		#$06
-		BCC		_j_pass_input_control
-		AND		#$80
-		BEQ		loc_451C2
-		LDA		#$04
-		BNE		.pass_tmp03_set
-loc_451C2:
-		LDA		#$02
-.pass_tmp03_set:
+		SEC
+		SBC		_pass_wrap_list+1,X
+		BPL		.pass_col_set
+		CLC
+		ADC		_pass_wrap_list,X
+.pass_col_set:
 		STA		_tmp03
-		BNE		_j_pass_input_control
+		JMP		_pass_input_control
+_pass_wrap_list:
+		.BYTE	$0A,$01
+		.BYTE	$0A,$01
+#if LANGUAGE == LANG_US
+		.BYTE	$0A,$01
+		.BYTE	$06,$01
+#endif
+#if LANGUAGE == LANG_JP
+		.BYTE	$06,$01
+		.BYTE	$0A,$01
+#endif
+		.BYTE	$0A,$01
+		.BYTE	$0A,$01
+		.BYTE	$08,$01
+		.BYTE	$06,$02
 
 ; =============== S U B	R O U T	I N E =======================================
 _pass_encode:
@@ -1758,16 +1660,16 @@ _pass_encode:
 		LDX		#$00
 loc_44860:
 		JSR		_pass_get_dataA
-		JSR		_pass_write_ppu_char
+		JSR		_pass_write_char_and_render_on
 		INC		_tmp06
 		JSR		_pass_get_dataB
-		JSR		_pass_write_ppu_char
+		JSR		_pass_write_char_and_render_on
 		INC		_tmp06
 		JSR		_pass_get_dataC
-		JSR		_pass_write_ppu_char
+		JSR		_pass_write_char_and_render_on
 		INC		_tmp06
 		JSR		_pass_get_dataD
-		JSR		_pass_write_ppu_char
+		JSR		_pass_write_char_and_render_on
 		INC		_tmp06
 		INC		_tmp06
 		INX
@@ -1781,7 +1683,7 @@ loc_44860:
 loc_44891:
 		CPX		#$18
 		BNE		loc_44860
-		JMP		_pass_decrypt			; restore encripted buffer because
+		JMP		_pass_decrypt			; restore encrypted buffer because
 										; we need it decrypted
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -1824,19 +1726,19 @@ loc_45201:
 _pass_encrypt:
 		TYA
 		PHA
-		LDA		#$00
+		LDA		#$00					; calc checksum
 		TAY
 loc_45217:
 		CPY		#$0A
-		BEQ		loc_4521F
+		BEQ		loc_4521F				; skip checksum position
 		CLC
 		ADC		_game,Y
 loc_4521F:
 		INY
 		CPY		#$18
 		BNE		loc_45217
-		STA		_game._crc
-		TAX
+		STA		_game._crc				; store and use it as index
+		TAX								; in _rand_table to XOR data
 		LDY		#$00
 loc_4522C:
 		CPY		#$0A
@@ -1857,15 +1759,15 @@ loc_45239:
 _pass_decrypt:
 		TYA
 		PHA
-		LDX		_game._crc
+		LDX		_game._crc				; get the checksum
 		LDA		#$00
 		PHA
 		TAY
 loc_45249:
 		CPY		#$0A
-		BEQ		loc_45256
-		LDA		_game,Y
-		EOR		_rand_tbl,X
+		BEQ		loc_45256				; skip checksum position
+		LDA		_game,Y					; effectively reXOR byte and
+		EOR		_rand_tbl,X				; summing at the same time
 		STA		_game,Y
 		PLA
 		CLC
@@ -1877,14 +1779,14 @@ loc_45256:
 		CPY		#$18
 		BNE		loc_45249
 		PLA
-		CMP		_game._crc
+		CMP		_game._crc				; verify the sum
 		BEQ		loc_45279
 		LDA		#$02
 		BNE		loc_4527A
 loc_45279:
 		LDA		#$01
 loc_4527A:
-		STA		_tmp13
+		STA		_tmp13					; exit code 01 if ok, 02 if fail
 		PLA
 		TAY
 		RTS
@@ -2008,12 +1910,7 @@ _pass_get_dataD:
 
 ; =============== S U B	R O U T	I N E =======================================
 _pass_read_ppu_char:
-		JSR		_render_off
-		LDA		_PPU_STATUS
-		LDA		_tmp05
-		STA		_PPU_ADDR
-		LDA		_tmp06
-		STA		_PPU_ADDR
+		JSR		_pass_set_ppu_ofs
 		LDA		_PPU_DATA
 		LDA		_PPU_DATA
 		SEC
@@ -2022,17 +1919,27 @@ _pass_read_ppu_char:
 		JMP		_render_on
 
 ; =============== S U B	R O U T	I N E =======================================
-_pass_write_ppu_char:
+_pass_set_ppu_ofs:
 		JSR		_render_off
 		LDA		_PPU_STATUS
 		LDA		_tmp05
 		STA		_PPU_ADDR
 		LDA		_tmp06
 		STA		_PPU_ADDR
+		RTS
+
+; =============== S U B	R O U T	I N E =======================================
+_pass_write_ppu_char:
+		JSR		_pass_set_ppu_ofs
 		LDA		_tmp02
 		CLC
 		ADC		#$50
 		STA		_PPU_DATA
+		RTS
+
+; =============== S U B	R O U T	I N E =======================================
+_pass_write_char_and_render_on:
+		JSR		_pass_write_ppu_char
 		LDA		_PPU_STATUS
 		LDA		#$00
 		STA		_PPU_SCROLL

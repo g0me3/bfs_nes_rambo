@@ -115,13 +115,13 @@ loc_6006E:
 loc_6007F:
 		LDA		#$06
 		JSR		_mmc_prg_set
-		LDA		_game._life+1
-		BNE		loc_600C0
-		LDA		_game._life_level
+		LDA		_game._life+1			; low life test goes here
+		BNE		loc_600C0				; check high nibble first
+		LDA		_game._life_level		; if not zero, no need to worry
 		ASL
 		TAY
-		LDA		_max_life_list,Y
-		STA		_tmp02
+		LDA		_max_life_list,Y		; get the current max life level
+		STA		_tmp02					; divide it to 8
 		LDA		_max_life_list+1,Y
 		STA		_tmp03
 		LSR		_tmp03
@@ -130,26 +130,26 @@ loc_6007F:
 		ROR		_tmp02
 		LSR		_tmp03
 		ROR		_tmp02
-		LDA		_game._life
-		CMP		_tmp02
+		LDA		_game._life				; compare current low life nibble
+		CMP		_tmp02					; if less than max/8, do red blinking
 		BCS		loc_600C0
-		LDA		_play_seconds
-		AND		#$01
+		LDA		_play_seconds			; once per ingame second (6 times
+		AND		#$01					; faster than the real second)
 		BEQ		loc_600C0
-		LDA		_ppu_mask_shadow
-		ORA		#$20
+		LDA		_ppu_mask_shadow		; instant RGB background setting
+		ORA		#$20					; set RED
 		STA		_ppu_mask_shadow
 		BNE		loc_600C8
 loc_600C0:
-		LDA		_ppu_mask_shadow
-		AND		#$DF
+		LDA		_ppu_mask_shadow		; clear RED
+		AND		#$DF					; let the NMI do the rest
 		STA		_ppu_mask_shadow
 loc_600C8:
 		LDA		_ppu_ctrl_shadow
 		STA		_PPU_CTRL
-;		LDA		_pad					; removed cheat leftovers.
-;		CMP		#$18
-;		BNE		loc_600D5
+;		LDA		_pad					; removed cheat leftovers
+;		CMP		#$18					; legendary UP + START
+;		BNE		loc_600D5				; sadly, but currently does nothing
 ;loc_600D5:
 		JMP		_main_loop
 
@@ -1203,7 +1203,7 @@ loc_60B8C:
 		STA		_cur_prg_bank			; chunks may be in any order
 		LDA		(_tmp0E),Y				; fetch cht tiles chunk idx in ROM
 		CMP		#$40
-		BCC		loc_60B9D				; chunks with idx < $$0 in bank 3
+		BCC		loc_60B9D				; chunks with idx < $40 in bank 3
 		INC		_cur_prg_bank			; the rest in bank 4, adjust offset
 		AND		#$3F					; and bank number
 loc_60B9D:
@@ -5452,7 +5452,7 @@ loc_62803:								; them as well
 		STA		_objsA._player.field_8
 		LDA		#$06
 		STA		_objsA._player._collision_box_idx
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_62812:
 		LDA		_tmp11
 		AND		#$08
@@ -5469,12 +5469,12 @@ loc_62812:
 		LDA		_ppu_mask_shadow
 		AND		#$FE
 		STA		_ppu_mask_shadow
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_62836:
 		LDA		_ppu_mask_shadow
 		ORA		#$01
 		STA		_ppu_mask_shadow
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_62841:
 		LDA		_ppu_mask_shadow
 		AND		#$FE
@@ -5483,7 +5483,7 @@ loc_62841:
 		STA		_game._scr_idx
 		LDA		#$01
 		STA		_game._redraw_req
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_62856:
 		LDA		_tmp11
 		AND		#$01
@@ -5589,7 +5589,7 @@ loc_6291F:
 		AND		#$40
 		BNE		loc_6293A
 		JSR		_obj_move_animate_common
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 		JSR		_rambo_weapon_manager
 		JSR		_rambo_crouch_test
 		JMP		loc_62AAC
@@ -5625,7 +5625,7 @@ loc_6296F:
 		AND		_pad
 		BEQ		loc_62989
 		JSR		_obj_move_animate_common
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 		LDA		#_objB_hndl00_idx
 		STA		_tmp00
 		JSR		_player_weapon_projectile_deploy
@@ -5682,7 +5682,7 @@ loc_629D5:
 		DEC		_tmp0F
 loc_629E7:
 		JSR		_obj_move_animate_common
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 		JSR		_rambo_weapon_manager
 		JSR		_rambo_crouch_test
 		JMP		loc_62AAC
@@ -5713,7 +5713,7 @@ loc_62A03:
 		DEC		_tmp0F
 loc_62A29:
 		JSR		_obj_move_animate_common
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 		LDA		#_objB_hndl08_idx
 		STA		_tmp00
 		JSR		_player_weapon_projectile_deploy
@@ -5730,7 +5730,7 @@ loc_62A3F:
 		DEC		_tmp0F
 loc_62A4C:
 		JSR		_obj_move_animate_common
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 		LDA		#_objB_hndl00_idx
 		STA		_tmp00
 		JSR		_player_weapon_projectile_deploy
@@ -5774,7 +5774,7 @@ loc_62A9D:
 loc_62AA3:
 		JSR		_obj_move_animate_common
 		JSR		_rambo_crouch_test
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 loc_62AAC:
 		LDA		_tmp11
 		AND		#$20
@@ -5784,7 +5784,7 @@ loc_62AAC:
 		ORA		#$10
 		STA		_objsA._player.field_7
 loc_62ABA:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _rambo_state_adjust:
@@ -6197,8 +6197,8 @@ loc_62DB1:
 loc_62DD1:
 		STA		_tmp0F
 		JSR		_obj_move_animate_common
-		JSR		_obj_get_hor_delta16
-		JMP		_obj_flush_and_continue
+		JSR		_objA_frontal_collision_line_calc
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _hud_num_idx_adjust_hi:

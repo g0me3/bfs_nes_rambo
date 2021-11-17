@@ -5,1640 +5,27 @@
 
 		SECTION_START
 
-_location_room_settings:
-		.BYTE $20,$20,$40,$40,$40,$40,$20,$40,$40,$40,$20,$40,$20,$21,$20,$40
-		.BYTE $41,$41,$41,$41,$40,$40,$40,$40,$40,$40,$40,$41,$41,$41,$41,$41
-		.BYTE $41,$40,$41,$41,$40,$40,$40,$40,$40,$40,$40,$40,$40,$40,$41,$40
-		.BYTE $20,$40,$30,$40,$40,$40,$40,$40,$42,$40,$20,$42,$32,$42,$42,$41
-		.BYTE $40,$40,$40,$32,$42,$42,$42,$40,$40,$40,$40,$30,$40,$40,$40,$40
-		.BYTE $40,$40,$40,$40,$20,$30,$40,$40,$40,$40,$40,$40,$40,$40,$40,$40
-		.BYTE $31,$20,$20,$41,$41,$41,$41,$41,$41,$40,$41,$41,$40,$20,$20,$20
-		.BYTE $40,$40,$40,$40,$40,$41,$40,$20,$40,$30,$40,$40,$40,$40,$40,$40
-; stage CHR tiles library offsets
-; low 4-bit nibble is background CHR tiles list idx
-; high 4-bit nibble is for sprites CHR tiles list idx
-_location_chr_list:
-		.BYTE $00,$01,$32,$32,$32,$32,$42,$32,$32,$32,$42,$02,$22,$43,$42,$80
-		.BYTE $33,$33,$33,$43,$12,$32,$35,$35,$35,$35,$35,$33,$33,$33,$33,$43
-		.BYTE $43,$42,$43,$43,$42,$52,$52,$52,$A2,$52,$52,$52,$52,$52,$53,$52
-		.BYTE $02,$76,$76,$72,$42,$32,$35,$12,$12,$15,$22,$12,$12,$12,$12,$33
-		.BYTE $35,$45,$45,$12,$12,$12,$12,$45,$75,$66,$60,$90,$67,$67,$67,$67
-		.BYTE $67,$67,$67,$80,$00,$27,$87,$87,$87,$87,$87,$87,$87,$A2,$A2,$92
-		.BYTE $43,$40,$01,$43,$53,$53,$43,$53,$53,$52,$53,$53,$52,$72,$72,$72
-		.BYTE $A2,$A2,$A2,$92,$92,$93,$92,$02,$92,$A6,$92,$62,$14,$04,$04,$04
-; dialog cutscene CHR tiles library offsets
-; note, low nibble is always $08
-_cutscene_chr_list:
-		.BYTE $BB,$CB,$CC,$CC,$DC,$DD,$DD,$DC,$ED,$EE,$EE,$FC,$EE,$EE,$FD,$DD
-		.BYTE $DD,$CD,$DC,$CC,$CC,$CC,$DC,$DC,$CC,$ED,$CF
-_location_bg_pal_settings:
-		.BYTE $A0,$AD,$A2,$A2,$A2,$A2,$A2,$A2,$A2,$A2,$A2,$A2,$A2,$A4,$A2,$A8
-		.BYTE $A4,$A4,$A4,$A4,$A2,$A2,$A5,$A5,$A5,$A5,$A5,$A4,$A4,$A4,$A4,$A4
-		.BYTE $A4,$A2,$A4,$A4,$A2,$A2,$A2,$A2,$A2,$A2,$A2,$A2,$A2,$A2,$A4,$A2
-		.BYTE $A2,$AC,$AC,$A2,$A2,$A2,$A5,$A2,$E3,$A5,$A2,$E3,$E3,$E3,$E3,$A4
-		.BYTE $A6,$A6,$A6,$E3,$E3,$E3,$E3,$A6,$A6,$AC,$A8,$A8,$99,$99,$99,$99
-		.BYTE $99,$99,$99,$A1,$A1,$BB,$BB,$BB,$BB,$BB,$BB,$BB,$BB,$A2,$A2,$A2
-		.BYTE $A4,$A0,$AD,$A4,$A4,$A4,$A4,$A4,$A4,$A2,$A4,$A4,$A2,$A2,$A2,$A2
-		.BYTE $A2,$A2,$A2,$A2,$A2,$A4,$A2,$A2,$A2,$AC,$A2,$A2,$77,$77,$77,$77
-_location_spr_pal_settings:
-		.BYTE $00,$00,$33,$33,$33,$33,$44,$33,$33,$33,$44,$00,$22,$44,$44,$88
-		.BYTE $33,$33,$33,$44,$11,$33,$33,$33,$33,$33,$33,$33,$33,$33,$33,$44
-		.BYTE $44,$44,$44,$44,$44,$55,$55,$55,$AA,$55,$55,$55,$33,$55,$33,$33
-		.BYTE $00,$77,$77,$77,$44,$33,$33,$11,$B1,$11,$22,$B1,$B1,$B1,$B1,$33
-		.BYTE $33,$44,$44,$B1,$B1,$B1,$B1,$44,$77,$77,$66,$66,$66,$66,$66,$66
-		.BYTE $66,$66,$66,$88,$00,$22,$88,$88,$88,$88,$88,$88,$88,$AA,$AA,$99
-		.BYTE $44,$44,$00,$44,$55,$55,$44,$55,$55,$33,$55,$55,$55,$77,$77,$77
-		.BYTE $AA,$AA,$AA,$99,$99,$99,$99,$00,$99,$AA,$99,$99,$11,$00,$00,$00
-_location_room_idx_and_stop_flags:
-		.BYTE $00,$01,$44,$85,$48,$04,$07,$49,$33,$85,$C4,$02,$06,$0E,$04,$27
-		.BYTE $0F,$0B,$0F,$0C,$49,$88,$5E,$9F,$20,$21,$9E,$4F,$0B,$0C,$8A,$4C
-		.BYTE $0D,$85,$4A,$13,$11,$09,$11,$10,$91,$52,$15,$12,$94,$54,$13,$15
-		.BYTE $32,$34,$34,$05,$04,$05,$20,$B3,$1D,$1F,$06,$1B,$18,$19,$1A,$0F
-		.BYTE $A4,$25,$A2,$1D,$1C,$1B,$19,$A4,$22,$34,$26,$27,$69,$A8,$6B,$29
-		.BYTE $AA,$6A,$28,$36,$37,$6D,$2E,$30,$AE,$6C,$2F,$31,$B1,$94,$50,$11
-		.BYTE $0E,$00,$01,$4F,$0B,$0C,$8A,$4C,$0D,$85,$4A,$13,$11,$52,$94,$50
-		.BYTE $52,$94,$51,$12,$54,$13,$15,$32,$51,$34,$11,$95,$3C,$3C,$3C,$3C
-_location_warpsA_list:
-		.BYTE $8D,$CD,$00,$AD,$8D,$00,$00,$CD,$00,$CD,$FD,$00,$00,$00,$DD,$3D
-		.BYTE $00,$00,$AD,$00,$9D,$ED,$DD,$BD,$00,$00,$FD,$9D,$00,$DD,$ED,$CD
-		.BYTE $ED,$9D,$8D,$9D,$00,$00,$BD,$00,$00,$8D,$9D,$00,$00,$CD,$DD,$CD
-		.BYTE $00,$00,$00,$00,$00,$00,$BD,$00,$9D,$DD,$1D,$9D,$00,$DD,$00,$00
-		.BYTE $00,$AD,$00,$ED,$00,$00,$00,$00,$00,$00,$00,$3D,$00,$3D,$00,$00
-		.BYTE $00,$00,$3D,$2D,$00,$1D,$D7,$2D,$C7,$00,$8D,$00,$A7,$00,$8D,$00
-		.BYTE $00,$8D,$CD,$9D,$00,$DD,$ED,$CD,$ED,$9D,$8D,$9D,$00,$1B,$FD,$00
-		.BYTE $00,$FD,$9D,$00,$9D,$00,$DD,$FD,$DD,$00,$00,$CD,$00,$00,$00,$00
-_location_warpsB_list:
-		.BYTE $2D,$00,$00,$00,$ED,$00,$00,$00,$00,$BD,$00,$00,$00,$00,$00,$00
-		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
-		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$FD,$00,$00,$00,$00,$00
-		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$FD,$AD,$00,$ED,$00,$FD,$00,$00
-		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
-		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$B7,$00,$9D,$00,$00,$00
-		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$19,$00
-		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
-_location_prizes_list:
-		.BYTE $00
-		.BYTE $00
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE $00
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0C_arrow_ammo_idx
-		.BYTE _objB_hndl0C_arrow_ammo_idx
-		.BYTE $00
-		.BYTE $00
-		.BYTE $00
-		.BYTE $00
-		.BYTE $00
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl11_hi_speed_idx
-		.BYTE _objB_hndl0F_grenades_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl10_potions_idx
-		.BYTE _objB_hndl0E_machinegun_ammo_idx
-		.BYTE _objB_hndl0C_arrow_ammo_idx
-		.BYTE _objB_hndl12_hi_jump_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0C_arrow_ammo_idx
-		.BYTE _objB_hndl11_hi_speed_idx
-		.BYTE _objB_hndl10_potions_idx
-		.BYTE _objB_hndl0C_arrow_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0F_grenades_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl12_hi_jump_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0E_machinegun_ammo_idx
-		.BYTE _objB_hndl0C_arrow_ammo_idx
-		.BYTE _objB_hndl0C_arrow_ammo_idx
-		.BYTE _objB_hndl0C_arrow_ammo_idx
-		.BYTE _objB_hndl10_potions_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0D_explo_arrow_ammo_idx
-		.BYTE $00
-		.BYTE _objB_hndl0D_explo_arrow_ammo_idx
-		.BYTE _objB_hndl0A_heart_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0F_grenades_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0D_explo_arrow_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0C_arrow_ammo_idx
-		.BYTE $00
-		.BYTE _objB_hndl0C_arrow_ammo_idx
-		.BYTE _objB_hndl0A_heart_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE $00
-		.BYTE _objB_hndl0D_explo_arrow_ammo_idx
-		.BYTE _objB_hndl0A_heart_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0C_arrow_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0E_machinegun_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0F_grenades_ammo_idx
-		.BYTE _objB_hndl0A_heart_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0F_grenades_ammo_idx
-		.BYTE _objB_hndl0D_explo_arrow_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl10_potions_idx
-		.BYTE _objB_hndl0E_machinegun_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0D_explo_arrow_ammo_idx
-		.BYTE $00
-		.BYTE _objB_hndl0A_heart_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0F_grenades_ammo_idx
-		.BYTE _objB_hndl10_potions_idx
-		.BYTE _objB_hndl0E_machinegun_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0C_arrow_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl10_potions_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0C_arrow_ammo_idx
-		.BYTE _objB_hndl0A_heart_idx
-		.BYTE $00
-		.BYTE $00
-		.BYTE _objB_hndl11_hi_speed_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0C_arrow_ammo_idx
-		.BYTE _objB_hndl10_potions_idx
-		.BYTE _objB_hndl12_hi_jump_idx
-		.BYTE _objB_hndl0D_explo_arrow_ammo_idx
-		.BYTE _objB_hndl0E_machinegun_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0C_arrow_ammo_idx
-		.BYTE $00
-		.BYTE $00
-		.BYTE $00
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0E_machinegun_ammo_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0C_arrow_ammo_idx
-		.BYTE _objB_hndl0F_grenades_ammo_idx
-		.BYTE _objB_hndl12_hi_jump_idx
-		.BYTE _objB_hndl0E_machinegun_ammo_idx
-		.BYTE $00
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0A_heart_idx
-		.BYTE _objB_hndl0B_knife_ammo_idx
-		.BYTE _objB_hndl0D_explo_arrow_ammo_idx
-		.BYTE $00
-		.BYTE $00
-		.BYTE $00
-		.BYTE $00
-_chr_bg_table_lib:
-		.BYTE $00,$01,$02,$03,$04,$05,$08,$10,$11,$17,$18,$19,$1A,$1B,$2C,$2D	; $00	; regular stage bg tiles
-		.BYTE $00,$01,$02,$03,$04,$05,$0A,$10,$11,$12,$13,$14,$15,$16,$2C,$2D	; $01
-		.BYTE $00,$01,$02,$03,$04,$05,$09,$0C,$0D,$1C,$1D,$1E,$1F,$20,$2E,$2F	; $02
-		.BYTE $00,$01,$02,$03,$06,$07,$00,$0E,$0F,$1C,$1D,$1E,$1F,$20,$2E,$2F	; $03
-		.BYTE $00,$01,$02,$03,$04,$05,$00,$00,$00,$26,$27,$28,$29,$2A,$00,$00	; $04
-		.BYTE $00,$01,$02,$03,$04,$05,$00,$0E,$0F,$1C,$1D,$1E,$1F,$20,$2E,$2F	; $05
-		.BYTE $00,$01,$02,$03,$04,$05,$0A,$10,$11,$1C,$1D,$1E,$1F,$20,$2E,$2F	; $06
-		.BYTE $00,$01,$02,$03,$04,$05,$08,$10,$11,$21,$22,$23,$24,$25,$2C,$2D	; $07
-		.BYTE $30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$3A,$3B,$3C,$3D,$3E,$3F	; $08	all dialogs fonts bg chr
-		.BYTE $00,$01,$02,$30,$31,$32,$33,$34,$00,$00,$00,$00,$00,$00,$00,$00	; $09	final boss bg chr
-_chr_spr_table_lib:
-		.BYTE $18,$19,$1C,$00,$04,$05,$06,$0B,$4A,$4B,$4C,$4D,$4E,$4F,$55,$56	; $00	; regular stages spr tiles sets
-		.BYTE $18,$19,$1C,$00,$09,$29,$1E,$1F,$0E,$11,$3E,$3F,$40,$41,$55,$56	; $01
-		.BYTE $18,$19,$1C,$00,$09,$0A,$07,$08,$12,$13,$46,$47,$48,$49,$55,$56	; $02
-		.BYTE $18,$19,$1C,$00,$14,$15,$16,$17,$0C,$0D,$00,$01,$02,$03,$55,$56	; $03
-		.BYTE $18,$19,$1C,$00,$09,$0A,$04,$2A,$0F,$10,$28,$29,$2A,$2B,$55,$56	; $04
-		.BYTE $18,$19,$1C,$00,$2C,$2D,$14,$15,$34,$35,$00,$01,$02,$03,$55,$56	; $05
-		.BYTE $18,$19,$1C,$00,$38,$39,$36,$37,$12,$13,$20,$21,$23,$24,$55,$56	; $06
-		.BYTE $18,$19,$1C,$00,$09,$0A,$3C,$3D,$42,$43,$20,$21,$26,$24,$55,$56	; $07
-		.BYTE $18,$19,$1C,$00,$3A,$3B,$2E,$2F,$12,$13,$20,$21,$22,$27,$55,$56	; $08
-		.BYTE $18,$19,$1C,$00,$30,$31,$32,$33,$44,$45,$20,$21,$23,$24,$55,$56	; $09
-		.BYTE $18,$19,$1C,$00,$7C,$7D,$7E,$7F,$34,$35,$00,$01,$25,$03,$55,$56	; $0A
-		.BYTE $50,$51,$52,$53,$54,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$78	; $0B	; dialog spr tiles sets
-		.BYTE $57,$58,$59,$5A,$5B,$5C,$66,$67,$68,$69,$6A,$6B,$63,$64,$65,$78	; $0C
-		.BYTE $57,$58,$59,$5A,$5B,$5C,$5D,$5E,$5F,$60,$61,$62,$75,$76,$77,$79	; $0D
-		.BYTE $57,$58,$59,$5A,$5B,$5C,$5D,$5E,$5F,$6F,$70,$71,$72,$73,$74,$7A	; $0E
-		.BYTE $57,$58,$59,$5A,$5B,$5C,$6C,$6D,$6E,$60,$61,$62,$63,$64,$65,$7B	; $0F
-		.BYTE $18,$19,$1C,$00,$00,$00,$00,$00,$0F,$00,$20,$21,$26,$24,$55,$56	; $10	; final boss spr tile set
-_pal_bg_lib:
-		.BYTE $0F,$0C,$10,$2C,$0F,$07,$1B,$10,$0F,$10,$17,$07,$0F,$16,$12,$30
-		.BYTE $0F,$06,$10,$2C,$0F,$11,$1B,$10,$0F,$10,$17,$07,$0F,$16,$12,$30
-		.BYTE $0F,$00,$10,$19,$0F,$10,$17,$07,$0F,$2A,$2C,$1A,$0F,$16,$12,$30
-		.BYTE $0F,$0C,$19,$30,$0F,$06,$17,$08,$0F,$30,$2C,$30,$0F,$16,$12,$30
-		.BYTE $0C,$1A,$36,$0F,$0C,$10,$0F,$17,$0C,$07,$17,$27,$0C,$16,$12,$30
-		.BYTE $0F,$06,$00,$0F,$0F,$1A,$10,$0F,$0F,$1B,$2C,$0A,$0F,$16,$12,$30
-		.BYTE $0F,$1A,$10,$0F,$0F,$17,$10,$07,$0F,$0F,$2C,$1A,$0F,$16,$12,$30
-		.BYTE $22,$2C,$1C,$0C,$22,$12,$1A,$0F,$22,$1C,$0F,$1A,$22,$16,$12,$30
-		.BYTE $0F,$0A,$10,$2C,$0F,$07,$00,$10,$0F,$10,$17,$07,$0F,$16,$12,$30
-		.BYTE $0F,$18,$00,$0B,$0F,$30,$10,$1C,$0F,$10,$17,$07,$0F,$16,$12,$30
-		.BYTE $0F,$03,$00,$0C,$0F,$00,$0B,$07,$0F,$00,$0F,$0B,$0F,$16,$12,$30
-		.BYTE $0F,$18,$00,$0C,$0F,$10,$00,$0B,$0F,$10,$17,$07,$0F,$16,$12,$30
-		.BYTE $0F,$18,$10,$1B,$0F,$30,$27,$17,$0F,$2A,$2C,$1A,$0F,$16,$12,$30
-		.BYTE $0F,$03,$10,$2C,$0F,$18,$1B,$10,$0F,$10,$17,$07,$0F,$16,$12,$30
-		.BYTE $0F,$0F,$0F,$0F,$0F,$0C,$1C,$0F,$0F,$0F,$0F,$0F,$0F,$16,$12,$30
-		.BYTE $0C,$0F,$0F,$0F,$0C,$0C,$1C,$0F,$0C,$0F,$10,$19,$0C,$16,$12,$30
-_pal_spr_lib:
-		.BYTE $0F,$0F,$16,$27,$0F,$0F,$1A,$27,$0F,$0F,$16,$10,$0F,$16,$12,$30
-		.BYTE $0F,$06,$16,$27,$0F,$12,$10,$30,$0F,$14,$15,$36,$0F,$16,$12,$30
-		.BYTE $0F,$06,$16,$27,$0F,$0F,$1B,$27,$0F,$0F,$2A,$27,$0F,$16,$12,$30
-		.BYTE $0F,$0F,$16,$27,$0F,$0F,$12,$27,$0F,$0F,$16,$27,$0F,$16,$12,$30
-		.BYTE $0F,$06,$16,$27,$0F,$0F,$1B,$27,$0F,$25,$05,$30,$0F,$16,$12,$30
-		.BYTE $0F,$0F,$16,$27,$0F,$0F,$2B,$27,$0F,$01,$1C,$30,$0F,$16,$12,$30
-		.BYTE $0F,$0F,$16,$27,$0F,$0F,$14,$36,$0F,$0F,$16,$30,$0F,$16,$12,$30
-		.BYTE $0F,$06,$16,$27,$0F,$0F,$2A,$27,$0F,$0F,$16,$36,$0F,$16,$12,$30
-		.BYTE $0F,$0F,$16,$27,$0F,$0F,$1A,$36,$0F,$0B,$0C,$0B,$0F,$16,$12,$30
-		.BYTE $0F,$0F,$16,$27,$0F,$0F,$1C,$31,$0F,$0F,$12,$36,$0F,$16,$12,$30
-		.BYTE $0F,$0F,$16,$27,$0F,$0F,$16,$27,$0F,$0F,$1A,$36,$0F,$16,$12,$30
-		.BYTE $0F,$0C,$1C,$2C,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$16,$12,$30
-_game_warp_map:
-		.BYTE $00,$00,$01,$87
-		.BYTE $01,$01,$00,$00
-		.BYTE $02,$03,$00,$00
-		.BYTE $02,$03,$04,$00
-		.BYTE $04,$05,$07,$03
-		.BYTE $04,$06,$00,$00
-		.BYTE $05,$AA,$00,$00
-		.BYTE $07,$08,$04,$00
-		.BYTE $07,$09,$00,$00
-		.BYTE $08,$09,$06,$0A
-		.BYTE $0A,$0A,$09,$00
-		.BYTE $18,$18,$00,$00
-		.BYTE $AE,$8E,$00,$00
-		.BYTE $10,$0E,$00,$00
-		.BYTE $A8,$35,$1B,$00
-		.BYTE $4A,$53,$52,$00
-		.BYTE $AB,$11,$00,$00
-		.BYTE $10,$12,$00,$00
-		.BYTE $11,$13,$15,$00
-		.BYTE $12,$0E,$00,$00
-		.BYTE $14,$15,$16,$00
-		.BYTE $14,$15,$12,$00
-		.BYTE $16,$17,$14,$00
-		.BYTE $16,$17,$1A,$00
-		.BYTE $95,$19,$17,$00
-		.BYTE $18,$1A,$00,$16
-		.BYTE $19,$1A,$17,$00
-		.BYTE $1B,$1C,$0E,$00
-		.BYTE $1B,$1D,$00,$00
-		.BYTE $1C,$1E,$20,$00
-		.BYTE $1D,$1E,$21,$00
-		.BYTE $1F,$20,$22,$00
-		.BYTE $1F,$21,$23,$00
-		.BYTE $20,$21,$1E,$00
-		.BYTE $22,$23,$1F,$00
-		.BYTE $22,$24,$20,$00
-		.BYTE $23,$90,$00,$00
-		.BYTE $8F,$26,$00,$00
-		.BYTE $25,$27,$2A,$00
-		.BYTE $26,$28,$00,$00
-		.BYTE $27,$28,$00,$00
-		.BYTE $29,$2A,$2D,$00
-		.BYTE $29,$2B,$2E,$26
-		.BYTE $2A,$2C,$00,$00
-		.BYTE $2B,$2C,$00,$00
-		.BYTE $2D,$2E,$29,$00
-		.BYTE $2D,$2F,$2A,$00
-		.BYTE $2E,$30,$2B,$00
-		.BYTE $2F,$30,$00,$00
-		.BYTE $72,$32,$00,$00
-		.BYTE $31,$33,$00,$00
-		.BYTE $32,$34,$00,$00
-		.BYTE $33,$0C,$00,$00
-		.BYTE $0E,$36,$00,$00
-		.BYTE $35,$37,$38,$00
-		.BYTE $36,$37,$00,$00
-		.BYTE $38,$38,$39,$36
-		.BYTE $39,$3A,$38,$3B
-		.BYTE $39,$39,$99,$00
-		.BYTE $3B,$3B,$3D,$39
-		.BYTE $3D,$3C,$00,$00
-		.BYTE $3D,$3E,$3B,$3B
-		.BYTE $3D,$3D,$00,$3C
-		.BYTE $0C,$40,$00,$00
-		.BYTE $3F,$40,$00,$41
-		.BYTE $41,$41,$43,$42
-		.BYTE $3F,$42,$00,$00
-		.BYTE $43,$44,$41,$00
-		.BYTE $43,$45,$00,$42
-		.BYTE $44,$46,$00,$00
-		.BYTE $45,$47,$00,$00
-		.BYTE $46,$47,$00,$48
-		.BYTE $46,$49,$00,$00
-		.BYTE $48,$4A,$00,$00
-		.BYTE $49,$4B,$00,$00
-		.BYTE $4A,$53,$4D,$00
-		.BYTE $4C,$4D,$00,$4E
-		.BYTE $4C,$4D,$4B,$00
-		.BYTE $4E,$4F,$00,$00
-		.BYTE $4E,$50,$00,$52
-		.BYTE $4F,$50,$00,$00
-		.BYTE $51,$52,$00,$00
-		.BYTE $51,$52,$0F,$00
-		.BYTE $0F,$54,$57,$00
-		.BYTE $53,$54,$00,$00
-		.BYTE $55,$56,$9D,$59
-		.BYTE $55,$57,$5A,$00
-		.BYTE $56,$58,$53,$00
-		.BYTE $57,$58,$5C,$00
-		.BYTE $59,$5A,$00,$00
-		.BYTE $59,$5B,$56,$56
-		.BYTE $5A,$5C,$00,$00
-		.BYTE $5B,$5C,$58,$58
-		.BYTE $73,$5D,$00,$00
-		.BYTE $5E,$5F,$74,$00
-		.BYTE $5E,$73,$00,$00
-		.BYTE $13,$13,$00,$00
-		.BYTE $61,$61,$62,$00
-		.BYTE $62,$62,$61,$00
-		.BYTE $63,$64,$0E,$00
-		.BYTE $63,$65,$00,$00
-		.BYTE $64,$66,$68,$00
-		.BYTE $65,$66,$69,$00
-		.BYTE $67,$68,$6A,$00
-		.BYTE $67,$69,$6B,$00
-		.BYTE $68,$69,$66,$00
-		.BYTE $6A,$6B,$67,$00
-		.BYTE $6A,$6C,$68,$00
-		.BYTE $6B,$25,$00,$00
-		.BYTE $6D,$6E,$94,$00
-		.BYTE $6D,$6E,$6F,$92
-		.BYTE $6F,$0C,$00,$00
-		.BYTE $70,$71,$00,$00
-		.BYTE $70,$71,$72,$00
-		.BYTE $72,$31,$71,$00
-		.BYTE $5F,$5D,$00,$00
-		.BYTE $74,$75,$78,$00
-		.BYTE $74,$76,$00,$00
-		.BYTE $75,$77,$73,$00
-		.BYTE $76,$5D,$5D,$00
-		.BYTE $78,$79,$74,$00
-		.BYTE $78,$7A,$00,$00
-		.BYTE $79,$7B,$00,$00
-		.BYTE $7A,$7B,$B0,$00
-		.BYTE $7C,$7D,$00,$00
-		.BYTE $A6,$7E,$00,$00
-		.BYTE $A6,$7F,$00,$00
-		.BYTE $A7,$7F,$00,$00
-_stage_obj_list:
-; $00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$A,$1,_obj_hndl03_npcC
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $01
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$3,$3,_obj_hndl01_npcA
-		OBJ_MAP $D,$2,$2,_obj_hndl02_npcB
-		OBJ_MAP $2,$8,$0,_obj_hndl3E_helicopterB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $02
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $5,$8,$2,_obj_hndl05_bee
-		OBJ_MAP $6,$A,$1,_obj_hndl05_bee
-		OBJ_MAP $D,$B,$2,_obj_hndl06_snake
-		OBJ_MAP $4,$3,$3,_obj_hndl05_bee
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $03
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $4,$8,$3,_obj_hndl05_bee
-		OBJ_MAP $D,$7,$3,_obj_hndl06_snake
-		OBJ_MAP $6,$B,$0,_obj_hndl05_bee
-		OBJ_MAP $D,$5,$1,_obj_hndl06_snake
-		OBJ_MAP $7,$8,$1,_obj_hndl05_bee
-		OBJ_MAP $5,$4,$2,_obj_hndl05_bee
-		OBJ_MAP $0,$0,$0,$00
-; $04
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $7,$4,$1,_obj_hndl05_bee
-		OBJ_MAP $8,$8,$2,_obj_hndl05_bee
-		OBJ_MAP $D,$8,$1,_obj_hndl06_snake
-		OBJ_MAP $5,$3,$0,_obj_hndl05_bee
-		OBJ_MAP $4,$2,$3,_obj_hndl05_bee
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $05
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $7,$4,$2,_obj_hndl05_bee
-		OBJ_MAP $7,$4,$1,_obj_hndl05_bee
-		OBJ_MAP $D,$5,$1,_obj_hndl06_snake
-		OBJ_MAP $5,$A,$0,_obj_hndl05_bee
-		OBJ_MAP $6,$8,$3,_obj_hndl05_bee
-		OBJ_MAP $D,$5,$2,_obj_hndl06_snake
-		OBJ_MAP $0,$0,$0,$00
-; $06
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$5,$2,_obj_hndl04_npcD
-		OBJ_MAP $D,$8,$0,_obj_hndl01_npcA
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $07
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$7,$2,_obj_hndl06_snake
-		OBJ_MAP $D,$5,$1,_obj_hndl06_snake
-		OBJ_MAP $D,$E,$1,_obj_hndl06_snake
-		OBJ_MAP $4,$5,$0,_obj_hndl05_bee
-		OBJ_MAP $5,$6,$3,_obj_hndl05_bee
-		OBJ_MAP $D,$2,$3,_obj_hndl06_snake
-		OBJ_MAP $0,$0,$0,$00
-; $08
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $9,$B,$1,_obj_hndl19_tiger
-		OBJ_MAP $D,$9,$2,_obj_hndl19_tiger
-		OBJ_MAP $3,$E,$0,_obj_hndl05_bee
-		OBJ_MAP $5,$8,$2,_obj_hndl05_bee
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $09
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$9,$1,_obj_hndl19_tiger
-		OBJ_MAP $5,$C,$2,_obj_hndl06_snake
-		OBJ_MAP $4,$8,$1,_obj_hndl06_snake
-		OBJ_MAP $D,$B,$0,_obj_hndl06_snake
-		OBJ_MAP $5,$4,$3,_obj_hndl06_snake
-		OBJ_MAP $D,$A,$2,_obj_hndl06_snake
-		OBJ_MAP $0,$0,$0,$00
-; $0A
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$A,$1,_obj_hndl01_npcA
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $0B
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $F,$F,$1,_obj_hndl15_grenades
-		OBJ_MAP $F,$F,$2,_obj_hndl15_grenades
-		OBJ_MAP $B,$9,$0,_obj_hndl04_npcD
-		OBJ_MAP $F,$F,$2,_obj_hndl15_grenades
-		OBJ_MAP $8,$E,$2,_obj_hndl3E_helicopterB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $0C
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$7,$1,_obj_hndl03_npcC
-		OBJ_MAP $D,$A,$2,_obj_hndl04_npcD
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $0D
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $B,$3,$2,_obj_hndl01_npcA
-		OBJ_MAP $B,$B,$2,_obj_hndl04_npcD
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $0E
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$8,$2,_obj_hndl01_npcA
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $0F
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$8,$2,_obj_hndl23_soldierC
-		OBJ_MAP $D,$B,$1,_obj_hndl11_landmine
-		OBJ_MAP $D,$1,$3,_obj_hndl27_soldierB
-		OBJ_MAP $D,$B,$2,_obj_hndl11_landmine
-		OBJ_MAP $D,$C,$0,_obj_hndl11_landmine
-		OBJ_MAP $D,$7,$1,_obj_hndl23_soldierC
-		OBJ_MAP $0,$0,$0,$00
-; $10
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $4,$5,$2,_obj_hndl05_bee
-		OBJ_MAP $D,$C,$0,_obj_hndl07_fish
-		OBJ_MAP $D,$2,$1,_obj_hndl07_fish
-		OBJ_MAP $D,$4,$2,_obj_hndl07_fish
-		OBJ_MAP $D,$3,$3,_obj_hndl07_fish
-		OBJ_MAP $6,$8,$1,_obj_hndl05_bee
-		OBJ_MAP $0,$0,$0,$00
-; $11
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $B,$A,$2,_obj_hndl07_fish
-		OBJ_MAP $C,$6,$1,_obj_hndl07_fish
-		OBJ_MAP $B,$C,$0,_obj_hndl07_fish
-		OBJ_MAP $A,$2,$2,_obj_hndl07_fish
-		OBJ_MAP $A,$2,$3,_obj_hndl07_fish
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $12
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $4,$8,$1,_obj_hndl05_bee
-		OBJ_MAP $D,$C,$0,_obj_hndl07_fish
-		OBJ_MAP $D,$9,$1,_obj_hndl07_fish
-		OBJ_MAP $6,$B,$2,_obj_hndl05_bee
-		OBJ_MAP $D,$1,$2,_obj_hndl07_fish
-		OBJ_MAP $D,$4,$3,_obj_hndl07_fish
-		OBJ_MAP $0,$0,$0,$00
-; $13
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$A,$2,_obj_hndl17_pelikan
-		OBJ_MAP $F,$8,$2,_obj_hndl0C_bird
-		OBJ_MAP $D,$5,$3,_obj_hndl17_pelikan
-		OBJ_MAP $D,$A,$0,_obj_hndl17_pelikan
-		OBJ_MAP $F,$8,$1,_obj_hndl0C_bird
-		OBJ_MAP $D,$A,$1,_obj_hndl17_pelikan
-		OBJ_MAP $0,$0,$0,$00
-; $14
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $B,$3,$1,_obj_hndl0F_spider
-		OBJ_MAP $B,$4,$2,_obj_hndl0F_spider
-		OBJ_MAP $D,$5,$1,_obj_hndl0F_spider
-		OBJ_MAP $D,$6,$2,_obj_hndl0F_spider
-		OBJ_MAP $B,$4,$3,_obj_hndl0F_spider
-		OBJ_MAP $B,$B,$1,_obj_hndl0F_spider
-		OBJ_MAP $0,$0,$0,$00
-; $15
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $B,$1,$1,_obj_hndl19_tiger
-		OBJ_MAP $B,$3,$3,_obj_hndl19_tiger
-		OBJ_MAP $B,$C,$1,_obj_hndl19_tiger
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $16
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $8,$5,$2,_obj_hndl18_gorilla
-		OBJ_MAP $F,$F,$2,_obj_hndl14_rocks
-		OBJ_MAP $9,$E,$0,_obj_hndl18_gorilla
-		OBJ_MAP $F,$F,$1,_obj_hndl14_rocks
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $17
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $9,$6,$1,_obj_hndl19_tiger
-		OBJ_MAP $9,$B,$1,_obj_hndl06_snake
-		OBJ_MAP $B,$5,$2,_obj_hndl19_tiger
-		OBJ_MAP $9,$B,$2,_obj_hndl06_snake
-		OBJ_MAP $B,$E,$0,_obj_hndl06_snake
-		OBJ_MAP $D,$1,$3,_obj_hndl06_snake
-		OBJ_MAP $0,$0,$0,$00
-; $18
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $5,$C,$2,_obj_hndl21_soldierA
-		OBJ_MAP $5,$2,$2,_obj_hndl21_soldierA
-		OBJ_MAP $D,$8,$2,_obj_hndl1D_soldierB
-		OBJ_MAP $5,$2,$1,_obj_hndl21_soldierA
-		OBJ_MAP $5,$D,$1,_obj_hndl21_soldierA
-		OBJ_MAP $D,$7,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $19
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $C,$E,$2,_obj_hndl3F_multipurpose
-		OBJ_MAP $F,$F,$3,_obj_hndl14_rocks
-		OBJ_MAP $F,$F,$2,_obj_hndl14_rocks
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $1A
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $8,$6,$2,_obj_hndl18_gorilla
-		OBJ_MAP $4,$A,$2,_obj_hndl05_bee
-		OBJ_MAP $8,$A,$1,_obj_hndl18_gorilla
-		OBJ_MAP $5,$3,$1,_obj_hndl05_bee
-		OBJ_MAP $4,$9,$0,_obj_hndl05_bee
-		OBJ_MAP $4,$6,$3,_obj_hndl05_bee
-		OBJ_MAP $0,$0,$0,$00
-; $1B
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $4,$D,$2,_obj_hndl05_bee
-		OBJ_MAP $D,$1,$2,_obj_hndl07_fish
-		OBJ_MAP $D,$B,$2,_obj_hndl07_fish
-		OBJ_MAP $D,$5,$3,_obj_hndl07_fish
-		OBJ_MAP $5,$5,$1,_obj_hndl05_bee
-		OBJ_MAP $D,$A,$0,_obj_hndl07_fish
-		OBJ_MAP $0,$0,$0,$00
-; $1C
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $B,$A,$2,_obj_hndl07_fish
-		OBJ_MAP $A,$1,$1,_obj_hndl07_fish
-		OBJ_MAP $B,$B,$1,_obj_hndl07_fish
-		OBJ_MAP $A,$2,$3,_obj_hndl07_fish
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $1D
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$7,$0,_obj_hndl07_fish
-		OBJ_MAP $4,$6,$2,_obj_hndl05_bee
-		OBJ_MAP $D,$6,$3,_obj_hndl07_fish
-		OBJ_MAP $D,$6,$2,_obj_hndl07_fish
-		OBJ_MAP $4,$6,$1,_obj_hndl05_bee
-		OBJ_MAP $D,$6,$1,_obj_hndl07_fish
-		OBJ_MAP $0,$0,$0,$00
-; $1E
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$6,$3,_obj_hndl07_fish
-		OBJ_MAP $D,$A,$0,_obj_hndl07_fish
-		OBJ_MAP $D,$6,$1,_obj_hndl07_fish
-		OBJ_MAP $3,$E,$1,_obj_hndl05_bee
-		OBJ_MAP $4,$3,$2,_obj_hndl05_bee
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $1F
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$7,$1,_obj_hndl17_pelikan
-		OBJ_MAP $F,$8,$0,_obj_hndl0C_bird
-		OBJ_MAP $F,$8,$1,_obj_hndl0C_bird
-		OBJ_MAP $F,$8,$2,_obj_hndl0C_bird
-		OBJ_MAP $F,$8,$3,_obj_hndl0C_bird
-		OBJ_MAP $D,$B,$2,_obj_hndl17_pelikan
-		OBJ_MAP $0,$0,$0,$00
-; $20
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$4,$0,_obj_hndl17_pelikan
-		OBJ_MAP $F,$F,$1,_obj_hndl08_bubbles
-		OBJ_MAP $F,$F,$1,_obj_hndl08_bubbles
-		OBJ_MAP $D,$D,$2,_obj_hndl17_pelikan
-		OBJ_MAP $D,$2,$3,_obj_hndl17_pelikan
-		OBJ_MAP $F,$F,$1,_obj_hndl08_bubbles
-		OBJ_MAP $0,$0,$0,$00
-; $21
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$6,$3,_obj_hndl17_pelikan
-		OBJ_MAP $F,$8,$1,_obj_hndl0C_bird
-		OBJ_MAP $F,$8,$0,_obj_hndl0C_bird
-		OBJ_MAP $F,$8,$3,_obj_hndl0C_bird
-		OBJ_MAP $F,$8,$2,_obj_hndl0C_bird
-		OBJ_MAP $D,$4,$1,_obj_hndl17_pelikan
-		OBJ_MAP $0,$0,$0,$00
-; $22
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$7,$1,_obj_hndl17_pelikan
-		OBJ_MAP $B,$E,$0,_obj_hndl17_pelikan
-		OBJ_MAP $D,$5,$3,_obj_hndl17_pelikan
-		OBJ_MAP $D,$3,$2,_obj_hndl17_pelikan
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $23
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$B,$0,_obj_hndl3F_multipurpose
-		OBJ_MAP $F,$F,$1,_obj_hndl08_bubbles
-		OBJ_MAP $F,$F,$1,_obj_hndl08_bubbles
-		OBJ_MAP $F,$F,$1,_obj_hndl08_bubbles
-		OBJ_MAP $D,$D,$1,_obj_hndl17_pelikan
-		OBJ_MAP $D,$E,$2,_obj_hndl17_pelikan
-		OBJ_MAP $0,$0,$0,$00
-; $24
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$9,$2,_obj_hndl17_pelikan
-		OBJ_MAP $B,$D,$0,_obj_hndl17_pelikan
-		OBJ_MAP $D,$7,$1,_obj_hndl17_pelikan
-		OBJ_MAP $F,$8,$2,_obj_hndl0C_bird
-		OBJ_MAP $F,$8,$3,_obj_hndl0C_bird
-		OBJ_MAP $F,$8,$0,_obj_hndl0C_bird
-		OBJ_MAP $0,$0,$0,$00
-; $25
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $C,$B,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $B,$2,$1,_obj_hndl1C_soldierA
-		OBJ_MAP $D,$7,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $A,$2,$3,_obj_hndl1D_soldierB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $26
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $C,$3,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $A,$1,$1,_obj_hndl1C_soldierA
-		OBJ_MAP $D,$A,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $B,$C,$2,_obj_hndl1D_soldierB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $27
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$1,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $D,$8,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $A,$E,$0,_obj_hndl1C_soldierA
-		OBJ_MAP $D,$A,$1,_obj_hndl1C_soldierA
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $28
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$A,$1,_obj_hndl1E_soldierB
-		OBJ_MAP $A,$1,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $B,$C,$2,_obj_hndl1E_soldierB
-		OBJ_MAP $A,$E,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $A,$2,$3,_obj_hndl1D_soldierB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $29
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$4,$1,_obj_hndl2C_dubina_man
-		OBJ_MAP $B,$6,$2,_obj_hndl2C_dubina_man
-		OBJ_MAP $D,$1,$3,_obj_hndl1D_soldierB
-		OBJ_MAP $D,$1,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $D,$8,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $D,$3,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $2A
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$C,$1,_obj_hndl3F_multipurpose
-		OBJ_MAP $B,$1,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $8,$B,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $8,$B,$1,_obj_hndl1C_soldierA
-		OBJ_MAP $D,$D,$2,_obj_hndl1D_soldierB
-		OBJ_MAP $8,$4,$3,_obj_hndl1C_soldierA
-		OBJ_MAP $0,$0,$0,$00
-; $2B
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$3,$2,_obj_hndl1A_tiger
-		OBJ_MAP $D,$6,$1,_obj_hndl1A_tiger
-		OBJ_MAP $D,$E,$0,_obj_hndl1D_soldierB
-		OBJ_MAP $D,$2,$3,_obj_hndl1D_soldierB
-		OBJ_MAP $B,$7,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $2C
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$1,$2,_obj_hndl3F_multipurpose
-		OBJ_MAP $8,$2,$2,_obj_hndl21_soldierA
-		OBJ_MAP $D,$E,$0,_obj_hndl1D_soldierB
-		OBJ_MAP $9,$3,$1,_obj_hndl21_soldierA
-		OBJ_MAP $A,$1,$3,_obj_hndl1D_soldierB
-		OBJ_MAP $8,$8,$2,_obj_hndl1D_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $2D
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$1,$2,_obj_hndl3F_multipurpose
-		OBJ_MAP $D,$B,$1,_obj_hndl1A_tiger
-		OBJ_MAP $D,$4,$2,_obj_hndl1D_soldierB
-		OBJ_MAP $9,$C,$2,_obj_hndl1A_tiger
-		OBJ_MAP $9,$1,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $2E
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $9,$C,$1,_obj_hndl2C_dubina_man
-		OBJ_MAP $9,$1,$1,_obj_hndl1C_soldierA
-		OBJ_MAP $9,$8,$1,_obj_hndl1C_soldierA
-		OBJ_MAP $9,$4,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $9,$A,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $9,$1,$3,_obj_hndl21_soldierA
-		OBJ_MAP $0,$0,$0,$00
-; $2F
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $7,$A,$1,_obj_hndl21_soldierA
-		OBJ_MAP $7,$2,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $7,$C,$0,_obj_hndl21_soldierA
-		OBJ_MAP $8,$B,$2,_obj_hndl1D_soldierB
-		OBJ_MAP $8,$1,$3,_obj_hndl21_soldierA
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $30
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $8,$7,$1,_obj_hndl04_npcD
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $31
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$B,$1,_obj_hndl34_crouching_bomb_man
-		OBJ_MAP $9,$9,$1,_obj_hndl26_grenade_soldier
-		OBJ_MAP $D,$E,$0,_obj_hndl26_grenade_soldier
-		OBJ_MAP $9,$6,$2,_obj_hndl26_grenade_soldier
-		OBJ_MAP $D,$1,$3,_obj_hndl26_grenade_soldier
-		OBJ_MAP $D,$C,$2,_obj_hndl34_crouching_bomb_man
-		OBJ_MAP $0,$0,$0,$00
-; $32
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$6,$2,_obj_hndl38_boss_motorcycle
-		OBJ_MAP $D,$B,$1,_obj_hndl26_grenade_soldier
-		OBJ_MAP $9,$1,$1,_obj_hndl26_grenade_soldier
-		OBJ_MAP $9,$E,$2,_obj_hndl26_grenade_soldier
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $33
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$4,$1,_obj_hndl34_crouching_bomb_man
-		OBJ_MAP $D,$D,$0,_obj_hndl26_grenade_soldier
-		OBJ_MAP $D,$B,$1,_obj_hndl26_grenade_soldier
-		OBJ_MAP $D,$C,$2,_obj_hndl26_grenade_soldier
-		OBJ_MAP $D,$2,$3,_obj_hndl26_grenade_soldier
-		OBJ_MAP $D,$8,$2,_obj_hndl34_crouching_bomb_man
-		OBJ_MAP $0,$0,$0,$00
-; $34
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$8,$1,_obj_hndl17_pelikan
-		OBJ_MAP $D,$8,$2,_obj_hndl17_pelikan
-		OBJ_MAP $F,$8,$0,_obj_hndl0C_bird
-		OBJ_MAP $F,$8,$1,_obj_hndl0C_bird
-		OBJ_MAP $F,$8,$2,_obj_hndl0C_bird
-		OBJ_MAP $F,$8,$3,_obj_hndl0C_bird
-		OBJ_MAP $0,$0,$0,$00
-; $35
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $6,$B,$1,_obj_hndl05_bee
-		OBJ_MAP $D,$B,$1,_obj_hndl06_snake
-		OBJ_MAP $4,$2,$3,_obj_hndl06_snake
-		OBJ_MAP $5,$A,$2,_obj_hndl05_bee
-		OBJ_MAP $D,$6,$2,_obj_hndl06_snake
-		OBJ_MAP $6,$A,$0,_obj_hndl05_bee
-		OBJ_MAP $0,$0,$0,$00
-; $36
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$6,$2,_obj_hndl19_tiger
-		OBJ_MAP $5,$4,$2,_obj_hndl06_snake
-		OBJ_MAP $D,$7,$1,_obj_hndl19_tiger
-		OBJ_MAP $7,$8,$1,_obj_hndl06_snake
-		OBJ_MAP $8,$8,$0,_obj_hndl06_snake
-		OBJ_MAP $5,$4,$3,_obj_hndl06_snake
-		OBJ_MAP $0,$0,$0,$00
-; $37
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $3,$8,$2,_obj_hndl0E_small_bat
-		OBJ_MAP $9,$8,$0,_obj_hndl0F_spider
-		OBJ_MAP $9,$4,$3,_obj_hndl0F_spider
-		OBJ_MAP $3,$8,$1,_obj_hndl0E_small_bat
-		OBJ_MAP $9,$B,$1,_obj_hndl0F_spider
-		OBJ_MAP $8,$D,$2,_obj_hndl0F_spider
-		OBJ_MAP $0,$0,$0,$00
-; $38
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $8,$8,$2,_obj_hndl0E_small_bat
-		OBJ_MAP $D,$D,$1,_obj_hndl0F_spider
-		OBJ_MAP $8,$4,$0,_obj_hndl0E_small_bat
-		OBJ_MAP $D,$E,$0,_obj_hndl0F_spider
-		OBJ_MAP $D,$7,$2,_obj_hndl0F_spider
-		OBJ_MAP $D,$2,$3,_obj_hndl0F_spider
-		OBJ_MAP $0,$0,$0,$00
-; $39
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $F,$F,$1,_obj_hndl0B_skull
-		OBJ_MAP $F,$F,$1,_obj_hndl0B_skull
-		OBJ_MAP $D,$1,$1,_obj_hndl0F_spider
-		OBJ_MAP $D,$D,$1,_obj_hndl0F_spider
-		OBJ_MAP $D,$F,$2,_obj_hndl0F_spider
-		OBJ_MAP $D,$5,$3,_obj_hndl0F_spider
-		OBJ_MAP $0,$0,$0,$00
-; $3A
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$3,$2,_obj_hndl04_npcD
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $3B
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $5,$6,$3,_obj_hndl09_ceiling_bat
-		OBJ_MAP $5,$4,$2,_obj_hndl09_ceiling_bat
-		OBJ_MAP $5,$4,$1,_obj_hndl09_ceiling_bat
-		OBJ_MAP $5,$9,$0,_obj_hndl09_ceiling_bat
-		OBJ_MAP $F,$F,$1,_obj_hndl0B_skull
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $3C
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$C,$0,_obj_hndl37_boss_spider
-		OBJ_MAP $B,$A,$1,_obj_hndl0F_spider
-		OBJ_MAP $9,$1,$2,_obj_hndl0F_spider
-		OBJ_MAP $D,$4,$3,_obj_hndl1B_kid
-		OBJ_MAP $9,$2,$1,_obj_hndl0F_spider
-		OBJ_MAP $D,$7,$1,_obj_hndl0F_spider
-		OBJ_MAP $0,$0,$0,$00
-; $3D
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $F,$A,$0,_obj_hndl16_cobra
-		OBJ_MAP $F,$E,$1,_obj_hndl16_cobra
-		OBJ_MAP $F,$6,$2,_obj_hndl16_cobra
-		OBJ_MAP $F,$2,$3,_obj_hndl16_cobra
-		OBJ_MAP $5,$8,$0,_obj_hndl09_ceiling_bat
-		OBJ_MAP $5,$8,$2,_obj_hndl09_ceiling_bat
-		OBJ_MAP $0,$0,$0,$00
-; $3E
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $C,$7,$1,_obj_hndl0E_small_bat
-		OBJ_MAP $7,$9,$0,_obj_hndl0A_stalaktit
-		OBJ_MAP $5,$C,$0,_obj_hndl0A_stalaktit
-		OBJ_MAP $6,$C,$1,_obj_hndl0A_stalaktit
-		OBJ_MAP $6,$C,$0,_obj_hndl0E_small_bat
-		OBJ_MAP $4,$1,$2,_obj_hndl0A_stalaktit
-		OBJ_MAP $0,$0,$0,$00
-; $3F
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$8,$1,_obj_hndl07_fish
-		OBJ_MAP $D,$5,$1,_obj_hndl07_fish
-		OBJ_MAP $D,$B,$0,_obj_hndl07_fish
-		OBJ_MAP $D,$7,$2,_obj_hndl07_fish
-		OBJ_MAP $D,$B,$2,_obj_hndl07_fish
-		OBJ_MAP $D,$6,$3,_obj_hndl07_fish
-		OBJ_MAP $0,$0,$0,$00
-; $40
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $5,$3,$2,_obj_hndl05_bee
-		OBJ_MAP $7,$C,$1,_obj_hndl05_bee
-		OBJ_MAP $3,$C,$2,_obj_hndl05_bee
-		OBJ_MAP $C,$8,$2,_obj_hndl05_bee
-		OBJ_MAP $4,$F,$0,_obj_hndl05_bee
-		OBJ_MAP $8,$1,$1,_obj_hndl05_bee
-		OBJ_MAP $0,$0,$0,$00
-; $41
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $F,$F,$3,_obj_hndl0D_waterfall_logs
-		OBJ_MAP $F,$F,$3,_obj_hndl0D_waterfall_logs
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $42
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $C,$8,$2,_obj_hndl17_pelikan
-		OBJ_MAP $9,$5,$1,_obj_hndl17_pelikan
-		OBJ_MAP $F,$8,$2,_obj_hndl0C_bird
-		OBJ_MAP $F,$8,$0,_obj_hndl0C_bird
-		OBJ_MAP $F,$8,$1,_obj_hndl0C_bird
-		OBJ_MAP $F,$8,$3,_obj_hndl0C_bird
-		OBJ_MAP $0,$0,$0,$00
-; $43
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$7,$1,_obj_hndl36_boss_fire_tiger
-		OBJ_MAP $9,$B,$1,_obj_hndl0A_stalaktit
-		OBJ_MAP $8,$3,$2,_obj_hndl0A_stalaktit
-		OBJ_MAP $A,$C,$2,_obj_hndl0A_stalaktit
-		OBJ_MAP $A,$D,$2,_obj_hndl0A_stalaktit
-		OBJ_MAP $8,$5,$3,_obj_hndl0A_stalaktit
-		OBJ_MAP $0,$0,$0,$00
-; $44
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $7,$7,$2,_obj_hndl0E_small_bat
-		OBJ_MAP $8,$B,$0,_obj_hndl0E_small_bat
-		OBJ_MAP $5,$8,$1,_obj_hndl0E_small_bat
-		OBJ_MAP $6,$E,$2,_obj_hndl0E_small_bat
-		OBJ_MAP $5,$6,$3,_obj_hndl0E_small_bat
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $45
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $5,$6,$2,_obj_hndl09_ceiling_bat
-		OBJ_MAP $5,$9,$0,_obj_hndl09_ceiling_bat
-		OBJ_MAP $5,$7,$1,_obj_hndl09_ceiling_bat
-		OBJ_MAP $D,$7,$1,_obj_hndl0F_spider
-		OBJ_MAP $D,$8,$1,_obj_hndl0F_spider
-		OBJ_MAP $5,$7,$3,_obj_hndl09_ceiling_bat
-		OBJ_MAP $0,$0,$0,$00
-; $46
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $F,$6,$2,_obj_hndl16_cobra
-		OBJ_MAP $F,$E,$1,_obj_hndl16_cobra
-		OBJ_MAP $F,$A,$0,_obj_hndl16_cobra
-		OBJ_MAP $F,$2,$3,_obj_hndl16_cobra
-		OBJ_MAP $9,$A,$1,_obj_hndl0A_stalaktit
-		OBJ_MAP $5,$C,$2,_obj_hndl0A_stalaktit
-		OBJ_MAP $0,$0,$0,$00
-; $47
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $F,$8,$2,_obj_hndl0C_bird
-		OBJ_MAP $F,$8,$1,_obj_hndl0C_bird
-		OBJ_MAP $A,$F,$0,_obj_hndl17_pelikan
-		OBJ_MAP $9,$6,$1,_obj_hndl17_pelikan
-		OBJ_MAP $F,$8,$3,_obj_hndl0C_bird
-		OBJ_MAP $A,$1,$3,_obj_hndl17_pelikan
-		OBJ_MAP $0,$0,$0,$00
-; $48
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$A,$1,_obj_hndl24_soldierB
-		OBJ_MAP $D,$C,$2,_obj_hndl02_npcB
-		OBJ_MAP $D,$A,$0,_obj_hndl24_soldierB
-		OBJ_MAP $D,$3,$3,_obj_hndl24_soldierB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $49
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$9,$2,_obj_hndl24_soldierB
-		OBJ_MAP $9,$A,$1,_obj_hndl10_floor_turret
-		OBJ_MAP $D,$1,$1,_obj_hndl10_floor_turret
-		OBJ_MAP $D,$9,$2,_obj_hndl10_floor_turret
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $4A
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $9,$2,$2,_obj_hndl24_soldierB
-		OBJ_MAP $D,$9,$1,_obj_hndl25_soldierB
-		OBJ_MAP $D,$F,$0,_obj_hndl25_soldierB
-		OBJ_MAP $9,$3,$3,_obj_hndl24_soldierB
-		OBJ_MAP $9,$2,$1,_obj_hndl24_soldierB
-		OBJ_MAP $D,$C,$2,_obj_hndl25_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $4B
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$1,$2,_obj_hndl39_boss_drone
-		OBJ_MAP $D,$3,$1,_obj_hndl24_soldierB
-		OBJ_MAP $D,$4,$3,_obj_hndl25_soldierB
-		OBJ_MAP $D,$C,$2,_obj_hndl25_soldierB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $4C
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $5,$3,$1,_obj_hndl24_soldierB
-		OBJ_MAP $9,$A,$1,_obj_hndl24_soldierB
-		OBJ_MAP $9,$A,$2,_obj_hndl24_soldierB
-		OBJ_MAP $D,$1,$2,_obj_hndl24_soldierB
-		OBJ_MAP $5,$F,$2,_obj_hndl24_soldierB
-		OBJ_MAP $D,$7,$0,_obj_hndl24_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $4D
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$9,$1,_obj_hndl3F_multipurpose
-		OBJ_MAP $6,$B,$0,_obj_hndl24_soldierB
-		OBJ_MAP $D,$1,$1,_obj_hndl32_skull_monkey
-		OBJ_MAP $6,$7,$1,_obj_hndl24_soldierB
-		OBJ_MAP $D,$9,$2,_obj_hndl32_skull_monkey
-		OBJ_MAP $6,$4,$3,_obj_hndl24_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $4E
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$2,$2,_obj_hndl3F_multipurpose
-		OBJ_MAP $D,$1,$1,_obj_hndl24_soldierB
-		OBJ_MAP $D,$7,$1,_obj_hndl24_soldierB
-		OBJ_MAP $5,$9,$1,_obj_hndl25_soldierB
-		OBJ_MAP $D,$5,$2,_obj_hndl25_soldierB
-		OBJ_MAP $D,$1,$3,_obj_hndl25_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $4F
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $9,$B,$1,_obj_hndl24_soldierB
-		OBJ_MAP $5,$D,$0,_obj_hndl24_soldierB
-		OBJ_MAP $D,$1,$1,_obj_hndl24_soldierB
-		OBJ_MAP $9,$1,$3,_obj_hndl24_soldierB
-		OBJ_MAP $D,$2,$2,_obj_hndl24_soldierB
-		OBJ_MAP $5,$8,$2,_obj_hndl24_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $50
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$A,$2,_obj_hndl32_skull_monkey
-		OBJ_MAP $6,$6,$1,_obj_hndl25_soldierB
-		OBJ_MAP $6,$B,$0,_obj_hndl25_soldierB
-		OBJ_MAP $6,$3,$3,_obj_hndl25_soldierB
-		OBJ_MAP $D,$5,$1,_obj_hndl32_skull_monkey
-		OBJ_MAP $6,$9,$2,_obj_hndl25_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $51
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $6,$B,$2,_obj_hndl24_soldierB
-		OBJ_MAP $D,$5,$1,_obj_hndl25_soldierB
-		OBJ_MAP $D,$9,$2,_obj_hndl25_soldierB
-		OBJ_MAP $D,$1,$3,_obj_hndl25_soldierB
-		OBJ_MAP $6,$4,$1,_obj_hndl24_soldierB
-		OBJ_MAP $D,$8,$0,_obj_hndl25_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $52
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$1,$2,_obj_hndl31_machete_man
-		OBJ_MAP $6,$A,$0,_obj_hndl24_soldierB
-		OBJ_MAP $6,$7,$1,_obj_hndl24_soldierB
-		OBJ_MAP $D,$3,$1,_obj_hndl31_machete_man
-		OBJ_MAP $6,$8,$2,_obj_hndl24_soldierB
-		OBJ_MAP $6,$5,$3,_obj_hndl24_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $53
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$B,$1,_obj_hndl13_jumping_ball
-		OBJ_MAP $D,$9,$0,_obj_hndl11_landmine
-		OBJ_MAP $D,$F,$2,_obj_hndl13_jumping_ball
-		OBJ_MAP $D,$4,$2,_obj_hndl11_landmine
-		OBJ_MAP $D,$2,$1,_obj_hndl11_landmine
-		OBJ_MAP $D,$2,$3,_obj_hndl11_landmine
-		OBJ_MAP $0,$0,$0,$00
-; $54
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $2,$2,$3,_obj_hndl3E_helicopterB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $55
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$D,$2,_obj_hndl3A_boss_yusin
-		OBJ_MAP $D,$8,$1,_obj_hndl13_jumping_ball
-		OBJ_MAP $8,$8,$1,_obj_hndl13_jumping_ball
-		OBJ_MAP $8,$8,$2,_obj_hndl13_jumping_ball
-		OBJ_MAP $9,$3,$3,_obj_hndl13_jumping_ball
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $56
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$1,$3,_obj_hndl23_soldierC
-		OBJ_MAP $7,$A,$1,_obj_hndl23_soldierC
-		OBJ_MAP $7,$E,$0,_obj_hndl27_soldierB
-		OBJ_MAP $7,$8,$2,_obj_hndl27_soldierB
-		OBJ_MAP $D,$E,$0,_obj_hndl27_soldierB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $57
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$1,$2,_obj_hndl3F_multipurpose
-		OBJ_MAP $D,$E,$2,_obj_hndl2D_spectre
-		OBJ_MAP $D,$D,$0,_obj_hndl2D_spectre
-		OBJ_MAP $D,$2,$1,_obj_hndl27_soldierB
-		OBJ_MAP $D,$A,$1,_obj_hndl27_soldierB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $58
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $7,$5,$3,_obj_hndl3F_multipurpose
-		OBJ_MAP $D,$F,$2,_obj_hndl27_soldierB
-		OBJ_MAP $7,$8,$0,_obj_hndl27_soldierB
-		OBJ_MAP $7,$2,$3,_obj_hndl27_soldierB
-		OBJ_MAP $D,$9,$0,_obj_hndl23_soldierC
-		OBJ_MAP $7,$8,$1,_obj_hndl23_soldierC
-		OBJ_MAP $0,$0,$0,$00
-; $59
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $8,$3,$1,_obj_hndl3F_multipurpose
-		OBJ_MAP $D,$7,$1,_obj_hndl33_shield_man
-		OBJ_MAP $8,$8,$1,_obj_hndl27_soldierB
-		OBJ_MAP $D,$8,$2,_obj_hndl27_soldierB
-		OBJ_MAP $8,$2,$3,_obj_hndl33_shield_man
-		OBJ_MAP $D,$B,$0,_obj_hndl27_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $5A
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $7,$7,$2,_obj_hndl33_shield_man
-		OBJ_MAP $D,$6,$2,_obj_hndl23_soldierC
-		OBJ_MAP $D,$1,$3,_obj_hndl23_soldierC
-		OBJ_MAP $7,$F,$0,_obj_hndl23_soldierC
-		OBJ_MAP $D,$E,$0,_obj_hndl23_soldierC
-		OBJ_MAP $D,$9,$1,_obj_hndl33_shield_man
-		OBJ_MAP $0,$0,$0,$00
-; $5B
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$8,$2,_obj_hndl23_soldierC
-		OBJ_MAP $4,$1,$1,_obj_hndl12_ceiling_turret
-		OBJ_MAP $4,$1,$3,_obj_hndl12_ceiling_turret
-		OBJ_MAP $D,$5,$1,_obj_hndl23_soldierC
-		OBJ_MAP $4,$1,$2,_obj_hndl12_ceiling_turret
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $5C
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $7,$5,$3,_obj_hndl27_soldierB
-		OBJ_MAP $7,$8,$2,_obj_hndl27_soldierB
-		OBJ_MAP $7,$3,$1,_obj_hndl27_soldierB
-		OBJ_MAP $D,$8,$1,_obj_hndl2D_spectre
-		OBJ_MAP $D,$7,$2,_obj_hndl2D_spectre
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $5D
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$1,$2,_obj_hndl3F_multipurpose
-		OBJ_MAP $A,$D,$0,_obj_hndl22_soldierB
-		OBJ_MAP $9,$4,$1,_obj_hndl22_soldierB
-		OBJ_MAP $D,$8,$1,_obj_hndl22_soldierB
-		OBJ_MAP $8,$3,$2,_obj_hndl22_soldierB
-		OBJ_MAP $8,$C,$2,_obj_hndl22_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $5E
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$5,$2,_obj_hndl22_soldierB
-		OBJ_MAP $B,$1,$1,_obj_hndl22_soldierB
-		OBJ_MAP $B,$B,$0,_obj_hndl22_soldierB
-		OBJ_MAP $D,$1,$3,_obj_hndl22_soldierB
-		OBJ_MAP $D,$B,$1,_obj_hndl22_soldierB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $5F
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $C,$4,$1,_obj_hndl29_soldierB
-		OBJ_MAP $B,$D,$0,_obj_hndl28_soldierB
-		OBJ_MAP $A,$2,$3,_obj_hndl29_soldierB
-		OBJ_MAP $C,$C,$1,_obj_hndl29_soldierB
-		OBJ_MAP $D,$7,$2,_obj_hndl28_soldierB
-		OBJ_MAP $B,$F,$2,_obj_hndl29_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $60
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$4,$1,_obj_hndl2B_boss_pirate
-		OBJ_MAP $D,$B,$1,_obj_hndl2A_pirate
-		OBJ_MAP $B,$1,$2,_obj_hndl01_npcA
-		OBJ_MAP $B,$E,$2,_obj_hndl2A_pirate
-		OBJ_MAP $D,$4,$3,_obj_hndl2A_pirate
-		OBJ_MAP $D,$A,$0,_obj_hndl2A_pirate
-		OBJ_MAP $0,$0,$0,$00
-; $61
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$C,$1,_obj_hndl03_npcC
-		OBJ_MAP $D,$9,$3,_obj_hndl02_npcB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $62
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$3,$3,_obj_hndl03_npcC
-		OBJ_MAP $D,$B,$1,_obj_hndl04_npcD
-		OBJ_MAP $2,$8,$0,_obj_hndl3E_helicopterB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $63
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $E,$E,$2,_obj_hndl17_pelikan
-		OBJ_MAP $E,$E,$0,_obj_hndl17_pelikan
-		OBJ_MAP $F,$F,$2,_obj_hndl15_grenades
-		OBJ_MAP $F,$F,$2,_obj_hndl15_grenades
-		OBJ_MAP $D,$1,$2,_obj_hndl17_pelikan
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $64
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $C,$6,$1,_obj_hndl1C_soldierA
-		OBJ_MAP $B,$D,$0,_obj_hndl1D_soldierB
-		OBJ_MAP $B,$C,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $B,$8,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $A,$1,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $B,$D,$2,_obj_hndl1D_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $65
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$6,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $D,$C,$0,_obj_hndl1C_soldierA
-		OBJ_MAP $D,$7,$1,_obj_hndl1C_soldierA
-		OBJ_MAP $D,$B,$1,_obj_hndl1C_soldierA
-		OBJ_MAP $D,$6,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $D,$6,$3,_obj_hndl1C_soldierA
-		OBJ_MAP $0,$0,$0,$00
-; $66
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$6,$3,_obj_hndl17_pelikan
-		OBJ_MAP $D,$C,$0,_obj_hndl17_pelikan
-		OBJ_MAP $F,$F,$1,_obj_hndl15_grenades
-		OBJ_MAP $F,$F,$1,_obj_hndl15_grenades
-		OBJ_MAP $D,$7,$2,_obj_hndl17_pelikan
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $67
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$6,$2,_obj_hndl1D_soldierB
-		OBJ_MAP $D,$B,$2,_obj_hndl1D_soldierB
-		OBJ_MAP $D,$1,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $D,$C,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $D,$6,$3,_obj_hndl1D_soldierB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $68
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $9,$1,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $8,$D,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $D,$1,$3,_obj_hndl1D_soldierB
-		OBJ_MAP $8,$2,$1,_obj_hndl1C_soldierA
-		OBJ_MAP $D,$E,$0,_obj_hndl1D_soldierB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $69
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$7,$3,_obj_hndl21_soldierA
-		OBJ_MAP $D,$E,$2,_obj_hndl1D_soldierB
-		OBJ_MAP $D,$4,$1,_obj_hndl21_soldierA
-		OBJ_MAP $D,$E,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $D,$D,$0,_obj_hndl1D_soldierB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $6A
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$8,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $B,$1,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $D,$5,$1,_obj_hndl1C_soldierA
-		OBJ_MAP $D,$5,$3,_obj_hndl1C_soldierA
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $6B
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$C,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $D,$3,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $9,$2,$1,_obj_hndl1C_soldierA
-		OBJ_MAP $9,$3,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $9,$C,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $D,$1,$3,_obj_hndl1D_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $6C
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $B,$B,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $D,$9,$1,_obj_hndl1C_soldierA
-		OBJ_MAP $A,$1,$3,_obj_hndl1D_soldierB
-		OBJ_MAP $A,$E,$1,_obj_hndl1D_soldierB
-		OBJ_MAP $C,$3,$2,_obj_hndl1C_soldierA
-		OBJ_MAP $B,$E,$0,_obj_hndl1C_soldierA
-		OBJ_MAP $0,$0,$0,$00
-; $6D
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$4,$1,_obj_hndl20_torture_room_soldier
-		OBJ_MAP $B,$5,$2,_obj_hndl20_torture_room_soldier
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $6E
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$5,$3,_obj_hndl35_guard_of_torture_room
-		OBJ_MAP $8,$8,$2,_obj_hndl20_torture_room_soldier
-		OBJ_MAP $9,$3,$1,_obj_hndl20_torture_room_soldier
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $6F
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$9,$2,_obj_hndl20_torture_room_soldier
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $70
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $B,$6,$0,_obj_hndl1F_soldierB
-		OBJ_MAP $B,$8,$2,_obj_hndl1F_soldierB
-		OBJ_MAP $D,$1,$1,_obj_hndl30_burning_man
-		OBJ_MAP $B,$4,$3,_obj_hndl1F_soldierB
-		OBJ_MAP $B,$B,$0,_obj_hndl1F_soldierB
-		OBJ_MAP $B,$2,$2,_obj_hndl30_burning_man
-		OBJ_MAP $0,$0,$0,$00
-; $71
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $8,$4,$2,_obj_hndl1F_soldierB
-		OBJ_MAP $8,$E,$2,_obj_hndl1F_soldierB
-		OBJ_MAP $8,$D,$1,_obj_hndl30_burning_man
-		OBJ_MAP $9,$1,$1,_obj_hndl1F_soldierB
-		OBJ_MAP $D,$3,$3,_obj_hndl30_burning_man
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $72
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $B,$C,$2,_obj_hndl1E_soldierB
-		OBJ_MAP $A,$1,$3,_obj_hndl1F_soldierB
-		OBJ_MAP $A,$E,$1,_obj_hndl1F_soldierB
-		OBJ_MAP $B,$3,$1,_obj_hndl1F_soldierB
-		OBJ_MAP $D,$A,$1,_obj_hndl1E_soldierB
-		OBJ_MAP $D,$6,$0,_obj_hndl1E_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $73
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$5,$2,_obj_hndl2E_armored_man
-		OBJ_MAP $B,$2,$2,_obj_hndl29_soldierB
-		OBJ_MAP $D,$1,$3,_obj_hndl29_soldierB
-		OBJ_MAP $B,$6,$0,_obj_hndl29_soldierB
-		OBJ_MAP $D,$F,$0,_obj_hndl2E_armored_man
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $74
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$1,$2,_obj_hndl3F_multipurpose
-		OBJ_MAP $9,$1,$1,_obj_hndl29_soldierB
-		OBJ_MAP $8,$2,$2,_obj_hndl28_soldierB
-		OBJ_MAP $D,$9,$2,_obj_hndl28_soldierB
-		OBJ_MAP $A,$D,$0,_obj_hndl29_soldierB
-		OBJ_MAP $A,$1,$3,_obj_hndl28_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $75
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$3,$1,_obj_hndl28_soldierB
-		OBJ_MAP $9,$E,$2,_obj_hndl29_soldierB
-		OBJ_MAP $9,$7,$1,_obj_hndl2E_armored_man
-		OBJ_MAP $9,$4,$2,_obj_hndl2E_armored_man
-		OBJ_MAP $9,$1,$1,_obj_hndl29_soldierB
-		OBJ_MAP $D,$7,$2,_obj_hndl28_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $76
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $7,$E,$0,_obj_hndl2F_strong_man
-		OBJ_MAP $A,$1,$2,_obj_hndl29_soldierB
-		OBJ_MAP $D,$D,$2,_obj_hndl29_soldierB
-		OBJ_MAP $8,$7,$3,_obj_hndl2F_strong_man
-		OBJ_MAP $B,$F,$0,_obj_hndl29_soldierB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $77
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $8,$7,$1,_obj_hndl04_npcD
-		OBJ_MAP $2,$3,$3,_obj_hndl3E_helicopterB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $78
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $C,$4,$2,_obj_hndl29_soldierB
-		OBJ_MAP $A,$E,$1,_obj_hndl28_soldierB
-		OBJ_MAP $A,$1,$3,_obj_hndl29_soldierB
-		OBJ_MAP $B,$B,$2,_obj_hndl28_soldierB
-		OBJ_MAP $D,$5,$0,_obj_hndl28_soldierB
-		OBJ_MAP $B,$F,$0,_obj_hndl29_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $79
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$8,$2,_obj_hndl3B_boss_padovski
-		OBJ_MAP $D,$2,$3,_obj_hndl22_soldierB
-		OBJ_MAP $D,$F,$0,_obj_hndl22_soldierB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $7A
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $D,$8,$2,_obj_hndl29_soldierB
-		OBJ_MAP $D,$6,$2,_obj_hndl29_soldierB
-		OBJ_MAP $D,$7,$3,_obj_hndl29_soldierB
-		OBJ_MAP $B,$D,$0,_obj_hndl29_soldierB
-		OBJ_MAP $D,$6,$1,_obj_hndl29_soldierB
-		OBJ_MAP $D,$9,$1,_obj_hndl29_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $7B
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $8,$F,$2,_obj_hndl29_soldierB
-		OBJ_MAP $7,$7,$0,_obj_hndl29_soldierB
-		OBJ_MAP $A,$1,$2,_obj_hndl11_landmine
-		OBJ_MAP $9,$4,$2,_obj_hndl11_landmine
-		OBJ_MAP $7,$8,$1,_obj_hndl29_soldierB
-		OBJ_MAP $D,$C,$3,_obj_hndl28_soldierB
-		OBJ_MAP $0,$0,$0,$00
-; $7C
-		OBJ_MAP $0,$0,$0,_obj_hndl3C_plane
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $7D
-		OBJ_MAP $D,$8,$3,_obj_hndl3D_helicopterA
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $7E
-		OBJ_MAP $D,$8,$3,_obj_hndl3D_helicopterA
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-; $7F
-		OBJ_MAP $D,$8,$3,_obj_hndl3D_helicopterA
-		OBJ_MAP $D,$C,$3,_obj_hndl3E_helicopterB
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-		OBJ_MAP $0,$0,$0,$00
-_obj_params_lib:
-		.BYTE $F0,$EF,$00,$06,$00,$00,$80|$00						,$00	; $00
-		.BYTE $F0,$D8,$00,$06,$00,$FF,$80|_objB_hndl14_score_1_idx	,$00	; $01
-		.BYTE $F0,$D8,$00,$06,$00,$FF,$80|_objB_hndl14_score_1_idx	,$00	; $02
-		.BYTE $F0,$D8,$00,$06,$00,$FF,$80|_objB_hndl14_score_1_idx	,$00	; $03
-		.BYTE $F0,$D8,$00,$06,$00,$FF,$80|_objB_hndl14_score_1_idx	,$00	; $04
-		.BYTE $F0,$2F,$00,$03,$04,$01,    _objB_hndl14_score_1_idx	,$00	; $05
-		.BYTE $F0,$FF,$00,$03,$04,$02,    _objB_hndl14_score_1_idx	,$00	; $06
-		.BYTE $F0,$AF,$00,$03,$04,$04,    _objB_hndl15_score_2_idx	,$00	; $07
-		.BYTE $F0,$28,$00,$00,$04,$FF,$80|_objB_hndl14_score_1_idx	,$00	; $08
-		.BYTE $F0,$2F,$00,$03,$08,$04,    _objB_hndl15_score_2_idx	,$00	; $09
-		.BYTE $F0,$EF,$00,$03,$14,$FF,    _objB_hndl19_score_50_idx	,$00	; $0A
-		.BYTE $F0,$2F,$00,$03,$08,$0C,    _objB_hndl17_score_10_idx	,$00	; $0B
-		.BYTE $F0,$2F,$00,$03,$04,$02,    _objB_hndl14_score_1_idx	,$00	; $0C
-		.BYTE $F0,$28,$00,$0C,$14,$FF,$80|_objB_hndl1A_score_100_idx,$00	; $0D
-		.BYTE $F0,$AF,$00,$02,$08,$04,    _objB_hndl15_score_2_idx	,$00	; $0E
-		.BYTE $F0,$FF,$00,$00,$04,$02,    _objB_hndl14_score_1_idx	,$00	; $0F
-		.BYTE $F0,$3F,$00,$03,$18,$FF,    _objB_hndl14_score_1_idx	,$00	; $10
-		.BYTE $F0,$3F,$00,$02,$24,$02,$80|_objB_hndl09_animate_idx	,$00	; $11
-		.BYTE $F0,$3F,$00,$03,$1C,$02,    _objB_hndl14_score_1_idx	,$00	; $12
-		.BYTE $F0,$E8,$00,$03,$1C,$60,    _objB_hndl1A_score_100_idx,$00	; $13
-		.BYTE $F0,$28,$00,$03,$08,$FF,$80|_objB_hndl18_score_20_idx	,$00	; $14
-		.BYTE $F0,$EF,$00,$01,$0C,$FF,$80|_objB_hndl17_score_10_idx	,$00	; $15
-		.BYTE $F0,$28,$00,$00,$08,$06,    _objB_hndl16_score_5_idx	,$00	; $16
-		.BYTE $F0,$EF,$00,$05,$08,$06,    _objB_hndl16_score_5_idx	,$00	; $17
-		.BYTE $F0,$EF,$00,$09,$10,$18,    _objB_hndl18_score_20_idx	,$00	; $18
-		.BYTE $F0,$EF,$00,$0C,$04,$04,    _objB_hndl15_score_2_idx	,$00	; $19
-		.BYTE $F0,$EF,$00,$0C,$0C,$06,    _objB_hndl16_score_5_idx	,$00	; $1A
-		.BYTE $F0,$D8,$00,$01,$00,$FF,$80|_objB_hndl14_score_1_idx	,$00	; $1B
-		.BYTE $F0,$EF,$00,$06,$0C,$06,    _objB_hndl16_score_5_idx	,$00	; $1C
-		.BYTE $F0,$EF,$00,$06,$0C,$06,    _objB_hndl16_score_5_idx	,$00	; $1D
-		.BYTE $F0,$EF,$00,$06,$0C,$0C,    _objB_hndl17_score_10_idx	,$00	; $1E
-		.BYTE $F0,$EF,$00,$06,$10,$0C,    _objB_hndl17_score_10_idx	,$00	; $1F
-		.BYTE $F0,$D8,$00,$06,$00,$FF,$80|_objB_hndl14_score_1_idx	,$00	; $20
-		.BYTE $F0,$EF,$00,$06,$0C,$0C,    _objB_hndl17_score_10_idx	,$00	; $21
-		.BYTE $F0,$EF,$00,$06,$20,$C0,    _objB_hndl1B_score_200_idx,$00	; $22
-		.BYTE $F0,$EF,$00,$06,$1C,$60,    _objB_hndl1A_score_100_idx,$00	; $23
-		.BYTE $F0,$EF,$00,$06,$18,$30,    _objB_hndl0C_arrow_ammo_idx,$00	; $24
-		.BYTE $F0,$EF,$00,$06,$18,$30,    _objB_hndl19_score_50_idx	,$00	; $25
-		.BYTE $F0,$EF,$00,$06,$10,$0C,    _objB_hndl17_score_10_idx	,$00	; $26
-		.BYTE $F0,$EF,$00,$06,$1C,$60,    _objB_hndl1A_score_100_idx,$00	; $27
-		.BYTE $F0,$EF,$00,$06,$20,$C0,    _objB_hndl1B_score_200_idx,$00	; $28
-		.BYTE $F0,$EF,$00,$06,$20,$C0,    _objB_hndl1B_score_200_idx,$00	; $29
-		.BYTE $F0,$EF,$00,$06,$0C,$0C,    _objB_hndl17_score_10_idx	,$00	; $2A
-		.BYTE $F0,$EF,$00,$06,$0C,$18,$80|_objB_hndl18_score_20_idx	,$00	; $2B
-		.BYTE $F0,$EF,$00,$7A,$0C,$18,    _objB_hndl18_score_20_idx	,$00	; $2C
-		.BYTE $F0,$EF,$00,$09,$1C,$C0,    _objB_hndl1B_score_200_idx,$00	; $2D
-		.BYTE $F0,$EF,$00,$06,$20,$FF,    _objB_hndl1C_score_500_idx,$00	; $2E
-		.BYTE $F0,$EF,$00,$07,$20,$FF,    _objB_hndl1C_score_500_idx,$00	; $2F
-		.BYTE $F0,$EF,$00,$06,$10,$18,$80|_objB_hndl18_score_20_idx	,$00	; $30
-		.BYTE $F0,$EF,$00,$0B,$18,$60,    _objB_hndl0D_explo_arrow_ammo_idx,$00	; $31
-		.BYTE $F0,$EF,$00,$09,$18,$60,    _objB_hndl0E_machinegun_ammo_idx,$00	; $32
-		.BYTE $F0,$EF,$00,$05,$1C,$C0,    _objB_hndl1B_score_200_idx,$00	; $33
-		.BYTE $F0,$EF,$00,$06,$10,$18,    _objB_hndl18_score_20_idx	,$00	; $34
-		.BYTE $F0,$D8,$00,$06,$00,$FF,$80|$00						,$00	; $35
-		.BYTE $F0,$EF,$00,$0C,$14,$10,$80|_objB_hndl1B_score_200_idx,$00	; $36
-		.BYTE $F0,$EF,$0B,$CF,$08,$10,$80|_objB_hndl1A_score_100_idx,$00	; $37
-		.BYTE $F0,$EF,$0B,$0E,$10,$10,$80|_objB_hndl1B_score_200_idx,$00	; $38
-		.BYTE $F0,$2F,$00,$DA,$18,$10,$80|_objB_hndl1C_score_500_idx,$00	; $39
-		.BYTE $F0,$EF,$00,$46,$1C,$10,$80|_objB_hndl1C_score_500_idx,$00	; $3A
-		.BYTE $F0,$EF,$00,$06,$20,$10,$80|_objB_hndl1C_score_500_idx,$00	; $3B
-		.BYTE $F0,$00,$00,$00,$00,$FF,    _objB_hndl14_score_1_idx	,$00	; $3C
-		.BYTE $F0,$00,$00,$0C,$00,$10,    _objB_hndl14_score_1_idx	,$00	; $3D
-		.BYTE $F0,$3F,$00,$0E,$00,$10,$80|_objB_hndl14_score_1_idx	,$00	; $3E
-		.BYTE $F0,$0C,$00,$03,$00,$01,$80|_objB_hndl14_score_1_idx	,$00	; $3F
-
-		SECTION_END "GAME DATA"
-
-		SECTION_START
-		INCLUDE "..\sprites.inc"
-		SECTION_END "SPRITES DATA"
-
-		SECTION_START
-
 ; =============== S U B	R O U T	I N E =======================================
+; here starts main object MAGIC!
+;
 _objA_manager:
-		JSR		_obj_special_bonus_test_handler
-		JSR		_obj_rambo_shout_deploy_test
+		JSR		_obj_special_bonus_test_handler	; always check for rambo bonus
+		JSR		_obj_rambo_shout_deploy_test	; as well as special projectile
 		LDA		#$00
-		STA		_tmp14
+		STA		_tmp14					; init object counter here
 
 ; !FALLTHROUGH!
 
 ; =============== S U B	R O U T	I N E =======================================
-_objects_manager_loop:
-		LDA		_tmp14
+_objA_manager_loop:
+		LDA		_tmp14					; fetch object one by one
 		ASL
 		ASL
 		ASL
 		ASL
 		TAX
 		LDA		_objsA._player._hndl_idx,X
-		BMI		_obj_handler_continue
+		BMI		_objA_manager_next
 		AND		#$3F
 		ASL
 		TAY
@@ -1646,35 +33,35 @@ _objects_manager_loop:
 		STA		_tmp00
 		LDA		_obj_hndl_lib+1,Y
 		STA		_tmp01
-		JSR		_cur_obj_load
+		JSR		_objA_fetch
 		CPX		#$00
-		BEQ		loc_51FE7
+		BEQ		loc_51FE7				; explosion handlers are for enemies only
 		LDA		_objsA._player._prize_idx,X
-		BMI		loc_51FE7
-		JSR		_obj_sub52085
-		BCS		_obj_flush_and_continue
+		BMI		loc_51FE7				; also check if explosion alredy started
+		JSR		_enemy_explosion_handler; when replaced with explosion,
+		BCS		_objA_flush_and_continue; run only explosion handler here
 loc_51FE7:
-		JMP		(_tmp00)
+		JMP		(_tmp00)				; or else run regular game object handler
 
 ; =============== S U B	R O U T	I N E =======================================
-_obj_flush_and_continue:
-		JSR		_cur_obj_flush
+_objA_flush_and_continue:
+		JSR		_objA_flush				; all obj handlers must return here manually
 
 ; !FALLTHROUGH!
 
 ; =============== S U B	R O U T	I N E =======================================
-_obj_handler_continue:
-		INC		_tmp14
+_objA_manager_next:
+		INC		_tmp14					; iterate up to 8 main objects
 		LDA		_tmp14
 		CMP		#$08
-		BNE		_objects_manager_loop
+		BNE		_objA_manager_loop
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_cur_obj_load:
+_objA_fetch:
 		LDA		_objsA._player._anim_phase_cnt,X
-		LSR
-		LSR
+		LSR								; pre-load current object parameters
+		LSR								; for faster calcs
 		LSR
 		LSR
 		STA		_tmp0F
@@ -1696,18 +83,18 @@ _cur_obj_load:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_cur_obj_flush:
-		LDA		_tmp0F
-		ASL
+_objA_flush:
+		LDA		_tmp0F					; flush object parameters back to
+		ASL								; data slot
 		ASL
 		ASL
 		ASL
 		ORA		_tmp10
 		STA		_objsA._player._anim_phase_cnt,X
 		CPX		#$00
-		BEQ		loc_52031
-		LDA		_tmp0C
-		AND		#$03
+		BEQ		loc_52031				; all objects can't run out of location
+		LDA		_tmp0C					; will always wrap around rooms 0-3
+		AND		#$03					; but not for the player itself
 		STA		_tmp0C
 loc_52031:
 		LDA		_tmp0C
@@ -1725,13 +112,13 @@ loc_52031:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_obj_get_hor_delta16:
-		LDA		_tmp11
+_objA_frontal_collision_line_calc:
+		LDA		_tmp11					; recalc only if direction is changed
 		EOR		_tmp12
 		ASL
 		ASL
-		BCC		locret_52075
-		LDA		#$40
+		BCC		locret_52075			; calc the line 16 pixels forward in
+		LDA		#$40					; moving direction of the object
 		BIT		_tmp11
 		BNE		loc_52068
 		LDA		_tmp0D
@@ -1753,22 +140,25 @@ locret_52075:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_obj_sub52085:
-		JSR		_obj_sub52099
+_enemy_explosion_handler:
+		JSR		_explosion_start_and_prize_deploy
 		LDA		_objsA._player.field_C,X
 		BEQ		loc_52097
-		JSR		_obj_sub5214B
+		JSR		_explosion_animate		; do explosion anim
 		LDA		_tmp11
 		AND		#$20
-		BNE		loc_52097
+		BNE		loc_52097				; test if main handler need blocking
 		CLC
 		RTS
 loc_52097:
-		SEC
+		SEC								; return C=1 to block main handler
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_obj_sub52099:
+; when main object is killed, it turns into explosion object
+; and deploy simple moving projectile with prize icon
+;
+_explosion_start_and_prize_deploy:
 		LDA		_objsA._player.field_C,X
 		BNE		locret_52107
 		LDA		#_obj_hndl3F_multipurpose_idx
@@ -1776,9 +166,9 @@ _obj_sub52099:
 		LDA		#$F0
 		STA		_objsA._player._anim_phase_idx,X
 		LDA		#$01
-		STA		_tmp0B
+		STA		_tmp0B					; select explosion area size
 		LDA		_objsA._player._collision_box_idx,X
-		AND		#$0F
+		AND		#$0F					; depending of the size of collision box
 		CMP		#$08
 		BCS		loc_520CE
 		CMP		#$05
@@ -1826,7 +216,7 @@ locret_52107:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_obj_sub5214B:
+_explosion_animate:
 		LDA		_tmp11
 		AND		#$20
 		BNE		loc_52177
@@ -2023,8 +413,8 @@ _obj_jump_animate_test:
 ; =============== S U B	R O U T	I N E =======================================
 _obj_jump_animate_test_ex:
 		JSR		_obj_move_animate_common
-		JSR		_obj_get_hor_delta16
-		JMP		_obj_flush_and_continue
+		JSR		_objA_frontal_collision_line_calc
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_player_rand_timer_set:
@@ -2105,7 +495,7 @@ loc_522E4:
 _obj_kill_and_continue:
 		LDA		#$80
 		STA		_objsA._player._hndl_idx,X
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_special_bonus_test_handler:
@@ -2132,7 +522,7 @@ loc_52313:
 		BPL		locret_52332			; enemy object 1 must be dead (player is 0)
 		LDX		#$0F					; now copy obj data above dead enemy slot
 loc_5231E:
-		LDA		_obj_data_special,X
+		LDA		_obj_data_special_bonus,X
 		STA		_objsA._o1,X
 		DEX
 		BPL		loc_5231E
@@ -2143,7 +533,7 @@ loc_5231E:
 locret_52332:
 		RTS
 ; ---------------------------------------------------------------------------
-_obj_data_special:
+_obj_data_special_bonus:
 		.BYTE _obj_hndl3F_multipurpose_idx
 		.BYTE $F5,$00,$00,$80,$20,$00,$18,$00,$03,$00,$00,$00,$03,$9F,$00
 
@@ -2165,7 +555,7 @@ locret_52361:
 		RTS
 loc_52362:
 		LDA		_objsA._o6._hndl_idx	; test if object already deployed
-		BPL		.shout_animate			; jump to animate
+		BPL		.shout_collision_test	; jump to animate
 		LDA		_pad
 		AND		#$40
 		BNE		loc_52370				; or wait for B button press
@@ -2205,7 +595,7 @@ loc_5239E:
 		LSR
 		ORA		#$80
 		STA		_objsA._o6._dir
-.shout_animate:
+.shout_collision_test:
 		LDA		_game._scr_idx			; special case at war base
 		CMP		#$62					; projectile is turn murdock
 		BNE		locret_523F6			; into frog
@@ -2651,7 +1041,7 @@ loc_526B9:
 _obj_hndl05_bee:
 		JSR		_obj_to_player_lock
 		BCS		loc_526C4
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_526C4:
 		LDA		#$03
 		STA		_tmp01
@@ -2715,7 +1105,7 @@ _obj_hndl06_snake:
 		LDA		_tmp0C
 		CMP		_objsA._player._room_num
 		BEQ		loc_5273D
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_5273D:
 		LDA		_objsA._player._x_pos
 		AND		#$E0
@@ -2724,7 +1114,7 @@ loc_5273D:
 		LDA		_objsA._player._y_pos
 		CMP		_tmp0E
 		BCC		loc_5274E
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_5274E:
 		LDA		_tmp11
 		ORA		#$08
@@ -2769,7 +1159,7 @@ loc_52792:
 _obj_hndl07_fish:
 		JSR		_obj_to_player_lock
 		BCS		loc_5279D
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_5279D:
 		LDA		#$03
 		STA		_tmp01
@@ -2831,8 +1221,8 @@ loc_52803:
 		AND		#$FC
 		ORA		_tmp13
 		STA		_tmp0D
-		JSR		_obj_get_hor_delta16
-		JMP		_obj_flush_and_continue
+		JSR		_objA_frontal_collision_line_calc
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl09_ceiling_bat:
@@ -2867,9 +1257,9 @@ loc_52843:
 		EOR		_tmp0E
 		STA		_tmp0E
 		INC		_tmp0E
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 loc_52864:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl0A_stalaktit:
@@ -2884,13 +1274,13 @@ _obj_hndl0A_stalaktit:
 		LDA		_tmp0C
 		CMP		_objsA._player._room_num
 		BEQ		loc_52881
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_52881:
 		LDA		_objsA._player._x_pos
 		AND		#$F0
 		CMP		_tmp0D
 		BEQ		loc_5288C
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_5288C:
 		LDA		_tmp11
 		ORA		#$08
@@ -2992,15 +1382,15 @@ loc_52936:
 		STA		_tmp0E
 		INC		_tmp0E
 loc_52947:
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 loc_5294A:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl0C_bird:
 		JSR		_obj_to_player_lock
 		BCS		loc_52955
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_52955:
 		LDA		#$03
 		STA		_tmp01
@@ -3018,7 +1408,7 @@ loc_5296F:
 		JSR		_rand
 		AND		#$0F
 		BEQ		loc_52979
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_52979:
 		JSR		_obj_player_rand_timer_set
 		LDA		_tmp11
@@ -3103,15 +1493,15 @@ loc_52A07:
 		EOR		#$40
 		STA		_tmp11
 loc_52A19:
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 loc_52A1C:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl0E_small_bat:
 		JSR		_obj_to_player_lock
 		BCS		loc_52A27
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_52A27:
 		LDA		#$02
 		STA		_tmp01
@@ -3121,7 +1511,7 @@ loc_52A27:
 		LDA		_tmp11
 		AND		#$10
 		BEQ		loc_52A3B
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_52A3B:
 		DEC		_objsA._player._timer,X
 		BNE		loc_52A5A
@@ -3181,7 +1571,7 @@ loc_52AA8:
 		LDA		#$08
 		STA		_tmp0A
 		JSR		_obj_sub53EBA
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl10_floor_turret:
@@ -3200,7 +1590,7 @@ _obj_hndl10_floor_turret:
 loc_52ACF:
 		JSR		_cur_obj_direction_up_set
 loc_52AD2:
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 		LDA		_tmp11
 		AND		#$80
 		BNE		loc_52AE6
@@ -3221,16 +1611,16 @@ loc_52AEE:
 		STA		_tmp00
 		JSR		_obj_enemy_projectile_deploy
 loc_52AFB:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl11_landmine:
-		JSR		_obj_sub52085
+		JSR		_enemy_explosion_handler
 		BCC		loc_52B08
 		LDA		#SEN07
 		STA		_apu_se_noise_idx
 loc_52B08:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl12_ceiling_turret:
@@ -3246,7 +1636,7 @@ _obj_hndl12_ceiling_turret:
 		EOR		#$04
 		STA		_tmp11
 loc_52B23:
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 		LDA		_objsA._player._timer,X
 		AND		#$13
 		BNE		loc_52B52
@@ -3270,7 +1660,7 @@ loc_52B45:
 		STA		_tmp00
 		JSR		_obj_enemy_projectile_deploy
 loc_52B52:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl13_jumping_ball:
@@ -3357,8 +1747,8 @@ loc_52BE2:
 		EOR		#$40
 		ORA		_tmp11
 		STA		_tmp11
-		JSR		_obj_get_hor_delta16
-		JMP		_obj_flush_and_continue
+		JSR		_objA_frontal_collision_line_calc
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl14_rocks:
@@ -3386,8 +1776,8 @@ loc_52C18:
 		EOR		#$40
 		STA		_tmp11
 loc_52C2E:
-		JSR		_obj_get_hor_delta16
-		JMP		_obj_flush_and_continue
+		JSR		_objA_frontal_collision_line_calc
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl15_grenades:
@@ -3549,8 +1939,8 @@ loc_52D52:
 		AND		#$F0
 		STA		_tmp11
 loc_52D60:
-		JSR		_obj_get_hor_delta16
-		JMP		_obj_flush_and_continue
+		JSR		_objA_frontal_collision_line_calc
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_prize_deployA:
@@ -3768,7 +2158,7 @@ loc_52EE2:
 		LDA		#$01
 		STA		_game._redraw_req
 loc_52EF7:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl1C_soldierA:
@@ -3873,12 +2263,12 @@ loc_52FB1:
 		BEQ		loc_52FBC
 		LDA		#$04
 		STA		_tmp0B
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_52FBC:
 		LDA		_tmp11
 		AND		#$F0
 		STA		_tmp11
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_52FC5:
 		JMP		_obj_jump_animate_test_ex
 
@@ -3888,7 +2278,7 @@ _obj_hndl26_grenade_soldier:
 		BEQ		_obj_hndl1D_soldierB
 		LDA		#_obj_hndl20_torture_room_soldier_idx
 		STA		_objsA._player._hndl_idx,X
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl1D_soldierB:
@@ -4046,68 +2436,44 @@ locret_530E0:
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_extra_enemy_deploy_test:
-		LDA		_objsA._player._dir
-		AND		#$04
-		BNE		loc_530F2
-		LDA		_game._play_hours
+		LDA		_objsA._player._dir		; test if fire weapon were used in this
+		AND		#$04					; location. so force enemy duplication
+		BNE		.extra_enemy_insert		; because of SOUND!
+		LDA		_game._play_hours		; in other case, do this only at daytime
 		CMP		#$04
 		BCC		locret_530F5
 		CMP		#$15
 		BCS		locret_530F5
-loc_530F2:
-		JSR		_obj_extra_enemy_insert
-locret_530F5:
-		RTS
-
-; =============== S U B	R O U T	I N E =======================================
-_obj_extra_enemy_insert:
-		TXA
+.extra_enemy_insert:
+		TXA								; X = current object OFS ($10-$90)
 		PHA
 		TYA
 		PHA
-		LDA		_objsA._o4._hndl_idx
-		BPL		loc_5310E
 		LDY		#$40
-loc_53100:
-		LDA		_objsA._player._hndl_idx,X
-		STA		_objsA._player._hndl_idx,Y
-		INX
-		INY
-		CPY		#$50
-		BNE		loc_53100
-		BEQ		loc_53122
-loc_5310E:
-		LDA		_objsA._o6._hndl_idx
-		BPL		loc_53156
+		LDA		_objsA._player._hndl_idx,Y	; check if o4 slot is empty
+		BMI		loc_53122
 		LDY		#$60
-loc_53114:
-		LDA		_objsA._player._hndl_idx,X
-		STA		_objsA._player._hndl_idx,Y
-		INX
-		INY
-		CPY		#$70
-		BNE		loc_53114
-		JMP		loc_53122
+		LDA		_objsA._player._hndl_idx,Y
+		BPL		loc_53156
 loc_53122:
-		LDA		_objsA._player._room_num
+		JSR		_obj_to_obj_copy		; copy cur object to empty slot
+		LDA		_objsA._player._room_num; set position opposing to the player
 		CMP		#$02
 		BCS		loc_5313A
-		LDA		#$03
-		STA		_tobjA._room_num+$10,Y
+		LDA		#$03					; if player in rooms 0 or 1 set
+		STA		_tobjA._room_num+$10,Y	; position to room 3, x == 256-64
 		LDA		#$C0
 		STA		_tobjA._x_pos+$10,Y
-		LDA		#$D0
-		STA		_tobjA._y_pos+$10,Y
 		BNE		loc_53149
 loc_5313A:
-		LDA		#$00
-		STA		_tobjA._room_num+$10,Y
+		LDA		#$00					; or if player in rooms 2 or 3 set
+		STA		_tobjA._room_num+$10,Y	; position to room 0, x == 64
 		LDA		#$40
 		STA		_tobjA._x_pos+$10,Y
-		LDA		#$D0
-		STA		_tobjA._y_pos+$10,Y
 loc_53149:
-		LDA		#$15
+		LDA		#$D0
+		STA		_tobjA._y_pos+$10,Y		; y pos is fixed
+		LDA		#_obj_hndl15_grenades_idx	; prize is always grenades
 		STA		_tobjA._prize_idx+$10,Y
 		LDA		#$04
 		STA		_tobjA._damage+$10,Y
@@ -4117,6 +2483,20 @@ loc_53156:
 		TAY
 		PLA
 		TAX
+locret_530F5:
+		RTS
+
+; =============== S U B	R O U T	I N E =======================================
+_obj_to_obj_copy:
+		LDA		#$10
+		STA		_tmp01
+loc_53100:
+		LDA		_objsA._player._hndl_idx,X
+		STA		_objsA._player._hndl_idx,Y
+		INX
+		INY
+		DEC		_tmp01
+		BNE		loc_53100
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -4150,7 +2530,7 @@ loc_53183:
 		LDA		#$06
 		STA		_objsA._player._collision_box_idx,X
 		JSR		_obj_player_rand_timer_set
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_53197:
 		LDA		#$04
 		STA		_tmp0B
@@ -4175,7 +2555,7 @@ loc_531BA:
 		BNE		loc_531C3
 		JSR		_obj_prize_deployB
 loc_531C3:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_prize_deployB:
@@ -4218,7 +2598,7 @@ _obj_hndl2B_boss_pirate:
 		BEQ		loc_53210
 		JMP		_obj_kill_and_continue
 loc_53210:
-		JSR		_obj_sub52085
+		JSR		_enemy_explosion_handler
 		BCC		_obj_hndl2A_pirate
 		LDA		_objsA._player.field_C,X
 		BNE		loc_53221
@@ -4226,7 +2606,7 @@ loc_53210:
 		ORA		#$40
 		STA		_game._bosses
 loc_53221:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl2A_pirate:
@@ -4287,11 +2667,11 @@ loc_5328D:
 		CMP		#$04
 		BNE		_j_obj_jump_animate_test_ex0
 		JSR		_obj_move_animate_common
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 		LDA		#$18
 		STA		_tmp0A
 		JSR		_obj_prize_deployB
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl2C_dubina_man:
@@ -4349,7 +2729,7 @@ loc_532F9:
 loc_53307:
 		JMP		_obj_jump_animate_test_ex
 loc_5330A:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl2D_spectre:
@@ -4388,7 +2768,7 @@ loc_53339:
 loc_5334D:
 		JMP		_obj_jump_animate_test_ex
 loc_53350:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl2E_armored_man:
@@ -4413,11 +2793,11 @@ _obj_hndl2E_armored_man:
 loc_5337A:
 		LDA		#$40
 		STA		_objsA._player._timer,X
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_53381:
 		LDA		#$00
 		STA		_tmp0B
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_53388:
 		LDA		#$01
 		STA		_tmp0B
@@ -4433,14 +2813,14 @@ loc_53393:
 loc_5339E:
 		AND		#$03
 		BEQ		loc_533A5
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_533A5:
 		LDA		#$03
 		STA		_tmp0B
 		LDA		#$00
 		STA		_tmp0F
 		JSR		_obj_move_animate_common
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 		LDA		#$10
 		STA		_tmp02
 		STA		_tmp03
@@ -4449,7 +2829,7 @@ loc_533A5:
 		LDA		#_objB_hndl07_idx
 		STA		_tmp00
 		JSR		_obj_enemy_projectile_deploy
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl2F_strong_man:
@@ -4519,7 +2899,7 @@ loc_5342B:
 loc_53445:
 		JMP		_obj_jump_animate_test_ex
 loc_53448:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl30_burning_man:
@@ -4538,7 +2918,7 @@ _obj_hndl30_burning_man:
 		LDA		#$08
 		STA		_objsA._player._timer,X
 loc_53467:
-		JSR		_obj_sub52099
+		JSR		_explosion_start_and_prize_deploy
 		LDA		_objsA._player.field_C,X
 		BEQ		loc_53485
 		LDA		#$02
@@ -4550,9 +2930,9 @@ loc_53467:
 		AND		_objsA._player._state,X
 		BNE		loc_53488
 		JSR		_obj_move_animate_common
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 loc_53485:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_53488:
 		DEC		_objsA._player._timer,X
 		BNE		loc_53490
@@ -4570,7 +2950,7 @@ loc_53490:
 		LDA		#$01
 		STA		_tmp0B
 		JSR		_obj_move_animate_common
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_prize_deployC:
@@ -4589,7 +2969,7 @@ _obj_prize_deployC:
 		JSR		_obj_enemy_projectile_deploy
 		PLA
 		STA		_tmp11
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl31_machete_man:
@@ -4625,10 +3005,10 @@ loc_53506:
 		JMP		_obj_jump_animate_test_ex
 loc_53509:
 		JSR		_obj_hor_targeting_to_player_common
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 		LDA		#$00
 		STA		_tmp0B
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl32_skull_monkey:
@@ -4761,7 +3141,7 @@ loc_5360B:
 		STA		_objsA._player._timer,X
 loc_5360F:
 		JSR		_obj_move_animate_common
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 		LDA		_tmp0B
 		CMP		#$03
 		BNE		loc_53632
@@ -4777,7 +3157,7 @@ loc_5360F:
 		STA		_tmp00
 		JSR		_obj_enemy_projectile_deploy
 loc_53632:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl34_crouching_bomb_man:
@@ -4785,9 +3165,9 @@ _obj_hndl34_crouching_bomb_man:
 		BEQ		loc_53643
 		LDA		#_obj_hndl35_guard_of_torture_room_idx
 		STA		_objsA._player._hndl_idx,X
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_53643:
-		JSR		_obj_sub52085
+		JSR		_enemy_explosion_handler
 		BCS		loc_5367F
 		LDA		#$02
 		STA		_tmp01
@@ -4814,7 +3194,7 @@ loc_53675:
 		STA		_objsA._player._timer,X
 loc_53679:
 		JSR		_obj_move_animate_common
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 loc_5367F:
 		LDA		_tmp0B
 		AND		#$01
@@ -4831,7 +3211,7 @@ loc_5367F:
 		STA		_tmp00
 		JSR		_obj_enemy_projectile_deploy
 loc_5369C:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl35_guard_of_torture_room:
@@ -4860,8 +3240,8 @@ loc_536BB:
 		LDA		#$20
 		STA		_objsA._player._timer,X
 loc_536D3:
-		JSR		_obj_get_hor_delta16
-		JMP		_obj_flush_and_continue
+		JSR		_objA_frontal_collision_line_calc
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl36_boss_fire_tiger:
@@ -4870,7 +3250,7 @@ _obj_hndl36_boss_fire_tiger:
 		BEQ		loc_536E3
 		JMP		_obj_kill_and_continue
 loc_536E3:
-		JSR		_obj_sub52085
+		JSR		_enemy_explosion_handler
 		BCC		loc_536F7
 		LDA		_objsA._player.field_C,X
 		BNE		loc_536F4
@@ -4878,7 +3258,7 @@ loc_536E3:
 		ORA		#$01
 		STA		_game._bosses
 loc_536F4:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_536F7:
 		LDA		#$04
 		STA		_tmp01
@@ -4939,13 +3319,13 @@ loc_53759:
 		STA		_tmp0B
 loc_53767:
 		JSR		_obj_move_animate_common
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 		LDA		_objsA._player._timer,X
 		AND		#$07
 		BNE		loc_53776
 		JMP		_obj_prize_deployC
 loc_53776:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl37_boss_spider:
@@ -4959,7 +3339,7 @@ loc_53782:
 		BEQ		loc_5378C
 		JMP		_obj_kill_and_continue
 loc_5378C:
-		JSR		_obj_sub52085
+		JSR		_enemy_explosion_handler
 		BCC		loc_537A3
 		LDA		_objsA._player.field_C,X
 		BNE		loc_5379D
@@ -4968,7 +3348,7 @@ loc_5378C:
 		STA		_game._bosses
 loc_5379D:
 		JSR		_obj_adjust_field_7
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_537A3:
 		JSR		_obj_adjust_field_7
 		LDA		#$01
@@ -5029,7 +3409,7 @@ loc_537EF:
 		STA		_tmp04
 		JSR		_obj_boss_projectile_insert
 loc_5381A:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl38_boss_motorcycle:
@@ -5038,7 +3418,7 @@ _obj_hndl38_boss_motorcycle:
 		BEQ		loc_53827
 		JMP		_obj_kill_and_continue
 loc_53827:
-		JSR		_obj_sub52085
+		JSR		_enemy_explosion_handler
 		BCC		loc_5383E
 		LDA		_objsA._player.field_C,X
 		BNE		loc_53838
@@ -5047,7 +3427,7 @@ loc_53827:
 		STA		_game._bosses
 loc_53838:
 		JSR		_obj_adjust_field_7
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_5383E:
 		JSR		_obj_adjust_field_7
 		LDA		#$03
@@ -5088,7 +3468,7 @@ loc_53887:
 		LDA		#$20
 		STA		_tmp0A
 		JSR		_obj_sub53EBA
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl39_boss_drone:
@@ -5107,7 +3487,7 @@ loc_538A8:
 		BEQ		loc_538B2
 		JMP		_obj_kill_and_continue
 loc_538B2:
-		JSR		_obj_sub52085
+		JSR		_enemy_explosion_handler
 		BCC		loc_538C9
 		LDA		_objsA._player.field_C,X
 		BNE		loc_538C3
@@ -5116,7 +3496,7 @@ loc_538B2:
 		STA		_game._bosses
 loc_538C3:
 		JSR		_obj_drone_proj_adjust_vert
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_538C9:
 		JSR		_obj_drone_proj_adjust_vert
 		INC		_objsA._player._timer,X
@@ -5175,7 +3555,7 @@ loc_53930:
 		LDA		#$20
 		STA		_tmp0A
 		JSR		_obj_sub53EBA
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_5393D:
 		LDA		#$10
 		STA		_tmp02
@@ -5190,7 +3570,7 @@ loc_5393D:
 		LDA		#$03
 		STA		_tmp04
 		JSR		_obj_boss_projectile_insert
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_drone_proj_adjust_vert:
@@ -5216,7 +3596,7 @@ loc_53975:
 		BNE		loc_5397F
 		JMP		_obj_kill_and_continue
 loc_5397F:
-		JSR		_obj_sub52085
+		JSR		_enemy_explosion_handler
 		BCC		loc_53999
 		JSR		_obj_hor_targeting_to_player_common
 		LDA		_objsA._player.field_C,X
@@ -5226,7 +3606,7 @@ loc_5397F:
 		STA		_game._bosses
 loc_53993:
 		JSR		_obj_adjust_field_7
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_53999:
 		JSR		_obj_adjust_field_7
 		LDA		#$04
@@ -5279,7 +3659,7 @@ _obj_hndl3B_boss_padovski:
 		BEQ		loc_539FA
 		JMP		_obj_kill_and_continue
 loc_539FA:
-		JSR		_obj_sub52085
+		JSR		_enemy_explosion_handler
 		BCC		loc_53A14
 		JSR		_obj_hor_targeting_to_player_common
 		LDA		_objsA._player.field_C,X
@@ -5289,7 +3669,7 @@ loc_539FA:
 		STA		_game._bosses
 loc_53A0E:
 		JSR		_obj_adjust_field_7
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_53A14:
 		JSR		_obj_adjust_field_7
 		LDA		#$02
@@ -5334,7 +3714,7 @@ loc_53A56:
 		STA		_tmp00
 		JSR		_obj_enemy_projectile_deploy
 loc_53A69:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_53A6C:
 		LDA		#$00
 		STA		_tmp0B
@@ -5391,7 +3771,7 @@ loc_53AB8:
 		CMP		#$F0
 		BEQ		loc_53AC7
 loc_53AC4:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_53AC7:
 		LDA		#$02
 		STA		_game._scr_idx
@@ -5409,7 +3789,7 @@ loc_53AC7:
 		STA		_tmp0E
 		LDA		#$00
 		STA		_ppu_mask_shadow
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_53AEE:
 		LDA		#$3C
 		STA		_objsA._o1,X
@@ -5434,7 +3814,7 @@ loc_53B0F:
 		INC		_tmp0E
 		INC		_tmp0D
 loc_53B19:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl3D_helicopterA:
@@ -5447,7 +3827,7 @@ loc_53B27:
 		LDA		_tmp0B
 		CMP		#$01
 		BNE		loc_53B30
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_53B30:
 		LDA		#$00
 		STA		_tmp01
@@ -5478,7 +3858,7 @@ loc_53B61:
 loc_53B66:
 		LDA		#$01
 		STA		_game._redraw_req
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_53B6E:
 		LDA		_tmp11
 		AND		#$01
@@ -5504,7 +3884,7 @@ loc_53B90:
 loc_53B9E:
 		STA		_tmp10
 		JSR		_obj_move_animate_common
-		JSR		_obj_get_hor_delta16
+		JSR		_objA_frontal_collision_line_calc
 		SEC
 		LDA		_tmp0D
 		SBC		#$01
@@ -5521,7 +3901,7 @@ loc_53B9E:
 		STA		_objsA._o7._room_num
 		LDA		_tmp0E
 		STA		_objsA._o7._y_pos
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl3E_helicopterB:
@@ -5550,7 +3930,7 @@ _obj_helicopter_for_cutsenes:
 		BNE		loc_53C15
 		BEQ		loc_53C07
 loc_53BF4:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_53BF7:
 		LDA		_tmp11
 		AND		#$01
@@ -5594,7 +3974,7 @@ loc_53C41:
 		LDA		_tmp0B
 		CMP		#$01
 		BNE		loc_53C4A
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_53C4A:
 		LDA		_objA_buf_shuffle_pos
 		CMP		#$10
@@ -5643,7 +4023,7 @@ loc_53C9A:
 		STA		_objsA._player.field_C,X
 		STA		_objsA._o7.field_C
 loc_53CB3:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 _heli_flight_up:
 		LDA		_game._scr_idx
 		CMP		#$0B
@@ -5692,7 +4072,7 @@ loc_53CF5:
 		STA		_objsA._player._dir
 		FLAG_CLEAR	FLAG13_SYS
 loc_53D23:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 _heli_already_landed:
 		LDA		_game._scr_idx
 		CMP		#$01
@@ -5726,7 +4106,7 @@ loc_53D57:
 		LDA		#$01
 		STA		_game._redraw_req
 loc_53D63:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 loc_53D66:
 		LDA		_tmp0E
 		CMP		#$70
@@ -5763,7 +4143,7 @@ loc_53D8D:
 		LDA		#$01
 		STA		_game._redraw_req
 loc_53DA9:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_heli_active_zone_obj_insert:
@@ -5807,11 +4187,16 @@ loc_53DE7:
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl3F_multipurpose:
 		LDA		_tmp0B
-		BEQ		_obj_sub53E1A
+		BEQ		_hidden_static_prize_object
 		CMP		#$05
 		BEQ		_special_head_prize
 		CMP		#$06
-		BEQ		_obj_sub53E20
+		BEQ		_rambo_shout_animate
+
+; !FALLTHROUGH!
+
+; =============== S U B	R O U T	I N E =======================================
+_regular_enemy_explosion:
 		LDA		_objsA._player._hndl_idx,X
 		AND		#$40
 		BEQ		loc_53E17
@@ -5820,15 +4205,15 @@ _obj_hndl3F_multipurpose:
 		LDA		#$80
 		STA		_objsA._player._hndl_idx,X
 loc_53E17:
-		JMP		_obj_flush_and_continue
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
-_obj_sub53E1A:
-		JSR		_obj_sub52085
-		JMP		_obj_flush_and_continue
+_hidden_static_prize_object:
+		JSR		_enemy_explosion_handler
+		JMP		_objA_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
-_obj_sub53E20:
+_rambo_shout_animate:
 		LDA		#$04
 		STA		_tmp01
 		STA		_tmp03
@@ -6067,13 +4452,21 @@ loc_53F97:
 loc_53FC0:
 		JSR		_obj_move_animate_common
 loc_53FC3:
-		JSR		_obj_get_hor_delta16
-		JMP		_obj_flush_and_continue
+		JSR		_objA_frontal_collision_line_calc
+		JMP		_objA_flush_and_continue
 ; ---------------------------------------------------------------------------
 _boss_spider_drone_proj_anim_tbl:
 		.BYTE $30,$31,$31,$32,$32,$22,$22,$22,$22,$22,$22,$23,$23,$13,$13,$03
 		.BYTE $03,$13,$13,$23,$23,$22,$22,$22,$22,$22,$22,$32,$32,$31,$31,$30
 
 		SECTION_END "OBJECTS PROGRAM"
+
+		SECTION_START
+		INCLUDE "..\game_data.inc"
+		SECTION_END "GAME DATA"
+
+		SECTION_START
+		INCLUDE "..\sprites.inc"
+		SECTION_END "SPRITES DATA"
 
 		BANK_END 6,$C000
