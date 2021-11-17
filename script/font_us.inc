@@ -82,3 +82,4 @@ _rs 	EQU $F0
 
 __		EQU $F1
 _eol 	EQU $FF
+_eof 	EQU $FF

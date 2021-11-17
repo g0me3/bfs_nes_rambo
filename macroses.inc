@@ -81,8 +81,6 @@ FLAG14_FLY_FORTRESS_DEAD	EQU	$14
 {1}_size SET [{1}_end-{1}]
 	ENDM
 
-;---------------S-C-R-I-P-T-S-------------------
-
 	MAC	_tobjA
 _tobjA					SET	$00
 {1}						SET	.
@@ -194,7 +192,7 @@ _tobjB.field_7			SET	_tobjB + 7
 	_tapu_chnl	{1}._ch3
 	ENDM
 
-;---------G-A-M-E--S-P-E-C-I-F-I-C--------------
+;---------------S-C-R-I-P-T-S-------------------
 
 	MAC	sprite_draw_up
 		.BYTE $00,{1}
@@ -246,7 +244,7 @@ _tobjB.field_7			SET	_tobjB + 7
 		.BYTE $0D,{1}
 	ENDM
 
-	MAC	game_flags_toggle
+	MAC	game_flags_clear
 		.BYTE $0E,{1}
 	ENDM
 
@@ -333,6 +331,54 @@ _tobjB.field_7			SET	_tobjB + 7
 
 	MAC	scroller
 		.BYTE $29
+	ENDM
+
+;---------G-A-M-E--S-P-E-C-I-F-I-C--------------
+
+	MAC	PPU_FILL_LINEY
+		LDA		_PPU_STATUS
+		LDA		#>[{1}]
+		STA		_PPU_ADDR
+		LDA		#<[{1}]
+		STA		_PPU_ADDR
+		LDA		#{2}
+		LDY		#{3}
+.1:
+		STA		_PPU_DATA
+		DEY
+		BNE		.1
+	ENDM
+
+	MAC	PPU_FILL_LINEX
+		LDA		_PPU_STATUS
+		LDA		#>[{1}]
+		STA		_PPU_ADDR
+		LDA		#<[{1}]
+		STA		_PPU_ADDR
+		LDA		#{2}
+		LDX		#{3}
+.1:
+		STA		_PPU_DATA
+		DEX
+		BNE		.1
+	ENDM
+
+	MAC	PPU_FILL_RECT
+		LDA		_PPU_STATUS
+		LDA		#>[{1}]
+		STA		_PPU_ADDR
+		LDA		#<[{1}]
+		STA		_PPU_ADDR
+		LDA		#{2}
+		LDY		#{3}
+.1:
+		LDX		#{4}
+.2:
+		STA		_PPU_DATA
+		DEX
+		BNE		.2
+		DEY
+		BNE		.1
 	ENDM
 
 ;----------------C-O-M-M-O-N--------------------

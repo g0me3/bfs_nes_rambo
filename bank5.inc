@@ -39,18 +39,7 @@ loc_4402E:
 ; =============== S U B	R O U T	I N E =======================================
 _screen_off:
 		JSR		_wait_for_nmi
-		LDA		_PPU_STATUS
-		LDA		#$3F
-		STA		_PPU_ADDR
-		LDA		#$00
-		STA		_PPU_ADDR
-		LDY		#$00
-		LDA		#$0F
-loc_4404D:
-		STA		_PPU_DATA
-		INY
-		CPY		#$20
-		BNE		loc_4404D
+		PPU_FILL_LINEY	$3F00, $0F, $20
 		JMP		_ppu_regs_reinit
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -59,102 +48,11 @@ _ppu_screen_clear:
 		STA		_PPU_CTRL
 		LDA		#$00
 		STA		_PPU_MASK
-		LDA		_PPU_STATUS
-		LDA		#$24
-		STA		_PPU_ADDR
-		LDA		#$00
-		STA		_PPU_ADDR
-		LDA		#$FE
-		LDY		#$1E
-loc_44074:
-		LDX		#$20
-loc_44076:
-		STA		_PPU_DATA
-		DEX
-		BNE		loc_44076
-		DEY
-		BNE		loc_44074
-		LDA		_PPU_STATUS
-		LDA		#$20
-		STA		_PPU_ADDR
-		LDA		#$00
-		STA		_PPU_ADDR
-		LDA		#$FE
-		LDY		#$1E
-loc_44090:
-		LDX		#$20
-loc_44092:
-		STA		_PPU_DATA
-		DEX
-		BNE		loc_44092
-		DEY
-		BNE		loc_44090
-		LDA		_PPU_STATUS
-		LDA		#$23
-		STA		_PPU_ADDR
-		LDA		#$C0
-		STA		_PPU_ADDR
-		LDA		#$FF
-		LDY		#$40
-loc_440AC:
-		STA		_PPU_DATA
-		DEY
-		BNE		loc_440AC
-		LDA		_PPU_STATUS
-		LDA		#$27
-		STA		_PPU_ADDR
-		LDA		#$C0
-		STA		_PPU_ADDR
-		LDA		#$FF
-		LDY		#$40
-loc_440C3:
-		STA		_PPU_DATA
-		DEY
-		BNE		loc_440C3
+		PPU_FILL_RECT	$2400, $FE, $1E, $20
+		PPU_FILL_RECT	$2000, $FE, $1E, $20
+		PPU_FILL_LINEY	$23C0, $FF, $40
+		PPU_FILL_LINEY	$27C0, $FF, $40
 		JMP		_ppu_regs_reinit
-
-; =============== S U B	R O U T	I N E =======================================
-_msg_rect_clear:
-		TYA
-		PHA
-		TXA
-		PHA
-		JSR		_wait_for_nmi
-		LDA		_PPU_STATUS
-		LDA		_tmp00
-		STA		_PPU_ADDR
-		LDA		_tmp01
-		STA		_PPU_ADDR
-		LDA		#$FE
-		LDY		_tmp03
-loc_440E5:
-		LDX		_tmp02
-loc_440E7:
-		STA		_PPU_DATA
-		DEX
-		BNE		loc_440E7
-		JSR		_ppu_regs_reinit
-		JSR		_wait_for_nmi
-		LDA		_PPU_STATUS
-		LDA		_tmp01
-		CLC
-		ADC		#$20
-		STA		_tmp01
-		LDA		_tmp00
-		ADC		#$00
-		STA		_tmp00
-		STA		_PPU_ADDR
-		LDA		_tmp01
-		STA		_PPU_ADDR
-		LDA		#$FE
-		DEY
-		BNE		loc_440E5
-		JSR		_ppu_regs_reinit
-		PLA
-		TAX
-		PLA
-		TAY
-		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
 _frame_draw:
@@ -162,55 +60,18 @@ _frame_draw:
 		PHA
 		TXA
 		PHA
-		JSR		_wait_for_nmi
-		LDA		_PPU_STATUS
-		LDA		_tmp00
-		STA		_PPU_ADDR
-		LDA		_tmp01
-		STA		_PPU_ADDR
-		LDA		#$F7
-		LDY		_tmp03
-		DEY
-		LDX		_tmp02
-		DEX
-loc_44134:
-		STA		_PPU_DATA
-		LDA		#$F8
-		DEX
-		BNE		loc_44134
-		LDA		#$F9
-		STA		_PPU_DATA
-		JSR		_ppu_regs_reinit
-		JSR		_wait_for_nmi
-		JSR		_ppu_add_of_32
-		DEY
+		DEC		_tmp02					; adjust width
+		DEC		_tmp03					; adjust height of internal frame
+		DEC		_tmp03
+		LDY		#$F7					; render top frame line F7,F8..F8,F9
+		JSR		_frame_line_draw
 loc_4414B:
-		LDA		#$FD
-		LDX		_tmp02
-		DEX
-loc_44150:
-		STA		_PPU_DATA
-		LDA		#$FE
-		DEX
-		BNE		loc_44150
-		LDA		#$FF
-		STA		_PPU_DATA
-		JSR		_ppu_regs_reinit
-		JSR		_wait_for_nmi
-		JSR		_ppu_add_of_32
-		DEY
+		LDY		#$FD					; render middle frame line FD,FE..FE,FF
+		JSR		_frame_line_draw
+		DEC		_tmp03
 		BNE		loc_4414B
-		LDA		#$FA
-		LDX		_tmp02
-		DEX
-loc_4416E:
-		STA		_PPU_DATA
-		LDA		#$FB
-		DEX
-		BNE		loc_4416E
-		LDA		#$FC
-		STA		_PPU_DATA
-		JSR		_ppu_regs_reinit
+		LDY		#$FA					; render bottom frame line FA,FB..FB,FC
+		JSR		_frame_line_draw
 		PLA
 		TAX
 		PLA
@@ -218,18 +79,33 @@ loc_4416E:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_ppu_add_of_32:
+_frame_line_draw:
+		JSR		_wait_for_nmi
+		JSR		_ppu_set_ofs_and_add20
+		STY		_PPU_DATA
+		LDX		_tmp02
+		INY
+loc_44134:
+		STY		_PPU_DATA
+		DEX
+		BNE		loc_44134
+		INY
+		STY		_PPU_DATA
+		JMP		_ppu_regs_reinit
+
+; =============== S U B	R O U T	I N E =======================================
+_ppu_set_ofs_and_add20:
 		LDA		_PPU_STATUS
+		LDA		_tmp00
+		STA		_PPU_ADDR
 		LDA		_tmp01
+		STA		_PPU_ADDR
 		CLC
 		ADC		#$20
 		STA		_tmp01
-		LDA		_tmp00
-		ADC		#$00
-		STA		_tmp00
-		STA		_PPU_ADDR
-		LDA		_tmp01
-		STA		_PPU_ADDR
+		BCC		.no_carry
+		INC		_tmp00
+.no_carry:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -253,6 +129,8 @@ loc_441B3:
 		LDA		_script_lib+1,X
 		STA		_tmp0E
 		LDY		#$00
+
+; !FALLTHROUGH!
 
 ; =============== S U B	R O U T	I N E =======================================
 _script_cmd_fetch:
@@ -298,13 +176,13 @@ _scr_cmd02_msg_draw_up:
 		LDA		_tmp11
 		AND		#$01
 		BEQ		loc_4420B
-		JSR		_msg_rect0Ax13_clearB
+		JSR		_msg_wnd_clear_down
 loc_4420B:
 		LDA		_tmp11
 		AND		#$FC
 		ORA		#$01
 		STA		_tmp11
-		JSR		_msg_rect0Ax13_clearA
+		JSR		_msg_wnd_clear_up
 		LDA		#$20
 		STA		_tmp00
 		LDA		#$AA
@@ -322,13 +200,13 @@ _scr_cmd03_msg_draw_down:
 		LDA		_tmp11
 		AND		#$02
 		BEQ		loc_44237
-		JSR		_msg_rect0Ax13_clearA
+		JSR		_msg_wnd_clear_up
 loc_44237:
 		LDA		_tmp11
 		AND		#$FC
 		ORA		#$02
 		STA		_tmp11
-		JSR		_msg_rect0Ax13_clearB
+		JSR		_msg_wnd_clear_down
 		LDA		#$22
 		STA		_tmp00
 		LDA		#$24
@@ -512,7 +390,7 @@ _scr_cmd0D_game_flags_set:
 		JMP		_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
-_scr_cmd0E_game_flags_toggle:
+_scr_cmd0E_game_flags_clear:
 		LDA		(_tmp0D),Y
 		INY
 		ASL
@@ -823,6 +701,8 @@ loc_445EF:
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd1B_life_resore:
+		TYA
+		PHA
 		LDA		_game._life_level
 		ASL
 		TAX
@@ -840,64 +720,34 @@ loc_44613:
 		BEQ		loc_44676
 		AND		#$02
 		BNE		loc_4464B
-		LDA		_PPU_STATUS
-		LDA		#$3F
-		STA		_PPU_ADDR
-		LDA		#$00
-		STA		_PPU_ADDR
-		TXA
-		PHA
-#if LANGUAGE == LANG_US
-		LDX		#$0E
-#endif
 #if LANGUAGE == LANG_JP
-		LDX		#$0F
+		PPU_FILL_LINEY	$3F00, $02, $0F
 #endif
-		LDA		#$02
-loc_44633:
-		STA		_PPU_DATA
-		DEX
-		BNE		loc_44633
 #if LANGUAGE == LANG_US
+		PPU_FILL_LINEY	$3F00, $02, $0E
 		LDA		#$30
 		STA		_PPU_DATA
 #endif
 		LDA		#$30
 		STA		_PPU_DATA
-		PLA
-		TAX
 		JSR		_ppu_regs_reinit
 		JMP		loc_44613
 loc_4464B:
-		LDA		_PPU_STATUS
-		LDA		#$3F
-		STA		_PPU_ADDR
-		LDA		#$00
-		STA		_PPU_ADDR
-		TXA
-		PHA
-#if LANGUAGE == LANG_US
-		LDX		#$0E
-#endif
 #if LANGUAGE == LANG_JP
-		LDX		#$0F
+		PPU_FILL_LINEY	$3F00, $0F, $0F
 #endif
-		LDA		#$0F
-loc_4465E:
-		STA		_PPU_DATA
-		DEX
-		BNE		loc_4465E
 #if LANGUAGE == LANG_US
+		PPU_FILL_LINEY	$3F00, $0F, $0E
 		LDA		#$30
 		STA		_PPU_DATA
 #endif
 		LDA		#$30
 		STA		_PPU_DATA
-		PLA
-		TAX
 		JSR		_ppu_regs_reinit
 		JMP		loc_44613
 loc_44676:
+		PLA
+		TAY
 		JSR		_ppu_regs_reinit
 		JMP		_script_cmd_fetch
 
@@ -1054,28 +904,45 @@ locret_44793:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_msg_rect0Ax13_clearA:
+_msg_wnd_clear_up:
 		LDA		#$20
 		STA		_tmp00
 		LDA		#$8A
-		STA		_tmp01
-		LDA		#$13
-		STA		_tmp02
-		LDA		#$0A
-		STA		_tmp03
-		JMP		_msg_rect_clear
+		BNE		_msg_wnd_clear_ex
 
 ; =============== S U B	R O U T	I N E =======================================
-_msg_rect0Ax13_clearB:
+_msg_wnd_clear_down:
 		LDA		#$22
 		STA		_tmp00
 		LDA		#$04
+
+; !FALLTHROUGH!
+
+; =============== S U B	R O U T	I N E =======================================
+_msg_wnd_clear_ex:
 		STA		_tmp01
-		LDA		#$13
-		STA		_tmp02
-		LDA		#$0A
-		STA		_tmp03
-		JMP		_msg_rect_clear
+		TYA
+		PHA
+		TXA
+		PHA
+		LDY		#$0A
+loc_440E5:
+		JSR		_wait_for_nmi
+		JSR		_ppu_set_ofs_and_add20
+		LDA		#$FE
+		LDX		#$14					; little fix allow up to 20 chars in
+loc_440E7:								; one line to be cleared, fixes at least
+		STA		_PPU_DATA				; one problem in scripts.
+		DEX
+		BNE		loc_440E7
+		JSR		_ppu_regs_reinit
+		DEY
+		BNE		loc_440E5
+		PLA
+		TAX
+		PLA
+		TAY
+		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
 _msg_wait_key_release:
@@ -1105,24 +972,16 @@ locret_447E1:
 
 ; =============== S U B	R O U T	I N E =======================================
 _msg_display_inventory_screen:
-; the US version introduced here some palette transition code
-; the JP version does the pass display instantly without prepare
+; the US version uses additional fonts color to highlight the small letters
+; when return to the title screen it will restore regular white coloring
 #if LANGUAGE == LANG_US
 		JSR		_wait_for_nmi
 		LDA		_PPU_STATUS
 		LDA		#$3F
 		STA		_PPU_ADDR
-		LDA		#$00
+		LDA		#$0E
 		STA		_PPU_ADDR
-		LDX		#$0E
-		LDA		#$0F
-loc_447F6:
-		STA		_PPU_DATA
-		DEX
-		BNE		loc_447F6
 		LDA		#$22
-		STA		_PPU_DATA
-		LDA		#$30
 		STA		_PPU_DATA
 		JSR		_ppu_regs_reinit
 #endif
@@ -1143,16 +1002,8 @@ loc_44817:
 		LDA		_PPU_STATUS
 		LDA		#$3F
 		STA		_PPU_ADDR
-		LDA		#$00
+		LDA		#$0E
 		STA		_PPU_ADDR
-		LDX		#$0E
-		LDA		#$0F
-loc_4483F:
-		STA		_PPU_DATA
-		DEX
-		BNE		loc_4483F
-		LDA		#$30
-		STA		_PPU_DATA
 		LDA		#$30
 		STA		_PPU_DATA
 		JSR		_ppu_regs_reinit
@@ -1333,24 +1184,20 @@ loc_44982:
 		LDA		_tmp12
 		AND		#$02
 		BEQ		locret_449F8
-		LDA		#$B0
-		TAX
+		LDX		#$B0
 		LDA		#$F8
 		JSR		_spr_nibble_fill
-		LDA		#$E0
-		TAX
+		LDX		#$E0
 		LDA		#$A8
 		JMP		_spr_nibble_fill
 loc_449A7:
 		LDA		_tmp12
 		AND		#$01
 		BEQ		locret_449F8
-		LDA		#$30
-		TAX
+		LDX		#$30
 		LDA		#$F8
 		JSR		_spr_nibble_fill
-		LDA		#$60
-		TAX
+		LDX		#$60
 		LDA		#$48
 		JMP		_spr_nibble_fill
 loc_449C0:
@@ -1360,24 +1207,20 @@ loc_449C0:
 		LDA		_tmp12
 		AND		#$02
 		BEQ		locret_449F8
-		LDA		#$B0
-		TAX
+		LDX		#$B0
 		LDA		#$A8
 		JSR		_spr_nibble_fill
-		LDA		#$E0
-		TAX
+		LDX		#$E0
 		LDA		#$F8
 		JMP		_spr_nibble_fill
 loc_449DF:
 		LDA		_tmp12
 		AND		#$01
 		BEQ		locret_449F8
-		LDA		#$30
-		TAX
+		LDX		#$30
 		LDA		#$48
 		JSR		_spr_nibble_fill
-		LDA		#$60
-		TAX
+		LDX		#$60
 		LDA		#$F8
 		JMP		_spr_nibble_fill
 locret_449F8:
@@ -1413,7 +1256,7 @@ _script_cmd_lib:
 		.WORD _scr_cmd0B_ptr_load
 		.WORD _scr_cmd0C_msg_raw_display
 		.WORD _scr_cmd0D_game_flags_set
-		.WORD _scr_cmd0E_game_flags_toggle
+		.WORD _scr_cmd0E_game_flags_clear
 		.WORD _scr_cmd0F_jmp_flag_not_set
 		.WORD _scr_cmd10_jmpne_option
 		.WORD _scr_cmd11_jmp_branch

@@ -283,9 +283,9 @@ _script88_loc01:
 		ptr_load			_script88_msg05
 		msg_draw_up			; [ランボ-・・・・\こううんを いのっている。]
 		game_hours_set		$03
-		game_flags_toggle	FLAG00_SYS
-		game_flags_toggle	FLAG08_SYS
-		game_flags_toggle	FLAG13_SYS
+		game_flags_clear	FLAG00_SYS
+		game_flags_clear	FLAG08_SYS
+		game_flags_clear	FLAG13_SYS
 		anim_scene_set		$00
 		set_room_idx		$7c
 		player_pos_set		$01, $50
@@ -357,7 +357,7 @@ _script8B_loc01:
 		sprite_draw_up		PORTRAIT14_PIRATE
 		ptr_load			_script8B_msg02
 		msg_draw_up			; [そうだ。\カネになれば なんでもするのさ。\おとなしく してもらおうか。]
-		game_flags_toggle	FLAG0E_BOAT
+		game_flags_clear	FLAG0E_BOAT
 		set_room_idx		$60
 		stop
 _script8B_loc02:
@@ -546,7 +546,7 @@ _script94_loc01:
 		msg_draw_down		; [ありがとう。ぶきをくれ!]
 		ptr_load			_script94_msg02
 		msg_draw_up			; [てきが	きづいたみたい。\いそいで にげましょう。]
-		game_flags_toggle	FLAG0C_SYS
+		game_flags_clear	FLAG0C_SYS
 		set_room_idx		$70
 		stop
 _script94_loc02:
@@ -623,7 +623,7 @@ _script95_loc07:
 		sprite_draw_up		PORTRAIT05_CO_SAD
 		ptr_load			_script95_msg0b
 		msg_draw_up			; [ざんねんだわ。\もうこれで あえないのね。\さようなら。きをつけて。]
-		game_flags_toggle	FLAG09_CO_TAKEN
+		game_flags_clear	FLAG09_CO_TAKEN
 		set_room_idx		$0b
 		player_pos_set		$00, $a0
 		stop
@@ -783,7 +783,7 @@ _script99_loc02:
 		frame_draw_down		PORTRAIT00_RAMBO
 		ptr_load			_script99_msg04
 		msg_draw_down		; [あまり、ゆっくりしてられないんだ。\よし、がんばるぞ。]
-		game_flags_toggle	FLAG04_KID_TAKEN
+		game_flags_clear	FLAG04_KID_TAKEN
 		game_flags_set		FLAG02_KID_SAVED
 		set_room_idx		$3a
 		stop
@@ -880,7 +880,7 @@ _script9C:
 		msg_draw_up			; [ランボ-・・・ ありがとう。\わたしを・ わたしをわすれないで・・。]
 		ptr_load			_script9C_msg08
 		msg_draw_down		; [コ-!]
-		game_flags_toggle	FLAG09_CO_TAKEN
+		game_flags_clear	FLAG09_CO_TAKEN
 		set_room_idx		$48
 		stop
 _script9D:
@@ -924,7 +924,7 @@ _script9E_loc01:
 		msg_draw_up			; [ランボ- はやくじょうしょうして!\てきが おってきたわ!]
 		------------------
 _script9E_loc02:
-		game_flags_toggle	FLAG06_POW_TAKEN
+		game_flags_clear	FLAG06_POW_TAKEN
 		player_pos_set		$03, $80
 		set_room_idx		$54
 		anim_scene_set		$7f
@@ -933,8 +933,8 @@ _script9F:
 		ptr_load			_script9F_msg00
 		msg_printf			$20e7	; [そのころコ-は、ランボ-を\たすけるために・・・・。]
 		msg_input_handler
-		game_flags_toggle	FLAG06_POW_TAKEN
-		game_flags_toggle	FLAG00_SYS
+		game_flags_clear	FLAG06_POW_TAKEN
+		game_flags_clear	FLAG00_SYS
 		game_flags_set		FLAG0C_SYS
 		game_flags_set		FLAG09_CO_TAKEN
 		game_flags_set		FLAG13_SYS
@@ -981,7 +981,7 @@ _scriptA1_loc00:
 		stop
 _scriptA2:
 		checkpoint_set
-		game_flags_toggle	FLAG00_SYS
+		game_flags_clear	FLAG00_SYS
 		frame_draw_down		PORTRAIT00_RAMBO
 		jmp_flags_not_set	FLAG06_POW_TAKEN, _scriptA2_loc00
 		ptr_load			_scriptA2_msg00
@@ -1133,7 +1133,7 @@ _scriptA4_loc05:
 		stop
 		------------------
 _scriptA4_loc06:
-		game_flags_toggle	FLAG13_SYS
+		game_flags_clear	FLAG13_SYS
 		game_flags_set		FLAG09_CO_TAKEN
 		set_room_idx		$95
 		stop
