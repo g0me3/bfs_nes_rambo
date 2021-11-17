@@ -77,24 +77,24 @@ loc_63523:
 		LDA		_tmp00
 		CMP		#$03
 		BEQ		.apu_next_chnl
-		LDA		_apu._ch0.field_3,X
+		LDA		_apu._ch0._field_3,X
 		CMP		#$00
 		BNE		loc_63552
-		LDY		_apu._ch0.field_4,X
+		LDY		_apu._ch0._field_4,X
 		LDA		_apu_tbl3,Y
 		STA		_tmp04
 		BEQ		.apu_len_and_continue
 		CMP		#$FF
 		BNE		loc_63549
-		INC		_apu._ch0.field_4,X
+		INC		_apu._ch0._field_4,X
 		INY
 		LDA		_apu_tbl3,Y
 		STA		_tmp04
 		BEQ		.apu_len_and_continue
 		BNE		loc_63549
 loc_63552:
-		DEC		_apu._ch0.field_3,X
-		LDY		_apu._ch0.field_4,X
+		DEC		_apu._ch0._field_3,X
+		LDY		_apu._ch0._field_4,X
 		LDA		_apu_tbl3,Y
 		STA		_tmp04
 		CMP		#$FF
@@ -107,7 +107,7 @@ loc_6356D:
 		LDA		_tmp04
 		BEQ		.apu_len_and_continue
 loc_63549:
-		INC		_apu._ch0.field_4,X
+		INC		_apu._ch0._field_4,X
 .apu_len_and_continue:
 		JSR		_apu_len_calc
 .apu_next_chnl:
@@ -239,14 +239,14 @@ loc_63622:
 		CMP		#$03
 		BEQ		loc_63671
 		INY
-		LDA		_apu._ch0.field_3,X
+		LDA		_apu._ch0._field_3,X
 		PHA
 		LDA		(_tmp08),Y
-		STA		_apu._ch0.field_3,X
+		STA		_apu._ch0._field_3,X
 		PLA
 		BNE		.apu_mus_play_exit
 		LDA		#$00
-		STA		_apu._ch0.field_4,X
+		STA		_apu._ch0._field_4,X
 		STA		_tmp06
 		STA		_tmp07
 		LDY		_tmp01
@@ -289,11 +289,11 @@ loc_63698:
 loc_636B8:
 		CPY		#$08
 		BNE		loc_636DA
-		LDA		_apu._ch0.field_3,X
+		LDA		_apu._ch0._field_3,X
 		ASL
 		ASL
 		CLC
-		ADC		_apu._ch0.field_3,X
+		ADC		_apu._ch0._field_3,X
 		STA		_APU_TRI_COUNT
 		JMP		loc_636970
 loc_636DA:

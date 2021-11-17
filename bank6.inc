@@ -1627,6 +1627,8 @@ _objA_manager:
 		LDA		#$00
 		STA		_tmp14
 
+; !FALLTHROUGH!
+
 ; =============== S U B	R O U T	I N E =======================================
 _objects_manager_loop:
 		LDA		_tmp14
@@ -1657,6 +1659,8 @@ loc_51FE7:
 ; =============== S U B	R O U T	I N E =======================================
 _obj_flush_and_continue:
 		JSR		_cur_obj_flush
+
+; !FALLTHROUGH!
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_handler_continue:
@@ -1730,13 +1734,13 @@ _obj_get_hor_delta16:
 		LDA		#$40
 		BIT		_tmp11
 		BNE		loc_52068
-		SEC
 		LDA		_tmp0D
+		SEC
 		SBC		#$0F
 		STA		_tmp0D
-		LDA		_tmp0C
-		SBC		#$00
-		STA		_tmp0C
+		BCS		locret_52067
+		DEC		_tmp0C
+locret_52067:
 		RTS
 loc_52068:
 		LDA		_tmp0D
@@ -1746,15 +1750,6 @@ loc_52068:
 		BCC		locret_52075
 		INC		_tmp0C
 locret_52075:
-		RTS
-
-; =============== S U B	R O U T	I N E =======================================
-_rand:
-		LDY		_rand_seed
-		LDA		_objA_manager,Y
-		ADC		_rand_seed
-		STA		_tmp13
-		INC		_rand_seed
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -1782,7 +1777,7 @@ _obj_sub52099:
 		STA		_objsA._player._anim_phase_idx,X
 		LDA		#$01
 		STA		_tmp0B
-		LDA		_objsA._player.field_9,X
+		LDA		_objsA._player._collision_box_idx,X
 		AND		#$0F
 		CMP		#$08
 		BCS		loc_520CE
@@ -1804,7 +1799,6 @@ loc_520D2:
 		STA		_tmp0B
 		LDA		#$00
 		STA		_objsA._player.field_7,X
-		LDA		#$00
 		STA		_objsA._player.field_8,X
 		LDA		#$06
 		STA		_tmp13
@@ -1895,8 +1889,8 @@ _obj_enemy_projectile_deploy:
 		STA		_tmp01
 		JMP		loc_521C4
 loc_521B7:
-		SEC
 		LDA		_tmp0D
+		SEC
 		SBC		_tmp02
 		STA		_tmp02
 		LDA		_tmp0C
@@ -1968,13 +1962,13 @@ _obj_multi_deploy_pos_calc:
 		LDA		_objsA._player._room_num
 		ADC		#$00
 		STA		_tmp0C
-		SEC
 		LDA		_tmp0D
+		SEC
 		SBC		#$80
 		STA		_tmp0D
-		LDA		_tmp0C
-		SBC		#$00
-		STA		_tmp0C
+		BCS		loc_52221
+		DEC		_tmp0C
+loc_52221:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -2023,6 +2017,8 @@ _obj_jump_animate_test_left:
 _obj_jump_animate_test:
 		LDA		#$00
 		STA		_tmp0F
+
+; !FALLTHROUGH!
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_jump_animate_test_ex:
@@ -2113,17 +2109,17 @@ _obj_kill_and_continue:
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_special_bonus_test_handler:
-		LDA		_game._scr_idx
+		LDA		_game._scr_idx			; only for locations
 		BMI		locret_52332
-		LDA		_objsA._o1._prize_idx
-		CMP		#$9F
+		LDA		_objsA._o1._prize_idx	; chek if bonus already deployed
+		CMP		#$9F					; (special garbage value left in RAM)
 		BEQ		locret_52332
-		LDA		_game._play_minutes
-		AND		#$0F
+		LDA		_game._play_minutes		; only when minutes counter is divisible
+		AND		#$0F					; by 16 (i.e. 00 16 32 48)
 		BNE		locret_52332
-		LDA		_cur_level_chr_idx
-		AND		#$F0
-		CMP		#$20
+		LDA		_cur_level_chr_idx		; specific stage CHR library index
+		AND		#$F0					; fit with most Russian War Base locations
+		CMP		#$20					; and second to last room before the BOSS
 		BEQ		loc_52313
 		CMP		#$60
 		BEQ		loc_52313
@@ -2131,21 +2127,18 @@ _obj_special_bonus_test_handler:
 		BEQ		loc_52313
 		RTS
 loc_52313:
-		INC		_game._play_minutes
-		LDA		_objsA._o1._hndl_idx
-		BPL		locret_52332
-		LDX		#$00
-		LDY		#$10
+		INC		_game._play_minutes		; make sure inutes is different now to
+		LDA		_objsA._o1._hndl_idx	; prevent multiple deployment
+		BPL		locret_52332			; enemy object 1 must be dead (player is 0)
+		LDX		#$0F					; now copy obj data above dead enemy slot
 loc_5231E:
 		LDA		_obj_data_special,X
-		STA		_objsA._player._hndl_idx,Y
-		INX
-		INY
-		CPY		#$20
-		BNE		loc_5231E
-		LDA		_objsA._player._room_num
+		STA		_objsA._o1,X
+		DEX
+		BPL		loc_5231E
+		LDA		_objsA._player._room_num; update object location info
 		STA		_objsA._o1._room_num
-		LDA		_objsA._player._x_pos
+		LDA		_objsA._player._x_pos	; position just above Rambo
 		STA		_objsA._o1._x_pos
 locret_52332:
 		RTS
@@ -2156,43 +2149,39 @@ _obj_data_special:
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_rambo_shout_deploy_test:
-		LDA		_objsA._player._hndl_idx
+		LDA		_objsA._player._hndl_idx; only if player i alive obviously
 		BMI		locret_52361
-		LDA		_game._scr_idx
-		CMP		#$62
+		LDA		_game._scr_idx			; only in two particular locations:
+		CMP		#$62					; final war base before game ending
 		BEQ		loc_52357
-		CMP		#$0B
+		CMP		#$0B					; and first pick-up-point with heli
 		BNE		locret_52361
-		LDA		_helicopter_warp_idx
-		BEQ		locret_52361
+		LDA		_helicopter_warp_idx	; additionally when helicopter warp
+		BEQ		locret_52361			; is set
 loc_52357:
-		LDA		_game._flags
-		AND		#$40
-		BNE		loc_52362
+		FLAG_TEST	FLAG06_POW_TAKEN	; and the final condition is have
+		BNE		loc_52362				; POW saved
 locret_52361:
 		RTS
 loc_52362:
-		LDA		_objsA._o6._hndl_idx
-		BPL		loc_523B0
+		LDA		_objsA._o6._hndl_idx	; test if object already deployed
+		BPL		.shout_animate			; jump to animate
 		LDA		_pad
 		AND		#$40
-		BNE		loc_52370
+		BNE		loc_52370				; or wait for B button press
 		RTS
 loc_52370:
-		LDX		#$00
-		LDY		#$60
+		LDX		#$17					; copy shout projectile data
 loc_52374:
 		LDA		_obj_data_rambo_shout,X
-		STA		_objsA,Y
-		INX
-		INY
-		CPY		#$70
-		BNE		loc_52374
-		LDA		_objsA._player._dir
-		AND		#$40
+		STA		_objsA._o6,X
+		DEX
+		BPL		loc_52374
+		LDA		_objsA._player._dir		; set current X position according
+		AND		#$40					; to Rambo's face direction
 		BEQ		loc_52396
-		SEC
 		LDA		_objsA._player._x_pos
+		SEC
 		SBC		#$20
 		STA		_objsA._o6._x_pos
 		LDA		_objsA._player._room_num
@@ -2205,24 +2194,24 @@ loc_52396:
 		LDA		_objsA._player._x_pos
 		STA		_objsA._o6._x_pos
 loc_5239E:
-		SEC
+		SEC								; set current Y position
 		LDA		_objsA._player._y_pos
 		SBC		#$10
 		STA		_objsA._o6._y_pos
-		LDA		_objsA._player._dir
+		LDA		_objsA._player._dir		; and same direction
 		AND		#$40
 		LSR
 		LSR
 		LSR
 		ORA		#$80
 		STA		_objsA._o6._dir
-loc_523B0:
-		LDA		_game._scr_idx
-		CMP		#$62
-		BNE		locret_523F6
+.shout_animate:
+		LDA		_game._scr_idx			; special case at war base
+		CMP		#$62					; projectile is turn murdock
+		BNE		locret_523F6			; into frog
 		LDA		#$40
 		STA		_objsA._o6._anim_phase_cnt
-		LDA		_objsA._o6._dir
+		LDA		_objsA._o6._dir			; get shout obj cur position
 		AND		#$40
 		ASL
 		ORA		_objsA._o6._room_num
@@ -2234,7 +2223,7 @@ loc_523B0:
 		LDA		#$04
 		STA		_tmp03
 		STA		_tmp04
-		LDA		_objsA._o1._dir
+		LDA		_objsA._o1._dir			; get murdock obj cur position
 		AND		#$40
 		ASL
 		ORA		_objsA._o1._room_num
@@ -2247,10 +2236,10 @@ loc_523B0:
 		STA		_tmp08
 		LDA		#$05
 		STA		_tmp09
-		JSR		_obj_col_testB_calcF
+		JSR		_obj_to_obj_collision_test	; collision test
 		LDA		_tmp16
 		BEQ		locret_523F6
-		LDA		#$F2
+		LDA		#$F2					; turn murdock to frog
 		STA		_objsA._o1._anim_phase_idx
 locret_523F6:
 		RTS
@@ -2360,7 +2349,7 @@ _obj_hndl01_talk_idx_select:
 		BEQ		locret_524C9
 		LDA		_objsA._player._state,X
 		BPL		locret_524C9
-		LDA		_game._scr_idx
+		LDA		_game._scr_idx			; dialog select for NPCA
 		CMP		#$01
 		BNE		loc_524B7
 		LDA		#$88
@@ -2386,7 +2375,7 @@ _obj_hndl02_talk_idx_select:
 		BEQ		locret_524EA
 		LDA		_objsA._player._state,X
 		BPL		locret_524EA
-		LDA		_game._scr_idx
+		LDA		_game._scr_idx			; dialog select for NPCB
 		CMP		#$01
 		BNE		loc_524DE
 		LDA		#$AC
@@ -2408,7 +2397,7 @@ _obj_hndl03_talk_idx_select:
 		BEQ		locret_52511
 		LDA		_objsA._player._state,X
 		BPL		locret_52511
-		LDA		_game._scr_idx
+		LDA		_game._scr_idx			; dialog select for NPCC
 		CMP		#$00
 		BNE		loc_524FF
 		LDA		#$86
@@ -2434,7 +2423,7 @@ _obj_hndl04_talk_idx_select:
 		BEQ		locret_52544
 		LDA		_objsA._player._state,X
 		BPL		locret_52544
-		LDA		_game._scr_idx
+		LDA		_game._scr_idx			; dialog select for NPCD
 		CMP		#$06
 		BNE		loc_52526
 		LDA		#$8A
@@ -2468,7 +2457,7 @@ _obj_hndl20_talk_idx_select:
 		BEQ		locret_52559
 		LDA		_objsA._player._state,X
 		BPL		locret_52559
-		LDA		_game._scr_idx
+		LDA		_game._scr_idx			; dialog select for NPCE
 		CMP		#$6F
 		BNE		locret_52559
 		LDA		#$91
@@ -2477,25 +2466,23 @@ locret_52559:
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl01_npcA:
-		CPX		#$00
-		BNE		loc_52561
-		JMP		_player_control_co
+		CPX		#$00					; if obj index0 this is RAMBO
+		BNE		loc_52561				; so we must control it manually
+		JMP		_obj_player_control_input
 loc_52561:
 		LDA		_game._scr_idx
 		CMP		#$0A
 		BNE		loc_52572
-		LDA		_game._flags+1
-		AND		#$02
+		FLAG_TEST	FLAG09_CO_TAKEN
 		BEQ		loc_52572
-		JMP		_player_control_co
+		JMP		_obj_player_control_input
 loc_52572:
 		LDA		_game._scr_idx
 		CMP		#$06
 		BNE		loc_52586
-		LDA		_game._flags+1
-		AND		#$02
+		FLAG_TEST	FLAG09_CO_TAKEN
 		BEQ		loc_52583
-		JMP		_player_control_co
+		JMP		_obj_player_control_input
 loc_52583:
 		JMP		_obj_kill_and_continue
 loc_52586:
@@ -2506,10 +2493,9 @@ loc_52586:
 _obj_hndl02_npcB:
 		CPX		#$00
 		BNE		loc_52593
-		JMP		_player_control_co
+		JMP		_obj_player_control_input
 loc_52593:
-		LDA		_game._flags+1
-		AND		#$02
+		FLAG_TEST	FLAG09_CO_TAKEN
 		BNE		loc_525A4
 		LDA		_game._scr_idx
 		CMP		#$01
@@ -2532,13 +2518,11 @@ _obj_hndl04_npcD:
 		CMP		#$77
 		BNE		loc_525C5
 loc_525BB:
-		LDA		_game._flags
-		AND		#$40
+		FLAG_TEST	FLAG06_POW_TAKEN
 		BEQ		loc_525C5
-		JMP		_player_control_co
+		JMP		_obj_player_control_input
 loc_525C5:
-		LDA		_game._flags
-		AND		#$40
+		FLAG_TEST	FLAG06_POW_TAKEN
 		BNE		loc_525D6
 		LDA		_game._scr_idx
 		CMP		#$62
@@ -2548,10 +2532,9 @@ loc_525D6:
 		LDA		_game._scr_idx
 		CMP		#$0B
 		BNE		loc_525EA
-		LDA		_game._flags
-		AND		#$40
+		FLAG_TEST	FLAG06_POW_TAKEN
 		BEQ		loc_525E7
-		JMP		_player_control_co
+		JMP		_obj_player_control_input
 loc_525E7:
 		JMP		_obj_kill_and_continue
 loc_525EA:
@@ -2590,8 +2573,7 @@ loc_5261B:
 		AND		#$3F
 		CMP		#_obj_hndl03_npcC_idx
 		BNE		loc_5263F
-		LDA		_game._flags
-		AND		#$40
+		FLAG_TEST	FLAG06_POW_TAKEN
 		BEQ		loc_5263F
 		LDA		#$04
 		STA		_tmp0F
@@ -3499,7 +3481,7 @@ loc_52CD1:
 		LDA		#$2F
 		STA		_objsA._player.field_8,X
 		LDA		#$90
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 loc_52CE3:
 		JMP		loc_52D60
 loc_52CE6:
@@ -3525,7 +3507,7 @@ loc_52D0A:
 		LDA		#$2F
 		STA		_objsA._player.field_8,X
 		LDA		#$A0
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		#$54
 		STA		_tmp03
 		JSR		_obj_prize_deployA
@@ -3553,7 +3535,7 @@ loc_52D40:
 		LDA		#$2F
 		STA		_objsA._player.field_8,X
 		LDA		#$B0
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		#$64
 		STA		_tmp03
 		JSR		_obj_prize_deployA
@@ -3596,7 +3578,7 @@ _obj_hndl17_pelikan:
 		LDA		#$01
 		STA		_tmp0B
 		LDA		#$05
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		_tmp13
 		CMP		#$40
 		BCC		loc_52DC4
@@ -3613,7 +3595,7 @@ _obj_hndl17_pelikan:
 		LDA		#$02
 		STA		_tmp0B
 		LDA		#$0C
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		BNE		loc_52DCB
 loc_52DBE:
 		JMP		_obj_jump_animate_test_right
@@ -3653,7 +3635,7 @@ loc_52DF4:
 		STA		_tmp0B
 loc_52DFC:
 		LDA		#$09
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 loc_52E00:
 		JSR		_obj_sub52242
 		DEC		_objsA._player._timer,X
@@ -3664,7 +3646,7 @@ loc_52E00:
 		LDA		#$01
 		STA		_tmp0B
 		LDA		#$09
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		_tmp13
 		CMP		#$20
 		BCC		loc_52E58
@@ -3693,7 +3675,7 @@ loc_52E44:
 		LDA		#$02
 		STA		_tmp0B
 		LDA		#$0D
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		BNE		loc_52E63
 loc_52E52:
 		JMP		_obj_jump_animate_test_right
@@ -3703,7 +3685,7 @@ loc_52E58:
 		LDA		#$00
 		STA		_tmp0B
 		LDA		#$09
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		JMP		_obj_jump_animate_test
 loc_52E63:
 		JMP		_obj_jump_animate_test_ex
@@ -3772,8 +3754,7 @@ loc_52ED5:
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl1B_kid:
-		LDA		_game._flags
-		AND		#$14
+		FLAGS_TEST	FLAG02_KID_SAVED,FLAG04_KID_TAKEN
 		BEQ		loc_52EE2
 		JMP		_obj_kill_and_continue
 loc_52EE2:
@@ -3825,7 +3806,7 @@ _obj_hndl21_soldierA:
 		LDA		#$2F
 		STA		_objsA._player.field_8,X
 		LDA		#$65
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 loc_52F40:
 		JMP		_obj_jump_animate_test_ex
 loc_52F43:
@@ -3841,7 +3822,7 @@ loc_52F50:
 		LDA		#$00
 		STA		_objsA._player.field_8,X
 		LDA		#$06
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		#$01
 		STA		_tmp0F
 		LDA		#$00
@@ -3867,7 +3848,7 @@ _obj_hndl23_soldierC:
 		LDA		#$00
 		STA		_objsA._player.field_8,X
 		LDA		#$06
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		#$04
 		AND		_objsA._player._state,X
 		BEQ		loc_52FC5
@@ -3886,7 +3867,7 @@ _obj_hndl23_soldierC:
 		LDA		#$2F
 		STA		_objsA._player.field_8,X
 		LDA		#$86
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 loc_52FB1:
 		DEC		_objsA._player._timer,X
 		BEQ		loc_52FBC
@@ -3903,8 +3884,7 @@ loc_52FC5:
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl26_grenade_soldier:
-		LDA		_game._flags+1
-		AND		#$10
+		FLAG_TEST	FLAG0C_SYS
 		BEQ		_obj_hndl1D_soldierB
 		LDA		#_obj_hndl20_torture_room_soldier_idx
 		STA		_objsA._player._hndl_idx,X
@@ -4156,7 +4136,7 @@ _obj_soldierB_common_hndl:
 		LDA		#$04
 		STA		_tmp0B
 		LDA		_tmp09
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		#$10
 		STA		_objsA._player._timer,X
 loc_53180:
@@ -4168,14 +4148,14 @@ loc_53183:
 		AND		#$F0
 		STA		_tmp11
 		LDA		#$06
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		JSR		_obj_player_rand_timer_set
 		JMP		_obj_flush_and_continue
 loc_53197:
 		LDA		#$04
 		STA		_tmp0B
 		LDA		_tmp09
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		_objsA._player._hndl_idx,X
 		AND		#$3F
 		CMP		#_obj_hndl28_soldierB_idx
@@ -4186,7 +4166,7 @@ loc_53197:
 		LDA		#$05
 		STA		_tmp0B
 		LDA		#$04
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		#$08
 		STA		_tmp0A
 loc_531BA:
@@ -4386,13 +4366,13 @@ _obj_hndl2D_spectre:
 		LDA		#$00
 		STA		_tmp0B
 		LDA		#$09
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		DEC		_objsA._player._timer,X
 		BNE		loc_53350
 		LDA		#$01
 		STA		_tmp0B
 		LDA		#$0A
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		#$18
 		STA		_objsA._player._timer,X
 loc_53339:
@@ -4511,7 +4491,7 @@ loc_53405:
 		LDA		#$28
 		STA		_objsA._player.field_8,X
 		LDA		#$17
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		BNE		loc_53445
 loc_53418:
 		LDA		#$02
@@ -4521,7 +4501,7 @@ loc_53418:
 		LDA		#$28
 		STA		_objsA._player.field_8,X
 		LDA		#$27
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		BNE		loc_53445
 loc_5342B:
 		JSR		_obj_hor_targeting_to_player_common
@@ -4535,7 +4515,7 @@ loc_5342B:
 		LDA		#$28
 		STA		_objsA._player.field_8,X
 		LDA		#$27
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 loc_53445:
 		JMP		_obj_jump_animate_test_ex
 loc_53448:
@@ -4691,7 +4671,7 @@ loc_53553:
 		LDA		#$02
 		STA		_tmp0B
 		LDA		#$0A
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 loc_53566:
 		JSR		_obj_hor_targeting_to_player_common
 		LDA		_tmp0E
@@ -4713,7 +4693,7 @@ loc_53578:
 loc_53589:
 		JSR		_obj_hor_targeting_to_player_common
 		LDA		#$09
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		#$01
 		STA		_tmp0F
 		LDA		#$01
@@ -4721,7 +4701,7 @@ loc_53589:
 		JMP		_obj_jump_animate_test_ex
 loc_5359B:
 		LDA		#$09
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		#$00
 		STA		_tmp0F
 		LDA		#$00
@@ -4756,24 +4736,24 @@ _obj_hndl33_shield_man:
 		BNE		loc_53603
 loc_535DE:
 		LDA		#$05
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		#$00
 		BEQ		loc_5360B
 loc_535E9:
 		LDA		#$05
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		#$02
 		BNE		loc_5360B
 loc_535F4:
 		LDA		#$02
 		STA		_tmp0B
 		LDA		#$04
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		#$00
 		BEQ		loc_5360B
 loc_53603:
 		LDA		#$05
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		#$00
 loc_5360B:
 		STA		_tmp0F
@@ -4801,8 +4781,7 @@ loc_53632:
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl34_crouching_bomb_man:
-		LDA		_game._flags+1
-		AND		#$10
+		FLAG_TEST	FLAG0C_SYS
 		BEQ		loc_53643
 		LDA		#_obj_hndl35_guard_of_torture_room_idx
 		STA		_objsA._player._hndl_idx,X
@@ -4825,11 +4804,11 @@ loc_53643:
 		CMP		#$02
 		BCS		loc_53671
 		LDA		#$06
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		BNE		loc_53675
 loc_53671:
 		LDA		#$04
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 loc_53675:
 		LDA		#$10
 		STA		_objsA._player._timer,X
@@ -5088,7 +5067,7 @@ loc_5383E:
 		LDA		#$00
 		STA		_tmp0B
 		LDA		#$EE
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		DEC		_objsA._player._timer,X
 		BNE		loc_53887
 		JSR		_obj_player_rand_timer_set
@@ -5100,7 +5079,7 @@ loc_5383E:
 		LDA		#$01
 		STA		_tmp0B
 		LDA		#$F6
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		BNE		loc_53887
 loc_53884:
 		JSR		_obj_hor_targeting_to_player_common
@@ -5233,8 +5212,7 @@ _obj_hndl3A_boss_yusin:
 		BEQ		loc_53975
 		JMP		_obj_kill_and_continue
 loc_53975:
-		LDA		_game._flags+2
-		AND		#$01
+		FLAG_TEST	FLAG10_HELI_KEY
 		BNE		loc_5397F
 		JMP		_obj_kill_and_continue
 loc_5397F:
@@ -5626,8 +5604,7 @@ loc_53C4A:
 loc_53C56:
 		LDA		_helicopter_warp_idx
 		BNE		_heli_flight_up
-		LDA		_game._flags+2
-		AND		#$08
+		FLAG_TEST	FLAG13_SYS
 		BEQ		_heli_not_landed
 		JMP		_heli_already_landed
 _heli_not_landed:
@@ -5645,15 +5622,12 @@ _heli_land_anim:
 		LDA		_tmp0E
 		CMP		#$D0
 		BNE		loc_53CB3
-		LDA		_game._flags+2
-		ORA		#$08
-		STA		_game._flags+2
+		FLAG_SET	FLAG13_SYS
 		LDA		#_obj_hndl00_rambo_idx
 		STA		_objsA._player._hndl_idx
 		LDA		_game._scr_idx
 		CMP		#$01
 		BNE		loc_53C9A
-		LDA		#$01
 		STA		_helicopter_warp_idx
 loc_53C9A:
 		LDA		_game._scr_idx
@@ -5663,8 +5637,8 @@ loc_53C9A:
 		STA		_objsA._player._prize_idx,X
 		STA		_objsA._o7._prize_idx
 		LDA		#$09
-		STA		_objsA._player.field_9,X
-		STA		_objsA._o7.field_9
+		STA		_objsA._player._collision_box_idx,X
+		STA		_objsA._o7._collision_box_idx
 		LDA		#$00
 		STA		_objsA._player.field_C,X
 		STA		_objsA._o7.field_C
@@ -5674,8 +5648,7 @@ _heli_flight_up:
 		LDA		_game._scr_idx
 		CMP		#$0B
 		BNE		loc_53CC4
-		LDA		_game._flags
-		AND		#$40
+		FLAG_TEST	FLAG06_POW_TAKEN
 		BNE		loc_53CD3
 loc_53CC4:
 		LDA		_game._scr_idx
@@ -5704,8 +5677,6 @@ loc_53CD3:
 loc_53CF5:
 		LDA		_helicopter_warp_idx
 		STA		_game._scr_idx
-		LDA		#$00
-		STA		_helicopter_warp_idx
 		LDA		#$01
 		STA		_game._redraw_req
 		LDA		#$03
@@ -5714,13 +5685,12 @@ loc_53CF5:
 		LDA		#$78
 		STA		_objsA._player._x_pos
 		LDA		#$00
+		STA		_helicopter_warp_idx
 		STA		_room_scroll_pos_x
 		LDA		_objsA._player._dir
 		AND		#$BF
 		STA		_objsA._player._dir
-		LDA		_game._flags+2
-		AND		#$F7
-		STA		_game._flags+2
+		FLAG_CLEAR	FLAG13_SYS
 loc_53D23:
 		JMP		_obj_flush_and_continue
 _heli_already_landed:
@@ -5797,32 +5767,26 @@ loc_53DA9:
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_heli_active_zone_obj_insert:
-		LDA		_tmp11
-		ORA		#$02
-		STA		_tmp11
 		LDA		#$02
 		STA		_objsA._o7._dir
+		ORA		_tmp11
+		STA		_tmp11
 		LDA		#_obj_hndl3E_helicopterB_idx
 		STA		_objsA._o7._hndl_idx
 		LDA		#$F0
 		STA		_objsA._player._anim_phase_idx,X
-		LDA		#$00
-		STA		_tmp0B
-		LDA		#$01
-		ORA		#$F0
+		LDA		#$F1
 		STA		_objsA._o7._anim_phase_idx
 		LDA		#$18
 		STA		_objsA._player.field_7,X
-		LDA		#$00
-		STA		_objsA._player.field_8,X
 		LDA		#$0F
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		#$00
+		STA		_tmp0B
+		STA		_objsA._player.field_8,X
 		STA		_objsA._o7.field_7
-		LDA		#$00
 		STA		_objsA._o7.field_8
-		LDA		_game._flags+2
-		AND		#$08
+		FLAG_TEST	FLAG13_SYS
 		BEQ		loc_53DE7
 		LDA		#$D0
 		STA		_tmp0E
@@ -5843,11 +5807,11 @@ loc_53DE7:
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl3F_multipurpose:
 		LDA		_tmp0B
-		BEQ		loc_53E1A
+		BEQ		_obj_sub53E1A
 		CMP		#$05
 		BEQ		_special_head_prize
 		CMP		#$06
-		BEQ		loc_53E20
+		BEQ		_obj_sub53E20
 		LDA		_objsA._player._hndl_idx,X
 		AND		#$40
 		BEQ		loc_53E17
@@ -5857,13 +5821,16 @@ _obj_hndl3F_multipurpose:
 		STA		_objsA._player._hndl_idx,X
 loc_53E17:
 		JMP		_obj_flush_and_continue
-loc_53E1A:
+
+; =============== S U B	R O U T	I N E =======================================
+_obj_sub53E1A:
 		JSR		_obj_sub52085
 		JMP		_obj_flush_and_continue
-loc_53E20:
+
+; =============== S U B	R O U T	I N E =======================================
+_obj_sub53E20:
 		LDA		#$04
 		STA		_tmp01
-		LDA		#$04
 		STA		_tmp03
 		JSR		_obj_tmp00_2_clear
 		LDA		#$10
@@ -5877,19 +5844,21 @@ loc_53E34:
 		LDA		_tmp11
 		AND		#$08
 		BEQ		loc_53E51
-		SEC
 		LDA		_tmp0D
+		SEC
 		SBC		_tmp0F
 		STA		_tmp0D
-		LDA		_tmp0C
-		SBC		#$00
-		STA		_tmp0C
+		BCS		loc_53E35
+		DEC		_tmp0C
+loc_53E35:
 		LDA		#$00
 		STA		_tmp0F
 loc_53E51:
 		JMP		_obj_jump_animate_test_ex
 loc_53E54:
 		JMP		_obj_kill_and_continue
+
+; =============== S U B	R O U T	I N E =======================================
 _special_head_prize:
 		LDA		#$00
 		STA		_tmp01
@@ -6024,7 +5993,7 @@ loc_53F2D:
 		LDA		_tmp05
 		STA		_objsA._player._damage,X
 		LDA		_tmp04
-		STA		_objsA._player.field_9,X
+		STA		_objsA._player._collision_box_idx,X
 		LDA		_tmp07
 		STA		_objsA._player.field_C,X
 		JMP		loc_53F50

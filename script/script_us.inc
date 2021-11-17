@@ -181,7 +181,7 @@ _script83_loc09:
 _script84:
 		ptr_load			_script84_msg00
 		msg_printf			$210b	; [GAME OVER]
-		sprite_draw_down	PORTRAIT01_RAMBO_ANGRY
+		sprite_draw_down	PORTR01_RAMBO_ANGRY
 		ptr_load			_script84_msg01
 		msg_printf			$22ac	; [CONTINUE\START]
 		continue_cur_draw
@@ -200,7 +200,7 @@ _script85:
 		ptr_load			_script85_msg00
 		msg_printf			$20e7	; [Colonel Trautman\visits Rambo in the\military prison.]
 		msg_input_handler
-		frame_draw_up		PORTRAIT08_TRAUMAN1
+		frame_draw_up		PORTR08_TRAUMAN
 		ptr_load			_script85_msg01
 		msg_draw_up			; [Rambo,I want to\send you on\a Mission.]
 		ptr_load			_script85_msg01A
@@ -212,7 +212,7 @@ _script85:
 		ptr_load			_script85_msg03
 		msg_draw_up			; [Your mission is to\sneak into the\enemy camp and find\them.\Are you up to it?]
 _script85_loc00:
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		input_2_options
 		ptr_load			_script85_msg04
 		msg_draw_down		; [ I'm not afraid of\death.\ \ I feel better in\prison.]
@@ -228,14 +228,14 @@ _script85_loc01:
 		jump				_script85_loc00
 _script86:
 		game_flags_set		FLAG00_SYS
-		frame_draw_up		PORTRAIT09_MURDOCK
+		frame_draw_up		PORTR09_MURDOCK
 		ptr_load			_script86_msg00
 		msg_draw_up			; [I'm\Commander Murdock.]
 		ptr_load			_script86_msg01
 		msg_draw_up			; [We want you to get\into enemy\territory and take\photographs of the\POW camp.]
 		ptr_load			_script86_msg01A
 		msg_draw_up			; [You're not to\engage the enemy.]
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_script86_msg02
 		msg_draw_down		; [Photos? Not rescue\them?]
 		ptr_load			_script86_msg03
@@ -245,7 +245,7 @@ _script86:
 		new_warp_set		$00
 		stop
 _script87:
-		frame_draw_up		PORTRAIT0D_ERICSON
+		frame_draw_up		PORTR0D_ERICSON
 		jmp_flags_not_set	FLAG00_SYS, _script87_loc00
 		jmp_branch			_script87_loc01
 _script87_loc00:
@@ -272,14 +272,14 @@ _script87_loc03:
 		new_warp_set		$00
 		stop
 _script88:
-		frame_draw_up		PORTRAIT08_TRAUMAN1
+		frame_draw_up		PORTR08_TRAUMAN
 		jmp_flags_not_set	FLAG08_SYS, _script88_loc00
 		jump				_script88_loc01
 		------------------
 _script88_loc00:
 		ptr_load			_script88_msg00
 		msg_draw_up			; [Rambo,forget about\your absurd hand-to\-hand fighting.\Military technology\will work best.]
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 ;		ptr_load			_script88_msg01
 ;		msg_draw_down		; [-MISSING-]
 		ptr_load			_script88_msg02
@@ -307,18 +307,18 @@ _script88_loc01:
 _script89:
 		checkpoint_set
 		game_flags_set		FLAG09_CO_TAKEN
-		frame_draw_up		PORTRAIT03_CO
+		frame_draw_up		PORTR03_CO
 		ptr_load			_script89_msg00
 		msg_draw_up			; [I'm Co.\You did not expect\a woman?]
 		ptr_load			_script89_msg00A
 		msg_draw_up			; [Would you like to\know something?]
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		input_2_options
 		ptr_load			_script89_msg01
 		msg_draw_down		; [ Where is the camp?\ \ \ What do you think\ about me?]
 		jmpne_option		$02, _script89_loc00
-		sprite_draw_down	PORTRAIT02_RAMBO_HAPPY
-		sprite_draw_up		PORTRAIT04_CO_HAPPY
+		sprite_draw_down	PORTR02_RAMBO_HAPPY
+		sprite_draw_up		PORTR04_CO_HAPPY
 		ptr_load			_script89_msg02
 		msg_draw_up			; [What?\You look good.]
 		------------------
@@ -334,7 +334,7 @@ _script8A:
 		jmp_flags_not_set	FLAG09_CO_TAKEN, _script8A_loc00
 		jmp_branch			_script8A_loc01
 _script8A_loc00:
-		frame_draw_up		PORTRAIT14_PIRATE
+		frame_draw_up		PORTR14_PIRATE
 		ptr_load			_script8A_msg00
 		msg_draw_up			; [You're outsiders,\aren't you.] [-MORE TEXT-]
 		ptr_load			_script8A_msg00A
@@ -343,14 +343,14 @@ _script8A_loc00:
 		stop
 _script8A_loc01:
 		jmp_flags_not_set	FLAG0E_BOAT,	_script8A_loc02
-		frame_draw_up		PORTRAIT14_PIRATE
+		frame_draw_up		PORTR14_PIRATE
 		jump				_script8A_loc03
 		------------------
 _script8A_loc02:
-		frame_draw_down		PORTRAIT03_CO
+		frame_draw_down		PORTR03_CO
 		ptr_load			_script8A_msg01
 		msg_draw_down		; [What? You should\know us.We wanna\get on the boat.\Here's money.]
-		frame_draw_up		PORTRAIT14_PIRATE
+		frame_draw_up		PORTR14_PIRATE
 		ptr_load			_script8A_msg02
 		msg_draw_up			; [OK] [-MORE TEXT-]
 _script8A_loc03:
@@ -361,7 +361,7 @@ _script8A_loc03:
 		stop
 _script8B:
 		checkpoint_set
-		frame_draw_up		PORTRAIT03_CO
+		frame_draw_up		PORTR03_CO
 		jmp_flags_not_set	FLAG01_SYS, _script8B_loc00
 		ptr_load			_script8B_msg00
 		msg_draw_up			; [Rambo,something's\strange.]
@@ -370,10 +370,10 @@ _script8B_loc00:
 		jump				_script8B_loc02
 		------------------
 _script8B_loc01:
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_script8B_msg01
 		msg_draw_down		; [Look! That's an\enemy boat.\You sold us!]
-		sprite_draw_up		PORTRAIT14_PIRATE
+		sprite_draw_up		PORTR14_PIRATE
 		ptr_load			_script8B_msg02
 		msg_draw_up			; [Right,We do\everything for\money.Don't move.]
 		game_flags_clear	FLAG0E_BOAT
@@ -386,14 +386,14 @@ _script8B_loc02:
 _script8B_loc03:
 ;		ptr_load			_script8B_msg03
 ;		msg_draw_up			; [-MISSING-]
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 ;		ptr_load			_script8B_msg04
 ;		msg_draw_down		; [-MISSING-]
 ;		ptr_load			_script8B_msg05
 ;		msg_draw_up			; [-MISSING-]
 		ptr_load			_script8B_msg06
 		msg_draw_down		; [What does this\pendant mean?]
-		sprite_draw_up		PORTRAIT04_CO_HAPPY
+		sprite_draw_up		PORTR04_CO_HAPPY
 		ptr_load			_script8B_msg07
 		msg_draw_up			; [It brings me good\luck.]
 ;		ptr_load			_script8B_msg08
@@ -411,7 +411,7 @@ _script8C:
 		checkpoint_set
 		game_flags_set		FLAG09_CO_TAKEN
 		new_warp_set		$0e
-		frame_draw_up		PORTRAIT03_CO
+		frame_draw_up		PORTR03_CO
 		jmp_flags_not_set	FLAG02_KID_SAVED, _script8C_loc00
 		jmp_branch			_script8C_loc01
 _script8C_loc00:
@@ -443,10 +443,10 @@ _script8C_loc05:
 		stop
 _script8D:
 		checkpoint_set
-		frame_draw_up		PORTRAIT15_KID
+		frame_draw_up		PORTR15_KID
 		ptr_load			_script8D_msg00
 		msg_draw_up			; [AHHH...!\AHH...!]
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_script8D_msg01
 		msg_draw_down		; [I'll help you.]
 		game_flags_set		FLAG04_KID_TAKEN
@@ -462,7 +462,7 @@ _script8E_loc00:
 		stop
 _script8F:
 		checkpoint_set
-		frame_draw_up		PORTRAIT03_CO
+		frame_draw_up		PORTR03_CO
 		ptr_load			_script8F_msg00
 		msg_draw_up			; [I'm so happy to\see you're safe.]
 		jmp_flags_not_set	FLAG06_POW_TAKEN, _script8F_loc00
@@ -472,7 +472,7 @@ _script8F:
 		msg_draw_up			; [You were supposed\to take photos\only!]
 		------------------
 _script8F_loc00:
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_script8F_msg02
 		msg_draw_down		; [Let's get out of\here,now!]
 		new_warp_set		$6c
@@ -480,19 +480,19 @@ _script8F_loc00:
 _script90:
 		checkpoint_set
 		game_flags_set		FLAG01_SYS
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_script90_msg00
 		msg_draw_down		; [I'll go ahead by\myself.]
-		frame_draw_up		PORTRAIT03_CO
+		frame_draw_up		PORTR03_CO
 		ptr_load			_script90_msg01
 		msg_draw_up			; [I see...] [-MORE TEXT-]
 		new_warp_set		$25
 		stop
 _script91:
-		frame_draw_down		PORTRAIT03_CO
+		frame_draw_down		PORTR03_CO
 		ptr_load			_script91_msg00
 		msg_draw_down		; [Did you call me?]
-		frame_draw_up		PORTRAIT11_SOLDIER2
+		frame_draw_up		PORTR11_SOLDIER2
 		jmp_flags_not_set	FLAG07_DRESS_ITEM, _script91_loc00
 		jmp_branch			_script91_loc01
 _script91_loc00:
@@ -507,14 +507,14 @@ _script91_loc01:
 		new_warp_set		$6e
 		stop
 _script92:
-		frame_draw_down		PORTRAIT03_CO
+		frame_draw_down		PORTR03_CO
 		jmp_flags_not_set	FLAG00_SYS, _script92_loc00
 		jump				_script92_loc02
 		------------------
 _script92_loc00:
 		ptr_load			_script92_msg00
 		msg_draw_down		; [Good evening.]
-		frame_draw_up		PORTRAIT11_SOLDIER2
+		frame_draw_up		PORTR11_SOLDIER2
 		ptr_load			_script92_msg01
 		msg_draw_up			; [You must be the\general's wife.] [-DIFFERENT MEANING-]
 		input_2_options
@@ -533,7 +533,7 @@ _script92_loc01:
 		msg_draw_up			; [I caught a spy.] [-DIFFERENT MEANING-]
 		ptr_load			_script92_msg06
 		msg_draw_down		; [So,you have the key\to the room.] [-DIFFERENT MEANING-]
-		sprite_draw_up		PORTRAIT_CLEAR
+		sprite_draw_up		PORTR_CLEAR
 		ptr_load			_script92_msg07
 		msg_draw_up			; [Anything for the\general's wife.] [-DIFFERENT MEANING-]
 _script92_loc02:
@@ -543,10 +543,10 @@ _script92_loc02:
 		new_warp_set		$6e
 		stop
 _script93:
-		frame_draw_up		PORTRAIT10_SOLDIER1
+		frame_draw_up		PORTR10_SOLDIER1
 		ptr_load			_script93_msg00
 		msg_draw_up			; [What are you doing\here?]  [-DIFFERENT MEANING-]
-		frame_draw_down		PORTRAIT03_CO
+		frame_draw_down		PORTR03_CO
 		ptr_load			_script93_msg01
 		msg_draw_down		; [Sorry.]
 		ptr_load			_script93_msg02
@@ -557,7 +557,7 @@ _script93:
 		stop
 _script94:
 		checkpoint_set
-		frame_draw_up		PORTRAIT03_CO
+		frame_draw_up		PORTR03_CO
 		jmp_flags_not_set	FLAG00_SYS, _script94_loc00
 		ptr_load			_script94_msg00
 		msg_draw_up			; [I'm opening\the door now.]
@@ -566,7 +566,7 @@ _script94_loc00:
 		jump				_script94_loc02
 		------------------
 _script94_loc01:
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_script94_msg01
 		msg_draw_down		; [Thanks.] [-MORE TEXT-]
 		ptr_load			_script94_msg02
@@ -577,14 +577,14 @@ _script94_loc01:
 _script94_loc02:
 		ptr_load			_script94_msg03
 		msg_draw_up			; [Rambo,it's me.\Wait a minute.\I'm going to look\for the key.]
-		frame_draw_down		PORTRAIT_CLEAR
+		frame_draw_down		PORTR_CLEAR
 		ptr_load			_script94_msg04
 		msg_draw_down		; [...]
 		new_warp_set		$6d
 		stop
 _script95:
 		checkpoint_set
-		frame_draw_up		PORTRAIT03_CO
+		frame_draw_up		PORTR03_CO
 		ptr_load			_script95_msg00
 		msg_draw_up			; [Rambo,the pick-up\point is ahead.]
 		jmp_flags_not_set	FLAG0A_MISSION_TIME_OVER, _script95_loc00
@@ -595,7 +595,7 @@ _script95_loc00:
 _script95_loc01:
 		ptr_load			_script95_msg01
 		msg_draw_up			; [But the contact\time has already\passed.]
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_script95_msg02
 		msg_draw_down		; [Let's return to\the jungle.]
 		new_warp_set		$18
@@ -612,7 +612,7 @@ _script95_loc03:
 _script95_loc04:
 		ptr_load			_script95_msg03
 		msg_draw_up			; [Are you going back\without doing\anything?]
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_script95_msg04
 		msg_draw_down		; [We still have\time to get to\the camp.]
 		ptr_load			_script95_msg05
@@ -621,7 +621,7 @@ _script95_loc04:
 		player_pos_set		$00, $c0
 		stop
 _script95_loc05:
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_script95_msg06
 		msg_draw_down		; [Co,thanks for\helping me.] [-MORE TEXT-]
 		ptr_load			_script95_msg07
@@ -636,7 +636,7 @@ _script95_loc06:
 		ptr_load			_script95_msg09
 		msg_draw_down		; [ I'm sorry.I can't\ take you.\ \ Then come back with\ me.]
 		jmpne_option		$02, _script95_loc07
-		sprite_draw_up		PORTRAIT04_CO_HAPPY
+		sprite_draw_up		PORTR04_CO_HAPPY
 		ptr_load			_script95_msg0a
 		msg_draw_up			; [Thanks.\I'm so glad.\Let's go,they're\coming.Hurry up.]
 		game_flags_set		FLAG09_CO_TAKEN
@@ -645,7 +645,7 @@ _script95_loc06:
 		stop
 		------------------
 _script95_loc07:
-		sprite_draw_up		PORTRAIT05_CO_SAD
+		sprite_draw_up		PORTR05_CO_SAD
 		ptr_load			_script95_msg0b
 		msg_draw_up			; [I won't see you\any more.\Good-bye.]
 		game_flags_clear	FLAG09_CO_TAKEN
@@ -653,7 +653,7 @@ _script95_loc07:
 		player_pos_set		$00, $a0
 		stop
 _script96:
-		frame_draw_up		PORTRAIT0D_ERICSON
+		frame_draw_up		PORTR0D_ERICSON
 		jmp_flags_not_set	FLAG06_POW_TAKEN, _script96_loc00
 		ptr_load			_script96_msg00
 		msg_draw_up			; [Headquarters,\we found Rambo.\He's taking POW's\with him.]
@@ -662,15 +662,15 @@ _script96_loc00:
 		jump				_script96_loc02
 		------------------
 _script96_loc01:
-		frame_draw_down		PORTRAIT_CLEAR
+		frame_draw_down		PORTR_CLEAR
 		ptr_load			_script96_msg01
 		msg_draw_down		; [..Emergency\Stop the mission..]
-		sprite_draw_down	PORTRAIT08_TRAUMAN1
+		sprite_draw_down	PORTR08_TRAUMAN
 		ptr_load			_script96_msg02
 		msg_draw_down		; [What?\I can't leave them\stranded.]
 		ptr_load			_script96_msg03
 		msg_draw_up			; [I have to follow\orders.]
-		sprite_draw_down	PORTRAIT0C_TRAUMAN2
+		sprite_draw_down	PORTR0C_TRAUMAN_SAD
 		ptr_load			_script96_msg04
 		msg_draw_down		; [Mercenaries!] [-MORE TEXT-]
 		new_warp_set		$0b
@@ -681,10 +681,10 @@ _script96_loc02:
 		msg_draw_up			; [Headquarters,we've\found Rambo.We're\going in to rescue\him.]
 		ptr_load			_script96_msg05A
 		msg_draw_up			; [He's being chased\by the enemy.]
-		frame_draw_down		PORTRAIT_CLEAR
+		frame_draw_down		PORTR_CLEAR
 		ptr_load			_script96_msg06
 		msg_draw_down		; [.. Rescue him ..]
-		sprite_draw_up		PORTRAIT08_TRAUMAN1
+		sprite_draw_up		PORTR08_TRAUMAN
 		ptr_load			_script96_msg07
 		msg_draw_up			; [Rambo,get on,hurry\up.So long,jungle.]
 		new_warp_set		$0b
@@ -694,33 +694,33 @@ _script97:
 		ptr_load			_script97_msg00
 		msg_printf			$20e7	; [At that time Rambo,\who was caught by\the enemy,was being\interrogated.]
 		msg_input_handler
-		frame_draw_up		PORTRAIT0E_PADOVSKY
+		frame_draw_up		PORTR0E_PADOVSKY
 		ptr_load			_script97_msg01
 		msg_draw_up			; [I'm\Commander Padovsky.]
 		ptr_load			_script97_msg02
 		msg_draw_up			; [You were sent here\in an effort to\free war criminals.]
 		ptr_load			_script97_msg02A
 		msg_draw_up			; [I want all the\details of your\Mission.]
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_script97_msg03
 		msg_draw_down		; [...]
 		ptr_load			_script97_msg04
 		msg_draw_up			; [I want you to radio\your headquarters\and say that you\have been captured.]
 		ptr_load			_script97_msg05
 		msg_draw_down		; [...]
-		sprite_draw_down	PORTRAIT00_RAMBO
+		sprite_draw_down	PORTR00_RAMBO
 		ptr_load			_script97_msg06
 		msg_draw_up			; [You will not talk?\O.K.\Yashin!]
 		ptr_load			_script97_msg06A
 		msg_draw_up			; [You're only an\experimental\animal for sergeant\Yashin.]
-;		sprite_draw_up		PORTRAIT0F_YUSIN
+;		sprite_draw_up		PORTR0F_YUSIN
 ;		ptr_load			_script97_msg07
 ;		msg_draw_up			; [-MISSING-]
-;		sprite_draw_down	PORTRAIT01_RAMBO_ANGRY
+;		sprite_draw_down	PORTR01_RAMBO_ANGRY
 ;		ptr_load			_script97_msg08
 ;		msg_draw_down		; [-MISSING-]
-		sprite_draw_up		PORTRAIT0E_PADOVSKY
-		sprite_draw_down	PORTRAIT00_RAMBO
+		sprite_draw_up		PORTR0E_PADOVSKY
+		sprite_draw_down	PORTR00_RAMBO
 		ptr_load			_script97_msg09
 		msg_draw_up			; [Your Command has\abandoned you.\Do you still\protect them?]
 		ptr_load			_script97_msg09A
@@ -735,27 +735,27 @@ _script97_loc00:
 		jump				_script97_loc00
 		------------------
 _script97_loc01:
-		sprite_draw_up		PORTRAIT_CLEAR
+		sprite_draw_up		PORTR_CLEAR
 		ptr_load			_script97_msg0c
 		msg_draw_up			; [..Report your\position and\status..]
-		sprite_draw_up		PORTRAIT0E_PADOVSKY
+		sprite_draw_up		PORTR0E_PADOVSKY
 		ptr_load			_script97_msg0d
 		msg_draw_up			; [Answer it,if you\don't wanna see\your friend die.]
-		sprite_draw_up		PORTRAIT_CLEAR
+		sprite_draw_up		PORTR_CLEAR
 		ptr_load			_script97_msg0e
 		msg_draw_up			; [John,it's me.\Answer.]
 		ptr_load			_script97_msg0f
 		msg_draw_down		; [Where is Murdock?]
 		ptr_load			_script97_msg10
 		msg_draw_up			; [He is here.\Give us the\position.We'll\come to pick\you up.]
-		sprite_draw_down	PORTRAIT01_RAMBO_ANGRY
+		sprite_draw_down	PORTR01_RAMBO_ANGRY
 		ptr_load			_script97_msg11
 		msg_draw_down		; [I'm coming to\terminate you.]
 		new_warp_set		$9f
 		stop
 _script98:
 		checkpoint_set
-		frame_draw_up		PORTRAIT12_VILLAGER1
+		frame_draw_up		PORTR12_VILLAGER1
 		jmp_flags_not_set	FLAG0C_SYS, _script98_loc00
 		jmp_branch			_script98_loc01
 _script98_loc00:
@@ -771,7 +771,7 @@ _script98_loc01:
 _script98_loc02:
 		ptr_load			_script98_msg01
 		msg_draw_up			; [Oh,what's on your\mind,just let me\know.Would you like\to buy this dress?]
-		frame_draw_down		PORTRAIT03_CO
+		frame_draw_down		PORTR03_CO
 		input_2_options
 		ptr_load			_script98_msg02
 		msg_draw_down		; [ I can't go without\ this rifle.\ \ Oh,this is a\ beautiful dress.]
@@ -789,7 +789,7 @@ _script98_loc03:
 		stop
 _script99:
 		checkpoint_set
-		frame_draw_up		PORTRAIT13_VILLAGER2
+		frame_draw_up		PORTR13_VILLAGER2
 		jmp_flags_not_set	FLAG02_KID_SAVED, _script99_loc00
 		jump				_script99_loc02
 		------------------
@@ -800,10 +800,10 @@ _script99_loc00:
 _script99_loc01:
 		ptr_load			_script99_msg00
 		msg_draw_up			; [A kid is missing\in a cave to the\north.\Please find him.]
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_script99_msg01
 		msg_draw_down		; [...]
-		sprite_draw_up		PORTRAIT03_CO
+		sprite_draw_up		PORTR03_CO
 		ptr_load			_script99_msg02
 		msg_draw_up			; [Rambo,please save\the kid.]
 		game_flags_set		FLAG00_SYS
@@ -813,7 +813,7 @@ _script99_loc02:
 		ptr_load			_script99_msg03
 		msg_draw_up			; [Thank you for\saving the kid.\Please rest.]
 		life_restore
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_script99_msg04
 		msg_draw_down		; [I can't stay here\for a long time.\I must go.]
 		game_flags_clear	FLAG04_KID_TAKEN
@@ -822,7 +822,7 @@ _script99_loc02:
 		stop
 _script9A:
 		checkpoint_set
-		frame_draw_up		PORTRAIT12_VILLAGER1
+		frame_draw_up		PORTR12_VILLAGER1
 		jmp_flags_not_set	FLAG0A_MISSION_TIME_OVER, _script9A_loc00
 		ptr_load			_script9A_msg00
 		msg_draw_up			; [Why did you come\here?] [-MORE TEXT-]
@@ -838,7 +838,7 @@ _script9A_loc01:
 		ptr_load			_script9A_msg00
 		msg_draw_up			; [Why did you come\here?]
 		jmp_flags_not_set	FLAG00_SYS, _script9A_loc02
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_script9A_msg02
 		msg_draw_down		; [I want to save the\kid in the cave.]
 		jmp_branch			_script9A_loc03
@@ -854,7 +854,7 @@ _script9A_loc03:
 		stop
 _script9B:
 		checkpoint_set
-		frame_draw_up		PORTRAIT13_VILLAGER2
+		frame_draw_up		PORTR13_VILLAGER2
 		jmp_flags_not_set	FLAG0C_SYS, _script9B_loc00
 		ptr_load			_script9B_msg00
 		msg_draw_up			; [An American spy was\caught.] [-MORE TEXT-]
@@ -863,7 +863,7 @@ _script9B_loc00:
 		jump				_script9B_loc04
 		------------------
 _script9B_loc01:
-		frame_draw_down		PORTRAIT03_CO
+		frame_draw_down		PORTR03_CO
 		ptr_load			_script9B_msg01
 		msg_draw_down		; [I wanna take him\out.]
 		jmp_flags_not_set	FLAG0D_SYS, _script9B_loc02
@@ -880,7 +880,7 @@ _script9B_loc03:
 _script9B_loc04:
 		ptr_load			_script9B_msg03
 		msg_draw_up			; [You look tired.\Rest here for a\while.]
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		life_restore
 		ptr_load			_script9B_msg04
 		msg_draw_down		; [Thanks.\I'm able to fight\again.]
@@ -888,21 +888,21 @@ _script9B_loc04:
 		stop
 _script9C:
 		checkpoint_set
-		frame_draw_up		PORTRAIT03_CO
+		frame_draw_up		PORTR03_CO
 		ptr_load			_script9C_msg00
 		msg_draw_up			; [We're safe for now.\What are you going\to do?\Going to Thailand?]
 		ptr_load			_script9C_msg00A
 		msg_draw_up			; [Then America?\Would you please\take me with you?]
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_script9C_msg01
 		msg_draw_down		; [You're in danger\here.Let's go back\together.]
-		sprite_draw_up		PORTRAIT04_CO_HAPPY
+		sprite_draw_up		PORTR04_CO_HAPPY
 		ptr_load			_script9C_msg02
 		msg_draw_up			; [Thank you...\I'm so happy...\Let's go.They're\coming up behind\us.]
-		sprite_draw_up		PORTRAIT_CLEAR
+		sprite_draw_up		PORTR_CLEAR
 		ptr_load			_script9C_msg03
 		msg_draw_up			; [Ugh!]
-		sprite_draw_up		PORTRAIT05_CO_SAD
+		sprite_draw_up		PORTR05_CO_SAD
 		ptr_load			_script9C_msg04
 		msg_draw_down		; [Co.Are you all\right?]
 		ptr_load			_script9C_msg05
@@ -910,7 +910,7 @@ _script9C:
 		ptr_load			_script9C_msg06
 		msg_draw_down		; [You're going with\me to the States.]
 		game_flags_set		FLAG12_BANDANA
-		sprite_draw_up		PORTRAIT06_CO_DEAD
+		sprite_draw_up		PORTR06_CO_DEAD
 		ptr_load			_script9C_msg07
 		msg_draw_up			; [Rambo,thank you.\Please don't forget\me.]
 		ptr_load			_script9C_msg08
@@ -939,7 +939,7 @@ _script9D_loc00:
 ; FIX
 		msg_printf			$2167	; [Sergeant Yashin\came up there.]
 		msg_input_handler
-		frame_draw_up		PORTRAIT0F_YUSIN
+		frame_draw_up		PORTR0F_YUSIN
 		ptr_load			_script9D_msg02
 		msg_draw_up			; [It's time for\you to die.]
 		game_flags_set		FLAG10_HELI_KEY
@@ -958,11 +958,11 @@ _script9E_loc00:
 		------------------
 _script9E_loc01:
 		game_flags_set		FLAG08_SYS
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_script9E_msg01
 		msg_draw_down		; [Let's go to the\camp and rescue\them.]
 		jmp_flags_not_set	FLAG09_CO_TAKEN, _script9E_loc02
-		frame_draw_up		PORTRAIT03_CO
+		frame_draw_up		PORTR03_CO
 		ptr_load			_script9E_msg02
 		msg_draw_up			; [Rambo,jump on\quickly.]
 		------------------
@@ -986,10 +986,10 @@ _script9F:
 		stop
 _scriptA0:
 		checkpoint_set
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_scriptA0_msg00
 		msg_draw_down		; [Are you alright?\I came here to get\you home.]
-		frame_draw_up		PORTRAIT07_BANKS_POW
+		frame_draw_up		PORTR07_BANKS_POW
 		ptr_load			_scriptA0_msg01
 		msg_draw_up			; [I'm weak.\I think I'm dying.]
 		ptr_load			_scriptA0_msg02
@@ -999,10 +999,10 @@ _scriptA0:
 		stop
 _scriptA1:
 		checkpoint_set
-		frame_draw_up		PORTRAIT07_BANKS_POW
+		frame_draw_up		PORTR07_BANKS_POW
 		ptr_load			_scriptA1_msg00
 		msg_draw_up			; [Please rescue me.]
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		input_2_options
 		ptr_load			_scriptA1_msg01
 		msg_draw_down		; [ All right.\ \ \ Sorry,my duty is\ just to take photos.]
@@ -1025,7 +1025,7 @@ _scriptA1_loc00:
 _scriptA2:
 		checkpoint_set
 		game_flags_clear	FLAG00_SYS
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		jmp_flags_not_set	FLAG06_POW_TAKEN, _scriptA2_loc00
 		ptr_load			_scriptA2_msg00
 		msg_draw_down		; [Get on the chopper!\Quick!]
@@ -1034,7 +1034,7 @@ _scriptA2_loc00:
 		jump				_scriptA2_loc02
 		------------------
 _scriptA2_loc01:
-		frame_draw_up		PORTRAIT07_BANKS_POW
+		frame_draw_up		PORTR07_BANKS_POW
 		ptr_load			_scriptA2_msg01
 		msg_draw_up			; [Good-bye 'Nam.]
 		heli_warp_set		$7e
@@ -1044,7 +1044,7 @@ _scriptA2_loc02:
 		ptr_load			_scriptA2_msg02
 		msg_draw_down		; [There must be some\more.\Let's take them\out.]
 		jmp_flags_not_set	FLAG09_CO_TAKEN, _scriptA2_loc03
-		frame_draw_up		PORTRAIT03_CO
+		frame_draw_up		PORTR03_CO
 		ptr_load			_scriptA2_msg03
 		msg_draw_up			; [I'll help you.]
 		jmp_branch			_scriptA2_loc04
@@ -1058,7 +1058,7 @@ _scriptA2_loc04:
 		new_warp_set		$77
 		stop
 _scriptA3:
-		frame_draw_up		PORTRAIT09_MURDOCK
+		frame_draw_up		PORTR09_MURDOCK
 		jmp_flags_not_set	FLAG06_POW_TAKEN, _scriptA3_loc00
 		ptr_load			_scriptA3_msg00
 		msg_draw_up			; [I don't make\orders.I take them\just like you.]
@@ -1067,15 +1067,15 @@ _scriptA3_loc00:
 		jump				_scriptA3_loc02
 		------------------
 _scriptA3_loc01:
-		sprite_draw_up		PORTRAIT0B_MURDOCK_SAD
+		sprite_draw_up		PORTR0B_MURDOCK_SAD
 		ptr_load			_scriptA3_msg01
 		msg_draw_up			; [I swear to God,\this wasn't\supposed to happen.]
 		ptr_load			_scriptA3_msg02
 		msg_draw_up			; [It was just\supposed to be\another\assignment.]
-		frame_draw_down		PORTRAIT01_RAMBO_ANGRY
+		frame_draw_down		PORTR01_RAMBO_ANGRY
 		ptr_load			_scriptA3_msg03
 		msg_draw_down		; [Mission\accomplished.]
-		sprite_draw_down	PORTRAIT00_RAMBO
+		sprite_draw_down	PORTR00_RAMBO
 		ptr_load			_scriptA3_msg04
 		msg_draw_down		; [There are more men\out there.\Find them,or I'll\find you.]
 		game_flags_set		FLAG00_SYS
@@ -1090,7 +1090,7 @@ _scriptA3_loc03:
 		jump				_scriptA3_loc05
 		------------------
 _scriptA3_loc04:
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_scriptA3_msg06
 		msg_draw_down		; [Aren't you going to\rescue the POW's?]
 		ptr_load			_scriptA3_msg07
@@ -1098,13 +1098,13 @@ _scriptA3_loc04:
 		new_warp_set		$62
 		stop
 _scriptA3_loc05:
-		sprite_draw_up		PORTRAIT0A_MURDOCK_ANGRY
+		sprite_draw_up		PORTR0A_MURDOCK_ANGRY
 		ptr_load			_scriptA3_msg08
 		msg_draw_up			; [The mission was\a failure.I knew\you couldn't do it.]
 		new_warp_set		$62
 		stop
 _scriptA4:
-		frame_draw_up		PORTRAIT08_TRAUMAN1
+		frame_draw_up		PORTR08_TRAUMAN
 		jmp_flags_not_set	FLAG06_POW_TAKEN, _scriptA4_loc00
 		jmp_branch			_scriptA4_loc01
 _scriptA4_loc00:
@@ -1117,7 +1117,7 @@ _scriptA4_loc01:
 _scriptA4_loc02:
 		ptr_load			_scriptA4_msg00
 		msg_draw_up			; [Good job,Rambo.]
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_scriptA4_msg01
 		msg_draw_down		; [...]
 		new_warp_set		$61
@@ -1127,7 +1127,7 @@ _scriptA4_loc03:
 		msg_draw_up			; [You're tougher\then I thought.Now,\you're free.]
 		ptr_load			_scriptA4_msg03
 		msg_draw_up			; [John,where are you\going?]
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_scriptA4_msg04
 		msg_draw_down		; [I don't know.]
 		ptr_load			_scriptA4_msg05
@@ -1157,13 +1157,13 @@ _scriptA4_loc03:
 		ptr_load			_scriptA4_msg0f
 		msg_draw_down		; [Day by day.]
 		new_warp_set		$b1
-		sprite_draw_up		PORTRAIT_CLEAR
-		sprite_draw_down	PORTRAIT02_RAMBO_HAPPY
+		sprite_draw_up		PORTR_CLEAR
+		sprite_draw_down	PORTR02_RAMBO_HAPPY
 		stop
 _scriptA4_loc04:
 		ptr_load			_scriptA4_msg10
 		msg_draw_up			; [Welcome back.\But the game is not\over.John,are you\satisfied?]
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		input_2_options
 		ptr_load			_scriptA4_msg11
 		msg_draw_down		; [ Let me try again.\ \ \ I don't want to do\ that again.]
@@ -1191,18 +1191,18 @@ _scriptA4_loc06:
 ;		new_warp_set		$95
 		stop
 _scriptA5:
-		frame_draw_up		PORTRAIT03_CO
+		frame_draw_up		PORTR03_CO
 		ptr_load			_scriptA5_msg00
 		msg_draw_up			; [What are you doing?\Going to\the States?]
 		ptr_load			_scriptA5_msg01
 		msg_draw_up			; [Warm people.\Warm city.\Warm days.]
 		ptr_load			_scriptA5_msg01A
 		msg_draw_up			; [I've been dreaming\of living in the\USA and having a\simple life.If you\don't mind...]
-		frame_draw_down		PORTRAIT00_RAMBO
+		frame_draw_down		PORTR00_RAMBO
 		ptr_load			_scriptA5_msg02
 		msg_draw_down		; [I think I learned\something important\from you.I may be\able to live,\or love...]
-		sprite_draw_up		PORTRAIT04_CO_HAPPY
-		sprite_draw_down	PORTRAIT02_RAMBO_HAPPY
+		sprite_draw_up		PORTR04_CO_HAPPY
+		sprite_draw_down	PORTR02_RAMBO_HAPPY
 		ptr_load			_scriptA5_msg03
 		msg_draw_up			; [Really?\I love you.]
 		life_restore
@@ -1228,10 +1228,10 @@ _scriptA9:
 ;		ptr_load			_scriptA9_msg00
 ;		msg_printf			$20e7	; [-MISSING-]
 ;		msg_input_handler
-;		frame_draw_down		PORTRAIT08_TRAUMAN1
+;		frame_draw_down		PORTR08_TRAUMAN
 ;		ptr_load			_scriptA9_msg01
 ;		msg_draw_down		; [-MISSING-]
-;		frame_draw_up		PORTRAIT09_MURDOCK
+;		frame_draw_up		PORTR09_MURDOCK
 ;		ptr_load			_scriptA9_msg02
 ;		msg_draw_up			; [-MISSING-]
 ;		ptr_load			_scriptA9_msg03
@@ -1240,10 +1240,10 @@ _scriptA9:
 ;		msg_draw_up			; [-MISSING-]
 ;		ptr_load			_scriptA9_msg05
 ;		msg_draw_up			; [-MISSING-]
-;		sprite_draw_down	PORTRAIT0C_TRAUMAN2
+;		sprite_draw_down	PORTR0C_TRAUMAN_SAD
 ;		ptr_load			_scriptA9_msg06
 ;		msg_draw_down		; [-MISSING-]
-;		sprite_draw_down	PORTRAIT08_TRAUMAN1
+;		sprite_draw_down	PORTR08_TRAUMAN
 ;		ptr_load			_scriptA9_msg07
 ;		msg_draw_up			; [-MISSING-]
 ;		ptr_load			_scriptA9_msg08
@@ -1283,7 +1283,7 @@ _scriptAB_loc01:
 		new_warp_set		$06
 		stop
 _scriptAC:
-		frame_draw_up		PORTRAIT0D_ERICSON
+		frame_draw_up		PORTR0D_ERICSON
 		jmp_flags_not_set	FLAG08_SYS, _scriptAC_loc00
 		jmp_branch			_scriptAC_loc01
 _scriptAC_loc00:
@@ -1298,7 +1298,7 @@ _scriptAC_loc01:
 		new_warp_set		$01
 		stop
 _scriptAD:
-		frame_draw_up		PORTRAIT07_BANKS_POW
+		frame_draw_up		PORTR07_BANKS_POW
 		ptr_load			_scriptAD_msg00
 		msg_draw_up			; [Thank you Rambo.\We knew that\you would save\them.]
 		new_warp_set		$62
@@ -1335,68 +1335,68 @@ _scriptB0_loc01:
 		player_pos_set		$03, $d0
 		stop
 _scriptB1:
-		frame_draw_up		PORTRAIT00_RAMBO
+		frame_draw_up		PORTR00_RAMBO
 		ptr_load			_scriptB1_msg00
 		msg_printf			$20aa	; [Rambo\ \ The battle is\ over,but...]
 		ending_anim
-;		frame_draw_down		PORTRAIT08_TRAUMAN1
+;		frame_draw_down		PORTR08_TRAUMAN
 ;		ptr_load			_scriptB1_msg01
 ;		msg_printf			$2224	; [-MISSING-]
 ;		ending_anim
-;		frame_draw_up		PORTRAIT09_MURDOCK
+;		frame_draw_up		PORTR09_MURDOCK
 ;		ptr_load			_scriptB1_msg02
 ;		msg_printf			$20aa	; [-MISSING-]
 ;		ending_anim
-;		frame_draw_down		PORTRAIT0D_ERICSON
+;		frame_draw_down		PORTR0D_ERICSON
 ;		ptr_load			_scriptB1_msg03
 ;		msg_printf			$2224	; [-MISSING-]
 ;		ending_anim
 ;		new_warp_set		$b2
 ;		stop
 _scriptB2:
-;		frame_draw_up		PORTRAIT03_CO
+;		frame_draw_up		PORTR03_CO
 ;		ptr_load			_scriptB2_msg00
 ;		msg_printf			$20aa	; [-MISSING-]
 ;		ending_anim
-;		frame_draw_down		PORTRAIT07_BANKS_POW
+;		frame_draw_down		PORTR07_BANKS_POW
 ;		ptr_load			_scriptB2_msg01
 ;		msg_printf			$2224	; [-MISSING-]
 ;		ending_anim
-;		frame_draw_up		PORTRAIT14_PIRATE
+;		frame_draw_up		PORTR14_PIRATE
 ;		ptr_load			_scriptB2_msg02
 ;		msg_printf			$20aa	; [-MISSING-]
 ;		ending_anim
-;		frame_draw_down		PORTRAIT15_KID
+;		frame_draw_down		PORTR15_KID
 ;		ptr_load			_scriptB2_msg03
 ;		msg_printf			$2224	; [-MISSING-]
 ;		ending_anim
 ;		new_warp_set		$b3
 ;		stop
 _scriptB3:
-;		frame_draw_up		PORTRAIT10_SOLDIER1
+;		frame_draw_up		PORTR10_SOLDIER1
 ;		ptr_load			_scriptB3_msg00
 ;		msg_printf			$20aa	; [-MISSING-]
 ;		ending_anim
-;		frame_draw_down		PORTRAIT11_SOLDIER2
+;		frame_draw_down		PORTR11_SOLDIER2
 ;		ptr_load			_scriptB3_msg01
 ;		msg_printf			$2224	; [-MISSING-]
 ;		ending_anim
-;		frame_draw_up		PORTRAIT12_VILLAGER1
+;		frame_draw_up		PORTR12_VILLAGER1
 ;		ptr_load			_scriptB3_msg02
 ;		msg_printf			$20aa	; [-MISSING-]
 ;		ending_anim
-;		frame_draw_down		PORTRAIT13_VILLAGER2
+;		frame_draw_down		PORTR13_VILLAGER2
 ;		ptr_load			_scriptB3_msg03
 ;		msg_printf			$2224	; [-MISSING-]
 ;		ending_anim
 ;		new_warp_set		$b4
 ;		stop
 _scriptB4:
-;		frame_draw_up		PORTRAIT0E_PADOVSKY
+;		frame_draw_up		PORTR0E_PADOVSKY
 ;		ptr_load			_scriptB4_msg00
 ;		msg_printf			$20aa	; [-MISSING-]
 ;		ending_anim
-;		frame_draw_down		PORTRAIT0F_YUSIN
+;		frame_draw_down		PORTR0F_YUSIN
 ;		ptr_load			_scriptB4_msg01
 ;		msg_printf			$2224	; [-MISSING-]
 ;		ending_anim
@@ -1406,7 +1406,7 @@ _scriptB5:
 		ptr_load			_scriptB5_msg00
 		msg_printf			$230d	; [Thank you\for trying.]
 		ending_anim
-		sprite_draw_down	PORTRAIT02_RAMBO_HAPPY
+		sprite_draw_down	PORTR02_RAMBO_HAPPY
 		new_warp_set		$80
 		scroller
 		stop

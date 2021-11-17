@@ -61,9 +61,9 @@ loc_600F9:
 		LDA		#$10
 		STA		_objA_buf_shuffle_pos
 		JSR		_objs_reset
-;_delay:
-;		INC		_tmp04
-;		BNE		_delay
+;_delay:								; maybe need for something, but
+;		INC		_tmp04					; does very long delay at the game
+;		BNE		_delay					; boot
 ;		INC		_tmp05
 ;		BNE		_delay
 ;		INC		_tmp06
@@ -77,6 +77,7 @@ loc_600F9:
 		LDA		#$0A					; load dummy music
 		JSR		_apu_cur_mus_load
 _main_loop:
+		JSR		_rand
 		LDA		_nmi_flag				; update once per 2 frames
 		CMP		#$02
 		BCC		_main_loop
@@ -643,17 +644,16 @@ loc_605B7:
 		STA		_cur_loc_warpB_pos
 		LDA		_location_prizes_list,X
 		STA		_cur_loc_prize_idx
-		LDA		_cur_loc_room_settings	; test for special palettes
+		LDA		_cur_loc_room_settings	; test for special palette selector
 		AND		#$02
 		BEQ		.regular_day_light_palettes
-		LDA		_game._flags			; palette for LAMP levels select
-		AND		#$08
+		FLAG_TEST	FLAG03_LAMP_ITEM	; test for LAMP item
 		BNE		.room_day_palette
 		BEQ		.room_night_palette
 .regular_day_light_palettes:
 		LDA		_game._play_hours		; regular timed palette select
-		CMP		#$15
-		BCS		.room_night_palette
+		CMP		#$15					; night: 09 PM to 03 AM
+		BCS		.room_night_palette		; day  : 04 AM to 08 PM
 		CMP		#$04
 		BCS		.room_day_palette
 .room_night_palette:
@@ -893,17 +893,7 @@ _final_boss_enemy_dinamic_list:
 
 ; =============== S U B	R O U T	I N E =======================================
 _hud_icons_redraw:
-		LDA		_PPU_STATUS
-		LDA		#$20
-		STA		_PPU_ADDR
-		LDA		#$00
-		STA		_PPU_ADDR
-		LDX		#$40
-		LDA		#$15
-loc_608FF:
-		STA		_PPU_DATA
-		DEX
-		BNE		loc_608FF
+		PPU_FILL_LINEX	$2000, $15, $40
 		LDX		#$00
 loc_60907:
 		LDA		_hud_icons_tlm,X
@@ -915,45 +905,10 @@ loc_60907:
 loc_60915:
 		LDA		#$24
 		STA		_PPU_DATA
-		LDX		#$1F
-		LDA		#$15
-loc_6091E:
-		STA		_PPU_DATA
-		DEX
-		BNE		loc_6091E
-		LDA		_PPU_STATUS
-		LDA		#$23
-		STA		_PPU_ADDR
-		LDA		#$C0
-		STA		_PPU_ADDR
-		LDX		#$08
-		LDA		#$FF
-loc_60935:
-		STA		_PPU_DATA
-		DEX
-		BNE		loc_60935
-		LDA		_PPU_STATUS
-		LDA		#$24
-		STA		_PPU_ADDR
-		LDA		#$00
-		STA		_PPU_ADDR
-		LDX		#$80
-		LDA		#$15
-loc_6094C:
-		STA		_PPU_DATA
-		DEX
-		BNE		loc_6094C
-		LDA		_PPU_STATUS
-		LDA		#$27
-		STA		_PPU_ADDR
-		LDA		#$C0
-		STA		_PPU_ADDR
-		LDX		#$08
-		LDA		#$FF
-loc_60963:
-		STA		_PPU_DATA
-		DEX
-		BNE		loc_60963
+		PPU_FILL_LINEX	    0, $15, $1F
+		PPU_FILL_LINEX	$23C0, $FF, $08
+		PPU_FILL_LINEX	$2400, $15, $80
+		PPU_FILL_LINEX	$27C0, $FF, $08
 		RTS
 ; ---------------------------------------------------------------------------
 _hud_icons_tlm:
@@ -1141,7 +1096,7 @@ _obj_lib_insert:
 		STA		_tobjA.field_8,X
 		INY
 		LDA		(_tmp06),Y
-		STA		_tobjA.field_9,X
+		STA		_tobjA._collision_box_idx,X
 		INY
 		LDA		(_tmp06),Y
 		STA		_tobjA._damage,X
@@ -2630,7 +2585,7 @@ loc_61489:
 		BPL		loc_614FD
 		LDA		_tobjA._anim_phase_cnt,X
 		BEQ		loc_614FD
-		LDA		_tobjA.field_9,X
+		LDA		_tobjA._collision_box_idx,X
 		AND		#$0F
 		TAY
 		LDA		_obj_collision_tableA,Y
@@ -2713,7 +2668,7 @@ loc_6151E:
 		LDA		_tobjA._room_num,X
 		AND		#$03
 		STA		_tmp13
-		LDA		_tobjA.field_9,X
+		LDA		_tobjA._collision_box_idx,X
 		AND		#$F0
 		LSR
 		LSR
@@ -2721,7 +2676,7 @@ loc_6151E:
 		TAY
 		LDA		_tmp02
 		BMI		loc_6154F
-		LDA		_obj_collision_tableB,Y
+		LDA		_obj_collision_box_tblB,Y
 		AND		#$F0
 		LSR
 		CLC
@@ -2734,7 +2689,7 @@ loc_6151E:
 		BCC		loc_61567
 		BCS		loc_615A6
 loc_6154F:
-		LDA		_obj_collision_tableB,Y
+		LDA		_obj_collision_box_tblB,Y
 		AND		#$F0
 		LSR
 		STA		_tmp10
@@ -2746,7 +2701,7 @@ loc_6154F:
 		DEC		_tmp13
 		BMI		loc_615A6
 loc_61567:
-		LDA		_obj_collision_tableB,Y
+		LDA		_obj_collision_box_tblB,Y
 		AND		#$0F
 		ASL
 		ASL
@@ -2757,14 +2712,14 @@ loc_61567:
 		SBC		_tmp11
 		STA		_tmp11
 		INC		_tmp11
-		LDA		_obj_collision_tableB+1,Y
+		LDA		_obj_collision_box_tblB+1,Y
 		LSR
 		LSR
 		LSR
 		LSR
 		STA		_tmp16
 		STA		_tmp00
-		LDA		_obj_collision_tableB+1,Y
+		LDA		_obj_collision_box_tblB+1,Y
 		AND		#$0F
 		STA		_tmp17
 		STA		_tmp01
@@ -3301,7 +3256,7 @@ _obj_collision_tableA:
 		.BYTE $34,$35
 		.BYTE $42,$43
 		.BYTE $52,$64
-_obj_collision_tableB:
+_obj_collision_box_tblB:
 		.BYTE $21,$11
 		.BYTE $23,$11
 		.BYTE $24,$11
@@ -3331,7 +3286,7 @@ loc_61950:
 		BPL		loc_61959
 		JMP		loc_61A88
 loc_61959:
-		JSR		_obj_col_testB_calcA
+		JSR		_rambo_get_collision_box_lo
 		LDA		_tobjA.field_7,X
 		AND		#$08
 		BEQ		loc_6197F
@@ -3343,8 +3298,8 @@ loc_61959:
 		AND		_tmp17
 		STA		_tmp17
 		BEQ		loc_6197F
-		JSR		_obj_collision_testB_subA
-		JSR		_obj_col_testB_calcF
+		JSR		_objA_get_collision_box_lo
+		JSR		_obj_to_obj_collision_test
 		LDA		_tmp16
 		BEQ		loc_6197F
 		JSR		_obj_col_testB_calcE
@@ -3360,14 +3315,14 @@ loc_6197F:
 		AND		_tmp17
 		STA		_tmp17
 		BEQ		loc_619A4
-		JSR		_obj_collision_testB_subB
+		JSR		_objA_get_collision_box_hi
 		BMI		loc_619A4
-		JSR		_obj_col_testB_calcF
+		JSR		_obj_to_obj_collision_test
 		LDA		_tmp16
 		BEQ		loc_619A4
 		JSR		_obj_col_testB_calcE
 loc_619A4:
-		JSR		_obj_col_testB_calcB
+		JSR		_rambo_get_collision_box_hi
 		BMI		loc_619C6
 		LDA		_tobjA.field_7,X
 		AND		#$30
@@ -3377,8 +3332,8 @@ loc_619A4:
 		AND		_tmp17
 		STA		_tmp17
 		BEQ		loc_619C6
-		JSR		_obj_collision_testB_subA
-		JSR		_obj_col_testB_calcF
+		JSR		_objA_get_collision_box_lo
+		JSR		_obj_to_obj_collision_test
 		LDA		_tmp16
 		BEQ		loc_619C6
 		JSR		_obj_col_testB_calcE
@@ -3393,15 +3348,15 @@ loc_619CE:
 		BPL		loc_619D7
 		JMP		loc_61A7A
 loc_619D7:
-		JSR		_obj_col_testB_calcC
+		JSR		_objB_get_collision_boxA
 		LDX		_tmp14
 		LDA		_tobjB.field_4,X
 		AND		#$07
 		LDX		_tmp12
 		AND		_tobjA.field_7,X
 		BEQ		loc_61A2A
-		JSR		_obj_collision_testB_subA
-		JSR		_obj_col_testB_calcF
+		JSR		_objA_get_collision_box_lo
+		JSR		_obj_to_obj_collision_test
 		LDA		_tmp16
 		BEQ		loc_61A2A
 		LDX		_tmp14
@@ -3442,8 +3397,8 @@ loc_61A2A:
 		LDX		_tmp12
 		AND		_tobjA.field_8,X
 		BEQ		loc_61A7A
-		JSR		_obj_collision_testB_subB
-		JSR		_obj_col_testB_calcF
+		JSR		_objA_get_collision_box_hi
+		JSR		_obj_to_obj_collision_test
 		LDA		_tmp16
 		BEQ		loc_61A7A
 		LDX		_tmp14
@@ -3494,7 +3449,7 @@ loc_61A88:
 		BEQ		loc_61A96
 		JMP		loc_61950
 loc_61A96:
-		JSR		_obj_col_testB_calcA
+		JSR		_rambo_get_collision_box_lo
 		LDA		#$C0
 		STA		_tmp14
 		LDA		#$08
@@ -3507,8 +3462,8 @@ loc_61AA1:
 		AND		#$07
 		AND		_tobjB.field_4,X
 		BEQ		loc_61AF6
-		JSR		_obj_col_testB_calcD
-		JSR		_obj_col_testB_calcF
+		JSR		_objB_get_collision_boxB
+		JSR		_obj_to_obj_collision_test
 		LDA		_tmp16
 		BEQ		loc_61AF6
 		LDA		_tobjB.field_4,X
@@ -3555,8 +3510,8 @@ loc_61B29:
 		AND		#$0F
 		CMP		#_objB_hndl05_idx
 		BNE		loc_61B5E
-		JSR		_obj_col_testB_calcC
-		JSR		_obj_col_testB_calcF
+		JSR		_objB_get_collision_boxA
+		JSR		_obj_to_obj_collision_test
 		LDA		_tmp16
 		BEQ		loc_61B5E
 		LDX		_tmp14
@@ -3582,8 +3537,8 @@ locret_61B69:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_obj_collision_testB_subA:
-		LDA		_tobjA.field_9,X
+_objA_get_collision_box_lo:
+		LDA		_tobjA._collision_box_idx,X
 		AND		#$0F
 		TAY
 		LDA		_obj_collision_tableA,Y
@@ -3610,7 +3565,7 @@ _obj_collision_testB_subA:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_obj_collision_testB_subB:
+_objA_get_collision_box_hi:
 		LDA		_tobjB.field_3,X
 		AND		#$03
 		STA		_tmp05
@@ -3623,7 +3578,7 @@ _obj_collision_testB_subB:
 		LDA		_tobjB.field_6,X
 		AND		#$40
 		BNE		loc_61BC3
-		LDA		_obj_collision_tableB,Y
+		LDA		_obj_collision_box_tblB,Y
 		AND		#$F0
 		LSR
 		CLC
@@ -3636,7 +3591,7 @@ _obj_collision_testB_subB:
 		BCC		loc_61BDB
 		BCS		loc_61C0A
 loc_61BC3:
-		LDA		_obj_collision_tableB,Y
+		LDA		_obj_collision_box_tblB,Y
 		AND		#$F0
 		LSR
 		STA		_tmp06
@@ -3648,7 +3603,7 @@ loc_61BC3:
 		DEC		_tmp05
 		BMI		loc_61C0A
 loc_61BDB:
-		LDA		_obj_collision_tableB,Y
+		LDA		_obj_collision_box_tblB,Y
 		AND		#$0F
 		ASL
 		ASL
@@ -3659,13 +3614,13 @@ loc_61BDB:
 		SBC		_tmp07
 		STA		_tmp07
 		BCC		loc_61C0A
-		LDA		_obj_collision_tableB+1,Y
+		LDA		_obj_collision_box_tblB+1,Y
 		LSR
 		LSR
 		LSR
 		LSR
 		STA		_tmp08
-		LDA		_obj_collision_tableB+1,Y
+		LDA		_obj_collision_box_tblB+1,Y
 		AND		#$0F
 		STA		_tmp09
 		LDA		_tobjB.field_6,X
@@ -3680,8 +3635,8 @@ loc_61C0A:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_obj_col_testB_calcA:
-		LDA		_objsA._player.field_9
+_rambo_get_collision_box_lo:
+		LDA		_objsA._player._collision_box_idx
 		AND		#$0F
 		TAY
 		LDA		_obj_collision_tableA,Y
@@ -3708,11 +3663,11 @@ _obj_col_testB_calcA:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_obj_col_testB_calcB:
+_rambo_get_collision_box_hi:
 		LDA		_objsA._player._room_num
 		AND		#$03
 		STA		_tmp00
-		LDA		_objsA._player.field_9
+		LDA		_objsA._player._collision_box_idx
 		AND		#$F0
 		LSR
 		LSR
@@ -3720,7 +3675,7 @@ _obj_col_testB_calcB:
 		TAY
 		BIT		_objsA._player._dir
 		BVS		loc_61C64
-		LDA		_obj_collision_tableB,Y
+		LDA		_obj_collision_box_tblB,Y
 		AND		#$F0
 		LSR
 		CLC
@@ -3731,9 +3686,9 @@ _obj_col_testB_calcB:
 		LDA		_tmp00
 		CMP		#$04
 		BCC		loc_61C7C
-		BCS		loc_61CAB
+		BCS		.rambo_out_of_screen
 loc_61C64:
-		LDA		_obj_collision_tableB,Y
+		LDA		_obj_collision_box_tblB,Y
 		AND		#$F0
 		LSR
 		STA		_tmp01
@@ -3743,9 +3698,9 @@ loc_61C64:
 		STA		_tmp01
 		BCS		loc_61C7C
 		DEC		_tmp00
-		BMI		loc_61CAB
+		BMI		.rambo_out_of_screen
 loc_61C7C:
-		LDA		_obj_collision_tableB,Y
+		LDA		_obj_collision_box_tblB,Y
 		AND		#$0F
 		ASL
 		ASL
@@ -3755,14 +3710,14 @@ loc_61C7C:
 		SEC
 		SBC		_tmp02
 		STA		_tmp02
-		BCC		loc_61CAB
-		LDA		_obj_collision_tableB+1,Y
+		BCC		.rambo_out_of_screen
+		LDA		_obj_collision_box_tblB+1,Y
 		LSR
 		LSR
 		LSR
 		LSR
 		STA		_tmp03
-		LDA		_obj_collision_tableB+1,Y
+		LDA		_obj_collision_box_tblB+1,Y
 		AND		#$0F
 		STA		_tmp04
 		LDA		_objsA._player._dir
@@ -3772,12 +3727,12 @@ loc_61C7C:
 		STA		_tmp00
 		LDA		#$00
 		RTS
-loc_61CAB:
+.rambo_out_of_screen:
 		LDA		#$FF
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_obj_col_testB_calcC:
+_objB_get_collision_boxA:
 		LDX		_tmp14
 		LDA		_tobjB.field_4,X
 		AND		#$30
@@ -3810,7 +3765,7 @@ _obj_col_testB_calcC:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_obj_col_testB_calcD:
+_objB_get_collision_boxB:
 		LDX		_tmp14
 		LDA		_tobjB.field_4,X
 		AND		#$30
@@ -3911,7 +3866,7 @@ loc_62B40:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_obj_col_testB_calcF:
+_obj_to_obj_collision_test:
 		LDA		#$00
 		STA		_tmp0A
 		ASL		_tmp05
@@ -5033,7 +4988,7 @@ locret_624FE:
 
 ; =============== S U B	R O U T	I N E =======================================
 _spr_obj_priority_fix:
-		LDA		_cur_loc_room_settings
+		LDA		_cur_loc_room_settings	; test for sprite priority flag
 		AND		#$01
 		BEQ		locret_6250C
 		LDA		_tmp03
@@ -5484,21 +5439,19 @@ locret_627F0:
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl00_rambo:
-		LDA		_game._flags+1
-		AND		#$10
-		BEQ		loc_62812
-		INC		_objsA._player._hndl_idx
-		LDA		_game._flags
-		AND		#$80
-		BEQ		loc_62803
-		INC		_objsA._player._hndl_idx
-loc_62803:
+		FLAG_TEST	FLAG0C_SYS			; rambo appearance change depending
+		BEQ		loc_62812				; on flags either to Co or dressed Co
+		INC		_objsA._player._hndl_idx; fun fact, in other locations, the
+		FLAG_TEST	FLAG07_DRESS_ITEM	; object will be different. at the war
+		BEQ		loc_62803				; base for example it will be Trautman
+		INC		_objsA._player._hndl_idx; and Ericson instead, so you may control
+loc_62803:								; them as well
 		LDA		#$90
 		STA		_objsA._player.field_7
 		LDA		#$00
 		STA		_objsA._player.field_8
 		LDA		#$06
-		STA		_objsA._player.field_9
+		STA		_objsA._player._collision_box_idx
 		JMP		_obj_flush_and_continue
 loc_62812:
 		LDA		_tmp11
@@ -5577,8 +5530,7 @@ loc_6289E:
 		LDA		_game._life
 		ORA		_game._life+1
 		BNE		loc_628D5
-		LDA		_game._flags+2
-		AND		#$80
+		FLAG_TEST	FLAG17_INVINCIBILITY	; debug secret flag
 		BNE		loc_628D5
 		LDA		_tmp11
 		ORA		#$08
@@ -5600,7 +5552,7 @@ loc_628D5:
 		LDA		#$00
 		STA		_objsA._player.field_8
 		LDA		#$05
-		STA		_objsA._player.field_9
+		STA		_objsA._player._collision_box_idx
 		LDA		_tmp11
 		EOR		#$C0
 		ORA		#$20
@@ -5656,7 +5608,7 @@ loc_62947:
 		LDA		#$00
 		STA		_objsA._player.field_8
 		LDA		#$06
-		STA		_objsA._player.field_9
+		STA		_objsA._player._collision_box_idx
 		LDA		#$01
 		AND		_pad
 		BEQ		loc_62964
@@ -5694,7 +5646,7 @@ loc_6298C:
 		LDA		#$00
 		STA		_objsA._player.field_8
 		LDA		#$06
-		STA		_objsA._player.field_9
+		STA		_objsA._player._collision_box_idx
 		LDA		_tmp11
 		ORA		#$80
 		STA		_tmp11
@@ -5752,7 +5704,7 @@ loc_62A03:
 		LDA		#$00
 		STA		_objsA._player.field_8
 		LDA		#$04
-		STA		_objsA._player.field_9
+		STA		_objsA._player._collision_box_idx
 		LDA		#$40
 		AND		_pad
 		BEQ		loc_62A3C
@@ -5811,7 +5763,7 @@ loc_62A81:
 		LDA		#$00
 		STA		_objsA._player.field_8
 		LDA		#$04
-		STA		_objsA._player.field_9
+		STA		_objsA._player._collision_box_idx
 		JMP		loc_62A9D
 loc_62A9A:
 		JSR		_rambo_state_adjust
@@ -5867,7 +5819,7 @@ loc_62AEF:
 		LDA		#$00
 		STA		_objsA._player.field_8
 		LDA		#$06
-		STA		_objsA._player.field_9
+		STA		_objsA._player._collision_box_idx
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -5887,7 +5839,7 @@ _player_weapon_projectile_deploy:
 		LDA		#$00
 		STA		_objsA._player.field_8
 		LDA		_weapons_data_tbl+1,Y
-		STA		_objsA._player.field_9
+		STA		_objsA._player._collision_box_idx
 		LDA		_cur_weapon_selected
 		CMP		#$06
 		BNE		locret_62B45				; test if selected item is POTIONS
@@ -6014,7 +5966,7 @@ loc_62C1A:
 		LDA		#$90
 		STA		_objsA._player.field_8
 		LDA		#$16
-		STA		_objsA._player.field_9
+		STA		_objsA._player._collision_box_idx
 		BNE		loc_62C6B
 loc_62C2F:
 		LDA		_objsA._player.field_2
@@ -6025,7 +5977,7 @@ loc_62C2F:
 		LDA		#$90
 		STA		_objsA._player.field_8
 		LDA		#$06
-		STA		_objsA._player.field_9
+		STA		_objsA._player._collision_box_idx
 		BNE		loc_62C6B
 locret_62C44:
 		RTS
@@ -6169,7 +6121,7 @@ locret_62D3D:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_player_control_co:
+_obj_player_control_input:
 		LDA		_tmp11
 		AND		#$DF
 		STA		_tmp11
@@ -6230,7 +6182,7 @@ loc_62D99:
 loc_62DB1:
 		LDA		#$02
 		AND		_pad
-		BEQ		loc_62DC9
+		BEQ		.obj_stop
 		LDA		#$01
 		STA		_tmp0B
 		LDA		_tmp11
@@ -6238,7 +6190,7 @@ loc_62DB1:
 		STA		_tmp11
 		LDA		#$02
 		BNE		loc_62DD1
-loc_62DC9:
+.obj_stop:
 		LDA		#$00
 		STA		_tmp0B
 		LDA		#$00
@@ -7152,6 +7104,8 @@ _hud_decimal_putA:
 		JSR		_hud_num_idx_adjust_hi
 		STA		_PPU_DATA
 
+; !FALLTHROUGH!
+
 ; =============== S U B	R O U T	I N E =======================================
 _hud_decimal_putB:
 		LDA		_hud_decimals_buf,Y
@@ -7174,25 +7128,51 @@ _game_time_do_count:
 		STA		_pre_timer
 		INC		_play_seconds
 		LDA		_play_seconds
-		CMP		#$3C
+		CMP		#60
 		BCC		locret_634C6
 		LDA		#$00
 		STA		_play_seconds
 		INC		_game._play_minutes
 		LDA		_game._play_minutes
-		CMP		#$3C
+		CMP		#60
 		BCC		locret_634C6
 		LDA		#$00
 		STA		_game._play_minutes
 		INC		_game._play_hours
 		LDA		_game._play_hours
-		CMP		#$18
+		CMP		#24
 		BCC		locret_634C6
 		LDA		#$00
 		STA		_game._play_hours
 		INC		_game._play_days
 locret_634C6:
 		RTS
+
+; =============== S U B	R O U T	I N E =======================================
+_rand:
+		LDY		_rand_seed
+		LDA		_rand_tbl,Y
+		ADC		_rand_seed
+		STA		_tmp13
+		INC		_rand_seed
+		RTS
+_rand_tbl:
+		.BYTE $3E,$4E,$4F,$83,$0E,$C9,$7F,$5D,$FC,$E6,$BA,$01,$F8,$00,$F4,$0A
+		.BYTE $E5,$A9,$8D,$D1,$E8,$DB,$DE,$81,$95,$72,$08,$9A,$C7,$49,$C8,$23
+		.BYTE $39,$37,$E0,$91,$C3,$33,$9B,$5F,$BE,$41,$EE,$74,$E2,$0B,$47,$7E
+		.BYTE $BF,$60,$BB,$20,$61,$05,$B2,$94,$B6,$E4,$3A,$21,$1E,$B4,$8C,$CE
+		.BYTE $7B,$FE,$22,$DC,$18,$C4,$6D,$FB,$CD,$27,$A0,$09,$6E,$38,$8A,$04
+		.BYTE $7C,$56,$97,$5A,$A8,$4D,$78,$B5,$6C,$AA,$03,$1A,$4A,$0D,$26,$82
+		.BYTE $AD,$02,$A1,$B9,$A3,$6B,$D8,$0C,$4C,$AE,$19,$45,$5B,$9C,$16,$07
+		.BYTE $89,$51,$90,$29,$F5,$62,$F7,$CB,$F1,$53,$FF,$14,$65,$D0,$87,$35
+		.BYTE $10,$73,$7A,$9F,$EB,$D9,$3C,$EF,$9E,$D7,$3D,$6F,$D6,$84,$AB,$11
+		.BYTE $CA,$D2,$88,$17,$E1,$A6,$52,$8E,$5E,$36,$24,$44,$28,$A4,$55,$A7
+		.BYTE $C2,$FD,$76,$2E,$B7,$D5,$F6,$64,$15,$31,$99,$93,$C0,$8F,$B3,$FA
+		.BYTE $E9,$E3,$67,$4B,$85,$32,$C6,$69,$48,$DF,$A2,$EC,$98,$6A,$E7,$D4
+		.BYTE $1C,$F3,$58,$50,$ED,$2B,$1D,$86,$F0,$71,$BD,$34,$1B,$AF,$30,$2D
+		.BYTE $68,$CC,$0F,$57,$EA,$92,$8B,$3F,$3B,$AC,$B8,$C1,$2F,$F2,$46,$75
+		.BYTE $96,$7D,$2A,$79,$40,$DA,$9D,$25,$12,$42,$54,$D3,$1F,$80,$5C,$59
+		.BYTE $43,$F9,$B0,$DD,$63,$A5,$77,$CF,$13,$2C,$66,$BC,$70,$B1,$C5,$06
 
 		SECTION_END "MAIN PROGRAM"
 

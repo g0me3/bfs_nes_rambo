@@ -261,7 +261,7 @@ _scroller_spr_title_insert:
 		INY
 		STA		_tmp04
 		JSR		_spr_sheet_title_insert
-		CPY		#[SPR_TITLE_SCREEN+3*7]
+		CPY		#[SPR_TITLE_SCREEN+[3*7]]
 		BNE		loc_63BA2
 		LDY		#SPR_TITLE_SCREEN
 loc_63BA2:
