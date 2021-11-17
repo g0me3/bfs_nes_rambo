@@ -860,9 +860,9 @@ _obj_hndl01_npcA:
 		BNE		loc_52561				; so we must control it manually
 		JMP		_obj_player_control_input
 loc_52561:
-		LDA		_game._scr_idx
-		CMP		#$0A
-		BNE		loc_52572
+		LDA		_game._scr_idx			; this allows the NPC character
+		CMP		#$0A					; dub the movement of the main char
+		BNE		loc_52572				; in a particular areas 06 and 0A
 		FLAG_TEST	FLAG09_CO_TAKEN
 		BEQ		loc_52572
 		JMP		_obj_player_control_input
@@ -934,6 +934,8 @@ loc_525EA:
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl20_torture_room_soldier:
 		JSR		_obj_hndl20_talk_idx_select
+
+; !FALLTHROUGHR!
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_npc_dialog_start:
@@ -1033,7 +1035,6 @@ loc_52699:
 		STA		_tmp0F
 		JSR		_cur_obj_direction_up_set
 		JSR		_obj_hor_targeting_to_player_common
-		JMP		loc_526B9
 loc_526B9:
 		JMP		_obj_jump_animate_test_ex
 
@@ -1130,11 +1131,10 @@ loc_52754:
 loc_52763:
 		LDA		#$01
 		STA		_tmp0F
+		STA		_tmp0B
 		LDA		_tmp11
 		ORA		#$04
 		STA		_tmp11
-		LDA		#$01
-		STA		_tmp0B
 loc_52771:
 		JSR		_obj_sub52242
 		DEC		_objsA._player._timer,X
@@ -1192,14 +1192,13 @@ loc_527D4:
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl08_bubbles:
 		LDA		#$00
+		STA		_tmp00
 		STA		_tmp01
+		STA		_tmp02
+		STA		_tmp0F
 		LDA		#$03
 		STA		_tmp03
-		JSR		_obj_tmp00_2_clear
-		LDA		#$03
 		STA		_tmp10
-		LDA		#$00
-		STA		_tmp0F
 		JSR		_cur_obj_direction_up_set
 		LDA		_tmp11
 		AND		#$10
@@ -1394,7 +1393,6 @@ _obj_hndl0C_bird:
 loc_52955:
 		LDA		#$03
 		STA		_tmp01
-		LDA		#$03
 		STA		_tmp03
 		JSR		_obj_tmp00_2_clear
 		LDA		_tmp11
@@ -1466,14 +1464,13 @@ loc_529CA:
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl0D_waterfall_logs:
 		LDA		#$00
+		STA		_tmp00
 		STA		_tmp01
+		STA		_tmp02
+		STA		_tmp0F
 		LDA		#$03
 		STA		_tmp03
-		JSR		_obj_tmp00_2_clear
-		LDA		#$03
 		STA		_tmp10
-		LDA		#$00
-		STA		_tmp0F
 		JSR		_rand
 		LDA		_tmp0E
 		CMP		#$F8
@@ -1505,7 +1502,6 @@ _obj_hndl0E_small_bat:
 loc_52A27:
 		LDA		#$02
 		STA		_tmp01
-		LDA		#$02
 		STA		_tmp03
 		JSR		_obj_tmp00_2_clear
 		LDA		_tmp11
@@ -2636,13 +2632,9 @@ _obj_hndl2A_pirate:
 		STA		_tmp11
 		LDA		#$08
 		STA		_objsA._player._timer,X
-		LDA		#$01
-		STA		_tmp0F
 		LDA		#$02
 		BNE		loc_53273
 loc_53267:
-		LDA		#$01
-		STA		_tmp0F
 		LDA		#$01
 		BNE		loc_53273
 loc_53272:
@@ -2651,6 +2643,8 @@ loc_53272:
 		JMP		_obj_jump_animate_test
 loc_53273:
 		STA		_tmp0B
+		LDA		#$01
+		STA		_tmp0F
 _j_obj_jump_animate_test_ex0:
 		JMP		_obj_jump_animate_test_ex
 loc_5327C:
@@ -2735,12 +2729,11 @@ loc_5330A:
 _obj_hndl2D_spectre:
 		LDA		#$01
 		STA		_tmp01
+		STA		_tmp02
 		LDA		#$0B
 		STA		_tmp03
 		LDA		#$00
 		STA		_tmp00
-		LDA		#$01
-		STA		_tmp02
 		LDA		_tmp10
 		BNE		loc_53339
 		LDA		#$00
@@ -2801,7 +2794,6 @@ loc_53381:
 loc_53388:
 		LDA		#$01
 		STA		_tmp0B
-		LDA		#$01
 		STA		_tmp0F
 		JMP		_obj_jump_animate_test_ex
 loc_53393:
@@ -2860,7 +2852,6 @@ _obj_hndl2F_strong_man:
 loc_533FA:
 		LDA		#$00
 		STA		_tmp0B
-		LDA		#$00
 		STA		_objsA._player.field_8,X
 		BEQ		loc_53448
 loc_53405:
@@ -2876,7 +2867,6 @@ loc_53405:
 loc_53418:
 		LDA		#$02
 		STA		_tmp0F
-		LDA		#$02
 		STA		_tmp0B
 		LDA		#$28
 		STA		_objsA._player.field_8,X
@@ -3041,7 +3031,6 @@ loc_5353B:
 		BCC		loc_5359B
 		CMP		#$80
 		BCC		loc_53589
-		JMP		loc_53553
 loc_53553:
 		LDA		#$09
 		STA		_tmp10
@@ -3076,7 +3065,6 @@ loc_53589:
 		STA		_objsA._player._collision_box_idx,X
 		LDA		#$01
 		STA		_tmp0F
-		LDA		#$01
 		STA		_tmp0B
 		JMP		_obj_jump_animate_test_ex
 loc_5359B:
@@ -3084,7 +3072,6 @@ loc_5359B:
 		STA		_objsA._player._collision_box_idx,X
 		LDA		#$00
 		STA		_tmp0F
-		LDA		#$00
 		STA		_tmp0B
 _j_obj_jump_animate_test_ex:
 		JMP		_obj_jump_animate_test_ex
@@ -3315,7 +3302,6 @@ loc_53759:
 		STA		_tmp11
 		LDA		#$00
 		STA		_tmp0F
-		LDA		#$00
 		STA		_tmp0B
 loc_53767:
 		JSR		_obj_move_animate_common
@@ -3521,7 +3507,6 @@ loc_538DF:
 loc_538F2:
 		LDA		#$00
 		STA		_tmp0B
-		LDA		#$00
 		STA		_objsA._player.field_8,X
 loc_538FA:
 		LDA		_tmp0C
@@ -3773,22 +3758,20 @@ loc_53AB8:
 loc_53AC4:
 		JMP		_objA_flush_and_continue
 loc_53AC7:
-		LDA		#$02
-		STA		_game._scr_idx
-		LDA		#$01
-		STA		_game._redraw_req
+		INY
 		LDA		#$00
 		STA		_room_scroll_pos_x+1
 		STA		_tmp0C
-		INY
-		LDA		#$00
 		STA		_room_scroll_pos_x
+		STA		_ppu_mask_shadow
+		LDA		#$01
+		STA		_game._redraw_req
+		LDA		#$02
+		STA		_game._scr_idx
 		LDA		#$78
 		STA		_tmp0D
 		LDA		#$40
 		STA		_tmp0E
-		LDA		#$00
-		STA		_ppu_mask_shadow
 		JMP		_objA_flush_and_continue
 loc_53AEE:
 		LDA		#$3C
@@ -3798,7 +3781,6 @@ loc_53AEE:
 		STA		_objsA._o1._anim_phase_idx,X
 		LDA		#$00
 		STA		_objsA._o1.field_7,X
-		LDA		#$00
 		STA		_objsA._o1.field_8,X
 		LDA		_tmp0D
 		STA		_objsA._o1._x_pos,X
@@ -3830,12 +3812,12 @@ loc_53B27:
 		JMP		_objA_flush_and_continue
 loc_53B30:
 		LDA		#$00
+		STA		_tmp00
 		STA		_tmp01
+		STA		_tmp02
+		STA		_tmp0F
 		LDA		#$02
 		STA		_tmp03
-		JSR		_obj_tmp00_2_clear
-		LDA		#$00
-		STA		_tmp0F
 		LDA		_tmp0E
 		CMP		#$50
 		BEQ		loc_53B90
@@ -4246,10 +4228,11 @@ loc_53E54:
 ; =============== S U B	R O U T	I N E =======================================
 _special_head_prize:
 		LDA		#$00
+		STA		_tmp00
 		STA		_tmp01
+		STA		_tmp02
 		LDA		#$03
 		STA		_tmp03
-		JSR		_obj_tmp00_2_clear
 		LDA		_tmp0E
 		CMP		#$D0
 		BCS		loc_53EB4
@@ -4404,7 +4387,6 @@ _obj_data_boss_projectile:
 _obj_boss_spider_drone_proj_anim:
 		LDA		#$04
 		STA		_tmp01
-		LDA		#$04
 		STA		_tmp03
 		JSR		_obj_tmp00_2_clear
 		INC		_objsA._player._timer,X

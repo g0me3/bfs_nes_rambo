@@ -1583,7 +1583,7 @@ loc_450C9:
 		LDA		_nmi_flag				; when between frames, go to check
 		BEQ		.pass_wait_release		; all buttons are released
 		LDA		#$00					; when nmi occurs, unpade the auto
-		STA		_nmi_flag				; repeat timer. every N frames
+		STA		_nmi_flag				; repeat timer. every 8 frames
 		INC		_tmp14					; when button is not released,
 		LDA		_tmp14					; pass it to the main control loop
 		AND		#$08					; here is the default speed but
@@ -1634,6 +1634,7 @@ loc_450C9:
 .pass_col_set:
 		STA		_tmp03
 		JMP		_pass_input_control
+
 _pass_wrap_list:
 		.BYTE	$0A,$01
 		.BYTE	$0A,$01
