@@ -1756,6 +1756,18 @@ _pack_in_time_spr_insert:
 		LDA		_portraits_lib,Y
 		INY
 		STA		_tmp04
+; INSERT JP ICON BACK
+		LDA     #$02
+		STA     _tmp02
+		LDA     #$02
+		STA     _tmp03
+		LDA     #$D0
+		STA     _tmp01
+		LDA     #$80
+		STA     _tmp00
+		LDX     #$00
+		JSR     _sprite_sheet_insertB
+; END OF INSERT
 		LDA		#$01
 		STA		_tmp0A
 		JSR		_msg_pal_lib_load
@@ -3948,847 +3960,848 @@ _scriptB1:
 		set_room_idx		$80
 		scroller
 		stop
+
 _script80_msg00:
-		.BYTE $6B,$5A,$66,$5B,$68,$E3,$F1,$62,$6C,$F1,$5A,$F1,$6B,$5E,$60,$62,$6C,$6D,$5E,$6B,$5E,$5D,$FF
-		.BYTE $6D,$6B,$5A,$5D,$5E,$66,$5A,$6B,$64,$F1,$68,$5F,$F1,$5C,$5A,$6B,$68,$65,$5C,$68,$FF
-		.BYTE $69,$62,$5C,$6D,$6E,$6B,$5E,$6C,$F1,$62,$67,$5C,$E4,$E2,$F1,$51,$59,$58,$55,$E5,$51,$59,$58,$58,$FF
-		.BYTE $5C,$5A,$6B,$68,$65,$5C,$68,$E4,$5A,$65,$65,$F1,$6B,$62,$60,$61,$6D,$6C,$F1,$6B,$5E,$6C,$5E,$6B,$6F,$5E,$5D,$E4,$FF,$FF
+		.BYTE _R,_A,_M,_B,_O,_rig,__,_I,_S,__,_A,__,_R,_E,_G,_I,_S,_T,_E,_R,_E,_D,_eol
+		.BYTE _T,_R,_A,_D,_E,_M,_A,_R,_K,__,_O,_F,__,_C,_A,_R,_O,_L,_C,_O,_eol
+		.BYTE _P,_I,_C,_T,_U,_R,_E,_S,__,_I,_N,_C,_dot,_cop,__,_1,_9,_8,_5,_col,_1,_9,_8,_8,_eol
+		.BYTE _C,_A,_R,_O,_L,_C,_O,_dot,_A,_L,_L,__,_R,_I,_G,_H,_T,_S,__,_R,_E,_S,_E,_R,_V,_E,_D,_dot,_eol,_eol
 _script80_msg01:
-		.BYTE $6E,$67,$5A,$6E,$6D,$61,$68,$6B,$62,$73,$5E,$5D,$F1,$5D,$6E,$69,$65,$62,$5C,$5A,$6D,$62,$68,$67,$FF
-		.BYTE $62,$6C,$F1,$6C,$6D,$6B,$62,$5C,$6D,$65,$72,$F1,$69,$6B,$68,$61,$62,$5B,$62,$6D,$5E,$5D,$E4,$FF,$FF
+		.BYTE _U,_N,_A,_U,_T,_H,_O,_R,_I,_Z,_E,_D,__,_D,_U,_P,_L,_I,_C,_A,_T,_I,_O,_N,_eol
+		.BYTE _I,_S,__,_S,_T,_R,_I,_C,_T,_L,_Y,__,_P,_R,_O,_H,_I,_B,_I,_T,_E,_D,_dot,_eol,_eol
 _script80_msg02:
-		.BYTE $67,$62,$67,$6D,$5E,$67,$5D,$68,$F1,$6F,$5E,$6B,$6C,$62,$68,$67,$F1,$E2,$F1,$51,$59,$58,$58,$FF
-		.BYTE $69,$5A,$5C,$64,$E7,$62,$67,$E7,$6F,$62,$5D,$5E,$68,$F1,$5C,$68,$E4,$E5,$65,$6D,$5D,$E4,$FF,$FF
+		.BYTE _N,_I,_N,_T,_E,_N,_D,_O,__,_V,_E,_R,_S,_I,_O,_N,__,_cop,__,_1,_9,_8,_8,_eol
+		.BYTE _P,_A,_C,_K,_dsh,_I,_N,_dsh,_V,_I,_D,_E,_O,__,_C,_O,_dot,_col,_L,_T,_D,_dot,_eol,_eol
 _script80_msg03:
-		.BYTE $65,$62,$5C,$5E,$67,$5C,$5E,$5D,$F1,$5A,$67,$5D,$F1,$5C,$68,$67,$6D,$6B,$68,$65,$65,$5E,$5D,$F1,$5F,$68,$6B,$FF
-		.BYTE $6D,$61,$5E,$F1,$6E,$67,$62,$6D,$5E,$5D,$F1,$6C,$6D,$5A,$6D,$5E,$6C,$F1,$5A,$67,$5D,$F1,$5C,$5A,$67,$5A,$5D,$5A,$FF
-		.BYTE $5B,$72,$F1,$5A,$5C,$5C,$65,$5A,$62,$66,$F1,$5E,$67,$6D,$5E,$6B,$6D,$5A,$62,$67,$66,$5E,$67,$6D,$E5,$62,$67,$5C,$E4,$FF,$FF
+		.BYTE _L,_I,_C,_E,_N,_C,_E,_D,__,_A,_N,_D,__,_C,_O,_N,_T,_R,_O,_L,_L,_E,_D,__,_F,_O,_R,_eol
+		.BYTE _T,_H,_E,__,_U,_N,_I,_T,_E,_D,__,_S,_T,_A,_T,_E,_S,__,_A,_N,_D,__,_C,_A,_N,_A,_D,_A,_eol
+		.BYTE _B,_Y,__,_A,_C,_C,_L,_A,_I,_M,__,_E,_N,_T,_E,_R,_T,_A,_I,_N,_M,_E,_N,_T,_col,_I,_N,_C,_dot,_eol,_eol
 _script80_msg04:
-		.BYTE $65,$62,$5C,$5E,$67,$6C,$5E,$5D,$F1,$5B,$72,$F1,$67,$62,$67,$6D,$5E,$67,$5D,$68,$F1,$68,$5F,$FF
-		.BYTE $5A,$66,$5E,$6B,$62,$5C,$5A,$E5,$62,$67,$5C,$E4,$FF,$FF
+		.BYTE _L,_I,_C,_E,_N,_S,_E,_D,__,_B,_Y,__,_N,_I,_N,_T,_E,_N,_D,_O,__,_O,_F,_eol
+		.BYTE _A,_M,_E,_R,_I,_C,_A,_col,_I,_N,_C,_dot,_eol,_eol
 _script81_msg00:
-		.BYTE $6C,$6D,$5A,$6B,$6D,$FF
-		.BYTE $5C,$68,$67,$6D,$62,$67,$6E,$5E,$FF,$FF
+		.BYTE _S,_T,_A,_R,_T,_eol
+		.BYTE _C,_O,_N,_T,_I,_N,_U,_E,_eol,_eol
 _script82_msg00:
-		.BYTE $62,$81,$83,$88,$87,$F1,$66,$7C,$86,$86,$7C,$82,$81,$F1,$5C,$82,$77,$78,$FF,$FF
+		.BYTE _I,_n,_p,_u,_t,__,_M,_i,_s,_s,_i,_o,_n,__,_C,_o,_d,_e,_eol,_eol
 _script82_msg01:
-		.BYTE $50,$F1,$51,$F1,$52,$F1,$53,$F1,$54,$F1,$55,$F1,$56,$F1,$57,$F1,$58,$F1,$59,$FF
-		.BYTE $5A,$F1,$5B,$F1,$5C,$F1,$5D,$F1,$5E,$F1,$5F,$F1,$60,$F1,$61,$F1,$62,$F1,$63,$FF
-		.BYTE $64,$F1,$65,$F1,$66,$F1,$67,$F1,$68,$F1,$69,$F1,$6A,$F1,$6B,$F1,$6C,$F1,$6D,$FF
-		.BYTE $6E,$F1,$6F,$F1,$70,$F1,$71,$F1,$72,$F1,$73,$FF
-		.BYTE $74,$F1,$75,$F1,$76,$F1,$77,$F1,$78,$F1,$79,$F1,$7A,$F1,$7B,$F1,$7C,$F1,$7D,$FF
-		.BYTE $7E,$F1,$7F,$F1,$80,$F1,$81,$F1,$82,$F1,$83,$F1,$84,$F1,$85,$F1,$86,$F1,$87,$FF
-		.BYTE $88,$F1,$89,$F1,$8A,$F1,$8B,$F1,$8C,$F1,$8D,$F1,$8E,$F1,$8F,$FF
-		.BYTE $5B,$6C,$F1,$F1,$6C,$69,$F1,$F1,$5E,$67,$5D,$FF,$FF
+		.BYTE _0,__,_1,__,_2,__,_3,__,_4,__,_5,__,_6,__,_7,__,_8,__,_9,_eol
+		.BYTE _A,__,_B,__,_C,__,_D,__,_E,__,_F,__,_G,__,_H,__,_I,__,_J,_eol
+		.BYTE _K,__,_L,__,_M,__,_N,__,_O,__,_P,__,_Q,__,_R,__,_S,__,_T,_eol
+		.BYTE _U,__,_V,__,_W,__,_X,__,_Y,__,_Z,_eol
+		.BYTE _a,__,_b,__,_c,__,_d,__,_e,__,_f,__,_g,__,_h,__,_i,__,_j,_eol
+		.BYTE _k,__,_l,__,_m,__,_n,__,_o,__,_p,__,_q,__,_r,__,_s,__,_t,_eol
+		.BYTE _u,__,_v,__,_w,__,_x,__,_y,__,_z,__,_qe,__,_ex,_eol
+		.BYTE _B,_S,__,__,_S,_P,__,__,_E,_N,_D,_eol,_eol
 _script82_msg02:
-		.BYTE $5C,$82,$77,$78,$F1,$5E,$85,$85,$82,$85,$FF,$FF
+		.BYTE _C,_o,_d,_e,__,_E,_r,_r,_o,_r,_eol,_eol
 _script82_msg03:
-		.BYTE $6C,$6D,$5A,$6B,$6D,$FF
-		.BYTE $5C,$68,$67,$6D,$62,$67,$6E,$5E,$FF,$FF
+		.BYTE _S,_T,_A,_R,_T,_eol
+		.BYTE _C,_O,_N,_T,_I,_N,_U,_E,_eol,_eol
 _script83_msg00:
-		.BYTE $65,$62,$5F,$5E,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$EF,$66,$5A,$71,$F1,$F1,$F1,$F1,$F1,$F1,$F0,$FF
-		.BYTE $5E,$71,$69,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$EF,$67,$5E,$71,$6D,$F1,$F1,$F1,$F1,$F1,$F0,$FF
-		.BYTE $6D,$62,$66,$5E,$FF,$FF
+		.BYTE _L,_I,_F,_E,__,__,__,__,__,__,__,__,_ls,_M,_A,_X,__,__,__,__,__,__,_rs,_eol
+		.BYTE _E,_X,_P,__,__,__,__,__,__,__,__,__,_ls,_N,_E,_X,_T,__,__,__,__,__,_rs,_eol
+		.BYTE _T,_I,_M,_E,_eol,_eol
 _script83_msg01:
-		.BYTE $62,$67,$6F,$5E,$67,$6D,$68,$6B,$72,$FF,$FF
+		.BYTE _I,_N,_V,_E,_N,_T,_O,_R,_Y,_eol,_eol
 _script83_msg02:
-		.BYTE $5C,$68,$FF,$FF
+		.BYTE _C,_O,_eol,_eol
 _script83_msg03:
-		.BYTE $5B,$68,$5A,$6D,$FF,$FF
+		.BYTE _B,_O,_A,_T,_eol,_eol
 _script83_msg04:
-		.BYTE $65,$5A,$66,$69,$FF,$FF
+		.BYTE _L,_A,_M,_P,_eol,_eol
 _script83_msg05:
-		.BYTE $64,$62,$5D,$FF,$FF
+		.BYTE _K,_I,_D,_eol,_eol
 _script83_msg06:
-		.BYTE $69,$61,$68,$6D,$68,$FF,$FF
+		.BYTE _P,_H,_O,_T,_O,_eol,_eol
 _script83_msg07:
-		.BYTE $69,$68,$70,$FF,$FF
+		.BYTE _P,_O,_W,_eol,_eol
 _script83_msg08:
-		.BYTE $5D,$6B,$5E,$6C,$6C,$FF,$FF
+		.BYTE _D,_R,_E,_S,_S,_eol,_eol
 _script83_msg09:
-		.BYTE $64,$5E,$72,$FF,$FF
+		.BYTE _K,_E,_Y,_eol,_eol
 _script83_msg0a:
-		.BYTE $69,$5E,$67,$5D,$5A,$67,$6D,$FF,$FF
+		.BYTE _P,_E,_N,_D,_A,_N,_T,_eol,_eol
 _script83_msg0b:
-		.BYTE $5B,$5A,$67,$5D,$5A,$67,$5A,$FF,$FF
+		.BYTE _B,_A,_N,_D,_A,_N,_A,_eol,_eol
 _script83_msg0c:
-		.BYTE $66,$62,$6C,$6C,$62,$68,$67,$F1,$5C,$68,$5D,$5E,$FF,$FF
+		.BYTE _M,_I,_S,_S,_I,_O,_N,__,_C,_O,_D,_E,_eol,_eol
 _script84_msg00:
-		.BYTE $60,$5A,$66,$5E,$F1,$68,$6F,$5E,$6B,$FF,$FF
+		.BYTE _G,_A,_M,_E,__,_O,_V,_E,_R,_eol,_eol
 _script84_msg01:
-		.BYTE $5C,$68,$67,$6D,$62,$67,$6E,$5E,$FF
-		.BYTE $6C,$6D,$5A,$6B,$6D,$FF,$FF
+		.BYTE _C,_O,_N,_T,_I,_N,_U,_E,_eol
+		.BYTE _S,_T,_A,_R,_T,_eol,_eol
 _script85_msg00:
-		.BYTE $5C,$82,$7F,$82,$81,$78,$7F,$F1,$6D,$85,$74,$88,$87,$80,$74,$81,$FF
-		.BYTE $89,$7C,$86,$7C,$87,$86,$F1,$6B,$74,$80,$75,$82,$F1,$7C,$81,$F1,$87,$7B,$78,$FF
-		.BYTE $80,$7C,$7F,$7C,$87,$74,$85,$8C,$F1,$83,$85,$7C,$86,$82,$81,$E4,$FF,$FF
+		.BYTE _C,_o,_l,_o,_n,_e,_l,__,_T,_r,_a,_u,_t,_m,_a,_n,_eol
+		.BYTE _v,_i,_s,_i,_t,_s,__,_R,_a,_m,_b,_o,__,_i,_n,__,_t,_h,_e,_eol
+		.BYTE _m,_i,_l,_i,_t,_a,_r,_y,__,_p,_r,_i,_s,_o,_n,_dot,_eol,_eol
 _script85_msg01:
-		.BYTE $6B,$74,$80,$75,$82,$E5,$62,$F1,$8A,$74,$81,$87,$F1,$87,$82,$FF
-		.BYTE $86,$78,$81,$77,$F1,$8C,$82,$88,$F1,$82,$81,$FF
-		.BYTE $74,$F1,$66,$7C,$86,$86,$7C,$82,$81,$E4,$FF,$FF
+		.BYTE _R,_a,_m,_b,_o,_col,_I,__,_w,_a,_n,_t,__,_t,_o,_eol
+		.BYTE _s,_e,_n,_d,__,_y,_o,_u,__,_o,_n,_eol
+		.BYTE _a,__,_M,_i,_s,_s,_i,_o,_n,_dot,_eol,_eol
 _script85_msg02:
-		.BYTE $62,$87,$90,$86,$F1,$77,$74,$81,$7A,$78,$85,$82,$88,$86,$E5,$75,$88,$87,$FF
-		.BYTE $8C,$82,$88,$90,$7F,$7F,$F1,$75,$78,$F1,$79,$85,$78,$78,$FF
-		.BYTE $7C,$79,$F1,$8C,$82,$88,$F1,$86,$88,$76,$76,$78,$78,$77,$E4,$FF,$FF
+		.BYTE _I,_t,_ap,_s,__,_d,_a,_n,_g,_e,_r,_o,_u,_s,_col,_b,_u,_t,_eol
+		.BYTE _y,_o,_u,_ap,_l,_l,__,_b,_e,__,_f,_r,_e,_e,_eol
+		.BYTE _i,_f,__,_y,_o,_u,__,_s,_u,_c,_c,_e,_e,_d,_dot,_eol,_eol
 _script85_msg03:
-		.BYTE $68,$88,$85,$F1,$80,$78,$81,$F1,$74,$85,$78,$F1,$86,$87,$7C,$7F,$7F,$FF
-		.BYTE $80,$7C,$86,$86,$7C,$81,$7A,$FF,$FF
+		.BYTE _O,_u,_r,__,_m,_e,_n,__,_a,_r,_e,__,_s,_t,_i,_l,_l,_eol
+		.BYTE _m,_i,_s,_s,_i,_n,_g,_eol,_eol
 _script85_msg04:
-		.BYTE $7C,$81,$F1,$74,$F1,$7D,$88,$81,$7A,$7F,$78,$FF
-		.BYTE $7C,$81,$F1,$6F,$7C,$78,$87,$81,$74,$80,$E4,$70,$78,$FF
-		.BYTE $75,$78,$7F,$7C,$78,$89,$78,$F1,$87,$7B,$78,$8C,$F1,$74,$85,$78,$FF
-		.BYTE $74,$7F,$7C,$89,$78,$E5,$83,$85,$7C,$86,$82,$81,$78,$85,$86,$F1,$82,$79,$FF
-		.BYTE $87,$7B,$78,$F1,$78,$81,$78,$80,$8C,$E4,$FF,$FF
+		.BYTE _i,_n,__,_a,__,_j,_u,_n,_g,_l,_e,_eol
+		.BYTE _i,_n,__,_V,_i,_e,_t,_n,_a,_m,_dot,_W,_e,_eol
+		.BYTE _b,_e,_l,_i,_e,_v,_e,__,_t,_h,_e,_y,__,_a,_r,_e,_eol
+		.BYTE _a,_l,_i,_v,_e,_col,_p,_r,_i,_s,_o,_n,_e,_r,_s,__,_o,_f,_eol
+		.BYTE _t,_h,_e,__,_e,_n,_e,_m,_y,_dot,_eol,_eol
 _script85_msg05:
-		.BYTE $72,$82,$88,$85,$F1,$80,$7C,$86,$86,$7C,$82,$81,$F1,$7C,$86,$F1,$87,$82,$FF
-		.BYTE $86,$81,$78,$74,$7E,$F1,$7C,$81,$87,$82,$F1,$87,$7B,$78,$FF
-		.BYTE $78,$81,$78,$80,$8C,$F1,$76,$74,$80,$83,$F1,$74,$81,$77,$F1,$79,$7C,$81,$77,$FF
-		.BYTE $87,$7B,$78,$80,$E4,$FF
-		.BYTE $5A,$85,$78,$F1,$8C,$82,$88,$F1,$88,$83,$F1,$87,$82,$F1,$7C,$87,$8E,$FF,$FF
+		.BYTE _Y,_o,_u,_r,__,_m,_i,_s,_s,_i,_o,_n,__,_i,_s,__,_t,_o,_eol
+		.BYTE _s,_n,_e,_a,_k,__,_i,_n,_t,_o,__,_t,_h,_e,_eol
+		.BYTE _e,_n,_e,_m,_y,__,_c,_a,_m,_p,__,_a,_n,_d,__,_f,_i,_n,_d,_eol
+		.BYTE _t,_h,_e,_m,_dot,_eol
+		.BYTE _A,_r,_e,__,_y,_o,_u,__,_u,_p,__,_t,_o,__,_i,_t,_qe,_eol,_eol
 _script85_msg06:
-		.BYTE $62,$90,$80,$F1,$81,$82,$87,$F1,$74,$79,$85,$74,$7C,$77,$F1,$82,$79,$FF
-		.BYTE $77,$78,$74,$87,$7B,$E4,$FF
-		.BYTE $F1,$FF
-		.BYTE $62,$F1,$79,$78,$78,$7F,$F1,$75,$78,$87,$87,$78,$85,$F1,$7C,$81,$FF
-		.BYTE $83,$85,$7C,$86,$82,$81,$E4,$FF,$FF
+		.BYTE _I,_ap,_m,__,_n,_o,_t,__,_a,_f,_r,_a,_i,_d,__,_o,_f,_eol
+		.BYTE _d,_e,_a,_t,_h,_dot,_eol
+		.BYTE __,_eol
+		.BYTE _I,__,_f,_e,_e,_l,__,_b,_e,_t,_t,_e,_r,__,_i,_n,_eol
+		.BYTE _p,_r,_i,_s,_o,_n,_dot,_eol,_eol
 _script85_msg07:
-		.BYTE $60,$82,$82,$77,$E5,$62,$90,$7F,$7F,$F1,$80,$74,$7E,$78,$F1,$87,$7B,$78,$FF
-		.BYTE $74,$85,$85,$74,$81,$7A,$78,$80,$78,$81,$87,$86,$E4,$FF,$FF
+		.BYTE _G,_o,_o,_d,_col,_I,_ap,_l,_l,__,_m,_a,_k,_e,__,_t,_h,_e,_eol
+		.BYTE _a,_r,_r,_a,_n,_g,_e,_m,_e,_n,_t,_s,_dot,_eol,_eol
 _script85_msg08:
-		.BYTE $5B,$88,$87,$F1,$7C,$87,$90,$86,$F1,$88,$83,$F1,$87,$82,$F1,$8C,$82,$88,$E4,$FF
-		.BYTE $6D,$7B,$78,$F1,$7A,$74,$80,$78,$F1,$77,$82,$78,$86,$81,$90,$87,$FF
-		.BYTE $86,$87,$74,$85,$87,$F1,$88,$81,$87,$7C,$7F,$F1,$8C,$82,$88,$FF
-		.BYTE $86,$74,$8C,$F1,$72,$5E,$6C,$E4,$FF,$FF
+		.BYTE _B,_u,_t,__,_i,_t,_ap,_s,__,_u,_p,__,_t,_o,__,_y,_o,_u,_dot,_eol
+		.BYTE _T,_h,_e,__,_g,_a,_m,_e,__,_d,_o,_e,_s,_n,_ap,_t,_eol
+		.BYTE _s,_t,_a,_r,_t,__,_u,_n,_t,_i,_l,__,_y,_o,_u,_eol
+		.BYTE _s,_a,_y,__,_Y,_E,_S,_dot,_eol,_eol
 _script86_msg00:
-		.BYTE $62,$90,$80,$FF
-		.BYTE $5C,$82,$80,$80,$74,$81,$77,$78,$85,$F1,$66,$88,$85,$77,$82,$76,$7E,$E4,$FF,$FF
+		.BYTE _I,_ap,_m,_eol
+		.BYTE _C,_o,_m,_m,_a,_n,_d,_e,_r,__,_M,_u,_r,_d,_o,_c,_k,_dot,_eol,_eol
 _script86_msg01:
-		.BYTE $70,$78,$F1,$8A,$74,$81,$87,$F1,$8C,$82,$88,$F1,$87,$82,$F1,$7A,$78,$87,$FF
-		.BYTE $7C,$81,$87,$82,$F1,$78,$81,$78,$80,$8C,$FF
-		.BYTE $87,$78,$85,$85,$7C,$87,$82,$85,$8C,$F1,$74,$81,$77,$F1,$87,$74,$7E,$78,$FF
-		.BYTE $83,$7B,$82,$87,$82,$7A,$85,$74,$83,$7B,$86,$F1,$82,$79,$F1,$87,$7B,$78,$FF
-		.BYTE $69,$68,$70,$F1,$76,$74,$80,$83,$E4,$FF,$FF
+		.BYTE _W,_e,__,_w,_a,_n,_t,__,_y,_o,_u,__,_t,_o,__,_g,_e,_t,_eol
+		.BYTE _i,_n,_t,_o,__,_e,_n,_e,_m,_y,_eol
+		.BYTE _t,_e,_r,_r,_i,_t,_o,_r,_y,__,_a,_n,_d,__,_t,_a,_k,_e,_eol
+		.BYTE _p,_h,_o,_t,_o,_g,_r,_a,_p,_h,_s,__,_o,_f,__,_t,_h,_e,_eol
+		.BYTE _P,_O,_W,__,_c,_a,_m,_p,_dot,_eol,_eol
 _script86_msg02:
-		.BYTE $72,$82,$88,$90,$85,$78,$F1,$81,$82,$87,$F1,$87,$82,$FF
-		.BYTE $78,$81,$7A,$74,$7A,$78,$F1,$87,$7B,$78,$F1,$78,$81,$78,$80,$8C,$E4,$FF,$FF
+		.BYTE _Y,_o,_u,_ap,_r,_e,__,_n,_o,_t,__,_t,_o,_eol
+		.BYTE _e,_n,_g,_a,_g,_e,__,_t,_h,_e,__,_e,_n,_e,_m,_y,_dot,_eol,_eol
 _script86_msg03:
-		.BYTE $69,$7B,$82,$87,$82,$86,$8E,$F1,$67,$82,$87,$F1,$85,$78,$86,$76,$88,$78,$FF
-		.BYTE $87,$7B,$78,$80,$8E,$FF,$FF
+		.BYTE _P,_h,_o,_t,_o,_s,_qe,__,_N,_o,_t,__,_r,_e,_s,_c,_u,_e,_eol
+		.BYTE _t,_h,_e,_m,_qe,_eol,_eol
 _script86_msg04:
-		.BYTE $62,$F1,$85,$78,$83,$78,$74,$87,$E4,$72,$82,$88,$90,$85,$78,$F1,$81,$82,$87,$FF
-		.BYTE $87,$82,$F1,$78,$81,$7A,$74,$7A,$78,$F1,$87,$7B,$78,$FF
-		.BYTE $78,$81,$78,$80,$8C,$E4,$FF,$FF
+		.BYTE _I,__,_r,_e,_p,_e,_a,_t,_dot,_Y,_o,_u,_ap,_r,_e,__,_n,_o,_t,_eol
+		.BYTE _t,_o,__,_e,_n,_g,_a,_g,_e,__,_t,_h,_e,_eol
+		.BYTE _e,_n,_e,_m,_y,_dot,_eol,_eol
 _script86_msg05:
-		.BYTE $60,$82,$F1,$87,$82,$F1,$87,$7B,$78,$F1,$8A,$78,$74,$83,$82,$81,$86,$FF
-		.BYTE $76,$78,$81,$87,$78,$85,$F1,$74,$81,$77,$FF
-		.BYTE $7A,$78,$87,$F1,$85,$78,$74,$77,$8C,$E4,$FF,$FF
+		.BYTE _G,_o,__,_t,_o,__,_t,_h,_e,__,_w,_e,_a,_p,_o,_n,_s,_eol
+		.BYTE _c,_e,_n,_t,_e,_r,__,_a,_n,_d,_eol
+		.BYTE _g,_e,_t,__,_r,_e,_a,_d,_y,_dot,_eol,_eol
 _script87_msg00:
-		.BYTE $70,$78,$F1,$76,$74,$81,$90,$87,$F1,$7A,$7C,$89,$78,$F1,$8C,$82,$88,$FF
-		.BYTE $8A,$78,$74,$83,$82,$81,$86,$F1,$8A,$7C,$87,$7B,$82,$88,$87,$FF
-		.BYTE $66,$88,$85,$77,$82,$76,$7E,$90,$86,$FF
-		.BYTE $83,$78,$85,$80,$7C,$86,$86,$7C,$82,$81,$E4,$FF,$FF
+		.BYTE _W,_e,__,_c,_a,_n,_ap,_t,__,_g,_i,_v,_e,__,_y,_o,_u,_eol
+		.BYTE _w,_e,_a,_p,_o,_n,_s,__,_w,_i,_t,_h,_o,_u,_t,_eol
+		.BYTE _M,_u,_r,_d,_o,_c,_k,_ap,_s,_eol
+		.BYTE _p,_e,_r,_m,_i,_s,_s,_i,_o,_n,_dot,_eol,_eol
 _script87_msg01:
-		.BYTE $62,$F1,$83,$7C,$76,$7E,$78,$77,$F1,$86,$82,$80,$78,$FF
-		.BYTE $8A,$78,$74,$83,$82,$81,$86,$F1,$79,$82,$85,$FF
-		.BYTE $8C,$82,$88,$85,$F1,$80,$7C,$86,$86,$7C,$82,$81,$E4,$FF,$FF
+		.BYTE _I,__,_p,_i,_c,_k,_e,_d,__,_s,_o,_m,_e,_eol
+		.BYTE _w,_e,_a,_p,_o,_n,_s,__,_f,_o,_r,_eol
+		.BYTE _y,_o,_u,_r,__,_m,_i,_s,_s,_i,_o,_n,_dot,_eol,_eol
 _script87_msg02:
-		.BYTE $60,$82,$F1,$87,$82,$F1,$6D,$85,$74,$88,$87,$80,$74,$81,$E4,$FF,$FF
+		.BYTE _G,_o,__,_t,_o,__,_T,_r,_a,_u,_t,_m,_a,_n,_dot,_eol,_eol
 _script88_msg00:
-		.BYTE $6B,$74,$80,$75,$82,$E5,$79,$82,$85,$7A,$78,$87,$F1,$74,$75,$82,$88,$87,$FF
-		.BYTE $8C,$82,$88,$85,$F1,$74,$75,$86,$88,$85,$77,$F1,$7B,$74,$81,$77,$E7,$87,$82,$FF
-		.BYTE $E7,$7B,$74,$81,$77,$F1,$79,$7C,$7A,$7B,$87,$7C,$81,$7A,$E4,$FF
-		.BYTE $66,$7C,$7F,$7C,$87,$74,$85,$8C,$F1,$87,$78,$76,$7B,$81,$82,$7F,$82,$7A,$8C,$FF
-		.BYTE $8A,$7C,$7F,$7F,$F1,$8A,$82,$85,$7E,$F1,$75,$78,$86,$87,$E4,$FF,$FF
-		.BYTE $FF
+		.BYTE _R,_a,_m,_b,_o,_col,_f,_o,_r,_g,_e,_t,__,_a,_b,_o,_u,_t,_eol
+		.BYTE _y,_o,_u,_r,__,_a,_b,_s,_u,_r,_d,__,_h,_a,_n,_d,_dsh,_t,_o,_eol
+		.BYTE _dsh,_h,_a,_n,_d,__,_f,_i,_g,_h,_t,_i,_n,_g,_dot,_eol
+		.BYTE _M,_i,_l,_i,_t,_a,_r,_y,__,_t,_e,_c,_h,_n,_o,_l,_o,_g,_y,_eol
+		.BYTE _w,_i,_l,_l,__,_w,_o,_r,_k,__,_b,_e,_s,_t,_dot,_eol,_eol
+;		.BYTE _eol
 _script88_msg01:
-		.BYTE $60,$82,$F1,$87,$82,$F1,$87,$7B,$78,$F1,$7B,$74,$81,$7A,$74,$85,$E4,$FF,$FF
+		.BYTE _G,_o,__,_t,_o,__,_t,_h,_e,__,_h,_a,_n,_g,_a,_r,_dot,_eol,_eol
 _script88_msg02:
-		.BYTE $6D,$7B,$78,$85,$78,$90,$86,$F1,$74,$F1,$76,$82,$81,$87,$74,$76,$87,$FF
-		.BYTE $80,$74,$81,$F1,$5C,$82,$E5,$82,$89,$78,$85,$FF
-		.BYTE $87,$7B,$78,$85,$78,$E4,$61,$78,$90,$7F,$7F,$F1,$7A,$88,$7C,$77,$78,$FF
-		.BYTE $8C,$82,$88,$F1,$7C,$81,$F1,$87,$7B,$78,$F1,$7D,$88,$81,$7A,$7F,$78,$E4,$FF,$FF
+		.BYTE _T,_h,_e,_r,_e,_ap,_s,__,_a,__,_c,_o,_n,_t,_a,_c,_t,_eol
+		.BYTE _m,_a,_n,__,_C,_o,_col,_o,_v,_e,_r,_eol
+		.BYTE _t,_h,_e,_r,_e,_dot,_H,_e,_ap,_l,_l,__,_g,_u,_i,_d,_e,_eol
+		.BYTE _y,_o,_u,__,_i,_n,__,_t,_h,_e,__,_j,_u,_n,_g,_l,_e,_dot,_eol,_eol
 _script88_msg03:
-		.BYTE $72,$82,$88,$90,$89,$78,$F1,$7A,$82,$87,$F1,$53,$56,$F1,$7B,$82,$88,$85,$86,$FF
-		.BYTE $87,$82,$F1,$7A,$78,$87,$F1,$7C,$81,$E5,$76,$82,$80,$83,$7F,$78,$87,$78,$FF
-		.BYTE $8C,$82,$88,$85,$F1,$74,$86,$86,$7C,$7A,$81,$80,$78,$81,$87,$E5,$FF
-		.BYTE $74,$81,$77,$F1,$7A,$78,$87,$F1,$87,$7B,$78,$F1,$7B,$78,$7F,$7F,$FF
-		.BYTE $82,$88,$87,$E4,$FF,$FF
+		.BYTE _Y,_o,_u,_ap,_v,_e,__,_g,_o,_t,__,_3,_6,__,_h,_o,_u,_r,_s,_eol
+		.BYTE _t,_o,__,_g,_e,_t,__,_i,_n,_col,_c,_o,_m,_p,_l,_e,_t,_e,_eol
+		.BYTE _y,_o,_u,_r,__,_a,_s,_s,_i,_g,_n,_m,_e,_n,_t,_col,_eol
+		.BYTE _a,_n,_d,__,_g,_e,_t,__,_t,_h,_e,__,_h,_e,_l,_l,_eol
+		.BYTE _o,_u,_t,_dot,_eol,_eol
 _script88_msg04:
-		.BYTE $62,$79,$F1,$8C,$82,$88,$F1,$7A,$78,$87,$F1,$7C,$81,$FF
-		.BYTE $87,$85,$82,$88,$75,$7F,$78,$E5,$87,$85,$8C,$F1,$87,$82,$FF
-		.BYTE $85,$78,$74,$76,$7B,$F1,$87,$7B,$78,$FF
-		.BYTE $78,$8B,$87,$85,$74,$76,$87,$7C,$82,$81,$F1,$86,$7C,$87,$78,$FF
-		.BYTE $80,$74,$85,$7E,$78,$77,$F1,$82,$81,$F1,$87,$7B,$78,$F1,$80,$74,$83,$E4,$FF,$FF
+		.BYTE _I,_f,__,_y,_o,_u,__,_g,_e,_t,__,_i,_n,_eol
+		.BYTE _t,_r,_o,_u,_b,_l,_e,_col,_t,_r,_y,__,_t,_o,_eol
+		.BYTE _r,_e,_a,_c,_h,__,_t,_h,_e,_eol
+		.BYTE _e,_x,_t,_r,_a,_c,_t,_i,_o,_n,__,_s,_i,_t,_e,_eol
+		.BYTE _m,_a,_r,_k,_e,_d,__,_o,_n,__,_t,_h,_e,__,_m,_a,_p,_dot,_eol,_eol
 _script88_msg05:
-		.BYTE $6B,$74,$80,$75,$82,$EE,$EE,$EE,$FF
-		.BYTE $60,$82,$82,$77,$F1,$7F,$88,$76,$7E,$E4,$FF,$FF
+		.BYTE _R,_a,_m,_b,_o,_dtt,_dtt,_dtt,_eol
+		.BYTE _G,_o,_o,_d,__,_l,_u,_c,_k,_dot,_eol,_eol
 _script89_msg00:
-		.BYTE $62,$90,$80,$F1,$5C,$82,$E4,$FF
-		.BYTE $72,$82,$88,$F1,$77,$7C,$77,$F1,$81,$82,$87,$F1,$78,$8B,$83,$78,$76,$87,$FF
-		.BYTE $74,$F1,$8A,$82,$80,$74,$81,$8E,$FF,$FF
+		.BYTE _I,_ap,_m,__,_C,_o,_dot,_eol
+		.BYTE _Y,_o,_u,__,_d,_i,_d,__,_n,_o,_t,__,_e,_x,_p,_e,_c,_t,_eol
+		.BYTE _a,__,_w,_o,_m,_a,_n,_qe,_eol,_eol
 _script89_msg01:
-		.BYTE $70,$82,$88,$7F,$77,$F1,$8C,$82,$88,$F1,$7F,$7C,$7E,$78,$F1,$87,$82,$FF
-		.BYTE $7E,$81,$82,$8A,$F1,$86,$82,$80,$78,$87,$7B,$7C,$81,$7A,$8E,$FF,$FF
+		.BYTE _W,_o,_u,_l,_d,__,_y,_o,_u,__,_l,_i,_k,_e,__,_t,_o,_eol
+		.BYTE _k,_n,_o,_w,__,_s,_o,_m,_e,_t,_h,_i,_n,_g,_qe,_eol,_eol
 _script89_msg02:
-		.BYTE $70,$7B,$78,$85,$78,$F1,$7C,$86,$F1,$87,$7B,$78,$F1,$76,$74,$80,$83,$8E,$FF
-		.BYTE $F1,$FF
-		.BYTE $F1,$FF
-		.BYTE $70,$7B,$74,$87,$F1,$77,$82,$F1,$8C,$82,$88,$F1,$87,$7B,$7C,$81,$7E,$FF
-		.BYTE $74,$75,$82,$88,$87,$F1,$80,$78,$8E,$FF,$FF
+		.BYTE _W,_h,_e,_r,_e,__,_i,_s,__,_t,_h,_e,__,_c,_a,_m,_p,_qe,_eol
+		.BYTE __,_eol
+		.BYTE __,_eol
+		.BYTE _W,_h,_a,_t,__,_d,_o,__,_y,_o,_u,__,_t,_h,_i,_n,_k,_eol
+		.BYTE _a,_b,_o,_u,_t,__,_m,_e,_qe,_eol,_eol
 _script89_msg03:
-		.BYTE $70,$7B,$74,$87,$8E,$FF
-		.BYTE $72,$82,$88,$F1,$7F,$82,$82,$7E,$F1,$7A,$82,$82,$77,$E4,$FF,$FF
+		.BYTE _W,_h,_a,_t,_qe,_eol
+		.BYTE _Y,_o,_u,__,_l,_o,_o,_k,__,_g,_o,_o,_d,_dot,_eol,_eol
 _script89_msg04:
-		.BYTE $6D,$7B,$78,$F1,$76,$74,$80,$83,$F1,$7C,$86,$F1,$7F,$82,$76,$74,$87,$78,$77,$FF
-		.BYTE $7C,$81,$F1,$87,$7B,$78,$F1,$7D,$88,$81,$7A,$7F,$78,$F1,$87,$82,$FF
-		.BYTE $87,$7B,$78,$F1,$5E,$74,$86,$87,$F1,$82,$79,$F1,$87,$7B,$78,$FF
-		.BYTE $85,$7C,$89,$78,$85,$E4,$FF,$FF
+		.BYTE _T,_h,_e,__,_c,_a,_m,_p,__,_i,_s,__,_l,_o,_c,_a,_t,_e,_d,_eol
+		.BYTE _i,_n,__,_t,_h,_e,__,_j,_u,_n,_g,_l,_e,__,_t,_o,_eol
+		.BYTE _t,_h,_e,__,_E,_a,_s,_t,__,_o,_f,__,_t,_h,_e,_eol
+		.BYTE _r,_i,_v,_e,_r,_dot,_eol,_eol
 _script89_msg05:
-		.BYTE $62,$90,$89,$78,$F1,$74,$85,$85,$74,$81,$7A,$78,$77,$FF
-		.BYTE $74,$F1,$75,$82,$74,$87,$E4,$65,$78,$87,$90,$86,$F1,$7A,$82,$F1,$87,$82,$FF
-		.BYTE $87,$7B,$78,$F1,$77,$82,$76,$7E,$E4,$FF,$FF
+		.BYTE _I,_ap,_v,_e,__,_a,_r,_r,_a,_n,_g,_e,_d,_eol
+		.BYTE _a,__,_b,_o,_a,_t,_dot,_L,_e,_t,_ap,_s,__,_g,_o,__,_t,_o,_eol
+		.BYTE _t,_h,_e,__,_d,_o,_c,_k,_dot,_eol,_eol
 _script8A_msg00:
-		.BYTE $72,$82,$88,$90,$85,$78,$F1,$82,$88,$87,$86,$7C,$77,$78,$85,$86,$E5,$FF
-		.BYTE $74,$85,$78,$81,$90,$87,$F1,$8C,$82,$88,$E4,$FF,$FF
+		.BYTE _Y,_o,_u,_ap,_r,_e,__,_o,_u,_t,_s,_i,_d,_e,_r,_s,_col,_eol
+		.BYTE _a,_r,_e,_n,_ap,_t,__,_y,_o,_u,_dot,_eol,_eol
 _script8A_msg01:
-		.BYTE $6C,$82,$85,$85,$8C,$E5,$8A,$78,$F1,$76,$74,$81,$90,$87,$FF
-		.BYTE $74,$7F,$7F,$82,$8A,$F1,$86,$87,$85,$74,$81,$7A,$78,$85,$86,$FF
-		.BYTE $87,$82,$F1,$7A,$78,$87,$F1,$82,$81,$F1,$82,$88,$85,$F1,$75,$82,$74,$87,$E4,$FF,$FF
+		.BYTE _S,_o,_r,_r,_y,_col,_w,_e,__,_c,_a,_n,_ap,_t,_eol
+		.BYTE _a,_l,_l,_o,_w,__,_s,_t,_r,_a,_n,_g,_e,_r,_s,_eol
+		.BYTE _t,_o,__,_g,_e,_t,__,_o,_n,__,_o,_u,_r,__,_b,_o,_a,_t,_dot,_eol,_eol
 _script8A_msg02:
-		.BYTE $70,$7B,$74,$87,$8E,$F1,$72,$82,$88,$F1,$86,$7B,$82,$88,$7F,$77,$FF
-		.BYTE $7E,$81,$82,$8A,$F1,$88,$86,$E4,$70,$78,$F1,$8A,$74,$81,$81,$74,$FF
-		.BYTE $7A,$78,$87,$F1,$82,$81,$F1,$87,$7B,$78,$F1,$75,$82,$74,$87,$E4,$FF
-		.BYTE $61,$78,$85,$78,$90,$86,$F1,$80,$82,$81,$78,$8C,$E4,$FF,$FF
+		.BYTE _W,_h,_a,_t,_qe,__,_Y,_o,_u,__,_s,_h,_o,_u,_l,_d,_eol
+		.BYTE _k,_n,_o,_w,__,_u,_s,_dot,_W,_e,__,_w,_a,_n,_n,_a,_eol
+		.BYTE _g,_e,_t,__,_o,_n,__,_t,_h,_e,__,_b,_o,_a,_t,_dot,_eol
+		.BYTE _H,_e,_r,_e,_ap,_s,__,_m,_o,_n,_e,_y,_dot,_eol,_eol
 _script8A_msg03:
-		.BYTE $68,$64,$FF,$FF
+		.BYTE _O,_K,_eol,_eol
 _script8A_msg04:
-		.BYTE $60,$78,$87,$F1,$82,$81,$E5,$7B,$88,$85,$85,$8C,$E4,$FF,$FF
+		.BYTE _G,_e,_t,__,_o,_n,_col,_h,_u,_r,_r,_y,_dot,_eol,_eol
 _script8B_msg00:
-		.BYTE $6B,$74,$80,$75,$82,$E5,$86,$82,$80,$78,$87,$7B,$7C,$81,$7A,$90,$86,$FF
-		.BYTE $86,$87,$85,$74,$81,$7A,$78,$E4,$FF,$FF
+		.BYTE _R,_a,_m,_b,_o,_col,_s,_o,_m,_e,_t,_h,_i,_n,_g,_ap,_s,_eol
+		.BYTE _s,_t,_r,_a,_n,_g,_e,_dot,_eol,_eol
 _script8B_msg01:
-		.BYTE $65,$82,$82,$7E,$8F,$F1,$6D,$7B,$74,$87,$90,$86,$F1,$74,$81,$FF
-		.BYTE $78,$81,$78,$80,$8C,$F1,$75,$82,$74,$87,$E4,$FF
-		.BYTE $72,$82,$88,$F1,$86,$82,$7F,$77,$F1,$88,$86,$8F,$FF,$FF
+		.BYTE _L,_o,_o,_k,_ex,__,_T,_h,_a,_t,_ap,_s,__,_a,_n,_eol
+		.BYTE _e,_n,_e,_m,_y,__,_b,_o,_a,_t,_dot,_eol
+		.BYTE _Y,_o,_u,__,_s,_o,_l,_d,__,_u,_s,_ex,_eol,_eol
 _script8B_msg02:
-		.BYTE $6B,$7C,$7A,$7B,$87,$E5,$70,$78,$F1,$77,$82,$FF
-		.BYTE $78,$89,$78,$85,$8C,$87,$7B,$7C,$81,$7A,$F1,$79,$82,$85,$FF
-		.BYTE $80,$82,$81,$78,$8C,$E4,$5D,$82,$81,$90,$87,$F1,$80,$82,$89,$78,$E4,$FF,$FF
+		.BYTE _R,_i,_g,_h,_t,_col,_W,_e,__,_d,_o,_eol
+		.BYTE _e,_v,_e,_r,_y,_t,_h,_i,_n,_g,__,_f,_o,_r,_eol
+		.BYTE _m,_o,_n,_e,_y,_dot,_D,_o,_n,_ap,_t,__,_m,_o,_v,_e,_dot,_eol,_eol
 _script8B_msg03:
-		.BYTE $70,$7B,$74,$87,$F1,$77,$82,$78,$86,$F1,$87,$7B,$7C,$86,$FF
-		.BYTE $83,$78,$81,$77,$74,$81,$87,$F1,$80,$78,$74,$81,$8E,$FF,$FF
+		.BYTE _W,_h,_a,_t,__,_d,_o,_e,_s,__,_t,_h,_i,_s,_eol
+		.BYTE _p,_e,_n,_d,_a,_n,_t,__,_m,_e,_a,_n,_qe,_eol,_eol
 _script8B_msg04:
-		.BYTE $62,$87,$F1,$75,$85,$7C,$81,$7A,$86,$F1,$80,$78,$F1,$7A,$82,$82,$77,$FF
-		.BYTE $7F,$88,$76,$7E,$E4,$FF,$FF
+		.BYTE _I,_t,__,_b,_r,_i,_n,_g,_s,__,_m,_e,__,_g,_o,_o,_d,_eol
+		.BYTE _l,_u,_c,_k,_dot,_eol,_eol
 _script8B_msg05:
-		.BYTE $6B,$74,$80,$75,$82,$E5,$7E,$78,$78,$83,$F1,$87,$7B,$7C,$86,$FF
-		.BYTE $83,$78,$81,$77,$74,$81,$87,$E4,$FF
-		.BYTE $69,$7F,$78,$74,$86,$78,$F1,$87,$74,$7E,$78,$F1,$76,$74,$85,$78,$FF
-		.BYTE $82,$79,$F1,$7C,$87,$E4,$FF,$FF
+		.BYTE _R,_a,_m,_b,_o,_col,_k,_e,_e,_p,__,_t,_h,_i,_s,_eol
+		.BYTE _p,_e,_n,_d,_a,_n,_t,_dot,_eol
+		.BYTE _P,_l,_e,_a,_s,_e,__,_t,_a,_k,_e,__,_c,_a,_r,_e,_eol
+		.BYTE _o,_f,__,_i,_t,_dot,_eol,_eol
 _script8B_msg06:
-		.BYTE $67,$82,$8A,$E5,$7B,$78,$85,$78,$F1,$8A,$78,$F1,$74,$85,$78,$E4,$FF
-		.BYTE $70,$78,$90,$7F,$7F,$F1,$7B,$74,$89,$78,$F1,$87,$82,$F1,$8A,$74,$7F,$7E,$FF
-		.BYTE $79,$85,$82,$80,$F1,$7B,$78,$85,$78,$FF
-		.BYTE $87,$82,$F1,$87,$7B,$78,$F1,$76,$74,$80,$83,$E4,$FF,$FF
+		.BYTE _N,_o,_w,_col,_h,_e,_r,_e,__,_w,_e,__,_a,_r,_e,_dot,_eol
+		.BYTE _W,_e,_ap,_l,_l,__,_h,_a,_v,_e,__,_t,_o,__,_w,_a,_l,_k,_eol
+		.BYTE _f,_r,_o,_m,__,_h,_e,_r,_e,_eol
+		.BYTE _t,_o,__,_t,_h,_e,__,_c,_a,_m,_p,_dot,_eol,_eol
 _script8C_msg00:
-		.BYTE $65,$78,$87,$90,$86,$F1,$7A,$82,$FF
-		.BYTE $86,$78,$74,$85,$76,$7B,$F1,$87,$7B,$78,$F1,$89,$7C,$7F,$7F,$74,$7A,$78,$E4,$FF
-		.BYTE $72,$82,$88,$90,$7F,$7F,$F1,$79,$7C,$81,$77,$F1,$7C,$87,$FF
-		.BYTE $7C,$81,$F1,$87,$7B,$78,$F1,$5E,$74,$86,$87,$E4,$FF,$FF
+		.BYTE _L,_e,_t,_ap,_s,__,_g,_o,_eol
+		.BYTE _s,_e,_a,_r,_c,_h,__,_t,_h,_e,__,_v,_i,_l,_l,_a,_g,_e,_dot,_eol
+		.BYTE _Y,_o,_u,_ap,_l,_l,__,_f,_i,_n,_d,__,_i,_t,_eol
+		.BYTE _i,_n,__,_t,_h,_e,__,_E,_a,_s,_t,_dot,_eol,_eol
 _script8C_msg01:
-		.BYTE $6D,$7B,$78,$F1,$76,$74,$80,$83,$F1,$7C,$86,$F1,$7F,$82,$76,$74,$87,$78,$77,$FF
-		.BYTE $6C,$82,$88,$87,$7B,$F1,$79,$85,$82,$80,$F1,$7B,$78,$85,$78,$E4,$FF,$FF
+		.BYTE _T,_h,_e,__,_c,_a,_m,_p,__,_i,_s,__,_l,_o,_c,_a,_t,_e,_d,_eol
+		.BYTE _S,_o,_u,_t,_h,__,_f,_r,_o,_m,__,_h,_e,_r,_e,_dot,_eol,_eol
 _script8C_msg02:
-		.BYTE $5C,$85,$82,$86,$86,$F1,$87,$7B,$78,$F1,$85,$7C,$89,$78,$85,$FF
-		.BYTE $87,$82,$F1,$87,$7B,$78,$F1,$70,$78,$86,$87,$E5,$74,$81,$77,$FF
-		.BYTE $76,$7F,$7C,$80,$75,$F1,$87,$7B,$78,$F1,$7B,$7C,$7F,$7F,$E5,$FF
-		.BYTE $87,$7B,$78,$81,$F1,$8C,$82,$88,$90,$7F,$7F,$F1,$79,$7C,$81,$77,$FF
-		.BYTE $87,$7B,$78,$F1,$83,$7C,$76,$7E,$E7,$88,$83,$F1,$83,$82,$7C,$81,$87,$E4,$FF,$FF
+		.BYTE _C,_r,_o,_s,_s,__,_t,_h,_e,__,_r,_i,_v,_e,_r,_eol
+		.BYTE _t,_o,__,_t,_h,_e,__,_W,_e,_s,_t,_col,_a,_n,_d,_eol
+		.BYTE _c,_l,_i,_m,_b,__,_t,_h,_e,__,_h,_i,_l,_l,_col,_eol
+		.BYTE _t,_h,_e,_n,__,_y,_o,_u,_ap,_l,_l,__,_f,_i,_n,_d,_eol
+		.BYTE _t,_h,_e,__,_p,_i,_c,_k,_dsh,_u,_p,__,_p,_o,_i,_n,_t,_dot,_eol,_eol
 _script8C_msg03:
-		.BYTE $5B,$88,$87,$E5,$8A,$78,$90,$85,$78,$F1,$7F,$74,$87,$78,$FF
-		.BYTE $79,$82,$85,$F1,$87,$7B,$78,$F1,$76,$82,$81,$87,$74,$76,$87,$FF
-		.BYTE $87,$7C,$80,$78,$E4,$FF,$FF
+		.BYTE _B,_u,_t,_col,_w,_e,_ap,_r,_e,__,_l,_a,_t,_e,_eol
+		.BYTE _f,_o,_r,__,_t,_h,_e,__,_c,_o,_n,_t,_a,_c,_t,_eol
+		.BYTE _t,_i,_m,_e,_dot,_eol,_eol
 _script8C_msg04:
-		.BYTE $6D,$7B,$78,$F1,$7B,$78,$7F,$7C,$76,$82,$83,$87,$78,$85,$FF
-		.BYTE $8A,$82,$81,$90,$87,$F1,$76,$82,$80,$78,$F1,$74,$81,$8C,$FF
-		.BYTE $80,$82,$85,$78,$E4,$FF
-		.BYTE $70,$78,$90,$77,$F1,$75,$78,$87,$87,$78,$85,$F1,$7B,$7C,$77,$78,$FF
-		.BYTE $7C,$81,$F1,$87,$7B,$78,$F1,$89,$7C,$7F,$7F,$74,$7A,$78,$E4,$FF,$FF
+		.BYTE _T,_h,_e,__,_h,_e,_l,_i,_c,_o,_p,_t,_e,_r,_eol
+		.BYTE _w,_o,_n,_ap,_t,__,_c,_o,_m,_e,__,_a,_n,_y,_eol
+		.BYTE _m,_o,_r,_e,_dot,_eol
+		.BYTE _W,_e,_ap,_d,__,_b,_e,_t,_t,_e,_r,__,_h,_i,_d,_e,_eol
+		.BYTE _i,_n,__,_t,_h,_e,__,_v,_i,_l,_l,_a,_g,_e,_dot,_eol,_eol
 _script8D_msg00:
-		.BYTE $5A,$61,$61,$61,$EE,$EE,$EE,$8F,$FF
-		.BYTE $5A,$61,$61,$EE,$EE,$EE,$8F,$FF,$FF
+		.BYTE _A,_H,_H,_H,_dtt,_dtt,_dtt,_ex,_eol
+		.BYTE _A,_H,_H,_dtt,_dtt,_dtt,_ex,_eol,_eol
 _script8D_msg01:
-		.BYTE $62,$90,$7F,$7F,$F1,$7B,$78,$7F,$83,$F1,$8C,$82,$88,$E4,$FF,$FF
-		.BYTE $FF
+		.BYTE _I,_ap,_l,_l,__,_h,_e,_l,_p,__,_y,_o,_u,_dot,_eol,_eol
+;		.BYTE _eol
 _script8F_msg00:
-		.BYTE $62,$90,$80,$F1,$86,$82,$F1,$7B,$74,$83,$83,$8C,$F1,$87,$82,$FF
-		.BYTE $86,$78,$78,$F1,$8C,$82,$88,$90,$85,$78,$F1,$86,$74,$79,$78,$E4,$FF,$FF
+		.BYTE _I,_ap,_m,__,_s,_o,__,_h,_a,_p,_p,_y,__,_t,_o,_eol
+		.BYTE _s,_e,_e,__,_y,_o,_u,_ap,_r,_e,__,_s,_a,_f,_e,_dot,_eol,_eol
 _script8F_msg01:
-		.BYTE $70,$7B,$74,$87,$8E,$FF
-		.BYTE $5D,$7C,$77,$F1,$8C,$82,$88,$F1,$87,$74,$7E,$78,$F1,$87,$7B,$78,$FF
-		.BYTE $69,$68,$70,$F1,$82,$88,$87,$8E,$FF,$FF
+		.BYTE _W,_h,_a,_t,_qe,_eol
+		.BYTE _D,_i,_d,__,_y,_o,_u,__,_t,_a,_k,_e,__,_t,_h,_e,_eol
+		.BYTE _P,_O,_W,__,_o,_u,_t,_qe,_eol,_eol
 _script8F_msg02:
-		.BYTE $72,$82,$88,$F1,$8A,$78,$85,$78,$F1,$86,$88,$83,$83,$82,$86,$78,$77,$FF
-		.BYTE $87,$82,$F1,$87,$74,$7E,$78,$F1,$83,$7B,$82,$87,$82,$86,$FF
-		.BYTE $82,$81,$7F,$8C,$8F,$FF,$FF
+		.BYTE _Y,_o,_u,__,_w,_e,_r,_e,__,_s,_u,_p,_p,_o,_s,_e,_d,_eol
+		.BYTE _t,_o,__,_t,_a,_k,_e,__,_p,_h,_o,_t,_o,_s,_eol
+		.BYTE _o,_n,_l,_y,_ex,_eol,_eol
 _script8F_msg03:
-		.BYTE $65,$78,$87,$90,$86,$F1,$7A,$78,$87,$F1,$82,$88,$87,$F1,$82,$79,$FF
-		.BYTE $7B,$78,$85,$78,$E5,$81,$82,$8A,$8F,$FF,$FF
+		.BYTE _L,_e,_t,_ap,_s,__,_g,_e,_t,__,_o,_u,_t,__,_o,_f,_eol
+		.BYTE _h,_e,_r,_e,_col,_n,_o,_w,_ex,_eol,_eol
 _script90_msg00:
-		.BYTE $62,$90,$7F,$7F,$F1,$7A,$82,$F1,$74,$7B,$78,$74,$77,$F1,$75,$8C,$FF
-		.BYTE $80,$8C,$86,$78,$7F,$79,$E4,$FF,$FF
+		.BYTE _I,_ap,_l,_l,__,_g,_o,__,_a,_h,_e,_a,_d,__,_b,_y,_eol
+		.BYTE _m,_y,_s,_e,_l,_f,_dot,_eol,_eol
 _script90_msg01:
-		.BYTE $62,$F1,$86,$78,$78,$EE,$EE,$EE,$FF,$FF
+		.BYTE _I,__,_s,_e,_e,_dtt,_dtt,_dtt,_eol,_eol
 _script91_msg00:
-		.BYTE $5D,$7C,$77,$F1,$8C,$82,$88,$F1,$76,$74,$7F,$7F,$F1,$80,$78,$8E,$FF,$FF
+		.BYTE _D,_i,_d,__,_y,_o,_u,__,_c,_a,_l,_l,__,_m,_e,_qe,_eol,_eol
 _script91_msg01:
-		.BYTE $6D,$7B,$7C,$86,$F1,$7C,$86,$F1,$81,$82,$F1,$83,$7F,$74,$76,$78,$FF
-		.BYTE $79,$82,$85,$F1,$89,$7C,$7F,$7F,$74,$7A,$78,$85,$86,$E4,$FF,$FF
+		.BYTE _T,_h,_i,_s,__,_i,_s,__,_n,_o,__,_p,_l,_a,_c,_e,_eol
+		.BYTE _f,_o,_r,__,_v,_i,_l,_l,_a,_g,_e,_r,_s,_dot,_eol,_eol
 _script91_msg02:
-		.BYTE $5A,$7B,$74,$E4,$FF
-		.BYTE $6D,$7B,$7C,$86,$F1,$8A,$74,$8C,$F1,$87,$82,$F1,$87,$7B,$78,$FF
-		.BYTE $76,$74,$83,$87,$74,$7C,$81,$90,$86,$F1,$84,$88,$74,$85,$87,$78,$85,$86,$E4,$FF,$FF
+		.BYTE _A,_h,_a,_dot,_eol
+		.BYTE _T,_h,_i,_s,__,_w,_a,_y,__,_t,_o,__,_t,_h,_e,_eol
+		.BYTE _c,_a,_p,_t,_a,_i,_n,_ap,_s,__,_q,_u,_a,_r,_t,_e,_r,_s,_dot,_eol,_eol
 _script92_msg00:
-		.BYTE $60,$82,$82,$77,$F1,$78,$89,$78,$81,$7C,$81,$7A,$E4,$FF,$FF
+		.BYTE _G,_o,_o,_d,__,_e,_v,_e,_n,_i,_n,_g,_dot,_eol,_eol
 _script92_msg01:
-		.BYTE $72,$82,$88,$F1,$80,$88,$86,$87,$F1,$75,$78,$F1,$87,$7B,$78,$FF
-		.BYTE $7A,$78,$81,$78,$85,$74,$7F,$90,$86,$F1,$8A,$7C,$79,$78,$E4,$FF,$FF
+		.BYTE _Y,_o,_u,__,_m,_u,_s,_t,__,_b,_e,__,_t,_h,_e,_eol
+		.BYTE _g,_e,_n,_e,_r,_a,_l,_ap,_s,__,_w,_i,_f,_e,_dot,_eol,_eol
 _script92_msg02:
-		.BYTE $67,$82,$E4,$62,$90,$80,$F1,$7F,$82,$82,$7E,$7C,$81,$7A,$FF
-		.BYTE $79,$82,$85,$F1,$86,$82,$80,$78,$E4,$FF
-		.BYTE $F1,$FF
-		.BYTE $72,$78,$86,$E4,$FF,$FF
+		.BYTE _N,_o,_dot,_I,_ap,_m,__,_l,_o,_o,_k,_i,_n,_g,_eol
+		.BYTE _f,_o,_r,__,_s,_o,_m,_e,_dot,_eol
+		.BYTE __,_eol
+		.BYTE _Y,_e,_s,_dot,_eol,_eol
 _script92_msg03:
-		.BYTE $60,$78,$87,$F1,$82,$88,$87,$F1,$82,$79,$F1,$7B,$78,$85,$78,$E4,$FF,$FF
+		.BYTE _G,_e,_t,__,_o,_u,_t,__,_o,_f,__,_h,_e,_r,_e,_dot,_eol,_eol
 _script92_msg04:
-		.BYTE $70,$7B,$74,$87,$F1,$7B,$74,$83,$83,$78,$81,$78,$77,$FF
-		.BYTE $87,$82,$77,$74,$8C,$8E,$FF,$FF
+		.BYTE _W,_h,_a,_t,__,_h,_a,_p,_p,_e,_n,_e,_d,_eol
+		.BYTE _t,_o,_d,_a,_y,_qe,_eol,_eol
 _script92_msg05:
-		.BYTE $62,$F1,$76,$74,$88,$7A,$7B,$87,$F1,$74,$F1,$86,$83,$8C,$E4,$FF,$FF
+		.BYTE _I,__,_c,_a,_u,_g,_h,_t,__,_a,__,_s,_p,_y,_dot,_eol,_eol
 _script92_msg06:
-		.BYTE $6C,$82,$E5,$8C,$82,$88,$F1,$7B,$74,$89,$78,$F1,$87,$7B,$78,$F1,$7E,$78,$8C,$FF
-		.BYTE $87,$82,$F1,$87,$7B,$78,$F1,$85,$82,$82,$80,$E4,$FF,$FF
+		.BYTE _S,_o,_col,_y,_o,_u,__,_h,_a,_v,_e,__,_t,_h,_e,__,_k,_e,_y,_eol
+		.BYTE _t,_o,__,_t,_h,_e,__,_r,_o,_o,_m,_dot,_eol,_eol
 _script92_msg07:
-		.BYTE $5A,$81,$8C,$87,$7B,$7C,$81,$7A,$F1,$79,$82,$85,$F1,$87,$7B,$78,$FF
-		.BYTE $7A,$78,$81,$78,$85,$74,$7F,$90,$86,$F1,$8A,$7C,$79,$78,$E4,$FF,$FF
+		.BYTE _A,_n,_y,_t,_h,_i,_n,_g,__,_f,_o,_r,__,_t,_h,_e,_eol
+		.BYTE _g,_e,_n,_e,_r,_a,_l,_ap,_s,__,_w,_i,_f,_e,_dot,_eol,_eol
 _script92_msg08:
-		.BYTE $62,$F1,$7A,$82,$87,$F1,$87,$7B,$78,$F1,$7E,$78,$8C,$E4,$FF,$FF
+		.BYTE _I,__,_g,_o,_t,__,_t,_h,_e,__,_k,_e,_y,_dot,_eol,_eol
 _script93_msg00:
-		.BYTE $70,$7B,$74,$87,$F1,$74,$85,$78,$F1,$8C,$82,$88,$F1,$77,$82,$7C,$81,$7A,$FF
-		.BYTE $7B,$78,$85,$78,$8E,$FF,$FF
+		.BYTE _W,_h,_a,_t,__,_a,_r,_e,__,_y,_o,_u,__,_d,_o,_i,_n,_g,_eol
+		.BYTE _h,_e,_r,_e,_qe,_eol,_eol
 _script93_msg01:
-		.BYTE $6C,$82,$85,$85,$8C,$E4,$FF,$FF
+		.BYTE _S,_o,_r,_r,_y,_dot,_eol,_eol
 _script93_msg02:
-		.BYTE $61,$78,$8C,$8F,$70,$7B,$78,$85,$78,$F1,$74,$85,$78,$F1,$8C,$82,$88,$FF
-		.BYTE $7A,$82,$7C,$81,$7A,$8E,$FF
-		.BYTE $6D,$7B,$78,$F1,$78,$8B,$7C,$87,$F1,$7C,$86,$F1,$82,$81,$F1,$87,$7B,$78,$FF
-		.BYTE $85,$7C,$7A,$7B,$87,$E4,$FF,$FF
+		.BYTE _H,_e,_y,_ex,_W,_h,_e,_r,_e,__,_a,_r,_e,__,_y,_o,_u,_eol
+		.BYTE _g,_o,_i,_n,_g,_qe,_eol
+		.BYTE _T,_h,_e,__,_e,_x,_i,_t,__,_i,_s,__,_o,_n,__,_t,_h,_e,_eol
+		.BYTE _r,_i,_g,_h,_t,_dot,_eol,_eol
 _script93_msg03:
-		.BYTE $6D,$82,$F1,$87,$7B,$78,$F1,$7F,$78,$79,$87,$F1,$7C,$86,$F1,$87,$7B,$78,$FF
-		.BYTE $87,$82,$85,$87,$88,$85,$78,$F1,$85,$82,$82,$80,$E4,$FF,$FF
+		.BYTE _T,_o,__,_t,_h,_e,__,_l,_e,_f,_t,__,_i,_s,__,_t,_h,_e,_eol
+		.BYTE _t,_o,_r,_t,_u,_r,_e,__,_r,_o,_o,_m,_dot,_eol,_eol
 _script94_msg00:
-		.BYTE $62,$90,$80,$F1,$82,$83,$78,$81,$7C,$81,$7A,$FF
-		.BYTE $87,$7B,$78,$F1,$77,$82,$82,$85,$F1,$81,$82,$8A,$E4,$FF,$FF
+		.BYTE _I,_ap,_m,__,_o,_p,_e,_n,_i,_n,_g,_eol
+		.BYTE _t,_h,_e,__,_d,_o,_o,_r,__,_n,_o,_w,_dot,_eol,_eol
 _script94_msg01:
-		.BYTE $6D,$7B,$74,$81,$7E,$86,$E4,$FF,$FF
+		.BYTE _T,_h,_a,_n,_k,_s,_dot,_eol,_eol
 _script94_msg02:
-		.BYTE $6D,$7B,$78,$8C,$90,$89,$78,$F1,$86,$78,$78,$81,$F1,$88,$86,$E4,$FF
-		.BYTE $65,$78,$87,$90,$86,$F1,$7A,$78,$87,$F1,$82,$88,$87,$FF
-		.BYTE $82,$79,$F1,$7B,$78,$85,$78,$F1,$81,$82,$8A,$E4,$FF,$FF
+		.BYTE _T,_h,_e,_y,_ap,_v,_e,__,_s,_e,_e,_n,__,_u,_s,_dot,_eol
+		.BYTE _L,_e,_t,_ap,_s,__,_g,_e,_t,__,_o,_u,_t,_eol
+		.BYTE _o,_f,__,_h,_e,_r,_e,__,_n,_o,_w,_dot,_eol,_eol
 _script94_msg03:
-		.BYTE $6B,$74,$80,$75,$82,$E5,$7C,$87,$90,$86,$F1,$80,$78,$E4,$FF
-		.BYTE $70,$74,$7C,$87,$F1,$74,$F1,$80,$7C,$81,$88,$87,$78,$E4,$FF
-		.BYTE $62,$90,$80,$F1,$7A,$82,$7C,$81,$7A,$F1,$87,$82,$F1,$7F,$82,$82,$7E,$FF
-		.BYTE $79,$82,$85,$F1,$87,$7B,$78,$F1,$7E,$78,$8C,$E4,$FF,$FF
+		.BYTE _R,_a,_m,_b,_o,_col,_i,_t,_ap,_s,__,_m,_e,_dot,_eol
+		.BYTE _W,_a,_i,_t,__,_a,__,_m,_i,_n,_u,_t,_e,_dot,_eol
+		.BYTE _I,_ap,_m,__,_g,_o,_i,_n,_g,__,_t,_o,__,_l,_o,_o,_k,_eol
+		.BYTE _f,_o,_r,__,_t,_h,_e,__,_k,_e,_y,_dot,_eol,_eol
 _script94_msg04:
-		.BYTE $EE,$EE,$EE,$FF,$FF
+		.BYTE _dtt,_dtt,_dtt,_eol,_eol
 _script95_msg00:
-		.BYTE $6B,$74,$80,$75,$82,$E5,$87,$7B,$78,$F1,$83,$7C,$76,$7E,$E7,$88,$83,$FF
-		.BYTE $83,$82,$7C,$81,$87,$F1,$7C,$86,$F1,$74,$7B,$78,$74,$77,$E4,$FF,$FF
+		.BYTE _R,_a,_m,_b,_o,_col,_t,_h,_e,__,_p,_i,_c,_k,_dsh,_u,_p,_eol
+		.BYTE _p,_o,_i,_n,_t,__,_i,_s,__,_a,_h,_e,_a,_d,_dot,_eol,_eol
 _script95_msg01:
-		.BYTE $5B,$88,$87,$F1,$87,$7B,$78,$F1,$76,$82,$81,$87,$74,$76,$87,$FF
-		.BYTE $87,$7C,$80,$78,$F1,$7B,$74,$86,$F1,$74,$7F,$85,$78,$74,$77,$8C,$FF
-		.BYTE $83,$74,$86,$86,$78,$77,$E4,$FF,$FF
+		.BYTE _B,_u,_t,__,_t,_h,_e,__,_c,_o,_n,_t,_a,_c,_t,_eol
+		.BYTE _t,_i,_m,_e,__,_h,_a,_s,__,_a,_l,_r,_e,_a,_d,_y,_eol
+		.BYTE _p,_a,_s,_s,_e,_d,_dot,_eol,_eol
 _script95_msg02:
-		.BYTE $65,$78,$87,$90,$86,$F1,$85,$78,$87,$88,$85,$81,$F1,$87,$82,$FF
-		.BYTE $87,$7B,$78,$F1,$7D,$88,$81,$7A,$7F,$78,$E4,$FF,$FF
+		.BYTE _L,_e,_t,_ap,_s,__,_r,_e,_t,_u,_r,_n,__,_t,_o,_eol
+		.BYTE _t,_h,_e,__,_j,_u,_n,_g,_l,_e,_dot,_eol,_eol
 _script95_msg03:
-		.BYTE $5A,$85,$78,$F1,$8C,$82,$88,$F1,$7A,$82,$7C,$81,$7A,$F1,$75,$74,$76,$7E,$FF
-		.BYTE $8A,$7C,$87,$7B,$82,$88,$87,$F1,$77,$82,$7C,$81,$7A,$FF
-		.BYTE $74,$81,$8C,$87,$7B,$7C,$81,$7A,$8E,$FF,$FF
+		.BYTE _A,_r,_e,__,_y,_o,_u,__,_g,_o,_i,_n,_g,__,_b,_a,_c,_k,_eol
+		.BYTE _w,_i,_t,_h,_o,_u,_t,__,_d,_o,_i,_n,_g,_eol
+		.BYTE _a,_n,_y,_t,_h,_i,_n,_g,_qe,_eol,_eol
 _script95_msg04:
-		.BYTE $70,$78,$F1,$86,$87,$7C,$7F,$7F,$F1,$7B,$74,$89,$78,$FF
-		.BYTE $87,$7C,$80,$78,$F1,$87,$82,$F1,$7A,$78,$87,$F1,$87,$82,$FF
-		.BYTE $87,$7B,$78,$F1,$76,$74,$80,$83,$E4,$FF,$FF
+		.BYTE _W,_e,__,_s,_t,_i,_l,_l,__,_h,_a,_v,_e,_eol
+		.BYTE _t,_i,_m,_e,__,_t,_o,__,_g,_e,_t,__,_t,_o,_eol
+		.BYTE _t,_h,_e,__,_c,_a,_m,_p,_dot,_eol,_eol
 _script95_msg05:
-		.BYTE $6D,$7B,$78,$F1,$76,$74,$80,$83,$F1,$7C,$86,$F1,$7F,$82,$76,$74,$87,$78,$77,$FF
-		.BYTE $79,$74,$85,$F1,$6C,$82,$88,$87,$7B,$F1,$79,$85,$82,$80,$FF
-		.BYTE $7B,$78,$85,$78,$E4,$FF,$FF
+		.BYTE _T,_h,_e,__,_c,_a,_m,_p,__,_i,_s,__,_l,_o,_c,_a,_t,_e,_d,_eol
+		.BYTE _f,_a,_r,__,_S,_o,_u,_t,_h,__,_f,_r,_o,_m,_eol
+		.BYTE _h,_e,_r,_e,_dot,_eol,_eol
 _script95_msg06:
-		.BYTE $5C,$82,$E5,$87,$7B,$74,$81,$7E,$86,$F1,$79,$82,$85,$FF
-		.BYTE $7B,$78,$7F,$83,$7C,$81,$7A,$F1,$80,$78,$E4,$FF,$FF
+		.BYTE _C,_o,_col,_t,_h,_a,_n,_k,_s,__,_f,_o,_r,_eol
+		.BYTE _h,_e,_l,_p,_i,_n,_g,__,_m,_e,_dot,_eol,_eol
 _script95_msg07:
-		.BYTE $6B,$74,$80,$75,$82,$E5,$62,$F1,$8A,$74,$81,$87,$F1,$87,$82,$F1,$7A,$82,$FF
-		.BYTE $87,$82,$F1,$5A,$80,$78,$85,$7C,$76,$74,$F1,$8A,$7C,$87,$7B,$FF
-		.BYTE $8C,$82,$88,$E4,$FF,$FF
+		.BYTE _R,_a,_m,_b,_o,_col,_I,__,_w,_a,_n,_t,__,_t,_o,__,_g,_o,_eol
+		.BYTE _t,_o,__,_A,_m,_e,_r,_i,_c,_a,__,_w,_i,_t,_h,_eol
+		.BYTE _y,_o,_u,_dot,_eol,_eol
 _script95_msg08:
-		.BYTE $62,$90,$80,$F1,$86,$82,$85,$85,$8C,$E4,$62,$F1,$76,$74,$81,$90,$87,$FF
-		.BYTE $87,$74,$7E,$78,$F1,$8C,$82,$88,$E4,$FF,$FF
+		.BYTE _I,_ap,_m,__,_s,_o,_r,_r,_y,_dot,_I,__,_c,_a,_n,_ap,_t,_eol
+		.BYTE _t,_a,_k,_e,__,_y,_o,_u,_dot,_eol,_eol
 _script95_msg09:
-		.BYTE $62,$90,$80,$F1,$86,$82,$85,$85,$8C,$E4,$62,$F1,$76,$74,$81,$90,$87,$FF
-		.BYTE $87,$74,$7E,$78,$F1,$8C,$82,$88,$E4,$FF
-		.BYTE $F1,$FF
-		.BYTE $6D,$7B,$78,$81,$F1,$76,$82,$80,$78,$F1,$75,$74,$76,$7E,$F1,$8A,$7C,$87,$7B,$FF
-		.BYTE $80,$78,$E4,$FF,$FF
+		.BYTE _I,_ap,_m,__,_s,_o,_r,_r,_y,_dot,_I,__,_c,_a,_n,_ap,_t,_eol
+		.BYTE _t,_a,_k,_e,__,_y,_o,_u,_dot,_eol
+		.BYTE __,_eol
+		.BYTE _T,_h,_e,_n,__,_c,_o,_m,_e,__,_b,_a,_c,_k,__,_w,_i,_t,_h,_eol
+		.BYTE _m,_e,_dot,_eol,_eol
 _script95_msg0a:
-		.BYTE $6D,$7B,$74,$81,$7E,$86,$E4,$FF
-		.BYTE $62,$90,$80,$F1,$86,$82,$F1,$7A,$7F,$74,$77,$E4,$FF
-		.BYTE $65,$78,$87,$90,$86,$F1,$7A,$82,$E5,$87,$7B,$78,$8C,$90,$85,$78,$FF
-		.BYTE $76,$82,$80,$7C,$81,$7A,$E4,$61,$88,$85,$85,$8C,$F1,$88,$83,$E4,$FF,$FF
+		.BYTE _T,_h,_a,_n,_k,_s,_dot,_eol
+		.BYTE _I,_ap,_m,__,_s,_o,__,_g,_l,_a,_d,_dot,_eol
+		.BYTE _L,_e,_t,_ap,_s,__,_g,_o,_col,_t,_h,_e,_y,_ap,_r,_e,_eol
+		.BYTE _c,_o,_m,_i,_n,_g,_dot,_H,_u,_r,_r,_y,__,_u,_p,_dot,_eol,_eol
 _script95_msg0b:
-		.BYTE $62,$F1,$8A,$82,$81,$90,$87,$F1,$86,$78,$78,$F1,$8C,$82,$88,$FF
-		.BYTE $74,$81,$8C,$F1,$80,$82,$85,$78,$E4,$FF
-		.BYTE $60,$82,$82,$77,$E7,$75,$8C,$78,$E4,$FF,$FF
+		.BYTE _I,__,_w,_o,_n,_ap,_t,__,_s,_e,_e,__,_y,_o,_u,_eol
+		.BYTE _a,_n,_y,__,_m,_o,_r,_e,_dot,_eol
+		.BYTE _G,_o,_o,_d,_dsh,_b,_y,_e,_dot,_eol,_eol
 _script96_msg00:
-		.BYTE $61,$78,$74,$77,$84,$88,$74,$85,$87,$78,$85,$86,$E5,$FF
-		.BYTE $8A,$78,$F1,$79,$82,$88,$81,$77,$F1,$6B,$74,$80,$75,$82,$E4,$FF
-		.BYTE $61,$78,$90,$86,$F1,$87,$74,$7E,$7C,$81,$7A,$F1,$69,$68,$70,$90,$86,$FF
-		.BYTE $8A,$7C,$87,$7B,$F1,$7B,$7C,$80,$E4,$FF,$FF
+		.BYTE _H,_e,_a,_d,_q,_u,_a,_r,_t,_e,_r,_s,_col,_eol
+		.BYTE _w,_e,__,_f,_o,_u,_n,_d,__,_R,_a,_m,_b,_o,_dot,_eol
+		.BYTE _H,_e,_ap,_s,__,_t,_a,_k,_i,_n,_g,__,_P,_O,_W,_ap,_s,_eol
+		.BYTE _w,_i,_t,_h,__,_h,_i,_m,_dot,_eol,_eol
 _script96_msg01:
-		.BYTE $EE,$EE,$5E,$80,$78,$85,$7A,$78,$81,$76,$8C,$FF
-		.BYTE $6C,$87,$82,$83,$F1,$87,$7B,$78,$F1,$80,$7C,$86,$86,$7C,$82,$81,$EE,$EE,$FF,$FF
+		.BYTE _dtt,_dtt,_E,_m,_e,_r,_g,_e,_n,_c,_y,_eol
+		.BYTE _S,_t,_o,_p,__,_t,_h,_e,__,_m,_i,_s,_s,_i,_o,_n,_dtt,_dtt,_eol,_eol
 _script96_msg02:
-		.BYTE $70,$7B,$74,$87,$8E,$FF
-		.BYTE $62,$F1,$76,$74,$81,$90,$87,$F1,$7F,$78,$74,$89,$78,$F1,$87,$7B,$78,$80,$FF
-		.BYTE $86,$87,$85,$74,$81,$77,$78,$77,$E4,$FF,$FF
+		.BYTE _W,_h,_a,_t,_qe,_eol
+		.BYTE _I,__,_c,_a,_n,_ap,_t,__,_l,_e,_a,_v,_e,__,_t,_h,_e,_m,_eol
+		.BYTE _s,_t,_r,_a,_n,_d,_e,_d,_dot,_eol,_eol
 _script96_msg03:
-		.BYTE $62,$F1,$7B,$74,$89,$78,$F1,$87,$82,$F1,$79,$82,$7F,$7F,$82,$8A,$FF
-		.BYTE $82,$85,$77,$78,$85,$86,$E4,$FF,$FF
+		.BYTE _I,__,_h,_a,_v,_e,__,_t,_o,__,_f,_o,_l,_l,_o,_w,_eol
+		.BYTE _o,_r,_d,_e,_r,_s,_dot,_eol,_eol
 _script96_msg04:
-		.BYTE $66,$78,$85,$76,$78,$81,$74,$85,$7C,$78,$86,$8F,$FF,$FF
+		.BYTE _M,_e,_r,_c,_e,_n,_a,_r,_i,_e,_s,_ex,_eol,_eol
 _script96_msg05:
-		.BYTE $61,$78,$74,$77,$84,$88,$74,$85,$87,$78,$85,$86,$E5,$8A,$78,$90,$89,$78,$FF
-		.BYTE $79,$82,$88,$81,$77,$F1,$6B,$74,$80,$75,$82,$E4,$70,$78,$90,$85,$78,$FF
-		.BYTE $7A,$82,$7C,$81,$7A,$F1,$7C,$81,$F1,$87,$82,$F1,$85,$78,$86,$76,$88,$78,$FF
-		.BYTE $7B,$7C,$80,$E4,$FF,$FF
+		.BYTE _H,_e,_a,_d,_q,_u,_a,_r,_t,_e,_r,_s,_col,_w,_e,_ap,_v,_e,_eol
+		.BYTE _f,_o,_u,_n,_d,__,_R,_a,_m,_b,_o,_dot,_W,_e,_ap,_r,_e,_eol
+		.BYTE _g,_o,_i,_n,_g,__,_i,_n,__,_t,_o,__,_r,_e,_s,_c,_u,_e,_eol
+		.BYTE _h,_i,_m,_dot,_eol,_eol
 _script96_msg06:
-		.BYTE $61,$78,$90,$86,$F1,$75,$78,$7C,$81,$7A,$F1,$76,$7B,$74,$86,$78,$77,$FF
-		.BYTE $75,$8C,$F1,$87,$7B,$78,$F1,$78,$81,$78,$80,$8C,$E4,$FF,$FF
+		.BYTE _H,_e,_ap,_s,__,_b,_e,_i,_n,_g,__,_c,_h,_a,_s,_e,_d,_eol
+		.BYTE _b,_y,__,_t,_h,_e,__,_e,_n,_e,_m,_y,_dot,_eol,_eol
 _script96_msg07:
-		.BYTE $EE,$EE,$F1,$6B,$78,$86,$76,$88,$78,$F1,$7B,$7C,$80,$F1,$EE,$EE,$FF,$FF
+		.BYTE _dtt,_dtt,__,_R,_e,_s,_c,_u,_e,__,_h,_i,_m,__,_dtt,_dtt,_eol,_eol
 _script96_msg08:
-		.BYTE $6B,$74,$80,$75,$82,$E5,$7A,$78,$87,$F1,$82,$81,$E5,$7B,$88,$85,$85,$8C,$FF
-		.BYTE $88,$83,$E4,$6C,$82,$F1,$7F,$82,$81,$7A,$E5,$7D,$88,$81,$7A,$7F,$78,$E4,$FF,$FF
+		.BYTE _R,_a,_m,_b,_o,_col,_g,_e,_t,__,_o,_n,_col,_h,_u,_r,_r,_y,_eol
+		.BYTE _u,_p,_dot,_S,_o,__,_l,_o,_n,_g,_col,_j,_u,_n,_g,_l,_e,_dot,_eol,_eol
 _script97_msg00:
-		.BYTE $5A,$87,$F1,$87,$7B,$74,$87,$F1,$87,$7C,$80,$78,$F1,$6B,$74,$80,$75,$82,$E5,$FF
-		.BYTE $8A,$7B,$82,$F1,$8A,$74,$86,$F1,$76,$74,$88,$7A,$7B,$87,$F1,$75,$8C,$FF
-		.BYTE $87,$7B,$78,$F1,$78,$81,$78,$80,$8C,$E5,$8A,$74,$86,$F1,$75,$78,$7C,$81,$7A,$FF
-		.BYTE $7C,$81,$87,$78,$85,$85,$82,$7A,$74,$87,$78,$77,$E4,$FF,$FF
+		.BYTE _A,_t,__,_t,_h,_a,_t,__,_t,_i,_m,_e,__,_R,_a,_m,_b,_o,_col,_eol
+		.BYTE _w,_h,_o,__,_w,_a,_s,__,_c,_a,_u,_g,_h,_t,__,_b,_y,_eol
+		.BYTE _t,_h,_e,__,_e,_n,_e,_m,_y,_col,_w,_a,_s,__,_b,_e,_i,_n,_g,_eol
+		.BYTE _i,_n,_t,_e,_r,_r,_o,_g,_a,_t,_e,_d,_dot,_eol,_eol
 _script97_msg01:
-		.BYTE $62,$90,$80,$FF
-		.BYTE $5C,$82,$80,$80,$74,$81,$77,$78,$85,$F1,$69,$74,$77,$82,$89,$86,$7E,$8C,$E4,$FF,$FF
+		.BYTE _I,_ap,_m,_eol
+		.BYTE _C,_o,_m,_m,_a,_n,_d,_e,_r,__,_P,_a,_d,_o,_v,_s,_k,_y,_dot,_eol,_eol
 _script97_msg02:
-		.BYTE $72,$82,$88,$F1,$8A,$78,$85,$78,$F1,$86,$78,$81,$87,$F1,$7B,$78,$85,$78,$FF
-		.BYTE $7C,$81,$F1,$74,$81,$F1,$78,$79,$79,$82,$85,$87,$F1,$87,$82,$FF
-		.BYTE $79,$85,$78,$78,$F1,$8A,$74,$85,$F1,$76,$85,$7C,$80,$7C,$81,$74,$7F,$86,$E4,$FF,$FF
+		.BYTE _Y,_o,_u,__,_w,_e,_r,_e,__,_s,_e,_n,_t,__,_h,_e,_r,_e,_eol
+		.BYTE _i,_n,__,_a,_n,__,_e,_f,_f,_o,_r,_t,__,_t,_o,_eol
+		.BYTE _f,_r,_e,_e,__,_w,_a,_r,__,_c,_r,_i,_m,_i,_n,_a,_l,_s,_dot,_eol,_eol
 _script97_msg03:
-		.BYTE $62,$F1,$8A,$74,$81,$87,$F1,$74,$7F,$7F,$F1,$87,$7B,$78,$FF
-		.BYTE $77,$78,$87,$74,$7C,$7F,$86,$F1,$82,$79,$F1,$8C,$82,$88,$85,$FF
-		.BYTE $66,$7C,$86,$86,$7C,$82,$81,$E4,$FF,$FF
+		.BYTE _I,__,_w,_a,_n,_t,__,_a,_l,_l,__,_t,_h,_e,_eol
+		.BYTE _d,_e,_t,_a,_i,_l,_s,__,_o,_f,__,_y,_o,_u,_r,_eol
+		.BYTE _M,_i,_s,_s,_i,_o,_n,_dot,_eol,_eol
 _script97_msg04:
-		.BYTE $EE,$EE,$EE,$FF,$FF
+		.BYTE _dtt,_dtt,_dtt,_eol,_eol
 _script97_msg05:
-		.BYTE $62,$F1,$8A,$74,$81,$87,$F1,$8C,$82,$88,$F1,$87,$82,$F1,$85,$74,$77,$7C,$82,$FF
-		.BYTE $8C,$82,$88,$85,$F1,$7B,$78,$74,$77,$84,$88,$74,$85,$87,$78,$85,$86,$FF
-		.BYTE $74,$81,$77,$F1,$86,$74,$8C,$F1,$87,$7B,$74,$87,$F1,$8C,$82,$88,$FF
-		.BYTE $7B,$74,$89,$78,$F1,$75,$78,$78,$81,$F1,$76,$74,$83,$87,$88,$85,$78,$77,$E4,$FF,$FF
+		.BYTE _I,__,_w,_a,_n,_t,__,_y,_o,_u,__,_t,_o,__,_r,_a,_d,_i,_o,_eol
+		.BYTE _y,_o,_u,_r,__,_h,_e,_a,_d,_q,_u,_a,_r,_t,_e,_r,_s,_eol
+		.BYTE _a,_n,_d,__,_s,_a,_y,__,_t,_h,_a,_t,__,_y,_o,_u,_eol
+		.BYTE _h,_a,_v,_e,__,_b,_e,_e,_n,__,_c,_a,_p,_t,_u,_r,_e,_d,_dot,_eol,_eol
 _script97_msg06:
-		.BYTE $EE,$EE,$EE,$FF,$FF
+		.BYTE _dtt,_dtt,_dtt,_eol,_eol
 _script97_msg07:
-		.BYTE $72,$82,$88,$F1,$8A,$7C,$7F,$7F,$F1,$81,$82,$87,$F1,$87,$74,$7F,$7E,$8E,$FF
-		.BYTE $68,$E4,$64,$E4,$FF
-		.BYTE $72,$74,$86,$7B,$7C,$81,$8F,$FF,$FF
+		.BYTE _Y,_o,_u,__,_w,_i,_l,_l,__,_n,_o,_t,__,_t,_a,_l,_k,_qe,_eol
+		.BYTE _O,_dot,_K,_dot,_eol
+		.BYTE _Y,_a,_s,_h,_i,_n,_ex,_eol,_eol
 _script97_msg08:
-		.BYTE $72,$82,$88,$90,$85,$78,$F1,$82,$81,$7F,$8C,$F1,$74,$81,$FF
-		.BYTE $78,$8B,$83,$78,$85,$7C,$80,$78,$81,$87,$74,$7F,$FF
-		.BYTE $74,$81,$7C,$80,$74,$7F,$F1,$79,$82,$85,$F1,$86,$78,$85,$7A,$78,$74,$81,$87,$FF
-		.BYTE $72,$74,$86,$7B,$7C,$81,$E4,$FF,$FF
+		.BYTE _Y,_o,_u,_ap,_r,_e,__,_o,_n,_l,_y,__,_a,_n,_eol
+		.BYTE _e,_x,_p,_e,_r,_i,_m,_e,_n,_t,_a,_l,_eol
+		.BYTE _a,_n,_i,_m,_a,_l,__,_f,_o,_r,__,_s,_e,_r,_g,_e,_a,_n,_t,_eol
+		.BYTE _Y,_a,_s,_h,_i,_n,_dot,_eol,_eol
 _script97_msg09:
-		.BYTE $72,$82,$88,$85,$F1,$5C,$82,$80,$80,$74,$81,$77,$F1,$7B,$74,$86,$FF
-		.BYTE $74,$75,$74,$81,$77,$82,$81,$78,$77,$F1,$8C,$82,$88,$E4,$FF
-		.BYTE $5D,$82,$F1,$8C,$82,$88,$F1,$86,$87,$7C,$7F,$7F,$FF
-		.BYTE $83,$85,$82,$87,$78,$76,$87,$F1,$87,$7B,$78,$80,$8E,$FF,$FF
+		.BYTE _Y,_o,_u,_r,__,_C,_o,_m,_m,_a,_n,_d,__,_h,_a,_s,_eol
+		.BYTE _a,_b,_a,_n,_d,_o,_n,_e,_d,__,_y,_o,_u,_dot,_eol
+		.BYTE _D,_o,__,_y,_o,_u,__,_s,_t,_i,_l,_l,_eol
+		.BYTE _p,_r,_o,_t,_e,_c,_t,__,_t,_h,_e,_m,_qe,_eol,_eol
 _script97_msg0a:
-		.BYTE $72,$82,$88,$F1,$80,$88,$86,$87,$F1,$80,$74,$7E,$78,$FF
-		.BYTE $76,$82,$81,$87,$74,$76,$87,$E5,$82,$87,$7B,$78,$85,$8A,$7C,$86,$78,$FF
-		.BYTE $8C,$82,$88,$85,$F1,$79,$85,$7C,$78,$81,$77,$F1,$8A,$7C,$7F,$7F,$F1,$75,$78,$FF
-		.BYTE $7E,$7C,$7F,$7F,$78,$77,$E4,$FF,$FF
+		.BYTE _Y,_o,_u,__,_m,_u,_s,_t,__,_m,_a,_k,_e,_eol
+		.BYTE _c,_o,_n,_t,_a,_c,_t,_col,_o,_t,_h,_e,_r,_w,_i,_s,_e,_eol
+		.BYTE _y,_o,_u,_r,__,_f,_r,_i,_e,_n,_d,__,_w,_i,_l,_l,__,_b,_e,_eol
+		.BYTE _k,_i,_l,_l,_e,_d,_dot,_eol,_eol
 _script97_msg0b:
-		.BYTE $66,$74,$7E,$78,$F1,$74,$F1,$85,$74,$77,$7C,$82,$F1,$76,$74,$7F,$7F,$E4,$FF,$FF
+		.BYTE _M,_a,_k,_e,__,_a,__,_r,_a,_d,_i,_o,__,_c,_a,_l,_l,_dot,_eol,_eol
 _script97_msg0c:
-		.BYTE $EE,$EE,$EE,$FF
-		.BYTE $F1,$FF
-		.BYTE $F1,$FF
-		.BYTE $52,$52,$50,$EE,$EE,$EE,$55,$56,$EE,$EE,$83,$7F,$78,$74,$86,$78,$FF,$FF
+		.BYTE _dtt,_dtt,_dtt,_eol
+		.BYTE __,_eol
+		.BYTE __,_eol
+		.BYTE _2,_2,_0,_dtt,_dtt,_dtt,_5,_6,_dtt,_dtt,_p,_l,_e,_a,_s,_e,_eol,_eol
 _script97_msg0d:
-		.BYTE $EE,$EE,$6B,$78,$83,$82,$85,$87,$F1,$8C,$82,$88,$85,$FF
-		.BYTE $83,$82,$86,$7C,$87,$7C,$82,$81,$F1,$74,$81,$77,$FF
-		.BYTE $86,$87,$74,$87,$88,$86,$EE,$EE,$FF,$FF
+		.BYTE _dtt,_dtt,_R,_e,_p,_o,_r,_t,__,_y,_o,_u,_r,_eol
+		.BYTE _p,_o,_s,_i,_t,_i,_o,_n,__,_a,_n,_d,_eol
+		.BYTE _s,_t,_a,_t,_u,_s,_dtt,_dtt,_eol,_eol
 _script97_msg0e:
-		.BYTE $5A,$81,$86,$8A,$78,$85,$F1,$7C,$87,$E5,$7C,$79,$F1,$8C,$82,$88,$FF
-		.BYTE $77,$82,$81,$90,$87,$F1,$8A,$74,$81,$81,$74,$F1,$86,$78,$78,$FF
-		.BYTE $8C,$82,$88,$85,$F1,$79,$85,$7C,$78,$81,$77,$F1,$77,$7C,$78,$E4,$FF,$FF
+		.BYTE _A,_n,_s,_w,_e,_r,__,_i,_t,_col,_i,_f,__,_y,_o,_u,_eol
+		.BYTE _d,_o,_n,_ap,_t,__,_w,_a,_n,_n,_a,__,_s,_e,_e,_eol
+		.BYTE _y,_o,_u,_r,__,_f,_r,_i,_e,_n,_d,__,_d,_i,_e,_dot,_eol,_eol
 _script97_msg0f:
-		.BYTE $63,$82,$7B,$81,$E5,$7C,$87,$90,$86,$F1,$80,$78,$E4,$FF
-		.BYTE $5A,$81,$86,$8A,$78,$85,$E4,$FF,$FF
+		.BYTE _J,_o,_h,_n,_col,_i,_t,_ap,_s,__,_m,_e,_dot,_eol
+		.BYTE _A,_n,_s,_w,_e,_r,_dot,_eol,_eol
 _script97_msg10:
-		.BYTE $70,$7B,$78,$85,$78,$F1,$7C,$86,$F1,$66,$88,$85,$77,$82,$76,$7E,$8E,$FF,$FF
+		.BYTE _W,_h,_e,_r,_e,__,_i,_s,__,_M,_u,_r,_d,_o,_c,_k,_qe,_eol,_eol
 _script97_msg11:
-		.BYTE $61,$78,$F1,$7C,$86,$F1,$7B,$78,$85,$78,$E4,$FF
-		.BYTE $60,$7C,$89,$78,$F1,$88,$86,$F1,$87,$7B,$78,$FF
-		.BYTE $83,$82,$86,$7C,$87,$7C,$82,$81,$E4,$70,$78,$90,$7F,$7F,$FF
-		.BYTE $76,$82,$80,$78,$F1,$87,$82,$F1,$83,$7C,$76,$7E,$FF
-		.BYTE $8C,$82,$88,$F1,$88,$83,$E4,$FF,$FF
+		.BYTE _H,_e,__,_i,_s,__,_h,_e,_r,_e,_dot,_eol
+		.BYTE _G,_i,_v,_e,__,_u,_s,__,_t,_h,_e,_eol
+		.BYTE _p,_o,_s,_i,_t,_i,_o,_n,_dot,_W,_e,_ap,_l,_l,_eol
+		.BYTE _c,_o,_m,_e,__,_t,_o,__,_p,_i,_c,_k,_eol
+		.BYTE _y,_o,_u,__,_u,_p,_dot,_eol,_eol
 _script97_msg12:
-		.BYTE $62,$90,$80,$F1,$76,$82,$80,$7C,$81,$7A,$F1,$87,$82,$FF
-		.BYTE $87,$78,$85,$80,$7C,$81,$74,$87,$78,$F1,$8C,$82,$88,$E4,$FF,$FF
+		.BYTE _I,_ap,_m,__,_c,_o,_m,_i,_n,_g,__,_t,_o,_eol
+		.BYTE _t,_e,_r,_m,_i,_n,_a,_t,_e,__,_y,_o,_u,_dot,_eol,_eol
 _script98_msg00:
-		.BYTE $61,$78,$7F,$7F,$82,$8F,$FF,$FF
+		.BYTE _H,_e,_l,_l,_o,_ex,_eol,_eol
 _script98_msg01:
-		.BYTE $68,$7B,$E5,$8A,$7B,$74,$87,$90,$86,$F1,$82,$81,$F1,$8C,$82,$88,$85,$FF
-		.BYTE $80,$7C,$81,$77,$E5,$7D,$88,$86,$87,$F1,$7F,$78,$87,$F1,$80,$78,$FF
-		.BYTE $7E,$81,$82,$8A,$E4,$70,$82,$88,$7F,$77,$F1,$8C,$82,$88,$F1,$7F,$7C,$7E,$78,$FF
-		.BYTE $87,$82,$F1,$75,$88,$8C,$F1,$87,$7B,$7C,$86,$F1,$77,$85,$78,$86,$86,$8E,$FF,$FF
+		.BYTE _O,_h,_col,_w,_h,_a,_t,_ap,_s,__,_o,_n,__,_y,_o,_u,_r,_eol
+		.BYTE _m,_i,_n,_d,_col,_j,_u,_s,_t,__,_l,_e,_t,__,_m,_e,_eol
+		.BYTE _k,_n,_o,_w,_dot,_W,_o,_u,_l,_d,__,_y,_o,_u,__,_l,_i,_k,_e,_eol
+		.BYTE _t,_o,__,_b,_u,_y,__,_t,_h,_i,_s,__,_d,_r,_e,_s,_s,_qe,_eol,_eol
 _script98_msg02:
-		.BYTE $62,$F1,$76,$74,$81,$90,$87,$F1,$7A,$82,$F1,$8A,$7C,$87,$7B,$82,$88,$87,$FF
-		.BYTE $87,$7B,$7C,$86,$F1,$85,$7C,$79,$7F,$78,$E4,$FF
-		.BYTE $F1,$FF
-		.BYTE $68,$7B,$E5,$87,$7B,$7C,$86,$F1,$7C,$86,$F1,$74,$FF
-		.BYTE $75,$78,$74,$88,$87,$7C,$79,$88,$7F,$F1,$77,$85,$78,$86,$86,$E4,$FF,$FF
+		.BYTE _I,__,_c,_a,_n,_ap,_t,__,_g,_o,__,_w,_i,_t,_h,_o,_u,_t,_eol
+		.BYTE _t,_h,_i,_s,__,_r,_i,_f,_l,_e,_dot,_eol
+		.BYTE __,_eol
+		.BYTE _O,_h,_col,_t,_h,_i,_s,__,_i,_s,__,_a,_eol
+		.BYTE _b,_e,_a,_u,_t,_i,_f,_u,_l,__,_d,_r,_e,_s,_s,_dot,_eol,_eol
 _script98_msg03:
-		.BYTE $61,$80,$80,$E5,$62,$90,$80,$F1,$86,$82,$85,$85,$8C,$E4,$FF,$FF
+		.BYTE _H,_m,_m,_col,_I,_ap,_m,__,_s,_o,_r,_r,_y,_dot,_eol,_eol
 _script98_msg04:
-		.BYTE $72,$82,$88,$F1,$7F,$82,$82,$7E,$F1,$7A,$82,$82,$77,$F1,$7C,$81,$FF
-		.BYTE $87,$7B,$78,$F1,$77,$85,$78,$86,$86,$E4,$FF,$FF
+		.BYTE _Y,_o,_u,__,_l,_o,_o,_k,__,_g,_o,_o,_d,__,_i,_n,_eol
+		.BYTE _t,_h,_e,__,_d,_r,_e,_s,_s,_dot,_eol,_eol
 _script99_msg00:
-		.BYTE $5A,$F1,$7E,$7C,$77,$F1,$7C,$86,$F1,$80,$7C,$86,$86,$7C,$81,$7A,$FF
-		.BYTE $7C,$81,$F1,$74,$F1,$76,$74,$89,$78,$F1,$87,$82,$F1,$87,$7B,$78,$FF
-		.BYTE $81,$82,$85,$87,$7B,$E4,$FF
-		.BYTE $69,$7F,$78,$74,$86,$78,$F1,$79,$7C,$81,$77,$F1,$7B,$7C,$80,$E4,$FF,$FF
+		.BYTE _A,__,_k,_i,_d,__,_i,_s,__,_m,_i,_s,_s,_i,_n,_g,_eol
+		.BYTE _i,_n,__,_a,__,_c,_a,_v,_e,__,_t,_o,__,_t,_h,_e,_eol
+		.BYTE _n,_o,_r,_t,_h,_dot,_eol
+		.BYTE _P,_l,_e,_a,_s,_e,__,_f,_i,_n,_d,__,_h,_i,_m,_dot,_eol,_eol
 _script99_msg01:
-		.BYTE $EE,$EE,$EE,$FF,$FF
+		.BYTE _dtt,_dtt,_dtt,_eol,_eol
 _script99_msg02:
-		.BYTE $6B,$74,$80,$75,$82,$E5,$83,$7F,$78,$74,$86,$78,$F1,$86,$74,$89,$78,$FF
-		.BYTE $87,$7B,$78,$F1,$7E,$7C,$77,$E4,$FF,$FF
+		.BYTE _R,_a,_m,_b,_o,_col,_p,_l,_e,_a,_s,_e,__,_s,_a,_v,_e,_eol
+		.BYTE _t,_h,_e,__,_k,_i,_d,_dot,_eol,_eol
 _script99_msg03:
-		.BYTE $6D,$7B,$74,$81,$7E,$F1,$8C,$82,$88,$F1,$79,$82,$85,$FF
-		.BYTE $86,$74,$89,$7C,$81,$7A,$F1,$87,$7B,$78,$F1,$7E,$7C,$77,$E4,$FF
-		.BYTE $69,$7F,$78,$74,$86,$78,$F1,$85,$78,$86,$87,$E4,$FF,$FF
+		.BYTE _T,_h,_a,_n,_k,__,_y,_o,_u,__,_f,_o,_r,_eol
+		.BYTE _s,_a,_v,_i,_n,_g,__,_t,_h,_e,__,_k,_i,_d,_dot,_eol
+		.BYTE _P,_l,_e,_a,_s,_e,__,_r,_e,_s,_t,_dot,_eol,_eol
 _script99_msg04:
-		.BYTE $62,$F1,$76,$74,$81,$90,$87,$F1,$86,$87,$74,$8C,$F1,$7B,$78,$85,$78,$FF
-		.BYTE $79,$82,$85,$F1,$74,$F1,$7F,$82,$81,$7A,$F1,$87,$7C,$80,$78,$E4,$FF
-		.BYTE $62,$F1,$80,$88,$86,$87,$F1,$7A,$82,$E4,$FF,$FF
+		.BYTE _I,__,_c,_a,_n,_ap,_t,__,_s,_t,_a,_y,__,_h,_e,_r,_e,_eol
+		.BYTE _f,_o,_r,__,_a,__,_l,_o,_n,_g,__,_t,_i,_m,_e,_dot,_eol
+		.BYTE _I,__,_m,_u,_s,_t,__,_g,_o,_dot,_eol,_eol
 _script9A_msg00:
-		.BYTE $70,$7B,$8C,$F1,$77,$7C,$77,$F1,$8C,$82,$88,$F1,$76,$82,$80,$78,$FF
-		.BYTE $7B,$78,$85,$78,$8E,$FF,$FF
+		.BYTE _W,_h,_y,__,_d,_i,_d,__,_y,_o,_u,__,_c,_o,_m,_e,_eol
+		.BYTE _h,_e,_r,_e,_qe,_eol,_eol
 _script9A_msg02:
-		.BYTE $62,$F1,$8A,$74,$81,$87,$F1,$87,$82,$F1,$86,$74,$89,$78,$F1,$87,$7B,$78,$FF
-		.BYTE $7E,$7C,$77,$F1,$7C,$81,$F1,$87,$7B,$78,$F1,$76,$74,$89,$78,$E4,$FF,$FF
+		.BYTE _I,__,_w,_a,_n,_t,__,_t,_o,__,_s,_a,_v,_e,__,_t,_h,_e,_eol
+		.BYTE _k,_i,_d,__,_i,_n,__,_t,_h,_e,__,_c,_a,_v,_e,_dot,_eol,_eol
 _script9A_msg03:
-		.BYTE $6D,$74,$7E,$78,$F1,$87,$7B,$7C,$86,$F1,$7F,$74,$80,$83,$E4,$FF,$FF
+		.BYTE _T,_a,_k,_e,__,_t,_h,_i,_s,__,_l,_a,_m,_p,_dot,_eol,_eol
 _script9B_msg00:
-		.BYTE $5A,$81,$F1,$5A,$80,$78,$85,$7C,$76,$74,$81,$F1,$86,$83,$8C,$F1,$8A,$74,$86,$FF
-		.BYTE $76,$74,$88,$7A,$7B,$87,$E4,$FF,$FF
+		.BYTE _A,_n,__,_A,_m,_e,_r,_i,_c,_a,_n,__,_s,_p,_y,__,_w,_a,_s,_eol
+		.BYTE _c,_a,_u,_g,_h,_t,_dot,_eol,_eol
 _script9B_msg01:
-		.BYTE $62,$F1,$8A,$74,$81,$81,$74,$F1,$87,$74,$7E,$78,$F1,$7B,$7C,$80,$FF
-		.BYTE $82,$88,$87,$E4,$FF,$FF
+		.BYTE _I,__,_w,_a,_n,_n,_a,__,_t,_a,_k,_e,__,_h,_i,_m,_eol
+		.BYTE _o,_u,_t,_dot,_eol,_eol
 _script9B_msg02:
-		.BYTE $6D,$74,$7E,$78,$F1,$87,$7B,$7C,$86,$F1,$80,$78,$77,$7C,$76,$7C,$81,$78,$FF
-		.BYTE $74,$81,$77,$F1,$7A,$7C,$89,$78,$F1,$7C,$87,$F1,$87,$82,$F1,$7B,$7C,$80,$E4,$FF,$FF
+		.BYTE _T,_a,_k,_e,__,_t,_h,_i,_s,__,_m,_e,_d,_i,_c,_i,_n,_e,_eol
+		.BYTE _a,_n,_d,__,_g,_i,_v,_e,__,_i,_t,__,_t,_o,__,_h,_i,_m,_dot,_eol,_eol
 _script9B_msg03:
-		.BYTE $72,$82,$88,$F1,$7F,$82,$82,$7E,$F1,$87,$7C,$85,$78,$77,$E4,$FF
-		.BYTE $6B,$78,$86,$87,$F1,$7B,$78,$85,$78,$F1,$79,$82,$85,$F1,$74,$FF
-		.BYTE $8A,$7B,$7C,$7F,$78,$E4,$FF,$FF
+		.BYTE _Y,_o,_u,__,_l,_o,_o,_k,__,_t,_i,_r,_e,_d,_dot,_eol
+		.BYTE _R,_e,_s,_t,__,_h,_e,_r,_e,__,_f,_o,_r,__,_a,_eol
+		.BYTE _w,_h,_i,_l,_e,_dot,_eol,_eol
 _script9B_msg04:
-		.BYTE $6D,$7B,$74,$81,$7E,$86,$E4,$FF
-		.BYTE $62,$90,$80,$F1,$74,$75,$7F,$78,$F1,$87,$82,$F1,$79,$7C,$7A,$7B,$87,$FF
-		.BYTE $74,$7A,$74,$7C,$81,$E4,$FF,$FF
+		.BYTE _T,_h,_a,_n,_k,_s,_dot,_eol
+		.BYTE _I,_ap,_m,__,_a,_b,_l,_e,__,_t,_o,__,_f,_i,_g,_h,_t,_eol
+		.BYTE _a,_g,_a,_i,_n,_dot,_eol,_eol
 _script9C_msg00:
-		.BYTE $70,$78,$90,$85,$78,$F1,$86,$74,$79,$78,$F1,$79,$82,$85,$F1,$81,$82,$8A,$E4,$FF
-		.BYTE $70,$7B,$74,$87,$F1,$74,$85,$78,$F1,$8C,$82,$88,$F1,$7A,$82,$7C,$81,$7A,$FF
-		.BYTE $87,$82,$F1,$77,$82,$8E,$FF
-		.BYTE $60,$82,$7C,$81,$7A,$F1,$87,$82,$F1,$6D,$7B,$74,$7C,$7F,$74,$81,$77,$8E,$FF,$FF
+		.BYTE _W,_e,_ap,_r,_e,__,_s,_a,_f,_e,__,_f,_o,_r,__,_n,_o,_w,_dot,_eol
+		.BYTE _W,_h,_a,_t,__,_a,_r,_e,__,_y,_o,_u,__,_g,_o,_i,_n,_g,_eol
+		.BYTE _t,_o,__,_d,_o,_qe,_eol
+		.BYTE _G,_o,_i,_n,_g,__,_t,_o,__,_T,_h,_a,_i,_l,_a,_n,_d,_qe,_eol,_eol
 _script9C_msg01:
-		.BYTE $6D,$7B,$78,$81,$F1,$5A,$80,$78,$85,$7C,$76,$74,$8E,$FF
-		.BYTE $70,$82,$88,$7F,$77,$F1,$8C,$82,$88,$F1,$83,$7F,$78,$74,$86,$78,$FF
-		.BYTE $87,$74,$7E,$78,$F1,$80,$78,$F1,$8A,$7C,$87,$7B,$F1,$8C,$82,$88,$8E,$FF,$FF
+		.BYTE _T,_h,_e,_n,__,_A,_m,_e,_r,_i,_c,_a,_qe,_eol
+		.BYTE _W,_o,_u,_l,_d,__,_y,_o,_u,__,_p,_l,_e,_a,_s,_e,_eol
+		.BYTE _t,_a,_k,_e,__,_m,_e,__,_w,_i,_t,_h,__,_y,_o,_u,_qe,_eol,_eol
 _script9C_msg02:
-		.BYTE $72,$82,$88,$90,$85,$78,$F1,$7C,$81,$F1,$77,$74,$81,$7A,$78,$85,$FF
-		.BYTE $7B,$78,$85,$78,$E4,$65,$78,$87,$90,$86,$F1,$7A,$82,$F1,$75,$74,$76,$7E,$FF
-		.BYTE $87,$82,$7A,$78,$87,$7B,$78,$85,$E4,$FF,$FF
+		.BYTE _Y,_o,_u,_ap,_r,_e,__,_i,_n,__,_d,_a,_n,_g,_e,_r,_eol
+		.BYTE _h,_e,_r,_e,_dot,_L,_e,_t,_ap,_s,__,_g,_o,__,_b,_a,_c,_k,_eol
+		.BYTE _t,_o,_g,_e,_t,_h,_e,_r,_dot,_eol,_eol
 _script9C_msg03:
-		.BYTE $6D,$7B,$74,$81,$7E,$F1,$8C,$82,$88,$EE,$EE,$EE,$FF
-		.BYTE $62,$90,$80,$F1,$86,$82,$F1,$7B,$74,$83,$83,$8C,$EE,$EE,$EE,$FF
-		.BYTE $65,$78,$87,$90,$86,$F1,$7A,$82,$E4,$6D,$7B,$78,$8C,$90,$85,$78,$FF
-		.BYTE $76,$82,$80,$7C,$81,$7A,$F1,$88,$83,$F1,$75,$78,$7B,$7C,$81,$77,$FF
-		.BYTE $88,$86,$E4,$FF,$FF
+		.BYTE _T,_h,_a,_n,_k,__,_y,_o,_u,_dtt,_dtt,_dtt,_eol
+		.BYTE _I,_ap,_m,__,_s,_o,__,_h,_a,_p,_p,_y,_dtt,_dtt,_dtt,_eol
+		.BYTE _L,_e,_t,_ap,_s,__,_g,_o,_dot,_T,_h,_e,_y,_ap,_r,_e,_eol
+		.BYTE _c,_o,_m,_i,_n,_g,__,_u,_p,__,_b,_e,_h,_i,_n,_d,_eol
+		.BYTE _u,_s,_dot,_eol,_eol
 _script9C_msg04:
-		.BYTE $6E,$7A,$7B,$8F,$FF,$FF
+		.BYTE _U,_g,_h,_ex,_eol,_eol
 _script9C_msg05:
-		.BYTE $5C,$82,$E4,$5A,$85,$78,$F1,$8C,$82,$88,$F1,$74,$7F,$7F,$FF
-		.BYTE $85,$7C,$7A,$7B,$87,$8E,$FF,$FF
+		.BYTE _C,_o,_dot,_A,_r,_e,__,_y,_o,_u,__,_a,_l,_l,_eol
+		.BYTE _r,_i,_g,_h,_t,_qe,_eol,_eol
 _script9C_msg06:
-		.BYTE $6B,$74,$80,$75,$82,$E5,$62,$F1,$76,$74,$81,$90,$87,$F1,$7A,$82,$FF
-		.BYTE $8A,$7C,$87,$7B,$F1,$8C,$82,$88,$E4,$FF,$FF
+		.BYTE _R,_a,_m,_b,_o,_col,_I,__,_c,_a,_n,_ap,_t,__,_g,_o,_eol
+		.BYTE _w,_i,_t,_h,__,_y,_o,_u,_dot,_eol,_eol
 _script9C_msg07:
-		.BYTE $72,$82,$88,$90,$85,$78,$F1,$7A,$82,$7C,$81,$7A,$F1,$8A,$7C,$87,$7B,$FF
-		.BYTE $80,$78,$F1,$87,$82,$F1,$87,$7B,$78,$F1,$6C,$87,$74,$87,$78,$86,$E4,$FF,$FF
+		.BYTE _Y,_o,_u,_ap,_r,_e,__,_g,_o,_i,_n,_g,__,_w,_i,_t,_h,_eol
+		.BYTE _m,_e,__,_t,_o,__,_t,_h,_e,__,_S,_t,_a,_t,_e,_s,_dot,_eol,_eol
 _script9C_msg08:
-		.BYTE $6B,$74,$80,$75,$82,$E5,$87,$7B,$74,$81,$7E,$F1,$8C,$82,$88,$E4,$FF
-		.BYTE $69,$7F,$78,$74,$86,$78,$F1,$77,$82,$81,$90,$87,$F1,$79,$82,$85,$7A,$78,$87,$FF
-		.BYTE $80,$78,$E4,$FF,$FF
+		.BYTE _R,_a,_m,_b,_o,_col,_t,_h,_a,_n,_k,__,_y,_o,_u,_dot,_eol
+		.BYTE _P,_l,_e,_a,_s,_e,__,_d,_o,_n,_ap,_t,__,_f,_o,_r,_g,_e,_t,_eol
+		.BYTE _m,_e,_dot,_eol,_eol
 _script9C_msg09:
-		.BYTE $5C,$82,$8F,$FF,$FF
+		.BYTE _C,_o,_ex,_eol,_eol
 _script9D_msg00:
-		.BYTE $6B,$74,$80,$75,$82,$F1,$79,$82,$88,$81,$77,$F1,$87,$7B,$78,$F1,$7E,$78,$8C,$FF
-		.BYTE $87,$82,$F1,$87,$7B,$78,$F1,$7B,$78,$7F,$7C,$76,$82,$83,$87,$78,$85,$E4,$FF,$FF
+		.BYTE _R,_a,_m,_b,_o,__,_f,_o,_u,_n,_d,__,_t,_h,_e,__,_k,_e,_y,_eol
+		.BYTE _t,_o,__,_t,_h,_e,__,_h,_e,_l,_i,_c,_o,_p,_t,_e,_r,_dot,_eol,_eol
 _script9D_msg01:
-		.BYTE $6C,$78,$85,$7A,$78,$74,$81,$87,$F1,$72,$74,$86,$7B,$7C,$81,$F1,$F1,$F1,$FF
-		.BYTE $76,$74,$80,$78,$F1,$88,$83,$F1,$87,$7B,$78,$85,$78,$E4,$FF,$FF
+		.BYTE _S,_e,_r,_g,_e,_a,_n,_t,__,_Y,_a,_s,_h,_i,_n,__,__,__,_eol
+		.BYTE _c,_a,_m,_e,__,_u,_p,__,_t,_h,_e,_r,_e,_dot,_eol,_eol
 _script9D_msg02:
-		.BYTE $62,$87,$90,$86,$F1,$87,$7C,$80,$78,$F1,$79,$82,$85,$FF
-		.BYTE $8C,$82,$88,$F1,$87,$82,$F1,$77,$7C,$78,$E4,$FF,$FF
+		.BYTE _I,_t,_ap,_s,__,_t,_i,_m,_e,__,_f,_o,_r,_eol
+		.BYTE _y,_o,_u,__,_t,_o,__,_d,_i,_e,_dot,_eol,_eol
 _script9E_msg00:
-		.BYTE $72,$82,$88,$F1,$76,$74,$81,$90,$87,$F1,$79,$7F,$8C,$FF
-		.BYTE $8A,$7C,$87,$7B,$82,$88,$87,$F1,$87,$7B,$78,$F1,$7E,$78,$8C,$F1,$87,$82,$FF
-		.BYTE $87,$7B,$78,$F1,$7B,$78,$7F,$7C,$76,$82,$83,$87,$78,$85,$E4,$FF,$FF
+		.BYTE _Y,_o,_u,__,_c,_a,_n,_ap,_t,__,_f,_l,_y,_eol
+		.BYTE _w,_i,_t,_h,_o,_u,_t,__,_t,_h,_e,__,_k,_e,_y,__,_t,_o,_eol
+		.BYTE _t,_h,_e,__,_h,_e,_l,_i,_c,_o,_p,_t,_e,_r,_dot,_eol,_eol
 _script9E_msg01:
-		.BYTE $65,$78,$87,$90,$86,$F1,$7A,$82,$F1,$87,$82,$F1,$87,$7B,$78,$FF
-		.BYTE $76,$74,$80,$83,$F1,$74,$81,$77,$F1,$85,$78,$86,$76,$88,$78,$FF
-		.BYTE $87,$7B,$78,$80,$E4,$FF,$FF
+		.BYTE _L,_e,_t,_ap,_s,__,_g,_o,__,_t,_o,__,_t,_h,_e,_eol
+		.BYTE _c,_a,_m,_p,__,_a,_n,_d,__,_r,_e,_s,_c,_u,_e,_eol
+		.BYTE _t,_h,_e,_m,_dot,_eol,_eol
 _script9E_msg02:
-		.BYTE $6B,$74,$80,$75,$82,$E5,$7D,$88,$80,$83,$F1,$82,$81,$FF
-		.BYTE $84,$88,$7C,$76,$7E,$7F,$8C,$E4,$FF,$FF
+		.BYTE _R,_a,_m,_b,_o,_col,_j,_u,_m,_p,__,_o,_n,_eol
+		.BYTE _q,_u,_i,_c,_k,_l,_y,_dot,_eol,_eol
 _script9F_msg00:
-		.BYTE $66,$78,$74,$81,$8A,$7B,$7C,$7F,$78,$E5,$5C,$82,$E5,$FF
-		.BYTE $87,$82,$F1,$86,$74,$89,$78,$F1,$6B,$74,$80,$75,$82,$EE,$EE,$EE,$FF,$FF
+		.BYTE _M,_e,_a,_n,_w,_h,_i,_l,_e,_col,_C,_o,_col,_eol
+		.BYTE _t,_o,__,_s,_a,_v,_e,__,_R,_a,_m,_b,_o,_dtt,_dtt,_dtt,_eol,_eol
 _scriptA0_msg00:
-		.BYTE $5A,$85,$78,$F1,$8C,$82,$88,$F1,$74,$7F,$85,$7C,$7A,$7B,$87,$8E,$FF
-		.BYTE $62,$F1,$76,$74,$80,$78,$F1,$7B,$78,$85,$78,$F1,$87,$82,$F1,$7A,$78,$87,$FF
-		.BYTE $8C,$82,$88,$F1,$7B,$82,$80,$78,$E4,$FF,$FF
+		.BYTE _A,_r,_e,__,_y,_o,_u,__,_a,_l,_r,_i,_g,_h,_t,_qe,_eol
+		.BYTE _I,__,_c,_a,_m,_e,__,_h,_e,_r,_e,__,_t,_o,__,_g,_e,_t,_eol
+		.BYTE _y,_o,_u,__,_h,_o,_m,_e,_dot,_eol,_eol
 _scriptA0_msg01:
-		.BYTE $62,$90,$80,$F1,$8A,$78,$74,$7E,$E4,$FF
-		.BYTE $62,$F1,$87,$7B,$7C,$81,$7E,$F1,$62,$90,$80,$F1,$77,$8C,$7C,$81,$7A,$E4,$FF,$FF
+		.BYTE _I,_ap,_m,__,_w,_e,_a,_k,_dot,_eol
+		.BYTE _I,__,_t,_h,_i,_n,_k,__,_I,_ap,_m,__,_d,_y,_i,_n,_g,_dot,_eol,_eol
 _scriptA0_msg02:
-		.BYTE $5B,$78,$F1,$86,$87,$85,$82,$81,$7A,$8F,$FF
-		.BYTE $70,$78,$F1,$76,$74,$81,$F1,$80,$74,$7E,$78,$F1,$7C,$87,$8F,$FF
-		.BYTE $61,$88,$85,$85,$8C,$E5,$7F,$78,$87,$90,$86,$F1,$7A,$78,$87,$F1,$82,$88,$87,$FF
-		.BYTE $82,$79,$F1,$7B,$78,$85,$78,$E4,$FF,$FF
+		.BYTE _B,_e,__,_s,_t,_r,_o,_n,_g,_ex,_eol
+		.BYTE _W,_e,__,_c,_a,_n,__,_m,_a,_k,_e,__,_i,_t,_ex,_eol
+		.BYTE _H,_u,_r,_r,_y,_col,_l,_e,_t,_ap,_s,__,_g,_e,_t,__,_o,_u,_t,_eol
+		.BYTE _o,_f,__,_h,_e,_r,_e,_dot,_eol,_eol
 _scriptA1_msg00:
-		.BYTE $69,$7F,$78,$74,$86,$78,$F1,$85,$78,$86,$76,$88,$78,$F1,$80,$78,$E4,$FF,$FF
+		.BYTE _P,_l,_e,_a,_s,_e,__,_r,_e,_s,_c,_u,_e,__,_m,_e,_dot,_eol,_eol
 _scriptA1_msg01:
-		.BYTE $5A,$7F,$7F,$F1,$85,$7C,$7A,$7B,$87,$E4,$FF
-		.BYTE $F1,$FF
-		.BYTE $F1,$FF
-		.BYTE $6C,$82,$85,$85,$8C,$E5,$80,$8C,$F1,$77,$88,$87,$8C,$F1,$7C,$86,$FF
-		.BYTE $7D,$88,$86,$87,$F1,$87,$82,$F1,$87,$74,$7E,$78,$F1,$83,$7B,$82,$87,$82,$86,$E4,$FF,$FF
+		.BYTE _A,_l,_l,__,_r,_i,_g,_h,_t,_dot,_eol
+		.BYTE __,_eol
+		.BYTE __,_eol
+		.BYTE _S,_o,_r,_r,_y,_col,_m,_y,__,_d,_u,_t,_y,__,_i,_s,_eol
+		.BYTE _j,_u,_s,_t,__,_t,_o,__,_t,_a,_k,_e,__,_p,_h,_o,_t,_o,_s,_dot,_eol,_eol
 _scriptA1_msg02:
-		.BYTE $5D,$7C,$77,$81,$90,$87,$F1,$8C,$82,$88,$F1,$76,$82,$80,$78,$FF
-		.BYTE $7B,$78,$85,$78,$F1,$87,$82,$F1,$86,$74,$89,$78,$F1,$88,$86,$E4,$FF
-		.BYTE $69,$7F,$78,$74,$86,$78,$F1,$87,$74,$7E,$78,$F1,$88,$86,$F1,$82,$88,$87,$E4,$FF,$FF
+		.BYTE _D,_i,_d,_n,_ap,_t,__,_y,_o,_u,__,_c,_o,_m,_e,_eol
+		.BYTE _h,_e,_r,_e,__,_t,_o,__,_s,_a,_v,_e,__,_u,_s,_dot,_eol
+		.BYTE _P,_l,_e,_a,_s,_e,__,_t,_a,_k,_e,__,_u,_s,__,_o,_u,_t,_dot,_eol,_eol
 _scriptA1_msg03:
-		.BYTE $62,$90,$80,$F1,$79,$85,$78,$78,$E4,$FF
-		.BYTE $6D,$7B,$78,$85,$78,$F1,$74,$85,$78,$F1,$86,$82,$80,$78,$FF
-		.BYTE $80,$82,$85,$78,$E4,$FF,$FF
+		.BYTE _I,_ap,_m,__,_f,_r,_e,_e,_dot,_eol
+		.BYTE _T,_h,_e,_r,_e,__,_a,_r,_e,__,_s,_o,_m,_e,_eol
+		.BYTE _m,_o,_r,_e,_dot,_eol,_eol
 _scriptA1_msg04:
-		.BYTE $62,$90,$7F,$7F,$F1,$75,$78,$F1,$75,$74,$76,$7E,$E4,$FF
-		.BYTE $65,$78,$87,$90,$86,$F1,$7A,$78,$87,$F1,$82,$88,$87,$F1,$82,$79,$FF
-		.BYTE $7B,$78,$85,$78,$E4,$FF
-		.BYTE $F1,$FF
-		.BYTE $F1,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$F1,$FF,$FF
+		.BYTE _I,_ap,_l,_l,__,_b,_e,__,_b,_a,_c,_k,_dot,_eol
+		.BYTE _L,_e,_t,_ap,_s,__,_g,_e,_t,__,_o,_u,_t,__,_o,_f,_eol
+		.BYTE _h,_e,_r,_e,_dot,_eol
+		.BYTE __,_eol
+		.BYTE __,__,__,__,__,__,__,__,__,__,__,__,__,__,__,__,__,__,__,__,_eol,_eol
 _scriptA2_msg00:
-		.BYTE $60,$78,$87,$F1,$82,$81,$F1,$87,$7B,$78,$F1,$76,$7B,$82,$83,$83,$78,$85,$8F,$FF
-		.BYTE $6A,$88,$7C,$76,$7E,$8F,$FF,$FF
+		.BYTE _G,_e,_t,__,_o,_n,__,_t,_h,_e,__,_c,_h,_o,_p,_p,_e,_r,_ex,_eol
+		.BYTE _Q,_u,_i,_c,_k,_ex,_eol,_eol
 _scriptA2_msg01:
-		.BYTE $60,$82,$82,$77,$E7,$75,$8C,$78,$F1,$90,$67,$74,$80,$E4,$FF,$FF
+		.BYTE _G,_o,_o,_d,_dsh,_b,_y,_e,__,_ap,_N,_a,_m,_dot,_eol,_eol
 _scriptA2_msg02:
-		.BYTE $6D,$7B,$78,$85,$78,$F1,$80,$88,$86,$87,$F1,$75,$78,$F1,$86,$82,$80,$78,$FF
-		.BYTE $80,$82,$85,$78,$E4,$FF
-		.BYTE $65,$78,$87,$90,$86,$F1,$87,$74,$7E,$78,$F1,$87,$7B,$78,$80,$FF
-		.BYTE $82,$88,$87,$E4,$FF,$FF
+		.BYTE _T,_h,_e,_r,_e,__,_m,_u,_s,_t,__,_b,_e,__,_s,_o,_m,_e,_eol
+		.BYTE _m,_o,_r,_e,_dot,_eol
+		.BYTE _L,_e,_t,_ap,_s,__,_t,_a,_k,_e,__,_t,_h,_e,_m,_eol
+		.BYTE _o,_u,_t,_dot,_eol,_eol
 _scriptA2_msg03:
-		.BYTE $62,$90,$7F,$7F,$F1,$7B,$78,$7F,$83,$F1,$8C,$82,$88,$E4,$FF,$FF
+		.BYTE _I,_ap,_l,_l,__,_h,_e,_l,_p,__,_y,_o,_u,_dot,_eol,_eol
 _scriptA2_msg04:
-		.BYTE $72,$82,$88,$90,$77,$F1,$75,$78,$87,$87,$78,$85,$F1,$86,$87,$74,$8C,$FF
-		.BYTE $7B,$78,$85,$78,$F1,$7C,$81,$F1,$87,$7B,$78,$FF
-		.BYTE $76,$7B,$82,$83,$83,$78,$85,$E4,$FF,$FF
+		.BYTE _Y,_o,_u,_ap,_d,__,_b,_e,_t,_t,_e,_r,__,_s,_t,_a,_y,_eol
+		.BYTE _h,_e,_r,_e,__,_i,_n,__,_t,_h,_e,_eol
+		.BYTE _c,_h,_o,_p,_p,_e,_r,_dot,_eol,_eol
 _scriptA3_msg00:
-		.BYTE $62,$F1,$77,$82,$81,$90,$87,$F1,$80,$74,$7E,$78,$FF
-		.BYTE $82,$85,$77,$78,$85,$86,$E4,$62,$F1,$87,$74,$7E,$78,$F1,$87,$7B,$78,$80,$FF
-		.BYTE $7D,$88,$86,$87,$F1,$7F,$7C,$7E,$78,$F1,$8C,$82,$88,$E4,$FF,$FF
+		.BYTE _I,__,_d,_o,_n,_ap,_t,__,_m,_a,_k,_e,_eol
+		.BYTE _o,_r,_d,_e,_r,_s,_dot,_I,__,_t,_a,_k,_e,__,_t,_h,_e,_m,_eol
+		.BYTE _j,_u,_s,_t,__,_l,_i,_k,_e,__,_y,_o,_u,_dot,_eol,_eol
 _scriptA3_msg01:
-		.BYTE $62,$F1,$86,$8A,$78,$74,$85,$F1,$87,$82,$F1,$60,$82,$77,$E5,$FF
-		.BYTE $87,$7B,$7C,$86,$F1,$8A,$74,$86,$81,$90,$87,$FF
-		.BYTE $86,$88,$83,$83,$82,$86,$78,$77,$F1,$87,$82,$F1,$7B,$74,$83,$83,$78,$81,$E4,$FF,$FF
+		.BYTE _I,__,_s,_w,_e,_a,_r,__,_t,_o,__,_G,_o,_d,_col,_eol
+		.BYTE _t,_h,_i,_s,__,_w,_a,_s,_n,_ap,_t,_eol
+		.BYTE _s,_u,_p,_p,_o,_s,_e,_d,__,_t,_o,__,_h,_a,_p,_p,_e,_n,_dot,_eol,_eol
 _scriptA3_msg02:
-		.BYTE $62,$87,$F1,$8A,$74,$86,$F1,$7D,$88,$86,$87,$FF
-		.BYTE $86,$88,$83,$83,$82,$86,$78,$77,$F1,$87,$82,$F1,$75,$78,$FF
-		.BYTE $74,$81,$82,$87,$7B,$78,$85,$FF
-		.BYTE $74,$86,$86,$7C,$7A,$81,$80,$78,$81,$87,$E4,$FF,$FF
+		.BYTE _I,_t,__,_w,_a,_s,__,_j,_u,_s,_t,_eol
+		.BYTE _s,_u,_p,_p,_o,_s,_e,_d,__,_t,_o,__,_b,_e,_eol
+		.BYTE _a,_n,_o,_t,_h,_e,_r,_eol
+		.BYTE _a,_s,_s,_i,_g,_n,_m,_e,_n,_t,_dot,_eol,_eol
 _scriptA3_msg03:
-		.BYTE $66,$7C,$86,$86,$7C,$82,$81,$FF
-		.BYTE $74,$76,$76,$82,$80,$83,$7F,$7C,$86,$7B,$78,$77,$E4,$FF,$FF
+		.BYTE _M,_i,_s,_s,_i,_o,_n,_eol
+		.BYTE _a,_c,_c,_o,_m,_p,_l,_i,_s,_h,_e,_d,_dot,_eol,_eol
 _scriptA3_msg04:
-		.BYTE $6D,$7B,$78,$85,$78,$F1,$74,$85,$78,$F1,$80,$82,$85,$78,$F1,$80,$78,$81,$FF
-		.BYTE $82,$88,$87,$F1,$87,$7B,$78,$85,$78,$E4,$FF
-		.BYTE $5F,$7C,$81,$77,$F1,$87,$7B,$78,$80,$E5,$82,$85,$F1,$62,$90,$7F,$7F,$FF
-		.BYTE $79,$7C,$81,$77,$F1,$8C,$82,$88,$E4,$FF,$FF
+		.BYTE _T,_h,_e,_r,_e,__,_a,_r,_e,__,_m,_o,_r,_e,__,_m,_e,_n,_eol
+		.BYTE _o,_u,_t,__,_t,_h,_e,_r,_e,_dot,_eol
+		.BYTE _F,_i,_n,_d,__,_t,_h,_e,_m,_col,_o,_r,__,_I,_ap,_l,_l,_eol
+		.BYTE _f,_i,_n,_d,__,_y,_o,_u,_dot,_eol,_eol
 _scriptA3_msg05:
-		.BYTE $60,$82,$82,$77,$F1,$7D,$82,$75,$E5,$6B,$74,$80,$75,$82,$E4,$FF
-		.BYTE $62,$90,$80,$F1,$7E,$78,$78,$83,$7C,$81,$7A,$F1,$82,$88,$85,$FF
-		.BYTE $77,$78,$74,$7F,$E5,$8C,$82,$88,$F1,$76,$74,$81,$F1,$7A,$82,$FF
-		.BYTE $8A,$7B,$78,$85,$78,$89,$78,$85,$F1,$8C,$82,$88,$F1,$8A,$74,$81,$87,$E4,$FF,$FF
+		.BYTE _G,_o,_o,_d,__,_j,_o,_b,_col,_R,_a,_m,_b,_o,_dot,_eol
+		.BYTE _I,_ap,_m,__,_k,_e,_e,_p,_i,_n,_g,__,_o,_u,_r,_eol
+		.BYTE _d,_e,_a,_l,_col,_y,_o,_u,__,_c,_a,_n,__,_g,_o,_eol
+		.BYTE _w,_h,_e,_r,_e,_v,_e,_r,__,_y,_o,_u,__,_w,_a,_n,_t,_dot,_eol,_eol
 _scriptA3_msg06:
-		.BYTE $5A,$85,$78,$81,$90,$87,$F1,$8C,$82,$88,$F1,$7A,$82,$7C,$81,$7A,$F1,$87,$82,$FF
-		.BYTE $85,$78,$86,$76,$88,$78,$F1,$87,$7B,$78,$F1,$69,$68,$70,$90,$86,$8E,$FF,$FF
+		.BYTE _A,_r,_e,_n,_ap,_t,__,_y,_o,_u,__,_g,_o,_i,_n,_g,__,_t,_o,_eol
+		.BYTE _r,_e,_s,_c,_u,_e,__,_t,_h,_e,__,_P,_O,_W,_ap,_s,_qe,_eol,_eol
 _scriptA3_msg07:
-		.BYTE $67,$82,$E5,$87,$7B,$82,$86,$78,$F1,$83,$7B,$82,$87,$82,$86,$FF
-		.BYTE $8A,$78,$85,$78,$F1,$88,$86,$78,$7F,$78,$86,$86,$F1,$74,$86,$FF
-		.BYTE $78,$89,$7C,$77,$78,$81,$76,$78,$E4,$FF,$FF
+		.BYTE _N,_o,_col,_t,_h,_o,_s,_e,__,_p,_h,_o,_t,_o,_s,_eol
+		.BYTE _w,_e,_r,_e,__,_u,_s,_e,_l,_e,_s,_s,__,_a,_s,_eol
+		.BYTE _e,_v,_i,_d,_e,_n,_c,_e,_dot,_eol,_eol
 _scriptA3_msg08:
-		.BYTE $6D,$7B,$78,$F1,$80,$7C,$86,$86,$7C,$82,$81,$F1,$8A,$74,$86,$FF
-		.BYTE $74,$F1,$79,$74,$7C,$7F,$88,$85,$78,$E4,$62,$F1,$7E,$81,$78,$8A,$FF
-		.BYTE $8C,$82,$88,$F1,$76,$82,$88,$7F,$77,$81,$90,$87,$F1,$77,$82,$F1,$7C,$87,$E4,$FF,$FF
-		.BYTE $FF
+		.BYTE _T,_h,_e,__,_m,_i,_s,_s,_i,_o,_n,__,_w,_a,_s,_eol
+		.BYTE _a,__,_f,_a,_i,_l,_u,_r,_e,_dot,_I,__,_k,_n,_e,_w,_eol
+		.BYTE _y,_o,_u,__,_c,_o,_u,_l,_d,_n,_ap,_t,__,_d,_o,__,_i,_t,_dot,_eol,_eol
+;		.BYTE _eol
 _scriptA4_msg00:
-		.BYTE $60,$82,$82,$77,$F1,$7D,$82,$75,$E5,$6B,$74,$80,$75,$82,$E4,$FF,$FF
+		.BYTE _G,_o,_o,_d,__,_j,_o,_b,_col,_R,_a,_m,_b,_o,_dot,_eol,_eol
 _scriptA4_msg01:
-		.BYTE $EE,$EE,$EE,$FF,$FF
+		.BYTE _dtt,_dtt,_dtt,_eol,_eol
 _scriptA4_msg02:
-		.BYTE $72,$82,$88,$90,$85,$78,$F1,$87,$82,$88,$7A,$7B,$78,$85,$FF
-		.BYTE $87,$7B,$78,$81,$F1,$62,$F1,$87,$7B,$82,$88,$7A,$7B,$87,$E4,$67,$82,$8A,$E5,$FF
-		.BYTE $8C,$82,$88,$90,$85,$78,$F1,$79,$85,$78,$78,$E4,$FF,$FF
+		.BYTE _Y,_o,_u,_ap,_r,_e,__,_t,_o,_u,_g,_h,_e,_r,_eol
+		.BYTE _t,_h,_e,_n,__,_I,__,_t,_h,_o,_u,_g,_h,_t,_dot,_N,_o,_w,_col,_eol
+		.BYTE _y,_o,_u,_ap,_r,_e,__,_f,_r,_e,_e,_dot,_eol,_eol
 _scriptA4_msg03:
-		.BYTE $63,$82,$7B,$81,$E5,$8A,$7B,$78,$85,$78,$F1,$74,$85,$78,$F1,$8C,$82,$88,$FF
-		.BYTE $7A,$82,$7C,$81,$7A,$8E,$FF,$FF
+		.BYTE _J,_o,_h,_n,_col,_w,_h,_e,_r,_e,__,_a,_r,_e,__,_y,_o,_u,_eol
+		.BYTE _g,_o,_i,_n,_g,_qe,_eol,_eol
 _scriptA4_msg04:
-		.BYTE $62,$F1,$77,$82,$81,$90,$87,$F1,$7E,$81,$82,$8A,$E4,$FF,$FF
+		.BYTE _I,__,_d,_o,_n,_ap,_t,__,_k,_n,_o,_w,_dot,_eol,_eol
 _scriptA4_msg05:
-		.BYTE $6D,$7B,$7C,$86,$F1,$7C,$86,$F1,$74,$F1,$86,$78,$76,$82,$81,$77,$FF
-		.BYTE $66,$78,$77,$74,$7F,$F1,$82,$79,$F1,$61,$82,$81,$82,$85,$F1,$79,$82,$85,$FF
-		.BYTE $8C,$82,$88,$E4,$FF,$FF
+		.BYTE _T,_h,_i,_s,__,_i,_s,__,_a,__,_s,_e,_c,_o,_n,_d,_eol
+		.BYTE _M,_e,_d,_a,_l,__,_o,_f,__,_H,_o,_n,_o,_r,__,_f,_o,_r,_eol
+		.BYTE _y,_o,_u,_dot,_eol,_eol
 _scriptA4_msg06:
-		.BYTE $72,$82,$88,$F1,$86,$7B,$82,$88,$7F,$77,$F1,$7A,$7C,$89,$78,$F1,$7C,$87,$FF
-		.BYTE $87,$82,$F1,$87,$7B,$78,$80,$E4,$FF,$FF
+		.BYTE _Y,_o,_u,__,_s,_h,_o,_u,_l,_d,__,_g,_i,_v,_e,__,_i,_t,_eol
+		.BYTE _t,_o,__,_t,_h,_e,_m,_dot,_eol,_eol
 _scriptA4_msg07:
-		.BYTE $72,$82,$88,$90,$85,$78,$F1,$79,$85,$78,$78,$F1,$81,$82,$8A,$E4,$FF
-		.BYTE $5C,$82,$80,$78,$F1,$75,$74,$76,$7E,$F1,$8A,$7C,$87,$7B,$F1,$88,$86,$E4,$FF,$FF
+		.BYTE _Y,_o,_u,_ap,_r,_e,__,_f,_r,_e,_e,__,_n,_o,_w,_dot,_eol
+		.BYTE _C,_o,_m,_e,__,_b,_a,_c,_k,__,_w,_i,_t,_h,__,_u,_s,_dot,_eol,_eol
 _scriptA4_msg08:
-		.BYTE $70,$7B,$74,$87,$90,$86,$F1,$87,$7B,$78,$85,$78,$F1,$79,$82,$85,$FF
-		.BYTE $80,$78,$8E,$FF
-		.BYTE $66,$8C,$F1,$79,$85,$7C,$78,$81,$77,$86,$F1,$77,$7C,$78,$77,$FF
-		.BYTE $7B,$78,$85,$78,$E5,$74,$81,$77,$F1,$74,$F1,$83,$7C,$78,$76,$78,$F1,$82,$79,$FF
-		.BYTE $80,$78,$F1,$77,$7C,$77,$F1,$87,$82,$E4,$FF,$FF
+		.BYTE _W,_h,_a,_t,_ap,_s,__,_t,_h,_e,_r,_e,__,_f,_o,_r,_eol
+		.BYTE _m,_e,_qe,_eol
+		.BYTE _M,_y,__,_f,_r,_i,_e,_n,_d,_s,__,_d,_i,_e,_d,_eol
+		.BYTE _h,_e,_r,_e,_col,_a,_n,_d,__,_a,__,_p,_i,_e,_c,_e,__,_o,_f,_eol
+		.BYTE _m,_e,__,_d,_i,_d,__,_t,_o,_dot,_eol,_eol
 _scriptA4_msg09:
-		.BYTE $6D,$7B,$78,$F1,$8A,$74,$85,$E5,$78,$89,$78,$85,$8C,$87,$7B,$7C,$81,$7A,$FF
-		.BYTE $87,$7B,$74,$87,$F1,$7B,$74,$83,$83,$78,$81,$78,$77,$F1,$80,$74,$8C,$75,$78,$FF
-		.BYTE $7C,$87,$90,$86,$F1,$8A,$85,$82,$81,$7A,$E4,$FF,$FF
+		.BYTE _T,_h,_e,__,_w,_a,_r,_col,_e,_v,_e,_r,_y,_t,_h,_i,_n,_g,_eol
+		.BYTE _t,_h,_a,_t,__,_h,_a,_p,_p,_e,_n,_e,_d,__,_m,_a,_y,_b,_e,_eol
+		.BYTE _i,_t,_ap,_s,__,_w,_r,_o,_n,_g,_dot,_eol,_eol
 _scriptA4_msg0a:
-		.BYTE $5D,$82,$81,$90,$87,$F1,$7B,$74,$87,$78,$FF
-		.BYTE $8C,$82,$88,$85,$F1,$76,$82,$88,$81,$87,$85,$8C,$F1,$79,$82,$85,$FF
-		.BYTE $8A,$7B,$74,$87,$F1,$8C,$82,$88,$90,$89,$78,$F1,$75,$78,$78,$81,$FF
-		.BYTE $87,$7B,$85,$82,$88,$7A,$7B,$E4,$FF,$FF
+		.BYTE _D,_o,_n,_ap,_t,__,_h,_a,_t,_e,_eol
+		.BYTE _y,_o,_u,_r,__,_c,_o,_u,_n,_t,_r,_y,__,_f,_o,_r,_eol
+		.BYTE _w,_h,_a,_t,__,_y,_o,_u,_ap,_v,_e,__,_b,_e,_e,_n,_eol
+		.BYTE _t,_h,_r,_o,_u,_g,_h,_dot,_eol,_eol
 _scriptA4_msg0b:
-		.BYTE $61,$74,$87,$78,$8E,$FF
-		.BYTE $62,$90,$77,$F1,$77,$7C,$78,$F1,$79,$82,$85,$F1,$7C,$87,$E4,$FF,$FF
+		.BYTE _H,_a,_t,_e,_qe,_eol
+		.BYTE _I,_ap,_d,__,_d,_i,_e,__,_f,_o,_r,__,_i,_t,_dot,_eol,_eol
 _scriptA4_msg0c:
-		.BYTE $6C,$82,$E5,$8A,$7B,$74,$87,$F1,$77,$82,$F1,$8C,$82,$88,$FF
-		.BYTE $8A,$74,$81,$87,$E4,$FF,$FF
+		.BYTE _S,_o,_col,_w,_h,_a,_t,__,_d,_o,__,_y,_o,_u,_eol
+		.BYTE _w,_a,_n,_t,_dot,_eol,_eol
 _scriptA4_msg0d:
-		.BYTE $62,$F1,$8A,$74,$81,$87,$F1,$8A,$7B,$74,$87,$F1,$87,$7B,$78,$8C,$FF
-		.BYTE $8A,$74,$81,$87,$E4,$E4,$E4,$FF
-		.BYTE $78,$89,$78,$85,$8C,$F1,$82,$87,$7B,$78,$85,$F1,$7A,$88,$8C,$FF
-		.BYTE $8A,$7B,$82,$F1,$76,$74,$80,$78,$F1,$82,$89,$78,$85,$F1,$7B,$78,$85,$78,$E5,$FF,$FF
+		.BYTE _I,__,_w,_a,_n,_t,__,_w,_h,_a,_t,__,_t,_h,_e,_y,_eol
+		.BYTE _w,_a,_n,_t,_dot,_dot,_dot,_eol
+		.BYTE _e,_v,_e,_r,_y,__,_o,_t,_h,_e,_r,__,_g,_u,_y,_eol
+		.BYTE _w,_h,_o,__,_c,_a,_m,_e,__,_o,_v,_e,_r,__,_h,_e,_r,_e,_col,_eol,_eol
 _scriptA4_msg0e:
-		.BYTE $62,$F1,$8A,$74,$81,$87,$F1,$79,$82,$85,$FF
-		.BYTE $80,$8C,$F1,$76,$82,$88,$81,$87,$85,$8C,$F1,$87,$82,$F1,$7F,$82,$89,$78,$FF
-		.BYTE $80,$78,$F1,$74,$86,$F1,$80,$88,$76,$7B,$F1,$74,$86,$FF
-		.BYTE $62,$F1,$7F,$82,$89,$78,$F1,$7C,$87,$E4,$FF,$FF
+		.BYTE _I,__,_w,_a,_n,_t,__,_f,_o,_r,_eol
+		.BYTE _m,_y,__,_c,_o,_u,_n,_t,_r,_y,__,_t,_o,__,_l,_o,_v,_e,_eol
+		.BYTE _m,_e,__,_a,_s,__,_m,_u,_c,_h,__,_a,_s,_eol
+		.BYTE _I,__,_l,_o,_v,_e,__,_i,_t,_dot,_eol,_eol
 _scriptA4_msg0f:
-		.BYTE $6D,$7B,$74,$87,$90,$86,$F1,$8A,$7B,$74,$87,$F1,$62,$F1,$8A,$74,$81,$87,$E4,$FF,$FF
+		.BYTE _T,_h,_a,_t,_ap,_s,__,_w,_h,_a,_t,__,_I,__,_w,_a,_n,_t,_dot,_eol,_eol
 _scriptA4_msg10:
-		.BYTE $70,$7B,$74,$87,$F1,$74,$85,$78,$F1,$8C,$82,$88,$F1,$7A,$82,$7C,$81,$7A,$FF
-		.BYTE $87,$82,$F1,$77,$82,$8E,$FF,$FF
+		.BYTE _W,_h,_a,_t,__,_a,_r,_e,__,_y,_o,_u,__,_g,_o,_i,_n,_g,_eol
+		.BYTE _t,_o,__,_d,_o,_qe,_eol,_eol
 _scriptA4_msg11:
-		.BYTE $5D,$74,$8C,$F1,$75,$8C,$F1,$77,$74,$8C,$E4,$FF,$FF
+		.BYTE _D,_a,_y,__,_b,_y,__,_d,_a,_y,_dot,_eol,_eol
 _scriptA4_msg12:
-		.BYTE $70,$78,$7F,$76,$82,$80,$78,$F1,$75,$74,$76,$7E,$E4,$FF
-		.BYTE $5B,$88,$87,$F1,$87,$7B,$78,$F1,$7A,$74,$80,$78,$F1,$7C,$86,$F1,$81,$82,$87,$FF
-		.BYTE $82,$89,$78,$85,$E4,$63,$82,$7B,$81,$E5,$74,$85,$78,$F1,$8C,$82,$88,$FF
-		.BYTE $86,$74,$87,$7C,$86,$79,$7C,$78,$77,$8E,$FF,$FF
+		.BYTE _W,_e,_l,_c,_o,_m,_e,__,_b,_a,_c,_k,_dot,_eol
+		.BYTE _B,_u,_t,__,_t,_h,_e,__,_g,_a,_m,_e,__,_i,_s,__,_n,_o,_t,_eol
+		.BYTE _o,_v,_e,_r,_dot,_J,_o,_h,_n,_col,_a,_r,_e,__,_y,_o,_u,_eol
+		.BYTE _s,_a,_t,_i,_s,_f,_i,_e,_d,_qe,_eol,_eol
 _scriptA4_msg13:
-		.BYTE $65,$78,$87,$F1,$80,$78,$F1,$87,$85,$8C,$F1,$74,$7A,$74,$7C,$81,$E4,$FF
-		.BYTE $F1,$FF
-		.BYTE $F1,$FF
-		.BYTE $62,$F1,$77,$82,$81,$90,$87,$F1,$8A,$74,$81,$87,$F1,$87,$82,$F1,$77,$82,$FF
-		.BYTE $87,$7B,$74,$87,$F1,$74,$7A,$74,$7C,$81,$E4,$FF,$FF
-		.BYTE $FF
+		.BYTE _L,_e,_t,__,_m,_e,__,_t,_r,_y,__,_a,_g,_a,_i,_n,_dot,_eol
+		.BYTE __,_eol
+		.BYTE __,_eol
+		.BYTE _I,__,_d,_o,_n,_ap,_t,__,_w,_a,_n,_t,__,_t,_o,__,_d,_o,_eol
+		.BYTE _t,_h,_a,_t,__,_a,_g,_a,_i,_n,_dot,_eol,_eol
+;		.BYTE _eol
 _scriptA4_msg14:
-		.BYTE $6D,$7B,$78,$F1,$85,$78,$74,$7F,$F1,$83,$88,$85,$83,$82,$86,$78,$F1,$82,$79,$FF
-		.BYTE $87,$7B,$78,$F1,$7A,$74,$80,$78,$F1,$7C,$86,$F1,$87,$82,$F1,$86,$74,$89,$78,$FF
-		.BYTE $87,$7B,$78,$F1,$69,$68,$70,$E4,$FF,$FF
+		.BYTE _T,_h,_e,__,_r,_e,_a,_l,__,_p,_u,_r,_p,_o,_s,_e,__,_o,_f,_eol
+		.BYTE _t,_h,_e,__,_g,_a,_m,_e,__,_i,_s,__,_t,_o,__,_s,_a,_v,_e,_eol
+		.BYTE _t,_h,_e,__,_P,_O,_W,_dot,_eol,_eol
 _scriptA5_msg00:
-		.BYTE $70,$7B,$74,$87,$F1,$74,$85,$78,$F1,$8C,$82,$88,$F1,$77,$82,$7C,$81,$7A,$8E,$FF
-		.BYTE $60,$82,$7C,$81,$7A,$F1,$87,$82,$FF
-		.BYTE $87,$7B,$78,$F1,$6C,$87,$74,$87,$78,$86,$8E,$FF,$FF
+		.BYTE _W,_h,_a,_t,__,_a,_r,_e,__,_y,_o,_u,__,_d,_o,_i,_n,_g,_qe,_eol
+		.BYTE _G,_o,_i,_n,_g,__,_t,_o,_eol
+		.BYTE _t,_h,_e,__,_S,_t,_a,_t,_e,_s,_qe,_eol,_eol
 _scriptA5_msg01:
-		.BYTE $70,$74,$85,$80,$F1,$83,$78,$82,$83,$7F,$78,$E4,$FF
-		.BYTE $70,$74,$85,$80,$F1,$76,$7C,$87,$8C,$E4,$FF
-		.BYTE $70,$74,$85,$80,$F1,$77,$74,$8C,$86,$E4,$FF,$FF
+		.BYTE _W,_a,_r,_m,__,_p,_e,_o,_p,_l,_e,_dot,_eol
+		.BYTE _W,_a,_r,_m,__,_c,_i,_t,_y,_dot,_eol
+		.BYTE _W,_a,_r,_m,__,_d,_a,_y,_s,_dot,_eol,_eol
 _scriptA5_msg02:
-		.BYTE $62,$90,$89,$78,$F1,$75,$78,$78,$81,$F1,$77,$85,$78,$74,$80,$7C,$81,$7A,$FF
-		.BYTE $82,$79,$F1,$7F,$7C,$89,$7C,$81,$7A,$F1,$7C,$81,$F1,$87,$7B,$78,$FF
-		.BYTE $6E,$6C,$5A,$F1,$74,$81,$77,$F1,$7B,$74,$89,$7C,$81,$7A,$F1,$74,$FF
-		.BYTE $86,$7C,$80,$83,$7F,$78,$F1,$7F,$7C,$79,$78,$E4,$62,$79,$F1,$8C,$82,$88,$FF
-		.BYTE $77,$82,$81,$90,$87,$F1,$80,$7C,$81,$77,$EE,$EE,$EE,$FF,$FF
+		.BYTE _I,_ap,_v,_e,__,_b,_e,_e,_n,__,_d,_r,_e,_a,_m,_i,_n,_g,_eol
+		.BYTE _o,_f,__,_l,_i,_v,_i,_n,_g,__,_i,_n,__,_t,_h,_e,_eol
+		.BYTE _U,_S,_A,__,_a,_n,_d,__,_h,_a,_v,_i,_n,_g,__,_a,_eol
+		.BYTE _s,_i,_m,_p,_l,_e,__,_l,_i,_f,_e,_dot,_I,_f,__,_y,_o,_u,_eol
+		.BYTE _d,_o,_n,_ap,_t,__,_m,_i,_n,_d,_dtt,_dtt,_dtt,_eol,_eol
 _scriptA5_msg03:
-		.BYTE $62,$F1,$87,$7B,$7C,$81,$7E,$F1,$62,$F1,$7F,$78,$74,$85,$81,$78,$77,$FF
-		.BYTE $86,$82,$80,$78,$87,$7B,$7C,$81,$7A,$F1,$7C,$80,$83,$82,$85,$87,$74,$81,$87,$FF
-		.BYTE $79,$85,$82,$80,$F1,$8C,$82,$88,$E4,$62,$F1,$80,$74,$8C,$F1,$75,$78,$FF
-		.BYTE $74,$75,$7F,$78,$F1,$87,$82,$F1,$7F,$7C,$89,$78,$E5,$FF
-		.BYTE $82,$85,$F1,$7F,$82,$89,$78,$EE,$EE,$EE,$FF,$FF
+		.BYTE _I,__,_t,_h,_i,_n,_k,__,_I,__,_l,_e,_a,_r,_n,_e,_d,_eol
+		.BYTE _s,_o,_m,_e,_t,_h,_i,_n,_g,__,_i,_m,_p,_o,_r,_t,_a,_n,_t,_eol
+		.BYTE _f,_r,_o,_m,__,_y,_o,_u,_dot,_I,__,_m,_a,_y,__,_b,_e,_eol
+		.BYTE _a,_b,_l,_e,__,_t,_o,__,_l,_i,_v,_e,_col,_eol
+		.BYTE _o,_r,__,_l,_o,_v,_e,_dtt,_dtt,_dtt,_eol,_eol
 _scriptA5_msg04:
-		.BYTE $6B,$78,$74,$7F,$7F,$8C,$8E,$FF
-		.BYTE $62,$F1,$7F,$82,$89,$78,$F1,$8C,$82,$88,$E4,$FF,$FF
-		.BYTE $FF,$FF,$FF,$FF,$FF
+		.BYTE _R,_e,_a,_l,_l,_y,_qe,_eol
+		.BYTE _I,__,_l,_o,_v,_e,__,_y,_o,_u,_dot,_eol,_eol
+;		.BYTE _eol,_eol,_eol,_eol,_eol
 _scriptAA_msg00:
-		.BYTE $6B,$74,$80,$75,$82,$F1,$74,$81,$77,$F1,$5C,$82,$F1,$82,$81,$FF
-		.BYTE $87,$7B,$78,$F1,$75,$82,$74,$87,$EE,$EE,$EE,$FF,$FF
-		.BYTE $FF,$FF
+		.BYTE _R,_a,_m,_b,_o,__,_a,_n,_d,__,_C,_o,__,_o,_n,_eol
+		.BYTE _t,_h,_e,__,_b,_o,_a,_t,_dtt,_dtt,_dtt,_eol,_eol
+;		.BYTE _eol,_eol
 _scriptAC_msg00:
-		.BYTE $62,$90,$80,$F1,$5E,$85,$7C,$76,$86,$82,$81,$E4,$FF
-		.BYTE $62,$90,$80,$F1,$7A,$7F,$74,$77,$F1,$87,$82,$F1,$8A,$82,$85,$7E,$FF
-		.BYTE $8A,$7C,$87,$7B,$F1,$8C,$82,$88,$E4,$FF,$FF
+		.BYTE _I,_ap,_m,__,_E,_r,_i,_c,_s,_o,_n,_dot,_eol
+		.BYTE _I,_ap,_m,__,_g,_l,_a,_d,__,_t,_o,__,_w,_o,_r,_k,_eol
+		.BYTE _w,_i,_t,_h,__,_y,_o,_u,_dot,_eol,_eol
 _scriptAC_msg01:
-		.BYTE $70,$78,$90,$89,$78,$F1,$81,$82,$F1,$87,$7C,$80,$78,$E4,$FF
-		.BYTE $60,$82,$F1,$87,$82,$FF
-		.BYTE $6D,$85,$74,$88,$87,$80,$74,$81,$F1,$86,$82,$82,$81,$E4,$FF,$FF
+		.BYTE _W,_e,_ap,_v,_e,__,_n,_o,__,_t,_i,_m,_e,_dot,_eol
+		.BYTE _G,_o,__,_t,_o,_eol
+		.BYTE _T,_r,_a,_u,_t,_m,_a,_n,__,_s,_o,_o,_n,_dot,_eol,_eol
 _scriptAD_msg00:
-		.BYTE $6D,$7B,$74,$81,$7E,$F1,$8C,$82,$88,$F1,$6B,$74,$80,$75,$82,$E4,$FF
-		.BYTE $70,$78,$F1,$7E,$81,$78,$8A,$F1,$87,$7B,$74,$87,$FF
-		.BYTE $8C,$82,$88,$F1,$8A,$82,$88,$7F,$77,$F1,$86,$74,$89,$78,$FF
-		.BYTE $87,$7B,$78,$80,$E4,$FF,$FF
+		.BYTE _T,_h,_a,_n,_k,__,_y,_o,_u,__,_R,_a,_m,_b,_o,_dot,_eol
+		.BYTE _W,_e,__,_k,_n,_e,_w,__,_t,_h,_a,_t,_eol
+		.BYTE _y,_o,_u,__,_w,_o,_u,_l,_d,__,_s,_a,_v,_e,_eol
+		.BYTE _t,_h,_e,_m,_dot,_eol,_eol
 _scriptAE_msg00:
-		.BYTE $5C,$82,$F1,$8A,$78,$81,$87,$F1,$87,$82,$F1,$87,$7B,$78,$F1,$76,$74,$80,$83,$FF
-		.BYTE $87,$82,$F1,$7B,$78,$7F,$83,$F1,$6B,$74,$80,$75,$82,$E4,$FF,$FF
-		.BYTE $FF,$FF,$FF
+		.BYTE _C,_o,__,_w,_e,_n,_t,__,_t,_o,__,_t,_h,_e,__,_c,_a,_m,_p,_eol
+		.BYTE _t,_o,__,_h,_e,_l,_p,__,_R,_a,_m,_b,_o,_dot,_eol,_eol
+;		.BYTE _eol,_eol,_eol
 _scriptB1_msg00:
-		.BYTE $6B,$74,$80,$75,$82,$FF
-		.BYTE $F1,$FF
-		.BYTE $F1,$6D,$7B,$78,$F1,$75,$74,$87,$87,$7F,$78,$F1,$7C,$86,$FF
-		.BYTE $F1,$82,$89,$78,$85,$E5,$75,$88,$87,$EE,$EE,$EE,$FF,$FF
+		.BYTE _R,_a,_m,_b,_o,_eol
+		.BYTE __,_eol
+		.BYTE __,_T,_h,_e,__,_b,_a,_t,_t,_l,_e,__,_i,_s,_eol
+		.BYTE __,_o,_v,_e,_r,_col,_b,_u,_t,_dtt,_dtt,_dtt,_eol,_eol
 _scriptB1_msg01:
-		.BYTE $6D,$7B,$74,$81,$7E,$F1,$8C,$82,$88,$FF
-		.BYTE $79,$82,$85,$F1,$87,$85,$8C,$7C,$81,$7A,$E4,$FF,$FF
+		.BYTE _T,_h,_a,_n,_k,__,_y,_o,_u,_eol
+		.BYTE _f,_o,_r,__,_t,_r,_y,_i,_n,_g,_dot,_eol,_eol
 
 		BANK_END 5,$C000
