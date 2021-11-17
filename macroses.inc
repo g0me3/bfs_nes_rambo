@@ -390,8 +390,13 @@ _tobjB.field_7			SET	_tobjB + 7
 
 ;---------G-A-M-E--S-P-E-C-I-F-I-C--------------
 
+	MAC	OBJ_START
+{1}			SET .
+OBJ_LIST_START	SET	{1}
+	ENDM
+
 	MAC	OBJ_HNDL
-{1}_idx		SET	[[.-_obj_hndl_lib]>>1]
+{1}_idx		SET	[[.-OBJ_LIST_START]>>1]
 		.WORD {1}
 	ENDM
 
@@ -441,11 +446,13 @@ _tobjB.field_7			SET	_tobjB + 7
 	ENDM
 
 	MAC	PPU_FILL_RECT
+#if {1}!=0
 		LDA		_PPU_STATUS
 		LDA		#>[{1}]
 		STA		_PPU_ADDR
 		LDA		#<[{1}]
 		STA		_PPU_ADDR
+#endif
 		LDA		#{2}
 		LDY		#{3}
 .1:

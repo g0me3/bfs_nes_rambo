@@ -77,14 +77,134 @@ _location_warpsB_list:
 		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$19,$00
 		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 _location_prizes_list:
-		.BYTE $00,$00,$0B,$0B,$0B,$0B,$00,$0B,$0C,$0C,$00,$00,$00,$00,$00,$0B
-		.BYTE $0B,$11,$0F,$0B,$0B,$0B,$10,$0E,$0C,$12,$0B,$0B,$0C,$11,$10,$0C
-		.BYTE $0B,$0F,$0B,$12,$0B,$0B,$0B,$0B,$0E,$0C,$0C,$0C,$10,$0B,$0B,$0D
-		.BYTE $00,$0D,$0A,$0B,$0B,$0F,$0B,$0D,$0B,$0C,$00,$0C,$0A,$0B,$0B,$0B
-		.BYTE $0B,$00,$0D,$0A,$0B,$0B,$0C,$0B,$0E,$0B,$0F,$0A,$0B,$0F,$0D,$0B
-		.BYTE $10,$0E,$0B,$0D,$00,$0A,$0B,$0F,$10,$0E,$0B,$0C,$0B,$10,$0B,$0C
-		.BYTE $0A,$00,$00,$11,$0B,$0B,$0C,$10,$12,$0D,$0E,$0B,$0C,$00,$00,$00
-		.BYTE $0B,$0E,$0B,$0C,$0F,$12,$0E,$00,$0B,$0A,$0B,$0D,$00,$00,$00,$00
+		.BYTE $00
+		.BYTE $00
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE $00
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0C_arrow_ammo_idx
+		.BYTE _objB_hndl0C_arrow_ammo_idx
+		.BYTE $00
+		.BYTE $00
+		.BYTE $00
+		.BYTE $00
+		.BYTE $00
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl11_hi_speed_idx
+		.BYTE _objB_hndl0F_grenades_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl10_potions_idx
+		.BYTE _objB_hndl0E_machinegun_ammo_idx
+		.BYTE _objB_hndl0C_arrow_ammo_idx
+		.BYTE _objB_hndl12_hi_jump_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0C_arrow_ammo_idx
+		.BYTE _objB_hndl11_hi_speed_idx
+		.BYTE _objB_hndl10_potions_idx
+		.BYTE _objB_hndl0C_arrow_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0F_grenades_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl12_hi_jump_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0E_machinegun_ammo_idx
+		.BYTE _objB_hndl0C_arrow_ammo_idx
+		.BYTE _objB_hndl0C_arrow_ammo_idx
+		.BYTE _objB_hndl0C_arrow_ammo_idx
+		.BYTE _objB_hndl10_potions_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0D_explo_arrow_ammo_idx
+		.BYTE $00
+		.BYTE _objB_hndl0D_explo_arrow_ammo_idx
+		.BYTE _objB_hndl0A_heart_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0F_grenades_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0D_explo_arrow_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0C_arrow_ammo_idx
+		.BYTE $00
+		.BYTE _objB_hndl0C_arrow_ammo_idx
+		.BYTE _objB_hndl0A_heart_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE $00
+		.BYTE _objB_hndl0D_explo_arrow_ammo_idx
+		.BYTE _objB_hndl0A_heart_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0C_arrow_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0E_machinegun_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0F_grenades_ammo_idx
+		.BYTE _objB_hndl0A_heart_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0F_grenades_ammo_idx
+		.BYTE _objB_hndl0D_explo_arrow_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl10_potions_idx
+		.BYTE _objB_hndl0E_machinegun_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0D_explo_arrow_ammo_idx
+		.BYTE $00
+		.BYTE _objB_hndl0A_heart_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0F_grenades_ammo_idx
+		.BYTE _objB_hndl10_potions_idx
+		.BYTE _objB_hndl0E_machinegun_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0C_arrow_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl10_potions_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0C_arrow_ammo_idx
+		.BYTE _objB_hndl0A_heart_idx
+		.BYTE $00
+		.BYTE $00
+		.BYTE _objB_hndl11_hi_speed_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0C_arrow_ammo_idx
+		.BYTE _objB_hndl10_potions_idx
+		.BYTE _objB_hndl12_hi_jump_idx
+		.BYTE _objB_hndl0D_explo_arrow_ammo_idx
+		.BYTE _objB_hndl0E_machinegun_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0C_arrow_ammo_idx
+		.BYTE $00
+		.BYTE $00
+		.BYTE $00
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0E_machinegun_ammo_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0C_arrow_ammo_idx
+		.BYTE _objB_hndl0F_grenades_ammo_idx
+		.BYTE _objB_hndl12_hi_jump_idx
+		.BYTE _objB_hndl0E_machinegun_ammo_idx
+		.BYTE $00
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0A_heart_idx
+		.BYTE _objB_hndl0B_knife_ammo_idx
+		.BYTE _objB_hndl0D_explo_arrow_ammo_idx
+		.BYTE $00
+		.BYTE $00
+		.BYTE $00
+		.BYTE $00
 _chr_bg_table_lib:
 		.BYTE $00,$01,$02,$03,$04,$05,$08,$10,$11,$17,$18,$19,$1A,$1B,$2C,$2D	; $00	; regular stage bg tiles
 		.BYTE $00,$01,$02,$03,$04,$05,$0A,$10,$11,$12,$13,$14,$15,$16,$2C,$2D	; $01
@@ -1427,70 +1547,70 @@ _stage_obj_list:
 		OBJ_MAP $0,$0,$0,$00
 		OBJ_MAP $0,$0,$0,$00
 _obj_params_lib:
-		.BYTE $F0,$EF,$00,$06,$00,$00,$80,$00	; $00
-		.BYTE $F0,$D8,$00,$06,$00,$FF,$94,$00	; $01
-		.BYTE $F0,$D8,$00,$06,$00,$FF,$94,$00	; $02
-		.BYTE $F0,$D8,$00,$06,$00,$FF,$94,$00	; $03
-		.BYTE $F0,$D8,$00,$06,$00,$FF,$94,$00	; $04
-		.BYTE $F0,$2F,$00,$03,$04,$01,$14,$00	; $05
-		.BYTE $F0,$FF,$00,$03,$04,$02,$14,$00	; $06
-		.BYTE $F0,$AF,$00,$03,$04,$04,$15,$00	; $07
-		.BYTE $F0,$28,$00,$00,$04,$FF,$94,$00	; $08
-		.BYTE $F0,$2F,$00,$03,$08,$04,$15,$00	; $09
-		.BYTE $F0,$EF,$00,$03,$14,$FF,$19,$00	; $0A
-		.BYTE $F0,$2F,$00,$03,$08,$0C,$17,$00	; $0B
-		.BYTE $F0,$2F,$00,$03,$04,$02,$14,$00	; $0C
-		.BYTE $F0,$28,$00,$0C,$14,$FF,$9A,$00	; $0D
-		.BYTE $F0,$AF,$00,$02,$08,$04,$15,$00	; $0E
-		.BYTE $F0,$FF,$00,$00,$04,$02,$14,$00	; $0F
-		.BYTE $F0,$3F,$00,$03,$18,$FF,$14,$00	; $10
-		.BYTE $F0,$3F,$00,$02,$24,$02,$89,$00	; $11
-		.BYTE $F0,$3F,$00,$03,$1C,$02,$14,$00	; $12
-		.BYTE $F0,$E8,$00,$03,$1C,$60,$1A,$00	; $13
-		.BYTE $F0,$28,$00,$03,$08,$FF,$98,$00	; $14
-		.BYTE $F0,$EF,$00,$01,$0C,$FF,$97,$00	; $15
-		.BYTE $F0,$28,$00,$00,$08,$06,$16,$00	; $16
-		.BYTE $F0,$EF,$00,$05,$08,$06,$16,$00	; $17
-		.BYTE $F0,$EF,$00,$09,$10,$18,$18,$00	; $18
-		.BYTE $F0,$EF,$00,$0C,$04,$04,$15,$00	; $19
-		.BYTE $F0,$EF,$00,$0C,$0C,$06,$16,$00	; $1A
-		.BYTE $F0,$D8,$00,$01,$00,$FF,$94,$00	; $1B
-		.BYTE $F0,$EF,$00,$06,$0C,$06,$16,$00	; $1C
-		.BYTE $F0,$EF,$00,$06,$0C,$06,$16,$00	; $1D
-		.BYTE $F0,$EF,$00,$06,$0C,$0C,$17,$00	; $1E
-		.BYTE $F0,$EF,$00,$06,$10,$0C,$17,$00	; $1F
-		.BYTE $F0,$D8,$00,$06,$00,$FF,$94,$00	; $20
-		.BYTE $F0,$EF,$00,$06,$0C,$0C,$17,$00	; $21
-		.BYTE $F0,$EF,$00,$06,$20,$C0,$1B,$00	; $22
-		.BYTE $F0,$EF,$00,$06,$1C,$60,$1A,$00	; $23
-		.BYTE $F0,$EF,$00,$06,$18,$30,$0C,$00	; $24
-		.BYTE $F0,$EF,$00,$06,$18,$30,$19,$00	; $25
-		.BYTE $F0,$EF,$00,$06,$10,$0C,$17,$00	; $26
-		.BYTE $F0,$EF,$00,$06,$1C,$60,$1A,$00	; $27
-		.BYTE $F0,$EF,$00,$06,$20,$C0,$1B,$00	; $28
-		.BYTE $F0,$EF,$00,$06,$20,$C0,$1B,$00	; $29
-		.BYTE $F0,$EF,$00,$06,$0C,$0C,$17,$00	; $2A
-		.BYTE $F0,$EF,$00,$06,$0C,$18,$98,$00	; $2B
-		.BYTE $F0,$EF,$00,$7A,$0C,$18,$18,$00	; $2C
-		.BYTE $F0,$EF,$00,$09,$1C,$C0,$1B,$00	; $2D
-		.BYTE $F0,$EF,$00,$06,$20,$FF,$1C,$00	; $2E
-		.BYTE $F0,$EF,$00,$07,$20,$FF,$1C,$00	; $2F
-		.BYTE $F0,$EF,$00,$06,$10,$18,$98,$00	; $30
-		.BYTE $F0,$EF,$00,$0B,$18,$60,$0D,$00	; $31
-		.BYTE $F0,$EF,$00,$09,$18,$60,$0E,$00	; $32
-		.BYTE $F0,$EF,$00,$05,$1C,$C0,$1B,$00	; $33
-		.BYTE $F0,$EF,$00,$06,$10,$18,$18,$00	; $34
-		.BYTE $F0,$D8,$00,$06,$00,$FF,$80,$00	; $35
-		.BYTE $F0,$EF,$00,$0C,$14,$10,$9B,$00	; $36
-		.BYTE $F0,$EF,$0B,$CF,$08,$10,$9A,$00	; $37
-		.BYTE $F0,$EF,$0B,$0E,$10,$10,$9B,$00	; $38
-		.BYTE $F0,$2F,$00,$DA,$18,$10,$9C,$00	; $39
-		.BYTE $F0,$EF,$00,$46,$1C,$10,$9C,$00	; $3A
-		.BYTE $F0,$EF,$00,$06,$20,$10,$9C,$00	; $3B
-		.BYTE $F0,$00,$00,$00,$00,$FF,$14,$00	; $3C
-		.BYTE $F0,$00,$00,$0C,$00,$10,$14,$00	; $3D
-		.BYTE $F0,$3F,$00,$0E,$00,$10,$94,$00	; $3E
-		.BYTE $F0,$0C,$00,$03,$00,$01,$94,$00	; $3F
+		.BYTE $F0,$EF,$00,$06,$00,$00,$80|$00						,$00	; $00
+		.BYTE $F0,$D8,$00,$06,$00,$FF,$80|_objB_hndl14_score_1_idx	,$00	; $01
+		.BYTE $F0,$D8,$00,$06,$00,$FF,$80|_objB_hndl14_score_1_idx	,$00	; $02
+		.BYTE $F0,$D8,$00,$06,$00,$FF,$80|_objB_hndl14_score_1_idx	,$00	; $03
+		.BYTE $F0,$D8,$00,$06,$00,$FF,$80|_objB_hndl14_score_1_idx	,$00	; $04
+		.BYTE $F0,$2F,$00,$03,$04,$01,    _objB_hndl14_score_1_idx	,$00	; $05
+		.BYTE $F0,$FF,$00,$03,$04,$02,    _objB_hndl14_score_1_idx	,$00	; $06
+		.BYTE $F0,$AF,$00,$03,$04,$04,    _objB_hndl15_score_2_idx	,$00	; $07
+		.BYTE $F0,$28,$00,$00,$04,$FF,$80|_objB_hndl14_score_1_idx	,$00	; $08
+		.BYTE $F0,$2F,$00,$03,$08,$04,    _objB_hndl15_score_2_idx	,$00	; $09
+		.BYTE $F0,$EF,$00,$03,$14,$FF,    _objB_hndl19_score_50_idx	,$00	; $0A
+		.BYTE $F0,$2F,$00,$03,$08,$0C,    _objB_hndl17_score_10_idx	,$00	; $0B
+		.BYTE $F0,$2F,$00,$03,$04,$02,    _objB_hndl14_score_1_idx	,$00	; $0C
+		.BYTE $F0,$28,$00,$0C,$14,$FF,$80|_objB_hndl1A_score_100_idx,$00	; $0D
+		.BYTE $F0,$AF,$00,$02,$08,$04,    _objB_hndl15_score_2_idx	,$00	; $0E
+		.BYTE $F0,$FF,$00,$00,$04,$02,    _objB_hndl14_score_1_idx	,$00	; $0F
+		.BYTE $F0,$3F,$00,$03,$18,$FF,    _objB_hndl14_score_1_idx	,$00	; $10
+		.BYTE $F0,$3F,$00,$02,$24,$02,$80|_objB_hndl09_animate_idx	,$00	; $11
+		.BYTE $F0,$3F,$00,$03,$1C,$02,    _objB_hndl14_score_1_idx	,$00	; $12
+		.BYTE $F0,$E8,$00,$03,$1C,$60,    _objB_hndl1A_score_100_idx,$00	; $13
+		.BYTE $F0,$28,$00,$03,$08,$FF,$80|_objB_hndl18_score_20_idx	,$00	; $14
+		.BYTE $F0,$EF,$00,$01,$0C,$FF,$80|_objB_hndl17_score_10_idx	,$00	; $15
+		.BYTE $F0,$28,$00,$00,$08,$06,    _objB_hndl16_score_5_idx	,$00	; $16
+		.BYTE $F0,$EF,$00,$05,$08,$06,    _objB_hndl16_score_5_idx	,$00	; $17
+		.BYTE $F0,$EF,$00,$09,$10,$18,    _objB_hndl18_score_20_idx	,$00	; $18
+		.BYTE $F0,$EF,$00,$0C,$04,$04,    _objB_hndl15_score_2_idx	,$00	; $19
+		.BYTE $F0,$EF,$00,$0C,$0C,$06,    _objB_hndl16_score_5_idx	,$00	; $1A
+		.BYTE $F0,$D8,$00,$01,$00,$FF,$80|_objB_hndl14_score_1_idx	,$00	; $1B
+		.BYTE $F0,$EF,$00,$06,$0C,$06,    _objB_hndl16_score_5_idx	,$00	; $1C
+		.BYTE $F0,$EF,$00,$06,$0C,$06,    _objB_hndl16_score_5_idx	,$00	; $1D
+		.BYTE $F0,$EF,$00,$06,$0C,$0C,    _objB_hndl17_score_10_idx	,$00	; $1E
+		.BYTE $F0,$EF,$00,$06,$10,$0C,    _objB_hndl17_score_10_idx	,$00	; $1F
+		.BYTE $F0,$D8,$00,$06,$00,$FF,$80|_objB_hndl14_score_1_idx	,$00	; $20
+		.BYTE $F0,$EF,$00,$06,$0C,$0C,    _objB_hndl17_score_10_idx	,$00	; $21
+		.BYTE $F0,$EF,$00,$06,$20,$C0,    _objB_hndl1B_score_200_idx,$00	; $22
+		.BYTE $F0,$EF,$00,$06,$1C,$60,    _objB_hndl1A_score_100_idx,$00	; $23
+		.BYTE $F0,$EF,$00,$06,$18,$30,    _objB_hndl0C_arrow_ammo_idx,$00	; $24
+		.BYTE $F0,$EF,$00,$06,$18,$30,    _objB_hndl19_score_50_idx	,$00	; $25
+		.BYTE $F0,$EF,$00,$06,$10,$0C,    _objB_hndl17_score_10_idx	,$00	; $26
+		.BYTE $F0,$EF,$00,$06,$1C,$60,    _objB_hndl1A_score_100_idx,$00	; $27
+		.BYTE $F0,$EF,$00,$06,$20,$C0,    _objB_hndl1B_score_200_idx,$00	; $28
+		.BYTE $F0,$EF,$00,$06,$20,$C0,    _objB_hndl1B_score_200_idx,$00	; $29
+		.BYTE $F0,$EF,$00,$06,$0C,$0C,    _objB_hndl17_score_10_idx	,$00	; $2A
+		.BYTE $F0,$EF,$00,$06,$0C,$18,$80|_objB_hndl18_score_20_idx	,$00	; $2B
+		.BYTE $F0,$EF,$00,$7A,$0C,$18,    _objB_hndl18_score_20_idx	,$00	; $2C
+		.BYTE $F0,$EF,$00,$09,$1C,$C0,    _objB_hndl1B_score_200_idx,$00	; $2D
+		.BYTE $F0,$EF,$00,$06,$20,$FF,    _objB_hndl1C_score_500_idx,$00	; $2E
+		.BYTE $F0,$EF,$00,$07,$20,$FF,    _objB_hndl1C_score_500_idx,$00	; $2F
+		.BYTE $F0,$EF,$00,$06,$10,$18,$80|_objB_hndl18_score_20_idx	,$00	; $30
+		.BYTE $F0,$EF,$00,$0B,$18,$60,    _objB_hndl0D_explo_arrow_ammo_idx,$00	; $31
+		.BYTE $F0,$EF,$00,$09,$18,$60,    _objB_hndl0E_machinegun_ammo_idx,$00	; $32
+		.BYTE $F0,$EF,$00,$05,$1C,$C0,    _objB_hndl1B_score_200_idx,$00	; $33
+		.BYTE $F0,$EF,$00,$06,$10,$18,    _objB_hndl18_score_20_idx	,$00	; $34
+		.BYTE $F0,$D8,$00,$06,$00,$FF,$80|$00						,$00	; $35
+		.BYTE $F0,$EF,$00,$0C,$14,$10,$80|_objB_hndl1B_score_200_idx,$00	; $36
+		.BYTE $F0,$EF,$0B,$CF,$08,$10,$80|_objB_hndl1A_score_100_idx,$00	; $37
+		.BYTE $F0,$EF,$0B,$0E,$10,$10,$80|_objB_hndl1B_score_200_idx,$00	; $38
+		.BYTE $F0,$2F,$00,$DA,$18,$10,$80|_objB_hndl1C_score_500_idx,$00	; $39
+		.BYTE $F0,$EF,$00,$46,$1C,$10,$80|_objB_hndl1C_score_500_idx,$00	; $3A
+		.BYTE $F0,$EF,$00,$06,$20,$10,$80|_objB_hndl1C_score_500_idx,$00	; $3B
+		.BYTE $F0,$00,$00,$00,$00,$FF,    _objB_hndl14_score_1_idx	,$00	; $3C
+		.BYTE $F0,$00,$00,$0C,$00,$10,    _objB_hndl14_score_1_idx	,$00	; $3D
+		.BYTE $F0,$3F,$00,$0E,$00,$10,$80|_objB_hndl14_score_1_idx	,$00	; $3E
+		.BYTE $F0,$0C,$00,$03,$00,$01,$80|_objB_hndl14_score_1_idx	,$00	; $3F
 
 		SECTION_END "GAME DATA"
 
@@ -1705,53 +1825,10 @@ loc_520D2:
 		STA		_tmp06
 		LDA		#$20
 		STA		_tmp07
-		JSR		_objB_prize_insert
+		JSR		_enemy_projectile_insert
 		LDA		#$80
 		STA		_objsA._player._prize_idx,X
 locret_52107:
-		RTS
-
-; =============== S U B	R O U T	I N E =======================================
-_objB_prize_insert:
-		TXA
-		PHA
-		LDA		#$04
-		STA		_tmp08
-loc_5210E:
-		LDA		_tmp08
-		ASL
-		ASL
-		ASL
-		TAX
-		LDA		_objsB._o0._hndl_idx,X
-		BPL		loc_52140
-		LDA		_tmp00
-		STA		_objsB._o0._hndl_idx,X
-		LDA		_tmp01
-		STA		_objsB._o0.field_1,X
-		LDA		_tmp02
-		STA		_objsB._o0.field_2,X
-		LDA		_tmp03
-		STA		_objsB._o0.field_3,X
-		LDA		_tmp04
-		STA		_objsB._o0.field_4,X
-		LDA		_tmp05
-		STA		_objsB._o0._damage,X
-		LDA		_tmp06
-		STA		_objsB._o0.field_6,X
-		LDA		_tmp07
-		STA		_objsB._o0.field_7,X
-		LDA		_tmp13
-		STA		_apu_se_noise_idx
-		JMP		loc_52148
-loc_52140:
-		INC		_tmp08
-		LDA		_tmp08
-		CMP		#$0C
-		BNE		loc_5210E
-loc_52148:
-		PLA
-		TAX
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -1801,7 +1878,7 @@ locret_52198:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_obj_prize_deploy_ex:
+_obj_enemy_projectile_deploy:
 		LDA		_tmp11
 		AND		#$C0
 		ORA		#$07
@@ -1834,11 +1911,11 @@ loc_521C4:
 		STA		_tmp05
 		LDA		#$30
 		STA		_tmp07
-		JSR		_objB_prize_apu_select
-		JMP		_objB_prize_insert
+		JSR		_objB_projectile_apu_select
+		JMP		_enemy_projectile_insert
 
 ; =============== S U B	R O U T	I N E =======================================
-_objB_prize_apu_select:
+_objB_projectile_apu_select:
 		LDA		_tmp00
 		CMP		#$09
 		BCC		loc_521E5
@@ -1847,11 +1924,11 @@ _objB_prize_apu_select:
 		RTS
 loc_521E5:
 		TAY
-		LDA		_prize_apu_list,Y
+		LDA		_projectile_apu_list,Y
 		STA		_tmp13
 		RTS
 ; ---------------------------------------------------------------------------
-_prize_apu_list:
+_projectile_apu_list:
 		.BYTE SEN02,SEN02,SEN05,SEN05,SEN03,SEN01,SEN01,$00,SEN06
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -2210,7 +2287,7 @@ _cur_obj_direction_up_set:
 		STA		_tmp11
 		RTS
 ; ---------------------------------------------------------------------------
-_obj_hndl_lib:
+		OBJ_START	_obj_hndl_lib
 		OBJ_HNDL _obj_hndl00_rambo
 		OBJ_HNDL _obj_hndl01_npcA
 		OBJ_HNDL _obj_hndl02_npcB
@@ -3158,9 +3235,9 @@ loc_52AEE:
 		LDA		#$04
 		STA		_tmp02
 		STA		_tmp03
-		LDA		#$07
+		LDA		#_objB_hndl07_idx
 		STA		_tmp00
-		JSR		_obj_prize_deploy_ex
+		JSR		_obj_enemy_projectile_deploy
 loc_52AFB:
 		JMP		_obj_flush_and_continue
 
@@ -3207,9 +3284,9 @@ loc_52B45:
 		LDA		#$04
 		STA		_tmp02
 		STA		_tmp03
-		LDA		#$07
+		LDA		#_objB_hndl07_idx
 		STA		_tmp00
-		JSR		_obj_prize_deploy_ex
+		JSR		_obj_enemy_projectile_deploy
 loc_52B52:
 		JMP		_obj_flush_and_continue
 
@@ -3499,9 +3576,9 @@ _obj_prize_deployA:
 		STA		_tmp02
 		LDA		#$40
 		STA		_tmp06
-		LDA		#$07
+		LDA		#_objB_hndl07_idx
 		STA		_tmp00
-		JMP		_obj_prize_deploy_ex
+		JMP		_obj_enemy_projectile_deploy
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl17_pelikan:
@@ -4101,7 +4178,7 @@ loc_53197:
 		STA		_objsA._player.field_9,X
 		LDA		_objsA._player._hndl_idx,X
 		AND		#$3F
-		CMP		#$28
+		CMP		#_obj_hndl28_soldierB_idx
 		BCC		loc_531BA
 		LDA		_pad
 		AND		#$04
@@ -4144,15 +4221,15 @@ loc_531E5:
 		STA		_tmp10
 		LDA		#$55
 		STA		_tmp06
-		LDA		#$05
+		LDA		#_objB_hndl05_idx
 		BNE		loc_53202
 loc_531FA:
 		LDA		#$40
 		STA		_tmp06
-		LDA		#$08
+		LDA		#_objB_hndl08_idx
 loc_53202:
 		STA		_tmp00
-		JMP		_obj_prize_deploy_ex
+		JMP		_obj_enemy_projectile_deploy
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl2B_boss_pirate:
@@ -4389,9 +4466,9 @@ loc_533A5:
 		STA		_tmp03
 		LDA		#$30
 		STA		_tmp06
-		LDA		#$07
+		LDA		#_objB_hndl07_idx
 		STA		_tmp00
-		JSR		_obj_prize_deploy_ex
+		JSR		_obj_enemy_projectile_deploy
 		JMP		_obj_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -4527,9 +4604,9 @@ _obj_prize_deployC:
 		LDA		_tmp13
 		AND		#$33
 		STA		_tmp06
-		LDA		#$07
+		LDA		#_objB_hndl07_idx
 		STA		_tmp00
-		JSR		_obj_prize_deploy_ex
+		JSR		_obj_enemy_projectile_deploy
 		PLA
 		STA		_tmp11
 		JMP		_obj_flush_and_continue
@@ -4716,9 +4793,9 @@ loc_5360F:
 		STA		_tmp03
 		LDA		#$30
 		STA		_tmp06
-		LDA		#$08
+		LDA		#_objB_hndl08_idx
 		STA		_tmp00
-		JSR		_obj_prize_deploy_ex
+		JSR		_obj_enemy_projectile_deploy
 loc_53632:
 		JMP		_obj_flush_and_continue
 
@@ -4771,9 +4848,9 @@ loc_5367F:
 		STA		_tmp03
 		LDA		#$30
 		STA		_tmp06
-		LDA		#$06
+		LDA		#_objB_hndl06_idx
 		STA		_tmp00
-		JSR		_obj_prize_deploy_ex
+		JSR		_obj_enemy_projectile_deploy
 loc_5369C:
 		JMP		_obj_flush_and_continue
 
@@ -5275,9 +5352,9 @@ loc_53A56:
 		STA		_tmp03
 		LDA		#$30
 		STA		_tmp06
-		LDA		#$04
+		LDA		#_objB_hndl04_idx
 		STA		_tmp00
-		JSR		_obj_prize_deploy_ex
+		JSR		_obj_enemy_projectile_deploy
 loc_53A69:
 		JMP		_obj_flush_and_continue
 loc_53A6C:

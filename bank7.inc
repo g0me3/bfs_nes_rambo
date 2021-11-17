@@ -331,13 +331,7 @@ loc_602EB:
 		LDA		_game._potions
 		BEQ		loc_60326
 		DEC		_game._potions
-		LDA		_game._life
-		CLC
-		ADC		#100
-		STA		_game._life
-		BCC		loc_602EC
-		INC		_game._life+1
-loc_602EC:
+		JSR		_add_100_life
 		LDA		#SEP04
 		STA		_apu_se_pulse_idx
 		BNE		loc_60345
@@ -544,7 +538,6 @@ loc_604D0:
 		LDA		#$00
 		STA		_ppu_mask_shadow
 		STA		_PPU_MASK
-		LDA		#$00
 		STA		_nmi_disable
 		LDA		#$80
 		STA		_nmi_disble_ppu_reset_req
@@ -607,7 +600,6 @@ loc_60551:
 		STA		_spr_buf+1
 		LDA		#$00
 		STA		_spr_buf+2
-		LDA		#$00
 		STA		_spr_buf+3
 loc_60568:
 		LDA		#$06
@@ -805,10 +797,10 @@ _rambo_chr_weapon_tiles_unpdate:
 		LDA		#$03
 		STA		_PPU_ADDR
 		LDA		#$00
+		TAY
 		STA		_PPU_ADDR
 		LDA		#$03
 		JSR		_mmc_prg_set
-		LDY		#$00
 loc_60724:
 		LDA		(_tmp0E),Y
 		STA		_PPU_DATA
@@ -817,54 +809,16 @@ loc_60724:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
+; TODO: convert manual drawings to regular packed level resource
+;
 _final_boss_draw:
-		LDA		_PPU_STATUS
-		LDA		#$20
-		STA		_PPU_ADDR
-		LDA		#$00
-		STA		_PPU_ADDR
-		LDA		#$1E
-		STA		_tmp01
-loc_6073E:
-		LDA		#$20
-		STA		_tmp00
-loc_60742:
-		LDA		#$30
-		STA		_PPU_DATA
-		DEC		_tmp00
-		BNE		loc_60742
-		DEC		_tmp01
-		BNE		loc_6073E
-		LDX		#$40
-		LDA		#$AA
-loc_60753:
-		STA		_PPU_DATA
-		DEX
-		BNE		loc_60753
-		LDA		_PPU_STATUS
-		LDA		#$24
-		STA		_PPU_ADDR
-		LDA		#$00
-		STA		_PPU_ADDR
-		LDA		#$1E
-		STA		_tmp01
-loc_6076A:
-		LDA		#$20
-		STA		_tmp00
-loc_6076E:
-		LDA		#$30
-		STA		_PPU_DATA
-		DEC		_tmp00
-		BNE		loc_6076E
-		DEC		_tmp01
-		BNE		loc_6076A
-		LDX		#$40
-		LDA		#$AA
-loc_6077F:
-		STA		_PPU_DATA
-		DEX
-		BNE		loc_6077F
-		LDX		#$00
+		PPU_FILL_RECT	$2000, $30, $1E-4, $20	; clear screens an fill with bg
+		PPU_FILL_LINEY	    0, $7F, $80			; tiles and attributes
+		PPU_FILL_LINEY	    0, $AA, $40
+		PPU_FILL_RECT	    0, $30, $1E-4, $20
+		PPU_FILL_LINEY	    0, $7F, $80
+		PPU_FILL_LINEY	    0, $AA, $40
+		LDX		#$00					; draw helicopter
 loc_60787:
 		LDA		_final_boss_pak_tlm+2,X
 		STA		_tmp00
@@ -887,80 +841,28 @@ loc_607A0:
 		INX
 		CPX		#$20
 		BNE		loc_60787
-		LDX		#$80
-		LDA		_PPU_STATUS
-		LDA		#$23
-		STA		_PPU_ADDR
-		LDA		#$40
-		STA		_PPU_ADDR
-		LDA		#$7F
-loc_607C4:
-		STA		_PPU_DATA
-		DEX
-		BNE		loc_607C4
-		LDX		#$80
-		LDA		_PPU_STATUS
-		LDA		#$27
-		STA		_PPU_ADDR
-		LDA		#$40
-		STA		_PPU_ADDR
-		LDA		#$7F
-loc_607DB:
-		STA		_PPU_DATA
-		DEX
-		BNE		loc_607DB
-		LDA		#<[_room_map_buf]
-		STA		_tmp02
-		LDA		#>[_room_map_buf]
-		STA		_tmp03
-		LDX		#$02
-		LDY		#$00
-		LDA		#$FF
+		LDX		#$00					; fill level buffer with collision data
+		LDA		#$FF					; for two screens
 loc_607EF:
-		STA		(_tmp02),Y
-		INY
+		STA		_room_map_buf,X
+		STA		_room_map_buf+$100,x
+		INX
 		BNE		loc_607EF
-		INC		_tmp03
-		DEX
-		BNE		loc_607EF
-		LDX		#$0D
 		LDY		#$10
 loc_607FD:
 		LDA		#$40
-		STA		_room_map_buf,X
-		STA		_room_map_buf+1,X
+		STA		_room_map_buf+$D,X
+		STA		_room_map_buf+$E,X
+		STA		_room_map_buf+$10D,X
+		STA		_room_map_buf+$10E,X
+		STA		_room_map_buf,Y
+		STA		_room_map_buf+$100,Y
 		TXA
 		CLC
 		ADC		#$10
 		TAX
 		DEY
 		BNE		loc_607FD
-		LDX		#$0D
-		LDY		#$10
-loc_60811:
-		LDA		#$40
-		STA		_room_map_buf+$100,X
-		STA		_room_map_buf+$101,X
-		TXA
-		CLC
-		ADC		#$10
-		TAX
-		DEY
-		BNE		loc_60811
-		LDX		#$00
-loc_60823:
-		LDA		#$40
-		STA		_room_map_buf,X
-		INX
-		CPX		#$10
-		BNE		loc_60823
-		LDX		#$00
-loc_6082F:
-		LDA		#$40
-		STA		_room_map_buf+$100,X
-		INX
-		CPX		#$10
-		BNE		loc_6082F
 		JSR		_objs_reset
 		LDY		#$00
 loc_6083E:
@@ -985,17 +887,15 @@ loc_6083E:
 		INY
 		CPY		#$24
 		BNE		loc_6083E
-		LDX		#$0B
 		LDA		#$20
-		STA		_objsA._o3,X
-		STA		_objsA._o4,X
-		LDX		#$06
-		LDA		_objsA._o1,X
+		STA		_objsA._o3._damage
+		STA		_objsA._o4._damage
+		LDA		_objsA._o1._dir
 		ORA		#$04
-		STA		_objsA._o1,X
-		LDA		_objsA._o2,X
+		STA		_objsA._o1._dir
+		LDA		_objsA._o2._dir
 		ORA		#$04
-		STA		_objsA._o2,X
+		STA		_objsA._o2._dir
 		LDA		#$28
 		STA		_final_boss_deploy_delay_timer
 		LDA		#$0F
@@ -1027,11 +927,11 @@ _final_boss_pak_tlm:
 		.BYTE $D1,$21,$73,$0C
 		.BYTE $DD,$21,$4E,$02
 _final_boss_enemy_dinamic_list:
-		.BYTE $00,$00,$78,$A0,$00,$00
-		.BYTE $24,$00,$F0,$40,$10,$00
-		.BYTE $26,$00,$08,$40,$20,$0F
-		.BYTE $15,$00,$88,$68,$30,$00
-		.BYTE $15,$00,$F0,$68,$40,$00
+		.BYTE _obj_hndl00_rambo_idx,			$00,$78,$A0,$00,$00
+		.BYTE _obj_hndl24_soldierB_idx,			$00,$F0,$40,$10,$00
+		.BYTE _obj_hndl26_grenade_soldier_idx,	$00,$08,$40,$20,$0F
+		.BYTE _obj_hndl15_grenades_idx,			$00,$88,$68,$30,$00
+		.BYTE _obj_hndl15_grenades_idx,			$00,$F0,$68,$40,$00
 
 ; =============== S U B	R O U T	I N E =======================================
 _hud_icons_redraw:
@@ -1128,7 +1028,7 @@ loc_6099C:
 ; =============== S U B	R O U T	I N E =======================================
 _stage_objs_insert_manager:
 		JSR		_objs_reset
-		JSR		_stage_obj_lib_insertA
+		JSR		_stage_obj_lib_insert
 		LDA		#$07
 		STA		_tmp0A
 		LDA		#$10
@@ -1194,7 +1094,7 @@ locret_60A23:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_stage_obj_lib_insertA:
+_stage_obj_lib_insert:
 		LDA		_game._scr_idx
 		LSR
 		LSR
@@ -1235,7 +1135,8 @@ _stage_obj_lib_insertA:
 		STA		_tmp01
 		LDA		#$00
 		STA		_tmp04
-		JMP		_obj_lib_insert
+
+; !FALLTHROUGH!
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_lib_insert:
@@ -1247,7 +1148,7 @@ _obj_lib_insert:
 		ASL
 		PHA
 		LDA		#$00
-		ADC		#$00
+		ROL
 		STA		_tmp07
 		PLA
 		CLC
@@ -2404,7 +2305,8 @@ loc_611D6:
 		BEQ		loc_611FF
 		LDA		_game._life,Y
 		STA		_tmp00
-		LDA		_game._life+1,Y
+		INY
+		LDA		_game._life,Y
 		STA		_tmp01
 		JSR		_hex_to_dec
 		LDA		_tmp05
@@ -2482,12 +2384,15 @@ _game_values_update:
 		BNE		loc_6128E
 		LDA		#$07
 		STA		_game._exp_level
-		ASL
-		TAY
-		LDA		_max_life_list,Y
-		STA		_game._life
-		LDA		_max_life_list+1,Y
-		STA		_game._life+1
+; probably fix ?
+;		LDA		_game._life_level
+;
+		ASL								; for some reason, we have here set max
+		TAY								; life when exp reaches max leve, but
+		LDA		_max_life_list,Y		; other times exp and lifes levels aren't
+		STA		_game._life				; connected, so maybe here is the BUG?
+		LDA		_max_life_list+1,Y		; if not, why then life max does not set
+		STA		_game._life+1			; to max when exp maxed out?
 loc_6128E:
 		LDA		#$00
 		STA		_game._exp
@@ -3286,7 +3191,7 @@ loc_617FB:
 		STA		_tobjB.field_3,X
 		LDA		_tmp13
 		STA		_tobjB.field_1,X
-		LDA		#$1E
+		LDA		#_objB_hndl1E_idx
 		STA		_tobjB._hndl_idx,X
 		LDA		#$00
 		STA		_tobjB.field_4,X
@@ -3561,7 +3466,7 @@ loc_619D7:
 		LDX		_tmp12
 		LDA		_tobjA._hndl_idx,X
 		AND		#$3F
-		CMP		#$36
+		CMP		#_obj_hndl36_boss_fire_tiger_idx
 		BCC		loc_61A17
 		DEC		_tobjA.field_C,X
 		JMP		loc_61A24
@@ -3603,7 +3508,7 @@ loc_61A2A:
 		LDX		_tmp12
 		LDA		_tobjA._hndl_idx,X
 		AND		#$3F
-		CMP		#$36
+		CMP		#_obj_hndl36_boss_fire_tiger_idx
 		BCC		loc_61A67
 		DEC		_tobjA.field_C,X
 		JMP		loc_61A74
@@ -3660,27 +3565,9 @@ loc_61AA1:
 		AND		#$07
 		AND		_tobjB.field_4,X
 		BEQ		loc_61AF6
-
 		LDA		_tobjB._damage,X
-		STA		_tmp19
-		LDA		_objsA._player._state
-		ORA		#$80
-		STA		_objsA._player._state
-		LDA		_game._life
-		ORA		_game._life+1
-		BEQ		loc_61AF6
-		LDA		_game._life
-		SEC
-		SBC		_tmp19
-		STA		_game._life
-		BCS		loc_61AF6
-		DEC		_game._life+1
-		BPL		loc_61AF6
-		LDA		#$00
-		STA		_game._life
-		STA		_game._life+1
+		JSR		_decrease_life_damage
 loc_61AF6:
-
 		LDA		_tmp14
 		CLC
 		ADC		#$08
@@ -3713,7 +3600,7 @@ loc_61B29:
 		BMI		loc_61B5E
 		LDA		_tobjB._hndl_idx,X
 		AND		#$0F
-		CMP		#$05
+		CMP		#_objB_hndl05_idx
 		BNE		loc_61B5E
 		JSR		_obj_col_testB_calcC
 		JSR		_obj_col_testB_calcF
@@ -4006,9 +3893,39 @@ _obj_col_testB_calcD:
 _obj_col_testB_calcE:
 		LDA		_tmp17
 		AND		#$20
-		BEQ		loc_61D49
-
+		BEQ		loc_61D4A
 		LDA		_tobjA._damage,X
+		JSR		_decrease_life_damage
+loc_61D4A:
+		LDA		_tmp17
+		AND		#$10
+		BEQ		locret_61D77
+		LDA		_objsA._player._damage
+		STA		_tmp19
+		LDA		_tobjA._state,X
+		ORA		#$80
+		STA		_tobjA._state,X
+		LDA		_tobjA.field_C,X
+		BEQ		locret_61D77
+		LDA		_tobjA._hndl_idx,X
+		AND		#$3F
+		CMP		#_obj_hndl36_boss_fire_tiger_idx
+		BCC		loc_61D6A
+		DEC		_tobjA.field_C,X
+		RTS
+loc_61D6A:
+		LDA		_tobjA.field_C,X
+		SEC
+		SBC		_tmp19
+		STA		_tobjA.field_C,X
+		BCS		locret_61D77
+		LDA		#$00
+		STA		_tobjA.field_C,X
+locret_61D77:
+		RTS
+
+; =============== S U B	R O U T	I N E =======================================
+_decrease_life_damage:
 		STA		_tmp19
 		LDA		_objsA._player._state
 		ORA		#$80
@@ -4027,32 +3944,17 @@ _obj_col_testB_calcE:
 		STA		_game._life+1
 		STA		_game._life
 loc_61D49:
-
-		LDA		_tmp17
-		AND		#$10
-		BEQ		locret_61D77
-		LDA		_objsA._player._damage
-		STA		_tmp19
-		LDA		_tobjA._state,X
-		ORA		#$80
-		STA		_tobjA._state,X
-		LDA		_tobjA.field_C,X
-		BEQ		locret_61D77
-		LDA		_tobjA._hndl_idx,X
-		AND		#$3F
-		CMP		#$36
-		BCC		loc_61D6A
-		DEC		_tobjA.field_C,X
 		RTS
-loc_61D6A:
-		LDA		_tobjA.field_C,X
-		SEC
-		SBC		_tmp19
-		STA		_tobjA.field_C,X
-		BCS		locret_61D77
-		LDA		#$00
-		STA		_tobjA.field_C,X
-locret_61D77:
+
+; =============== S U B	R O U T	I N E =======================================
+_add_100_life:
+		LDA		_game._life
+		CLC
+		ADC		#100
+		STA		_game._life
+		BCC		loc_62B40
+		INC		_game._life+1
+loc_62B40:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -4384,7 +4286,7 @@ loc_61FAD:
 		STA		_tobjB.field_3,X
 		LDA		#$00
 		STA		_tobjB.field_1,X
-		LDA		#$1E
+		LDA		#_objB_hndl1E_idx
 		STA		_tobjB._hndl_idx,X
 		LDA		#$00
 		STA		_tobjB.field_4,X
@@ -4404,9 +4306,9 @@ loc_61FE8:
 		STA		_room_scroll_pos_x
 		LDA		#$03
 		STA		_room_scroll_pos_x+1
-		LDA		#$E7
+		LDA		#<[999]
 		STA		_game._life
-		LDA		#$03
+		LDA		#>[999]
 		STA		_game._life+1
 		RTS
 _final_boss_animate:
@@ -4761,7 +4663,7 @@ loc_6223B:
 _objB_hndl0A_heart:
 		LDA		_objsB._o0.field_7,X
 		CMP		#$18
-		BNE		_objB_animate_common
+		BNE		_objB_hndl09_animate
 		LDA		#SEP04
 		STA		_apu_se_pulse_idx
 		LDA		_game._life_level
@@ -4774,67 +4676,64 @@ loc_62266:
 		TAY
 		LDA		_max_life_list,Y
 		STA		_game._life
-		INY
-		LDA		_max_life_list,Y
+		LDA		_max_life_list+1,Y
 		STA		_game._life+1
-		JMP		_objB_animate_common
+		JMP		_objB_hndl09_animate
 
 ; =============== S U B	R O U T	I N E =======================================
-_objB_hndl10_potions:
-		LDA		_objsB._o0.field_7,X
-		CMP		#$18
-		BNE		_objB_animate_common
-		LDA		_objsB._o0._hndl_idx,X
-		AND		#$3F
-		TAY
-		CLC
-		LDA		_game._ammo_knife-$B,Y
-		ADC		#$01
-		STA		_game._ammo_knife-$B,Y
-		JMP		_objB_animate_common
-
-; =============== S U B	R O U T	I N E =======================================
-_objB_hndl0B_0F_ammo:
-		LDA		_objsB._o0.field_7,X
-		CMP		#$18
-		BNE		_objB_animate_common
-		LDA		_objsB._o0._hndl_idx,X
-		AND		#$3F
-		TAY
+_objB_hndl0B_knife_ammo:
+_objB_hndl0C_arrow_ammo:
+_objB_hndl0D_explo_arrow_ammo:
+_objB_hndl0E_machinegun_ammo:
+_objB_hndl0F_grenades_ammo:
+		LDA		_objsB._o0.field_7,X	; for some reason grenade item
+		CMP		#$18					; also goes here and gets
+		BNE		_objB_hndl09_animate	; increment +10, refill at once
+		LDA		_objsB._o0._hndl_idx,X	; either this is an overlooked
+		AND		#$3F					; or made on purpose to decrease
+		TAY								; difficulty
 		CLC
 		LDA		_game._ammo_knife-$B,Y
 		ADC		#$0A
 		STA		_game._ammo_knife-$B,Y
-		JMP		_objB_animate_common
+		JMP		_objB_hndl09_animate
+
+; =============== S U B	R O U T	I N E =======================================
+_objB_hndl10_potions:
+		LDA		_objsB._o0.field_7,X	; also for some reason, they used
+		CMP		#$18					; of handler above onl for one
+		BNE		_objB_hndl09_animate	; potions item to just add +1,
+		INC		_game._potions			; redundant, removed
+		JMP		_objB_hndl09_animate
 
 ; =============== S U B	R O U T	I N E =======================================
 _objB_hndl11_hi_speed:
 		LDA		_objsA._player._dir
 		ORA		#$01
 		STA		_objsA._player._dir
-		JMP		_objB_animate_common
+		JMP		_objB_hndl09_animate
 
 ; =============== S U B	R O U T	I N E =======================================
 _objB_hndl12_hi_jump:
 		LDA		_objsA._player._dir
 		ORA		#$02
 		STA		_objsA._player._dir
-		JMP		_objB_animate_common
+		JMP		_objB_hndl09_animate
 
 ; =============== S U B	R O U T	I N E =======================================
-_objB_hndl13_invul_unused:
+_objB_hndl13_invul:
 		LDA		_objsB._o0.field_7,X
 		CMP		#$18
-		BNE		_objB_animate_common
+		BNE		_objB_hndl09_animate
 		LDA		#$FF
 		STA		_objsA._player._timer
 		LDA		_tmp11
 		ORA		#$20
 		STA		_objsA._player._timer
-		JMP		_objB_animate_common
+		JMP		_objB_hndl09_animate
 
 ; =============== S U B	R O U T	I N E =======================================
-_objB_animate_common:
+_objB_hndl09_animate:
 		LDA		#$00
 		STA		_tmp01
 		LDA		#$01
@@ -4852,7 +4751,15 @@ loc_622E9:
 		JMP		_objB_flush_and_continue
 
 ; =============== S U B	R O U T	I N E =======================================
-_objB_hndl14_1C_score:
+_objB_hndl14_score_1:
+_objB_hndl15_score_2:
+_objB_hndl16_score_5:
+_objB_hndl17_score_10:
+_objB_hndl18_score_20:
+_objB_hndl19_score_50:
+_objB_hndl1A_score_100:
+_objB_hndl1B_score_200:
+_objB_hndl1C_score_500:
 		LDA		_objsB._o0.field_7,X
 		CMP		#$18
 		BNE		loc_6230E
@@ -4924,7 +4831,7 @@ loc_6235F:
 
 ; =============== S U B	R O U T	I N E =======================================
 _objB_sub62362:
-		LDA		#$1D
+		LDA		#_objB_hndl1D_idx
 		STA		_objsB._o0._hndl_idx,X
 		LDA		#$01
 		STA		_tmp10
@@ -4941,7 +4848,7 @@ _objB_sub62362:
 
 ; =============== S U B	R O U T	I N E =======================================
 _objB_sub62380:
-		LDA		#$1E
+		LDA		#_objB_hndl1E_idx
 		STA		_objsB._o0._hndl_idx,X
 		LDA		#$02
 		STA		_tmp10
@@ -4956,38 +4863,38 @@ _objB_sub62380:
 		JMP		_objB_flush_and_continue
 
 ; ---------------------------------------------------------------------------
-_objB_hndl_lib:
-		.WORD _objB_hndl00
-		.WORD _objB_hndl01
-		.WORD _objB_hndl02
-		.WORD _objB_hndl03
-		.WORD _objB_hndl04
-		.WORD _objB_hndl05
-		.WORD _objB_hndl06
-		.WORD _objB_hndl07
-		.WORD _objB_hndl08
-		.WORD _objB_animate_common
-		.WORD _objB_hndl0A_heart
-		.WORD _objB_hndl0B_0F_ammo
-		.WORD _objB_hndl0B_0F_ammo
-		.WORD _objB_hndl0B_0F_ammo
-		.WORD _objB_hndl0B_0F_ammo
-		.WORD _objB_hndl0B_0F_ammo
-		.WORD _objB_hndl10_potions
-		.WORD _objB_hndl11_hi_speed
-		.WORD _objB_hndl12_hi_jump
-		.WORD _objB_hndl13_invul_unused
-		.WORD _objB_hndl14_1C_score
-		.WORD _objB_hndl14_1C_score
-		.WORD _objB_hndl14_1C_score
-		.WORD _objB_hndl14_1C_score
-		.WORD _objB_hndl14_1C_score
-		.WORD _objB_hndl14_1C_score
-		.WORD _objB_hndl14_1C_score
-		.WORD _objB_hndl14_1C_score
-		.WORD _objB_hndl14_1C_score
-		.WORD _objB_hndl1D
-		.WORD _objB_hndl1E
+		OBJ_START	_objB_hndl_lib
+		OBJ_HNDL _objB_hndl00
+		OBJ_HNDL _objB_hndl01
+		OBJ_HNDL _objB_hndl02
+		OBJ_HNDL _objB_hndl03
+		OBJ_HNDL _objB_hndl04
+		OBJ_HNDL _objB_hndl05
+		OBJ_HNDL _objB_hndl06
+		OBJ_HNDL _objB_hndl07
+		OBJ_HNDL _objB_hndl08
+		OBJ_HNDL _objB_hndl09_animate
+		OBJ_HNDL _objB_hndl0A_heart
+		OBJ_HNDL _objB_hndl0B_knife_ammo
+		OBJ_HNDL _objB_hndl0C_arrow_ammo
+		OBJ_HNDL _objB_hndl0D_explo_arrow_ammo
+		OBJ_HNDL _objB_hndl0E_machinegun_ammo
+		OBJ_HNDL _objB_hndl0F_grenades_ammo
+		OBJ_HNDL _objB_hndl10_potions
+		OBJ_HNDL _objB_hndl11_hi_speed
+		OBJ_HNDL _objB_hndl12_hi_jump
+		OBJ_HNDL _objB_hndl13_invul	; unused
+		OBJ_HNDL _objB_hndl14_score_1
+		OBJ_HNDL _objB_hndl15_score_2
+		OBJ_HNDL _objB_hndl16_score_5
+		OBJ_HNDL _objB_hndl17_score_10
+		OBJ_HNDL _objB_hndl18_score_20
+		OBJ_HNDL _objB_hndl19_score_50
+		OBJ_HNDL _objB_hndl1A_score_100
+		OBJ_HNDL _objB_hndl1B_score_200
+		OBJ_HNDL _objB_hndl1C_score_500
+		OBJ_HNDL _objB_hndl1D
+		OBJ_HNDL _objB_hndl1E
 
 ; =============== S U B	R O U T	I N E =======================================
 _spr_objsA_manager:
@@ -5814,7 +5721,7 @@ loc_6296F:
 		BEQ		loc_62989
 		JSR		_obj_move_animate_common
 		JSR		_obj_get_hor_delta16
-		LDA		#$00
+		LDA		#_objB_hndl00_idx
 		STA		_tmp00
 		JSR		_player_weapon_projectile_deploy
 		JSR		_rambo_crouch_test
@@ -5902,7 +5809,7 @@ loc_62A03:
 loc_62A29:
 		JSR		_obj_move_animate_common
 		JSR		_obj_get_hor_delta16
-		LDA		#$08
+		LDA		#_objB_hndl08_idx
 		STA		_tmp00
 		JSR		_player_weapon_projectile_deploy
 		JSR		_rambo_crouch_test
@@ -5919,7 +5826,7 @@ loc_62A3F:
 loc_62A4C:
 		JSR		_obj_move_animate_common
 		JSR		_obj_get_hor_delta16
-		LDA		#$00
+		LDA		#_objB_hndl00_idx
 		STA		_tmp00
 		JSR		_player_weapon_projectile_deploy
 		JSR		_rambo_crouch_test
@@ -6032,22 +5939,43 @@ _player_weapon_projectile_deploy:
 		CMP		#$06
 		BNE		locret_62B45				; test if selected item is POTIONS
 		LDA		_game._potions				; test if there are some potions
-		BEQ		loc_62B40
+		BEQ		loc_62B41
 		DEC		_game._potions				; decrement
-		LDA		_game._life					; increment life
-		CLC
-		ADC		#100
-		STA		_game._life
-		BCC		loc_62B40
-		INC		_game._life+1
-loc_62B40:
+		JSR		_add_100_life
+loc_62B41:
 		LDA		#$00
 		STA		_cur_weapon_selected		; return back to initial items pos
 locret_62B45:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_objB_insert:
+_enemy_projectile_insert:
+		TXA
+		PHA
+		LDA		#$04
+		STA		_tmp08
+loc_5210E:
+		LDA		_tmp08
+		ASL
+		ASL
+		ASL
+		TAX
+		LDA		_objsB._o0._hndl_idx,X
+		BPL		loc_52140
+		JSR		_projectile_insert
+		JMP		loc_52148
+loc_52140:
+		INC		_tmp08
+		LDA		_tmp08
+		CMP		#$0C
+		BNE		loc_5210E
+loc_52148:
+		PLA
+		TAX
+		RTS
+
+; =============== S U B	R O U T	I N E =======================================
+_rambo_projectile_insert:
 		TXA
 		PHA
 		LDA		#$00
@@ -6060,6 +5988,20 @@ loc_62B4C:
 		TAX
 		LDA		_objsB._o0._hndl_idx,X
 		BPL		loc_62B7E
+		JSR		_projectile_insert
+		JMP		loc_62B86
+loc_62B7E:
+		INC		_tmp08
+		LDA		_tmp08
+		CMP		#$04
+		BNE		loc_62B4C
+loc_62B86:
+		PLA
+		TAX
+		RTS
+
+; =============== S U B	R O U T	I N E =======================================
+_projectile_insert:
 		LDA		_tmp00
 		STA		_objsB._o0._hndl_idx,X
 		LDA		_tmp01
@@ -6078,16 +6020,8 @@ loc_62B4C:
 		STA		_objsB._o0.field_7,X
 		LDA		_tmp13
 		STA		_apu_se_noise_idx
-		JMP		loc_62B86
-loc_62B7E:
-		INC		_tmp08
-		LDA		_tmp08
-		CMP		#$04
-		BNE		loc_62B4C
-loc_62B86:
-		PLA
-		TAX
 		RTS
+
 ; ---------------------------------------------------------------------------
 _weapons_data_tbl:
 		.BYTE $07,$36,$00,$10,$19,$24,$00,$04,$08,$54,$00,$10,$08,$24,$00,$04
@@ -6258,7 +6192,7 @@ loc_62CED:
 loc_62D18:
 		LDA		_weapons_data_tbl+7,Y
 		STA		_tmp07
-		JSR		_objB_insert
+		JSR		_rambo_projectile_insert
 locret_62D20:
 		RTS
 

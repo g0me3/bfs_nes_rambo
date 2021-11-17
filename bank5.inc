@@ -41,9 +41,9 @@ _palette_off:
 _ppu_screen_clear:
 		JSR		_render_off_ex
 		PPU_FILL_RECT	$2000, $FE, $1E, $20
-		PPU_FILL_LINEY	$23C0, $FF, $40
-		PPU_FILL_RECT	$2400, $FE, $1E, $20
-		PPU_FILL_LINEY	$27C0, $FF, $40
+		PPU_FILL_LINEY	    0, $FF, $40
+		PPU_FILL_RECT	    0, $FE, $1E, $20
+		PPU_FILL_LINEY	    0, $FF, $40
 		JMP		_render_on
 
 ; =============== S U B	R O U T	I N E =======================================
