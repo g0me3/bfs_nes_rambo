@@ -7,7 +7,6 @@
 		BANK_START $00
 
 		SECTION_START
-_location_room_map_libA:
 		INCLUDE	"..\levels\levelsA.inc"
 		SECTION_END "LEVEL DATA A"
 

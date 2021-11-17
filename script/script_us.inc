@@ -65,7 +65,13 @@ _script80:
 		stop
 _script81:
 		ptr_load			_script81_msg00
+		msg_printf			$21c3	; [REND THE FEELINGS THE HEART\  WITH PAINFUL FEELINGS]
+		ptr_load			_script81_msg01
 		msg_printf			$22ac	; [START\CONTINUE]
+		ptr_load			_script81_msg02
+		msg_printf			$20E9	; [DIRECTOR'S CUT]
+		ptr_load			_script81_msg03
+		msg_printf			$2B65	; [_2021 CAH4E3 BFS GMBH]
 		sprite_draw_up		_SPR_TITLE_SCREEN
 		jmpne_option		$01, _script81_loc00
 		checkpoint_reset
@@ -1287,6 +1293,7 @@ _scriptB1:
 		ptr_load			_scriptB1_msg01
 		msg_printf			$230d	; [Thank you\for trying.]
 		ending_anim
+		sprite_draw_up		PORTRAIT_CLEAR
 		sprite_draw_down	PORTRAIT02_RAMBO_HAPPY
 		set_room_idx		$80
 		scroller
@@ -1311,8 +1318,15 @@ _script80_msg04:
 		.BYTE _L,_I,_C,_E,_N,_S,_E,_D,__,_B,_Y,__,_N,_I,_N,_T,_E,_N,_D,_O,__,_O,_F,_eol
 		.BYTE _A,_M,_E,_R,_I,_C,_A,_col,_I,_N,_C,_dot,_eol,_eol
 _script81_msg00:
+		.BYTE _R,_E,_N,_D,__,_T,_H,_E,__,_F,_E,_E,_L,_I,_N,_G,_S,__,_O,_F,__,_H,_E,_A,_R,_T,_eol
+		.BYTE __,__,_W,_I,_T,_H,__,_P,_A,_I,_N,_F,_U,_L,__,_F,_E,_E,_L,_I,_N,_G,_S,_eol,_eol
+_script81_msg01:
 		.BYTE _S,_T,_A,_R,_T,_eol
 		.BYTE _C,_O,_N,_T,_I,_N,_U,_E,_eol,_eol
+_script81_msg02:
+		.BYTE _D,_I,_R,_E,_C,_T,_O,_R,_ap,_S,__,_C,_U,_T,_eol,_eol
+_script81_msg03:
+		.BYTE _cop,_2,_0,_2,_1,__,_C,_A,_H,_4,_E,_3,__,_B,_F,_S,__,_G,_M,_B,_H,_eol,_eol
 _script82_msg00:
 		.BYTE _I,_n,_p,_u,_t,__,_M,_i,_s,_s,_i,_o,_n,__,_C,_o,_d,_e,_eol,_eol
 _script82_msg01:

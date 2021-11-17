@@ -1,4 +1,4 @@
-
+_location_room_map_libA:
 		.WORD _room_map00
 		.WORD _room_map01
 		.WORD _room_map02

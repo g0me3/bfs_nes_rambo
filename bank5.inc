@@ -51,8 +51,7 @@ loc_4404D:
 		INY
 		CPY		#$20
 		BNE		loc_4404D
-		JSR		_ppu_regs_reinit
-		RTS
+		JMP		_ppu_regs_reinit
 
 ; =============== S U B	R O U T	I N E =======================================
 _ppu_screen_clear:
@@ -112,8 +111,7 @@ loc_440C3:
 		STA		_PPU_DATA
 		DEY
 		BNE		loc_440C3
-		JSR		_ppu_regs_reinit
-		RTS
+		JMP		_ppu_regs_reinit
 
 ; =============== S U B	R O U T	I N E =======================================
 _msg_rect_clear:
@@ -261,7 +259,7 @@ _script_cmd_fetch:
 		LDA		_tmp11
 		AND		#$04
 		BEQ		loc_441CD
-		JMP		locret_441DF
+		RTS
 ; ---------------------------------------------------------------------------
 loc_441CD:
 		LDA		(_tmp0D),Y
@@ -273,9 +271,6 @@ loc_441CD:
 		LDA		_script_cmd_lib+1,X
 		STA		_tmp10
 		JMP		(_tmp0F)
-; ---------------------------------------------------------------------------
-locret_441DF:
-		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd00_portrait_draw_up:
@@ -449,6 +444,7 @@ loc_442FF:
 		JMP		loc_442D4
 ; ---------------------------------------------------------------------------
 loc_44302:
+		JSR		_msg_wait_key_release
 		LDA		_tmp11
 		AND		#$C7
 		STA		_tmp11
@@ -728,7 +724,7 @@ _scr_cmd1A_game_stats_draw:
 		STA		_tmp00
 		LDA		_game._life+1
 		STA		_tmp01
-		JSR		_hex_to_dec_0
+		JSR		_hex_to_dec
 		LDA		#$24
 		STA		_tmp00
 		LDA		#$6C
@@ -739,7 +735,7 @@ _scr_cmd1A_game_stats_draw:
 		STA		_tmp00
 		LDA		_game._exp+1
 		STA		_tmp01
-		JSR		_hex_to_dec_0
+		JSR		_hex_to_dec
 		LDA		#$24
 		STA		_tmp00
 		LDA		#$AC
@@ -754,7 +750,7 @@ _scr_cmd1A_game_stats_draw:
 		INX
 		LDA		_max_life_list,X
 		STA		_tmp01
-		JSR		_hex_to_dec_0
+		JSR		_hex_to_dec
 		LDA		#$24
 		STA		_tmp00
 		LDA		#$77
@@ -769,7 +765,7 @@ _scr_cmd1A_game_stats_draw:
 		INX
 		LDA		_next_exp_list,X
 		STA		_tmp01
-		JSR		_hex_to_dec_0
+		JSR		_hex_to_dec
 		LDA		#$24
 		STA		_tmp00
 		LDA		#$B7
@@ -780,7 +776,7 @@ _scr_cmd1A_game_stats_draw:
 		STA		_tmp00
 		LDA		#$00
 		STA		_tmp01
-		JSR		_hex_to_dec_0
+		JSR		_hex_to_dec
 		LDA		#$24
 		STA		_tmp00
 		LDA		#$EC
@@ -791,7 +787,7 @@ _scr_cmd1A_game_stats_draw:
 		STA		_tmp00
 		LDA		#$00
 		STA		_tmp01
-		JSR		_hex_to_dec_0
+		JSR		_hex_to_dec
 		LDA		#$0E
 		STA		_tmp04
 		LDA		#$24
@@ -804,7 +800,7 @@ _scr_cmd1A_game_stats_draw:
 		STA		_tmp00
 		LDA		#$00
 		STA		_tmp01
-		JSR		_hex_to_dec_0
+		JSR		_hex_to_dec
 		LDA		#$0E
 		STA		_tmp04
 		LDA		#$24
@@ -815,25 +811,6 @@ _scr_cmd1A_game_stats_draw:
 		JSR		_ppu_num_draw
 		JMP		_script_cmd_fetch
 
-; ---------------------------------------------------------------------------
-_max_life_list:
-		.WORD 100
-		.WORD 200
-		.WORD 300
-		.WORD 400
-		.WORD 500
-		.WORD 600
-		.WORD 700
-		.WORD 800
-_next_exp_list:
-		.WORD 20
-		.WORD 300
-		.WORD 600
-		.WORD 1500
-		.WORD 3000
-		.WORD 6000
-		.WORD 9000
-		.WORD 9000
 ; =============== S U B	R O U T	I N E =======================================
 _ppu_num_draw:
 		JSR		_wait_for_nmi
@@ -849,8 +826,7 @@ loc_445EF:
 		STA		_PPU_DATA
 		DEX
 		BNE		loc_445EF
-		JSR		_ppu_regs_reinit
-		RTS
+		JMP		_ppu_regs_reinit
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd1B_life_resore:
@@ -1103,8 +1079,7 @@ _msg_rect0Ax13_clearA:
 		STA		_tmp02
 		LDA		#$0A
 		STA		_tmp03
-		JSR		_msg_rect_clear
-		RTS
+		JMP		_msg_rect_clear
 
 ; =============== S U B	R O U T	I N E =======================================
 _msg_rect0Ax13_clearB:
@@ -1116,14 +1091,18 @@ _msg_rect0Ax13_clearB:
 		STA		_tmp02
 		LDA		#$0A
 		STA		_tmp03
-		JSR		_msg_rect_clear
+		JMP		_msg_rect_clear
+
+; =============== S U B	R O U T	I N E =======================================
+_msg_wait_key_release:
+		JSR		_read_pad_safeA
+		LDA		_pad
+		BNE		_msg_wait_key_release
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
 _msg_wait_for_input:
-		JSR		_read_pad_safeA
-		LDA		_pad
-		BNE		_msg_wait_for_input
+		JSR		_msg_wait_key_release
 loc_447C4:
 		JSR		_script_sprite_anim
 		JSR		_read_pad_safeA
@@ -1165,10 +1144,7 @@ loc_447F6:
 #endif
 		JSR		_cur_game_vars_backup
 		JSR		_pass_encode
-loc_4480F:
-		JSR		_read_pad_safeA
-		LDA		_pad
-		BNE		loc_4480F
+		JSR		_msg_wait_key_release
 loc_44817:
 		JSR		_read_pad_safeA
 		LDA		_pad
@@ -1233,8 +1209,7 @@ loc_44860:
 loc_44891:
 		CPX		#$18
 		BNE		loc_44860
-		JSR		_pass_decrypt
-		RTS
+		JMP		_pass_decrypt
 
 ; =============== S U B	R O U T	I N E =======================================
 _pass_get_dataA:
@@ -1351,21 +1326,21 @@ _cur_game_vars_backup:
 _script_sprite_anim:
 		LDA		_nmi_flag
 		BNE		loc_4496B
-		JMP		locret_449F8
+		RTS
 ; ---------------------------------------------------------------------------
 loc_4496B:
 		LDA		#$00
 		STA		_nmi_flag
 		LDA		_tmp14
 		BNE		loc_44977
-		JMP		locret_449F8
+		RTS
 ; ---------------------------------------------------------------------------
 loc_44977:
 		INC		_tmp14
 		LDA		_tmp14
 		AND		#$0F
 		BEQ		loc_44982
-		JMP		locret_449F8
+		RTS
 ; ---------------------------------------------------------------------------
 loc_44982:
 		LDA		_tmp14
@@ -1384,8 +1359,7 @@ loc_44982:
 		LDA		#$E0
 		TAX
 		LDA		#$A8
-		JSR		_spr_nibble_fill
-		JMP		locret_449F8
+		JMP		_spr_nibble_fill
 ; ---------------------------------------------------------------------------
 loc_449A7:
 		LDA		_tmp12
@@ -1398,8 +1372,7 @@ loc_449A7:
 		LDA		#$60
 		TAX
 		LDA		#$48
-		JSR		_spr_nibble_fill
-		JMP		locret_449F8
+		JMP		_spr_nibble_fill
 ; ---------------------------------------------------------------------------
 loc_449C0:
 		LDA		_tmp11
@@ -1415,8 +1388,7 @@ loc_449C0:
 		LDA		#$E0
 		TAX
 		LDA		#$F8
-		JSR		_spr_nibble_fill
-		JMP		locret_449F8
+		JMP		_spr_nibble_fill
 ; ---------------------------------------------------------------------------
 loc_449DF:
 		LDA		_tmp12
@@ -1429,8 +1401,7 @@ loc_449DF:
 		LDA		#$60
 		TAX
 		LDA		#$F8
-		JSR		_spr_nibble_fill
-		JMP		locret_449F8
+		JMP		_spr_nibble_fill
 locret_449F8:
 		RTS
 
@@ -1447,87 +1418,6 @@ _spr_nibble_fill:
 		INX
 		INX
 		STA		_spr_buf,X
-		RTS
-
-; =============== S U B	R O U T	I N E =======================================
-_hex_to_dec_0:
-		LDA		#$00
-		STA		_tmp02
-		STA		_tmp03
-		STA		_tmp04
-		STA		_tmp05
-loc_44A15:
-		JSR		_cmp1000_0
-		BCC		loc_44A22
-		JSR		_sub1000_0
-		INC		_tmp05
-		JMP		loc_44A15
-; ---------------------------------------------------------------------------
-loc_44A22:
-		JSR		_cmp100_0
-		BCC		loc_44A2F
-		JSR		_sub100_0
-		INC		_tmp04
-		JMP		loc_44A22
-; ---------------------------------------------------------------------------
-loc_44A2F:
-		LDA		_tmp00
-loc_44A31:
-		CMP		#$0A
-		BCS		loc_44A38
-		STA		_tmp02
-		RTS
-; ---------------------------------------------------------------------------
-loc_44A38:
-		SEC
-		SBC		#$0A
-		INC		_tmp03
-		JMP		loc_44A31
-
-; =============== S U B	R O U T	I N E =======================================
-_cmp1000_0:
-		LDA		_tmp01
-		CMP		#$03
-		BEQ		loc_44A47
-		RTS
-; ---------------------------------------------------------------------------
-loc_44A47:
-		LDA		_tmp00
-		CMP		#$E8
-		RTS
-
-; =============== S U B	R O U T	I N E =======================================
-_cmp100_0:
-		LDA		_tmp01
-		CMP		#$00
-		BEQ		loc_44A53
-		RTS
-; ---------------------------------------------------------------------------
-loc_44A53:
-		LDA		_tmp00
-		CMP		#$64
-		RTS
-
-; =============== S U B	R O U T	I N E =======================================
-_sub1000_0:
-		LDA		_tmp00
-		SEC
-		SBC		#$E8
-		STA		_tmp00
-		LDA		_tmp01
-		SBC		#$03
-		STA		_tmp01
-		RTS
-
-; =============== S U B	R O U T	I N E =======================================
-_sub100_0:
-		LDA		_tmp00
-		SEC
-		SBC		#$64
-		STA		_tmp00
-		LDA		_tmp01
-		SBC		#$00
-		STA		_tmp01
 		RTS
 
 ; ---------------------------------------------------------------------------
@@ -1793,7 +1683,7 @@ loc_44B93:
 		ORA		#$01
 		STA		_tmp12
 loc_44BA3:
-		JSR		_sprite_sheet_insertB
+		JSR		_sprite_sheet_insert
 		LDA		_portraits_lib,Y
 		INY
 		STA		_tmp04
@@ -1818,7 +1708,7 @@ loc_44BC7:
 		LDA		#$20
 		STA		_tmp01
 loc_44BD1:
-		JSR		_sprite_sheet_insertB
+		JSR		_sprite_sheet_insert
 		PLA
 		TAX
 		PLA
@@ -1882,7 +1772,7 @@ _pack_in_time_spr_insert:
 		STA     _tmp00
 #endif
 		LDX     #$00
-		JSR     _sprite_sheet_insertB
+		JSR     _sprite_sheet_insert
 ; END OF INSERT
 		LDA		#$01
 		STA		_tmp0A
@@ -2026,11 +1916,11 @@ _spr_sheet_title_insert:
 		STA		_tmp00
 		LDA		#$60
 		STA		_tmp01
-		JSR		_sprite_sheet_insertB
+		JSR		_sprite_sheet_insert
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_sprite_sheet_insertB:
+_sprite_sheet_insert:
 		LDA		#$04
 		STA		_tmp08
 loc_44D17:
@@ -2117,60 +2007,22 @@ _spr_title_anim:
 		.BYTE $00,$40,$00,$50,$00,$51,$41
 		.BYTE $18,$10,$00,$54,$01,$54,$05
 		.BYTE $30,$50,$05,$50,$45,$50,$45
+
 ; =============== S U B	R O U T	I N E =======================================
 _read_pad_safeA:
+		LDA		_tmp03
+		PHA
 		TYA
 		PHA
 		TXA
 		PHA
-loc_44E52:
-		LDA		#$00
-		JSR		_read_padA
-		STA		_pad
-		LDA		#$00
-		JSR		_read_padA
-		CMP		_pad
-		BNE		loc_44E52
+		JSR		_read_pad_safe
 		PLA
 		TAX
 		PLA
 		TAY
-		RTS
-
-; =============== S U B	R O U T	I N E =======================================
-_read_padA:
-		BEQ		loc_44E6E
-		LDA		#<[_PAD1_REG]
-; ---------------------------------------------------------------------------
-		.BYTE $AE
-; ---------------------------------------------------------------------------
-loc_44E6E:
-		LDA		#<[_PAD0_REG]
-		STA		_tmp01
-		LDA		#>[_PAD0_REG]
-		STA		_tmp02
-		LDA		#$01
-		STA		_PAD0_REG
-		NOP
-		NOP
-		LDA		#$00
-		STA		_tmp0B
-		TAY
-		TAX
-		STA		_PAD0_REG
-		NOP
-		NOP
-loc_44E88:
-		LDA		(_tmp01),Y
-		STA		_tmp00
-		LSR
-		ORA		_tmp00
-		LSR
-		ROL		_tmp0B
-		INX
-		CPX		#$08
-		BNE		loc_44E88
-		LDA		_tmp0B
+		PLA
+		STA		_tmp03
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -2369,7 +2221,7 @@ loc_45041:
 		BCC		loc_45058
 		LDA		#$07
 		STA		_tmp00
-		JMP		loc_45058
+		BNE		loc_45058
 ; ---------------------------------------------------------------------------
 loc_4504E:
 		LDA		_tmp00
@@ -2381,7 +2233,7 @@ loc_45058:
 		LDA		_pad
 		AND		#$80
 		BEQ		loc_45062
-		JMP		locret_451C9
+		RTS
 ; ---------------------------------------------------------------------------
 loc_45062:
 		ASL		_tmp00

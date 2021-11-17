@@ -70,7 +70,7 @@ loc_B79DA:
 		STA		_tmp05
 		LDA		#<[_tlm_scroller_heli_with_bio-1]
 		STA		_tmp04
-		LDA		#$00
+		LDA		#$C8
 		STA		_tmp0A
 loc_B7A10:
 		TXA
@@ -247,10 +247,8 @@ loc_B7B21:
 		LDA		#$02
 		STA		_tmp01
 loc_B7B35:
-		JSR		_render_off
-		JSR		_render_on
-		JSR		_render_off
-		JSR		_render_on
+		JSR		_render_toggle
+		JSR		_render_toggle
 		JSR		_render_off
 		INX
 		TXA
@@ -284,8 +282,7 @@ loc_B7B6D:
 loc_B7B73:
 		JSR		_render_on
 loc_B7B76:
-		JSR		_render_off
-		JSR		_render_on
+		JSR		_render_toggle
 		TXA
 		PHA
 		JSR		_read_pad_safeB
@@ -298,6 +295,11 @@ loc_B7B76:
 		PLA
 		TAY
 		RTS
+
+; =============== S U B	R O U T	I N E =======================================
+_render_toggle:
+		JSR		_render_off
+		JMP		_render_on
 
 ; =============== S U B	R O U T	I N E =======================================
 _scroller_draw_empty_line:
@@ -332,14 +334,14 @@ _scroller_spr_title_insert:
 		PHA
 		LDA		_tmp0A
 		TAY
-		LDA		_spr_title_anim_0,Y
+		LDA		_portraits_lib,Y
 		INY
 		STA		_tmp04
-		JSR		_scroller_spr_insert
-		CPY		#$15
-		BNE		loc_B7BCE
-		LDY		#$00
-loc_B7BCE:
+		JSR		_spr_sheet_title_insert
+		CPY		#$DD
+		BNE		loc_63BA2
+		LDY		#$C8
+loc_63BA2:
 		TYA
 		STA		_tmp0A
 		PLA
@@ -356,83 +358,6 @@ loc_B7BCE:
 		STA		_tmp00
 		RTS
 
-; =============== S U B	R O U T	I N E =======================================
-_scroller_spr_insert:
-		LDX		#$00
-		LDA		#$08
-		STA		_tmp02
-		LDA		#$03
-		STA		_tmp03
-		LDA		#$50
-		STA		_tmp00
-		LDA		#$60
-		STA		_tmp01
-		JSR		_scroller_spr_sheet_insert
-		RTS
-
-; =============== S U B	R O U T	I N E =======================================
-_scroller_spr_sheet_insert:
-		LDA		#$04
-		STA		_tmp08
-loc_B7BFE:
-		LDA		_tmp02
-		STA		_tmp06
-		LDA		_tmp01
-		STA		_tmp07
-loc_B7C06:
-		LDA		_tmp00
-		STA		_spr_buf,X
-		LDA		_tmp04
-		INC		_tmp04
-		STA		_spr_buf+1,X
-		INC		_tmp08
-		LDA		_tmp08
-		CMP		#$05
-		BNE		loc_B7C24
-		LDA		_spr_title_anim_0,Y
-		INY
-		STA		_tmp05
-		LDA		#$01
-		STA		_tmp08
-loc_B7C24:
-		ASL
-		STA		_tmp09
-		LDA		_tmp05
-		DEC		_tmp09
-loc_B7C2B:
-		DEC		_tmp09
-		BEQ		loc_B7C33
-		LSR
-		JMP		loc_B7C2B
-; ---------------------------------------------------------------------------
-loc_B7C33:
-		AND		#$03
-		STA		_spr_buf+2,X
-		LDA		_tmp07
-		STA		_spr_buf+3,X
-		INX
-		INX
-		INX
-		INX
-		LDA		_tmp07
-		CLC
-		ADC		#$08
-		STA		_tmp07
-		DEC		_tmp06
-		BNE		loc_B7C06
-		LDA		_tmp00
-		CLC
-		ADC		#$08
-		STA		_tmp00
-		DEC		_tmp03
-		BNE		loc_B7BFE
-		RTS
-
-; ---------------------------------------------------------------------------
-_spr_title_anim_0:
-		.BYTE $00,$40,$00,$50,$00,$51,$41
-		.BYTE $18,$10,$00,$54,$01,$54,$05
-		.BYTE $30,$50,$05,$50,$45,$50,$45
 ; =============== S U B	R O U T	I N E =======================================
 _render_off:
 		LDA		#$00
@@ -494,10 +419,6 @@ _tlm_scroller_heli_with_bio:
 		.BYTE $DD,$E1,$C2,$A2,$82,$B3,$A7,$BD,$A2,$97,$79,$6E,$75,__,$AC,$D6,$A8,$CD,$79,$76,$6C,_eol
 		.BYTE _eol
 		.BYTE _eol
-;		.BYTE _eol
-;		.BYTE _eol
-;		.BYTE _eol
-;		.BYTE _eol
 _res_the_end:
 		.BYTE __,_W,_H,_A,_T,__,_I,_S,__,_R,_E,_A,_L,__,_L,_I,_B,_E,_R,_T,_Y,__,_ex,_eol
 		.BYTE __,_P,_L,_E,_A,_S,_E,__,_T,_H,_I,_N,_K,__,_A,_B,_O,_U,_T,__,_I,_T,_dot,_eol
@@ -570,14 +491,6 @@ _res_the_end:
 		.BYTE _eol
 		.BYTE _eol
 		.BYTE _eol
-;		.BYTE _eol
-;		.BYTE _eol
-;		.BYTE _eol
-;		.BYTE _eol
-;		.BYTE _eol
-;		.BYTE _eol
-;		.BYTE _eol
-;		.BYTE _eol
 _pal_title_scroll:
 		.BYTE $0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$06,$10,$19
 		.BYTE $0F,$06,$16,$27,$0F,$16,$27,$37,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F

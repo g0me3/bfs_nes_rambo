@@ -76,7 +76,7 @@ loc_639E4:
 		STA		_tmp05
 		LDA		#<[_tlm_scroller_heli_with_bio-1]
 		STA		_tmp04
-		LDA		#$00
+		LDA		#$C8
 		STA		_tmp0A
 loc_63A1A:
 		TXA
@@ -253,40 +253,75 @@ loc_63B2B:
 		LDA		#$02
 		STA		_tmp01
 loc_63B3F:
-		JSR		_render_off
-		JSR		_render_on
-		JSR		_render_off
-		JSR		_render_on
+		JSR		_render_toggle
+		JSR		_render_toggle
 		JSR		_render_off
 		INX
 		TXA
+		CMP		#$F0
+		BNE		loc_B7B4F
+		INC		_tmp02
+		LDX		#$00
+		TXA
+loc_B7B4F:
 		CMP		#$60
-		BEQ		loc_63B64
-		CMP		#$01
-		BEQ		loc_63B5E
+		BNE		loc_B7B59
+		LDA		_tmp02
+		CMP		#$02
+		BEQ		loc_B7B73
+loc_B7B59:
+		AND		#$07
+		BEQ		loc_B7B67
+		AND		#$03
+		BEQ		loc_B7B6D
 		JSR		_render_on
 		JMP		loc_63B2B
 ; ---------------------------------------------------------------------------
-loc_63B5E:
+loc_B7B67:
 		JSR		_scroller_draw_line
 		JMP		loc_63B2B
 ; ---------------------------------------------------------------------------
-loc_63B64:
+loc_B7B6D:
+		JSR		_scroller_draw_empty_line
+		JMP		loc_63B2B
+; ---------------------------------------------------------------------------
+loc_B7B73:
 		JSR		_render_on
-loc_63B67:
-		JSR		_render_off
-		JSR		_render_on
+loc_B7B76:
+		JSR		_render_toggle
 		TXA
 		PHA
 		JSR		_read_pad_safeB
 		PLA
 		TAX
 		LDA		_pad
-		BEQ		loc_63B67
+		BEQ		loc_B7B76
 		PLA
 		TAX
 		PLA
 		TAY
+		RTS
+
+; =============== S U B	R O U T	I N E =======================================
+_render_toggle:
+		JSR		_render_off
+		JMP		_render_on
+
+; =============== S U B	R O U T	I N E =======================================
+_scroller_draw_empty_line:
+		LDA		_PPU_STATUS
+		LDA		_tmp00
+		STA		_PPU_ADDR
+		LDA		_tmp01
+		STA		_PPU_ADDR
+		LDY		#$1D
+		LDA		#$F1
+loc_B7B9E:
+		STA		_PPU_DATA
+		DEY
+		BNE		loc_B7B9E
+		LDY		#$00
+		JSR		_render_on
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -305,13 +340,13 @@ _scroller_spr_title_insert:
 		PHA
 		LDA		_tmp0A
 		TAY
-		LDA		_spr_title_anim_0,Y
+		LDA		_portraits_lib,Y
 		INY
 		STA		_tmp04
-		JSR		_scroller_spr_insert
-		CPY		#$15
+		JSR		_spr_sheet_title_insert
+		CPY		#$DD
 		BNE		loc_63BA2
-		LDY		#$00
+		LDY		#$C8
 loc_63BA2:
 		TYA
 		STA		_tmp0A
@@ -329,83 +364,6 @@ loc_63BA2:
 		STA		_tmp00
 		RTS
 
-; =============== S U B	R O U T	I N E =======================================
-_scroller_spr_insert:
-		LDX		#$00
-		LDA		#$08
-		STA		_tmp02
-		LDA		#$03
-		STA		_tmp03
-		LDA		#$50
-		STA		_tmp00
-		LDA		#$60
-		STA		_tmp01
-		JSR		_scroller_sp_sheet_insert
-		RTS
-
-; =============== S U B	R O U T	I N E =======================================
-_scroller_sp_sheet_insert:
-		LDA		#$04
-		STA		_tmp08
-loc_63BD2:
-		LDA		_tmp02
-		STA		_tmp06
-		LDA		_tmp01
-		STA		_tmp07
-loc_63BDA:
-		LDA		_tmp00
-		STA		_spr_buf,X
-		LDA		_tmp04
-		INC		_tmp04
-		STA		_spr_buf+1,X
-		INC		_tmp08
-		LDA		_tmp08
-		CMP		#$05
-		BNE		loc_63BF8
-		LDA		_spr_title_anim_0,Y
-		INY
-		STA		_tmp05
-		LDA		#$01
-		STA		_tmp08
-loc_63BF8:
-		ASL
-		STA		_tmp09
-		LDA		_tmp05
-		DEC		_tmp09
-loc_63BFF:
-		DEC		_tmp09
-		BEQ		loc_63C07
-		LSR
-		JMP		loc_63BFF
-; ---------------------------------------------------------------------------
-loc_63C07:
-		AND		#$03
-		STA		_spr_buf+2,X
-		LDA		_tmp07
-		STA		_spr_buf+3,X
-		INX
-		INX
-		INX
-		INX
-		LDA		_tmp07
-		CLC
-		ADC		#$08
-		STA		_tmp07
-		DEC		_tmp06
-		BNE		loc_63BDA
-		LDA		_tmp00
-		CLC
-		ADC		#$08
-		STA		_tmp00
-		DEC		_tmp03
-		BNE		loc_63BD2
-		RTS
-
-; ---------------------------------------------------------------------------
-_spr_title_anim_0:
-		.BYTE $00,$40,$00,$50,$00,$51,$41
-		.BYTE $18,$10,$00,$54,$01,$54,$05
-		.BYTE $30,$50,$05,$50,$45,$50,$45
 ; =============== S U B	R O U T	I N E =======================================
 _render_off:
 		LDA		#$00
@@ -441,10 +399,10 @@ _tlm_scroller_heli_bladeA:
 		.BYTE $00,$00,$00,$00,$00,$00,$00,$01,$02,$03,$04,$05,$06,$07,$08,$09,$0A,$0B,$0C,$0D,$FF
 _tlm_scroller_heli_with_bio:
 		.BYTE $00,$00,$00,$00,$00,$00,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$1A,$1B,$1C,$1D,$FF
-		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$20,$21,$22,$00,$00,$00,$00,$00,$00,$FF
-		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$23,$24,$25,$26,$27,$00,$00,$00,$00,$FF
-		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$28,$29,$2A,$2B,$00,$00,$00,$00,$00,$FF
-		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$2C,$2D,$2E,$2F,$30,$31,$32,$33,$34,$35,$00,$00,$FF
+		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$20,$21,$22,$FF
+		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$23,$24,$25,$26,$27,$FF
+		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$28,$29,$2A,$2B,$FF
+		.BYTE $00,$00,$00,$00,$00,$00,$00,$00,$2C,$2D,$2E,$2F,$30,$31,$32,$33,$34,$35,$FF
 		.BYTE $00,$00,$00,$00,$00,$00,$00,$36,$37,$38,$39,$3A,$3B,$3C,$3D,$3E,$3F,$40,$41,$42,$FF
 		.BYTE $00,$00,$00,$00,$00,$00,$43,$44,$45,$46,$47,$48,$49,$4A,$4B,$4C,$4D,$4E,$1E,$1F,$FF
 		.BYTE $FF
@@ -467,10 +425,78 @@ _tlm_scroller_heli_with_bio:
 		.BYTE __,_N,_u,_m,_e,_r,_o,_u,_s,__,_s,_e,_r,_v,_i,_c,_e,__,_a,_w,_a,_r,_d,_s,_dot,_eol
 		.BYTE __,_eol
 		.BYTE __,_eol
-;		.BYTE __,_eol
-;		.BYTE __,_eol
 _res_the_end:
-		.BYTE __,__,__,__,__,_T,_H,_E,__,_E,_N,_D,_eol
+		.BYTE _W,_H,_A,_T,__,_I,_S,__,_R,_E,_A,_L,__,_L,_I,_B,_E,_R,_T,_Y,_ex,_eol
+		.BYTE _P,_L,_E,_A,_S,_E,__,_T,_H,_I,_N,_K,__,_A,_B,_O,_U,_T,__,_I,_T,_dot,_eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE __,__,__,__,__,__,__,_S,__,_T,__,_A,__,_F,__,_F
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE __,__,__,_P,_R,_O,_D,_U,_C,_E,_R,__,_O,_K,_U,_C,_H,_A,_N,_eol
+		.BYTE _eol
+		.BYTE __,__,__,_D,_I,_R,_E,_C,_T,_O,_R,__,_I,_T,_O,_M,_A,_K,_I,_M,_A,_K,_I,_eol
+		.BYTE __,__,__,__,__,__,__,__,__,__,__,__,_Y,_A,_M,_A,_C,_H,_A,_N,_eol
+		.BYTE __,__,__,_S,_C,_E,_N,_A,_R,_I,_O,__,_M,_I,_S,_A,__,_N,_A,_R,_I,_T,_A,_eol
+		.BYTE _eol
+		.BYTE __,__,__,_D,_E,_S,_I,_G,_N,_E,_R,__,_F,_U,_K,_U,_C,_H,_A,_N,__,_T,_O,_K,_I,_T,_A,_eol
+		.BYTE _eol
+		.BYTE __,__,__,__,__,__,_M,_U,_S,_I,_C,__,_T,_O,_H,_R,_U,__,_H,_A,_S,_E,_B,_E,_eol
+		.BYTE _eol
+		.BYTE __,_P,_R,_O,_G,_R,_A,_M,_M,_E,_R,__,_A,_A,_Z,_eol
+		.BYTE _eol
+		.BYTE __,_P,_R,_O,_G,_R,_A,_M,_M,_E,_R,__,_P,_H,_I,_L,_I,_P,__,_M,_I,_Y,_A,_Z,_A,_W,_A,_eol
+		.BYTE _eol
+		.BYTE __,_P,_R,_O,_G,_R,_A,_M,_M,_E,_R,__,_N,_T,_T,__,_S,_H,_I,_R,_O,_T,_A,_eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE __,__,__,__,_S,_P,_E,_C,_I,_A,_L,__,_T,_H,_A,_N,_K,_S,_eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _S,_O,_U,_N,_D,_E,_F,_F,_E,_C,_T,__,_R,_U,_S,_H,_I,_R,_U,_S,_H,_I,_eol
+		.BYTE __,__,__,__,__,__,__,__,__,__,__,__,_S,_H,_I,_M,_A,_Z,_A,_K,_I,_eol
+		.BYTE __,__,__,_D,_E,_S,_I,_G,_N,_E,_R,__,_Y,_O,_S,_H,_I,__,_T,_O,_Y,_O,_K,_A,_W,_A,_eol
+		.BYTE _eol
+		.BYTE __,__,__,__,__,__,_M,_U,_S,_I,_C,__,_M,_I,_N,_K,_Y,__,_M,_O,_T,_O,_Y,_A,_M,_A,_eol
+		.BYTE _eol
+		.BYTE __,__,__,__,_A,_D,_V,_I,_S,_E,_R,__,_O,_Z,_eol
+		.BYTE _eol
+		.BYTE __,__,__,_P,_R,_O,_M,_O,_T,_E,_R,__,_N,_A,_N,_I,_W,_A,_N,_O,__,_S,_A,_S,_A,_K,_I,_eol
+		.BYTE _eol
+		.BYTE __,__,__,_P,_R,_O,_M,_O,_T,_E,_R,__,_T,_S,_U,_U,_eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE __,__,__,__,__,__,__,__,_T,_H,_E,__,_E,_N,_D,_eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
+		.BYTE _eol
 _pal_title_scroll:
 		.BYTE $0F,$0F,$19,$19,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$06,$10,$19
 		.BYTE $0F,$06,$16,$27,$0F,$16,$27,$37,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F

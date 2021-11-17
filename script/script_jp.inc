@@ -70,6 +70,8 @@ _script81:
 		msg_printf			$21c3	; [REND THE FEELINGS THE HEART\  WITH PAINFUL FEELINGS]
 		ptr_load			_script81_msg01
 		msg_printf			$22ac	; [START\CONTINUE]
+		ptr_load			_script81_msg02
+		msg_printf			$2B65	; [_2021 CAH4E3 BFS GMBH]
 		sprite_draw_up		_SPR_TITLE_SCREEN
 		jmpne_option		$01, _script81_loc00
 		checkpoint_reset
@@ -1374,6 +1376,8 @@ _script81_msg00:
 _script81_msg01:
 		.BYTE _S,_T,_A,_R,_T,_eol
 		.BYTE _C,_O,_N,_T,_I,_N,_U,_E,_eol,_eol
+_script81_msg02:
+		.BYTE _cop,_2,_0,_2,_1,__,_C,_A,_H,_4,_E,_3,__,_B,_F,_S,__,_G,_M,_B,_H,_eol,_eol
 _script82_msg00:
 		.BYTE $C0,$D7,$AC,$D6,$CD,$AA,$E7,$B4,$F5,$97,__,$6B,$93,$7C,$71,$79,$F5,$74,$6B,_eol,_eol
 _script82_msg01:

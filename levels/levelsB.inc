@@ -1,4 +1,4 @@
-
+_location_room_map_libB:
 		.WORD _room_map20
 		.WORD _room_map21
 		.WORD _room_map22

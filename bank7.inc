@@ -9,10 +9,10 @@
 
 ; =============== S U B	R O U T	I N E =======================================
 _MAIN:
-		LDA		#$06
-		STA		_cur_prg_bank
-		JSR		_mmc_prg
-		LDA		_location_room_settings
+;		LDA		#$06							; WHY?
+;		STA		_cur_prg_bank
+;		JSR		_mmc_prg
+;		LDA		_location_room_settings
 loc_6000E:
 		INC		_tmp04
 		BNE		loc_6000E
@@ -54,8 +54,7 @@ loc_6005D:
 		BEQ		loc_6006B
 		LDA		#$00
 		STA		_ingame_pause_flag
-		JMP		loc_6006E
-; ---------------------------------------------------------------------------
+		BEQ		loc_6006E
 loc_6006B:
 		JSR		_ingame_start_select_handler
 loc_6006E:
@@ -74,9 +73,9 @@ loc_6007F:
 		LDA		_game._life_level
 		ASL
 		TAY
-		LDA		_max_life_list_0,Y
+		LDA		_max_life_list,Y
 		STA		_tmp02
-		LDA		_max_life_list_0+1,Y
+		LDA		_max_life_list+1,Y
 		STA		_tmp03
 		LSR		_tmp03
 		ROR		_tmp02
@@ -93,7 +92,8 @@ loc_6007F:
 		LDA		_ppu_mask_shadow
 		ORA		#$20
 		STA		_ppu_mask_shadow
-		JMP		loc_600C8
+;		JMP		loc_600C8
+		BNE		loc_600C8
 ; ---------------------------------------------------------------------------
 loc_600C0:
 		LDA		_ppu_mask_shadow
@@ -102,10 +102,10 @@ loc_600C0:
 loc_600C8:
 		LDA		_ppu_ctrl_shadow
 		STA		_PPU_CTRL
-		LDA		_pad
-		CMP		#$18
-		BNE		loc_600D5
-loc_600D5:
+;		LDA		_pad							; removed cheat leftovers.
+;		CMP		#$18
+;		BNE		loc_600D5
+;loc_600D5:
 		JMP		_main_loop
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -125,7 +125,7 @@ loc_600E1:
 		LDY		#$00
 		LDA		#$00
 loc_600EF:
-		STA		_tmp00,Y
+		STA		$00,Y
 		INY
 		BNE		loc_600EF
 		INC		_tmp01
@@ -209,13 +209,7 @@ loc_60165:
 
 ; =============== S U B	R O U T	I N E =======================================
 _read_pad_safeB:
-		LDA		#$00
-		JSR		_read_padB
-		STA		_pad
-		LDA		#$00
-		JSR		_read_padB
-		CMP		_pad
-		BNE		_read_pad_safeB
+		JSR		_read_pad_safe
 		LDA		_pad_tmp
 		AND		_pad
 		STA		_tmp00
@@ -229,13 +223,16 @@ _read_pad_safeB:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_read_padB:
-		BEQ		loc_60285
-		LDA		#<[_PAD1_REG]
-; ---------------------------------------------------------------------------
-		.BYTE $AE
-; ---------------------------------------------------------------------------
-loc_60285:
+_read_pad_safe:
+		JSR		_read_pad
+		STA		_pad
+		JSR		_read_pad
+		CMP		_pad
+		BNE		_read_pad_safe
+		RTS
+
+; =============== S U B	R O U T	I N E =======================================
+_read_pad:
 		LDA		#<[_PAD0_REG]
 		STA		_tmp01
 		LDA		#>[_PAD0_REG]
@@ -267,11 +264,11 @@ loc_6029F:
 ; =============== S U B	R O U T	I N E =======================================
 _mmc_prg:
 		PHA
-		LDA		_cur_prg_bank
-		CMP		#$00
-		BCC		loc_602CD
-		CMP		#$08
-		BCS		loc_602CD
+;		LDA		_cur_prg_bank					; redundant check, debug leftovers
+;		CMP		#$00
+;		BCC		loc_602CD
+;		CMP		#$08
+;		BCS		loc_602CD
 		TXA
 		PHA
 		LDA		_cur_prg_bank
@@ -281,13 +278,12 @@ _mmc_prg:
 		STA		_mmc_cmd_list,X
 		PLA
 		TAX
-loc_602CD:
+;loc_602CD:
 		PLA
 		RTS
-
-; ---------------------------------------------------------------------------
 _mmc_cmd_list:
 		.BYTE $00,$01,$02,$03,$04,$05,$06,$07
+
 ; =============== S U B	R O U T	I N E =======================================
 _ingame_start_select_handler:
 		LDA		_pad
@@ -322,7 +318,7 @@ loc_602EB:
 		STA		_game._life+1
 		LDA		#$04
 		STA		_apu_se_idx
-		JMP		loc_60345
+		BNE		loc_60345
 ; ---------------------------------------------------------------------------
 loc_60326:
 		LDA		_cur_weapon_selected
@@ -357,10 +353,10 @@ loc_6034A:
 		LDA		_game._life_level
 		ASL
 		TAY
-		LDA		_max_life_list_0,Y
+		LDA		_max_life_list,Y
 		CMP		_game._life
 		BNE		loc_60370
-		LDA		_max_life_list_0+1,Y
+		LDA		_max_life_list+1,Y
 		CMP		_game._life+1
 		BEQ		loc_6033B
 loc_60370:
@@ -392,7 +388,7 @@ loc_60388:
 loc_603AD:
 		LDA		_ingame_pause_flag
 		BEQ		_ingame_cheats_test
-		JMP		locret_6044A
+		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
 _ingame_cheats_test:
@@ -413,7 +409,7 @@ loc_603C5:
 loc_603D3:
 		LDA		#$00
 		STA		_ingame_down_cheat_counter
-		JMP		loc_6040F
+		BNE		loc_6040F
 ; ---------------------------------------------------------------------------
 loc_603DB:
 		LDA		_ingame_down_cheat_counter
@@ -436,7 +432,7 @@ loc_603DB:
 		STA		_game._exp+1
 		LDA		#$03
 		STA		_apu_se_idx
-		JMP		loc_603D3
+		BNE		loc_603D3
 ; ---------------------------------------------------------------------------
 loc_6040F:
 		LDA		_pad
@@ -467,10 +463,9 @@ loc_60445:
 		STA		_ingame_dpad_cheat_counter
 locret_6044A:
 		RTS
-
-; ---------------------------------------------------------------------------
 _rambo_chr_weapon_tiles_ofs_list:
 		.BYTE $1D,$1D,$1B,$1B,$1A,$1D,$1D
+
 ; =============== S U B	R O U T	I N E =======================================
 _hud_cursor_spr_insert:
 		LDA		#$FE
@@ -521,12 +516,7 @@ loc_604A8:
 		LDA		#$05
 		STA		_cur_prg_bank
 		JSR		_mmc_prg
-		JSR		_inventory_screen
-		RTS
-
-; =============== S U B	R O U T	I N E =======================================
-_unref:
-		RTS
+		JMP		_inventory_screen
 
 ; =============== S U B	R O U T	I N E =======================================
 _level_draw_update:
@@ -562,7 +552,7 @@ loc_604EA:
 		INY
 		CPY		#$0C
 		BNE		loc_604EA
-		JMP		loc_60508
+		BEQ		loc_60508
 ; ---------------------------------------------------------------------------
 loc_604F7:
 		DEC		_tmp0D
@@ -603,9 +593,7 @@ loc_60542:
 		LDA		_game._scr_idx
 		BPL		loc_60551
 		CMP		#$FF
-		BEQ		loc_60551
-		JMP		loc_60568
-; ---------------------------------------------------------------------------
+		BNE		loc_60568
 loc_60551:
 		JSR		_spr_clear
 		LDA		#$1E
@@ -754,7 +742,7 @@ loc_60679:
 		CMP		#$FF
 		BNE		loc_6068E
 		LDA		#$03
-		JMP		loc_6069C
+		BNE		loc_6069C
 ; ---------------------------------------------------------------------------
 loc_6068E:
 		LDA		_cur_loc_room_settings
@@ -804,7 +792,7 @@ loc_606E5:
 		STA		_objsA._player._dir
 		LDA		#$00
 		STA		_game._redraw_req
-		JMP		locret_6057E
+		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
 _rambo_chr_weapon_tiles_unpdate:
@@ -1032,7 +1020,6 @@ loc_6083E:
 		LDA		#$00
 		STA		_spr_buf+3
 		RTS
-
 ; ---------------------------------------------------------------------------
 _final_boss_pak_tlm:
 		.BYTE $11,$21,$40,$0E
@@ -1049,6 +1036,7 @@ _final_boss_enemy_dinamic_list:
 		.BYTE $26,$00,$08,$40,$20,$0F
 		.BYTE $15,$00,$88,$68,$30,$00
 		.BYTE $15,$00,$F0,$68,$40,$00
+
 ; =============== S U B	R O U T	I N E =======================================
 _hud_icons_redraw:
 		LDA		_PPU_STATUS
@@ -1114,12 +1102,12 @@ loc_60963:
 		DEX
 		BNE		loc_60963
 		RTS
-
 ; ---------------------------------------------------------------------------
 _hud_icons_tlm:
 		.BYTE $15,$0C,$0D,$0E,$0F,$15,$10,$11,$12,$13,$14,$16,$17,$15,$18,$19
 		.BYTE $15,$1A,$1B,$15,$1C,$1D,$15,$1E,$1F,$15,$20,$21,$15,$22,$23,$15
 		.BYTE $FF
+
 ; =============== S U B	R O U T	I N E =======================================
 _blank_screen:
 		LDA		_PPU_STATUS
@@ -1252,8 +1240,7 @@ _stage_obj_lib_insertA:
 		STA		_tmp01
 		LDA		#$00
 		STA		_tmp04
-		JSR		_obj_lib_insert
-		RTS
+		JMP		_obj_lib_insert
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_lib_insert:
@@ -1334,14 +1321,14 @@ _chr_bg_tiles_load:
 		CMP		#$FF
 		BNE		loc_60AEA
 		LDA		#$09
-		JMP		loc_60AF9
+		BNE		loc_60AF9
 ; ---------------------------------------------------------------------------
 loc_60AEA:
 		SEC
 		SBC		#$80
 		TAY
 		LDA		_cutscene_chr_tbl,Y
-		JMP		loc_60AF7
+		BNE		loc_60AF7
 ; ---------------------------------------------------------------------------
 loc_60AF4:
 		LDA		_cur_level_chr_idx
@@ -1411,7 +1398,7 @@ loc_60B5D:
 		SBC		#$80
 		TAY
 		LDA		_cutscene_chr_tbl,Y
-		JMP		loc_60B6A
+		BNE		loc_60B6A
 ; ---------------------------------------------------------------------------
 loc_60B67:
 		LDA		_cur_level_chr_idx
@@ -1630,8 +1617,7 @@ loc_60CBE:
 		STA		_tmp0E
 		LDA		#>[_room_attr_buf+$AF]
 		STA		_tmp0F
-		JSR		_room_map_blank_attr_fill
-		RTS
+		JMP		_room_map_blank_attr_fill
 
 ; =============== S U B	R O U T	I N E =======================================
 _room_map_blank_nt_fill:
@@ -1734,6 +1720,8 @@ _room_data_send_to_vram:
 _room_scroll_to_rom_calc:
 		JSR		_room_scroll_to_ppu_ofs_calc
 
+; !FALLTHROUGH!
+
 ; =============== S U B	R O U T	I N E =======================================
 _room_scroll_to_rom_ptr_calc:
 		LDA		_tmp0E
@@ -1748,6 +1736,8 @@ _room_scroll_to_rom_ptr_calc:
 ; =============== S U B	R O U T	I N E =======================================
 _room_scroll_to_ppu_calc:
 		JSR		_room_scroll_to_ppu_ofs_calc
+
+; !FALLTHROUGH!
 
 ; =============== S U B	R O U T	I N E =======================================
 _room_scroll_to_ppu_ptr_calc:
@@ -1902,13 +1892,13 @@ loc_60E56:
 		ADC		#$C8
 		STA		_tmp03
 		RTS
-
 ; ---------------------------------------------------------------------------
 off_60E61:
 		.WORD _room_attr_buf
 		.WORD _room_attr_buf+$38
 		.WORD _room_attr_buf+$70
 		.WORD _room_attr_buf+$A8
+
 ; =============== S U B	R O U T	I N E =======================================
 _room_tlm_fetch_macro:
 		LDA		(_tmp01),Y
@@ -1967,7 +1957,7 @@ loc_60EAD:
 		JSR		_room_macro_queue
 		LDA		#$02
 		STA		_ppu_dequeue_idx
-		JMP		loc_60EC9
+		BNE		loc_60EC9
 ; ---------------------------------------------------------------------------
 loc_60EC1:
 		JSR		_room_macro_adjust
@@ -2134,9 +2124,7 @@ _collision_test_subA:
 		BEQ		loc_60FEA
 		LDA		_tmp17
 		STA		_tmp09
-		BEQ		loc_60FEA
-		JMP		loc_60FF7
-; ---------------------------------------------------------------------------
+		BNE		loc_60FF7
 loc_60FEA:
 		LDA		#$00
 		STA		_tmp16
@@ -2193,9 +2181,7 @@ loc_6101E:
 		STA		_tmp0F
 		LDA		_tmp0B
 		CMP		#$20
-		BCS		loc_61054
-		JMP		loc_60FEA
-; ---------------------------------------------------------------------------
+		BCC		loc_60FEA
 loc_61054:
 		LSR
 		LSR
@@ -2520,10 +2506,10 @@ _truncate:
 		AND		#$0F
 		ORA		_tmp07
 		RTS
-
 ; ---------------------------------------------------------------------------
 _hud_decimal_values_length_list:
 		.BYTE $02,$09,$02,$09,$00,$01,$01,$01,$01,$00,$00
+
 ; =============== S U B	R O U T	I N E =======================================
 _game_values_update:
 		LDA		_game._exp
@@ -2533,9 +2519,9 @@ _game_values_update:
 		LDA		_game._exp_level
 		ASL
 		TAY
-		LDA		_next_exp_list_0,Y
+		LDA		_next_exp_list,Y
 		STA		_tmp02
-		LDA		_next_exp_list_0+1,Y
+		LDA		_next_exp_list+1,Y
 		STA		_tmp03
 		JSR		_cmp_tmp00w_tmp02w
 		BCC		loc_61296
@@ -2549,9 +2535,9 @@ _game_values_update:
 		STA		_game._exp_level
 		ASL
 		TAY
-		LDA		_max_life_list_0,Y
+		LDA		_max_life_list,Y
 		STA		_game._life
-		LDA		_max_life_list_0+1,Y
+		LDA		_max_life_list+1,Y
 		STA		_game._life+1
 loc_6128E:
 		LDA		#$00
@@ -2565,15 +2551,15 @@ loc_61296:
 		STA		_tmp00
 		LDA		_game._life+1
 		STA		_tmp01
-		LDA		_max_life_list_0,Y
+		LDA		_max_life_list,Y
 		STA		_tmp02
-		LDA		_max_life_list_0+1,Y
+		LDA		_max_life_list+1,Y
 		STA		_tmp03
 		JSR		_cmp_tmp00w_tmp02w
 		BCC		loc_612C0
-		LDA		_max_life_list_0,Y
+		LDA		_max_life_list,Y
 		STA		_game._life
-		LDA		_max_life_list_0+1,Y
+		LDA		_max_life_list+1,Y
 		STA		_game._life+1
 loc_612C0:
 		LDY		#$04
@@ -2603,7 +2589,7 @@ loc_612E4:
 		BNE		loc_612F1
 		DEY
 		BNE		loc_612E4
-		JMP		loc_61302
+		BEQ		loc_61302
 ; ---------------------------------------------------------------------------
 loc_612F1:
 		LDY		#$00
@@ -2640,9 +2626,8 @@ _cmp_tmp00w_tmp02w:
 		CMP		_tmp02
 locret_61328:
 		RTS
-
 ; ---------------------------------------------------------------------------
-_max_life_list_0:
+_max_life_list:
 		.WORD 100
 		.WORD 200
 		.WORD 300
@@ -2651,7 +2636,7 @@ _max_life_list_0:
 		.WORD 600
 		.WORD 700
 		.WORD 800
-_next_exp_list_0:
+_next_exp_list:
 		.WORD 20
 		.WORD 300
 		.WORD 600
@@ -2660,6 +2645,7 @@ _next_exp_list_0:
 		.WORD 6000
 		.WORD 9000
 		.WORD 9000
+
 ; =============== S U B	R O U T	I N E =======================================
 _game_warps_handler:
 		LDX		#$00
@@ -2868,12 +2854,12 @@ loc_614C2:
 		BEQ		loc_614CF
 		LDA		#$0A
 		STA		_tmp12
-		JMP		loc_614F3
+		BNE		loc_614F3
 ; ---------------------------------------------------------------------------
 loc_614CF:
 		LDA		#$09
 		STA		_tmp12
-		JMP		loc_614F3
+		BNE		loc_614F3
 ; ---------------------------------------------------------------------------
 loc_614D6:
 		LDA		_tobjA._dir,X
@@ -3082,7 +3068,7 @@ _collision_test_subB:
 		CLC
 		ADC		#$08
 		STA		_tobjA._y_pos,X
-		JMP		locret_6169C
+		RTS
 ; ---------------------------------------------------------------------------
 loc_61638:
 		LDA		_tobjA._y_pos,X
@@ -3162,8 +3148,7 @@ loc_616B5:
 		ORA		#$04
 		STA		_tmp12
 loc_616BB:
-		JSR		_obj_sub616BF
-		RTS
+		JMP		_obj_sub616BF
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_sub616BF:
@@ -3297,7 +3282,7 @@ loc_6177B:
 		CLC
 		ADC		#$08
 		STA		_tobjA._y_pos,X
-		JMP		locret_617AF
+		RTS
 ; ---------------------------------------------------------------------------
 loc_6179D:
 		LDA		_tmp17
@@ -3847,7 +3832,7 @@ loc_61B29:
 		JSR		_objs_reset
 		LDA		#$40
 		STA		_final_boss_delay_and_hp
-		JMP		locret_61B69
+		RTS
 ; ---------------------------------------------------------------------------
 loc_61B5E:
 		LDA		_tmp14
@@ -4169,7 +4154,7 @@ loc_61D49:
 		CMP		#$36
 		BCC		loc_61D6A
 		DEC		_tobjA.field_C,X
-		JMP		locret_61D77
+		RTS
 ; ---------------------------------------------------------------------------
 loc_61D6A:
 		LDA		_tobjA.field_C,X
@@ -4209,7 +4194,7 @@ _obj_col_testB_calcF:
 loc_61DA4:
 		LDA		#$00
 		STA		_tmp16
-		JMP		locret_61E7F
+		RTS
 ; ---------------------------------------------------------------------------
 loc_61DAB:
 		LDA		_tmp04
@@ -4517,7 +4502,7 @@ loc_61F9E:
 		TAX
 		DEY
 		BNE		loc_61F9E
-		JMP		locret_61F4E
+		RTS
 ; ---------------------------------------------------------------------------
 loc_61FAD:
 		LDA		#$06
@@ -4548,7 +4533,7 @@ loc_61FAD:
 		STA		_tobjB.field_6,X
 		DEC		_final_boss_delay_and_hp
 		BEQ		loc_61FE8
-		JMP		locret_61F4E
+		RTS
 ; ---------------------------------------------------------------------------
 loc_61FE8:
 		LDA		#$AF
@@ -4563,13 +4548,13 @@ loc_61FE8:
 		STA		_game._life
 		LDA		#$03
 		STA		_game._life+1
-		JMP		locret_61F4E
+		RTS
 ; ---------------------------------------------------------------------------
 _final_boss_animate:
 		DEC		_final_boss_delay_and_hp
 		LDA		_final_boss_delay_and_hp
 		BEQ		_final_boss_obj_insert
-		JMP		locret_61F4E
+		RTS
 ; ---------------------------------------------------------------------------
 _final_boss_obj_insert:
 		LDA		#$78
@@ -4615,7 +4600,7 @@ loc_62047:
 		LDA		_objsA._o2,X
 		ORA		#$04
 		STA		_objsA._o2,X
-		JMP		locret_61F4E
+		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
 _objB_manager:
@@ -4922,20 +4907,6 @@ loc_62222:
 loc_6223B:
 		JMP		_objB_flush_and_continue
 
-; ---------------------------------------------------------------------------
-_max_life_list_1:
-		.WORD 100
-		.WORD 200
-		.WORD 300
-		.WORD 400
-		.WORD 500
-		.WORD 600
-		.WORD 700
-		.WORD 800
-; =============== S U B	R O U T	I N E =======================================
-_objB_hndl09_dummy:
-		JMP		_objB_animate_common
-
 ; =============== S U B	R O U T	I N E =======================================
 _objB_hndl0A_heart:
 		LDA		_objsB._o0.field_7,X
@@ -4951,10 +4922,10 @@ loc_62266:
 		LDA		_game._life_level
 		ASL
 		TAY
-		LDA		_max_life_list_1,Y
+		LDA		_max_life_list,Y
 		STA		_game._life
 		INY
-		LDA		_max_life_list_1,Y
+		LDA		_max_life_list,Y
 		STA		_game._life+1
 		JMP		_objB_animate_common
 
@@ -5145,7 +5116,7 @@ _objB_hndl_lib:
 		.WORD _objB_hndl06
 		.WORD _objB_hndl07
 		.WORD _objB_hndl08
-		.WORD _objB_hndl09_dummy
+		.WORD _objB_animate_common
 		.WORD _objB_hndl0A_heart
 		.WORD _objB_hndl0B_0F_ammo
 		.WORD _objB_hndl0B_0F_ammo
@@ -5317,7 +5288,7 @@ _spr_obj_fetch_chunkB:
 		CLC
 		ADC		_tmp00
 		STA		_tmp01
-		JMP		locret_624E6
+		RTS
 ; ---------------------------------------------------------------------------
 loc_624D3:
 		LDA		(_tmp0A),Y
@@ -5803,7 +5774,7 @@ loc_627CB:
 		ADC		#$00
 		AND		#$3F
 		STA		_tmp0C
-		JMP		locret_627F0
+		RTS
 ; ---------------------------------------------------------------------------
 loc_627E1:
 		SEC
@@ -6395,7 +6366,7 @@ loc_62C62:
 		LDA		_objsA._player.field_2
 		CMP		#$05
 		BEQ		loc_62C6B
-		JMP		locret_62D20
+		RTS
 ; ---------------------------------------------------------------------------
 loc_62C6B:
 		LDA		_game._exp_level
@@ -6418,7 +6389,7 @@ loc_62C88:
 		BEQ		loc_62C9F
 		LDA		_game._exp_level,Y
 		BNE		loc_62C96
-		JMP		locret_62D20
+		RTS
 ; ---------------------------------------------------------------------------
 loc_62C96:
 		LDA		_cur_weapon_selected
@@ -6512,7 +6483,7 @@ _rambo_crouch_test:
 		LDA		_objsA._player.field_7
 		AND		#$BF
 		STA		_objsA._player.field_7
-		JMP		locret_62D3D
+		RTS
 ; ---------------------------------------------------------------------------
 loc_62D37:
 		LDA		_objsA._player.field_7
@@ -7150,8 +7121,7 @@ loc_6318A:
 		LDA		#$0F
 		STA		_APU_STATUS
 loc_6318F:
-		JSR		_apu_play
-		RTS
+		JMP		_apu_play
 
 ; =============== S U B	R O U T	I N E =======================================
 _nmi_pal_fade_out:
@@ -7279,7 +7249,7 @@ loc_63262:
 		STA		_PPU_DATA
 		STA		_PPU_DATA
 		STA		_PPU_DATA
-		JMP		locret_63219
+		RTS
 ; ---------------------------------------------------------------------------
 loc_6328F:
 		LDA		_PPU_STATUS
@@ -7335,7 +7305,7 @@ loc_632D2:
 		STA		_PPU_DATA
 		STA		_PPU_DATA
 		STA		_PPU_DATA
-		JMP		locret_63219
+		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
 _nmi_pal_fade_in:
@@ -7443,7 +7413,7 @@ loc_633A0:
 		INX
 		DEY
 		BNE		loc_633A0
-		JMP		locret_63365
+		RTS
 ; ---------------------------------------------------------------------------
 loc_633C0:
 		LDA		_PPU_STATUS
@@ -7489,7 +7459,7 @@ loc_633F7:
 		INX
 		DEY
 		BNE		loc_633F7
-		JMP		locret_63365
+		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
 _hud_decimals_draw_update:
@@ -7589,6 +7559,7 @@ locret_634C6:
 		SECTION_END "APU PLAYER"
 
 		SECTION_START
+
 #if LANGUAGE == LANG_US
 		INCLUDE	"..\scroller_us.inc"
 #endif
