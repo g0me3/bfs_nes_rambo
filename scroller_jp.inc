@@ -44,7 +44,6 @@ loc_B79BB:
 		CMP		#$80
 		BNE		loc_B79D8
 		JMP		_the_end_scroller
-; ---------------------------------------------------------------------------
 loc_B79D8:
 		LDY		#$00
 loc_B79DA:
@@ -97,16 +96,13 @@ loc_B7A1C:
 		BEQ		loc_B7A39
 		JSR		_scroller_heli_bladeA_draw
 		JMP		loc_B7A10
-; ---------------------------------------------------------------------------
 loc_B7A39:
 		JSR		_scroller_draw_line
 		JMP		loc_B7A10
-; ---------------------------------------------------------------------------
 loc_B7A3F:
 		JSR		_render_on
 		STX		_tmp14
 		JMP		loc_B7A53
-; ---------------------------------------------------------------------------
 loc_B7A47:
 		JSR		_render_off
 		JSR		_scroller_heli_bladeB_draw
@@ -150,8 +146,7 @@ loc_B7A82:
 		CMP		#$FF
 		BEQ		loc_B7A90
 		STA		_PPU_DATA
-		JMP		loc_B7A82
-; ---------------------------------------------------------------------------
+		BNE		loc_B7A82
 loc_B7A90:
 		LDY		#$00
 		JSR		_render_on
@@ -171,8 +166,7 @@ loc_B7AA5:
 		CMP		#$FF
 		BEQ		loc_B7AB3
 		STA		_PPU_DATA
-		JMP		loc_B7AA5
-; ---------------------------------------------------------------------------
+		BNE		loc_B7AA5
 loc_B7AB3:
 		LDY		#$00
 		JSR		_render_on
@@ -195,16 +189,15 @@ loc_B7ACC:
 		BEQ		loc_B7AD8
 		STA		_PPU_DATA
 		JMP		loc_B7AC6
-; ---------------------------------------------------------------------------
 loc_B7AD8:
 		JSR		_render_on
 		LDA		_tmp01
 		CLC
 		ADC		#$20
 		STA		_tmp01
-		LDA		_tmp00
-		ADC		#$00
-		STA		_tmp00
+		BCC		loc_B7AD9
+		INC		_tmp00
+loc_B7AD9:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -270,15 +263,12 @@ loc_B7B59:
 		BEQ		loc_B7B6D
 		JSR		_render_on
 		JMP		loc_B7B21
-; ---------------------------------------------------------------------------
 loc_B7B67:
 		JSR		_scroller_draw_line
 		JMP		loc_B7B21
-; ---------------------------------------------------------------------------
 loc_B7B6D:
 		JSR		_scroller_draw_empty_line
 		JMP		loc_B7B21
-; ---------------------------------------------------------------------------
 loc_B7B73:
 		JSR		_render_on
 loc_B7B76:
@@ -387,7 +377,6 @@ _render_on:
 		LDA		#$90
 		STA		_PPU_CTRL
 		RTS
-
 ; ---------------------------------------------------------------------------
 _tlm_scroller_heli_bladeA:
 		.BYTE $00,$00,$00,$00,$01,$02,$03,$04,$05,$06,$07,$08,$09,$0A,$0B,$0C,$0D,$FF

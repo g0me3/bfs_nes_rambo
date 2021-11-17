@@ -10,12 +10,12 @@ _scroller_screen:
 		LDA		#$00
 		STA		_PPU_MASK
 		LDA		_PPU_STATUS
-		LDA		#$20
-		STA		_PPU_ADDR
-		LDA		#$00
-		STA		_PPU_ADDR
-		LDA		#$FE
-		LDY		#$1E
+		LDA		#$20					; manually clear screen here
+		STA		_PPU_ADDR				; it seems this routines are added
+		LDA		#$00					; at the very later stage of develop
+		STA		_PPU_ADDR				; so they are copy some other code
+		LDA		#$FE					; and sored at the fixed position
+		LDY		#$1E					; at the nd of the ROM
 loc_6399F:
 		LDX		#$20
 loc_639A1:
@@ -25,8 +25,8 @@ loc_639A1:
 		DEY
 		BNE		loc_6399F
 		LDA		_PPU_STATUS
-		LDA		#$23
-		STA		_PPU_ADDR
+		LDA		#$23					; refill attrs for drawing
+		STA		_PPU_ADDR				; helicopter as well as bio
 		LDA		#$C0
 		STA		_PPU_ADDR
 		LDA		#$FF
@@ -35,12 +35,12 @@ loc_639BB:
 		STA		_PPU_DATA
 		DEY
 		BNE		loc_639BB
-		LDA		#$00
-		LDY		#$30
-loc_639C5:
-		STA		_PPU_DATA
-		DEY
-		BNE		loc_639C5
+		LDA		#$00					; since in us version they changed
+		LDY		#$30					; the small font color, default
+loc_639C5:								; palette doe not fit here, so they
+		STA		_PPU_DATA				; put another one with one color
+		DEY								; and has to refill attrs with another
+		BNE		loc_639C5				; palette
 		LDA		_PPU_STATUS
 		LDA		#$3F
 		STA		_PPU_ADDR
@@ -50,7 +50,6 @@ loc_639C5:
 		CMP		#$80
 		BNE		loc_639E2
 		JMP		_the_end_scroller
-; ---------------------------------------------------------------------------
 loc_639E2:
 		LDY		#$00
 loc_639E4:
@@ -103,16 +102,13 @@ loc_63A26:
 		BEQ		loc_63A43
 		JSR		_scroller_heli_bladeA_draw
 		JMP		loc_63A1A
-; ---------------------------------------------------------------------------
 loc_63A43:
 		JSR		_scroller_draw_line
 		JMP		loc_63A1A
-; ---------------------------------------------------------------------------
 loc_63A49:
 		JSR		_render_on
 		STX		_tmp14
 		JMP		loc_63A5D
-; ---------------------------------------------------------------------------
 loc_63A51:
 		JSR		_render_off
 		JSR		_scroller_heli_bladeB_draw
@@ -156,8 +152,7 @@ loc_63A8C:
 		CMP		#$FF
 		BEQ		loc_63A9A
 		STA		_PPU_DATA
-		JMP		loc_63A8C
-; ---------------------------------------------------------------------------
+		BNE		loc_63A8C
 loc_63A9A:
 		LDY		#$00
 		JSR		_render_on
@@ -177,8 +172,7 @@ loc_63AAF:
 		CMP		#$FF
 		BEQ		loc_63ABD
 		STA		_PPU_DATA
-		JMP		loc_63AAF
-; ---------------------------------------------------------------------------
+		BNE		loc_63AAF
 loc_63ABD:
 		LDY		#$00
 		JSR		_render_on
@@ -200,17 +194,16 @@ loc_63AD6:
 		CMP		#$FF
 		BEQ		loc_63AE2
 		STA		_PPU_DATA
-		JMP		loc_63AD0
-; ---------------------------------------------------------------------------
+		BNE		loc_63AD0
 loc_63AE2:
 		JSR		_render_on
 		LDA		_tmp01
 		CLC
 		ADC		#$20
 		STA		_tmp01
-		LDA		_tmp00
-		ADC		#$00
-		STA		_tmp00
+		BCC		loc_63AE3
+		INC		_tmp00
+loc_63AE3:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -276,15 +269,12 @@ loc_B7B59:
 		BEQ		loc_B7B6D
 		JSR		_render_on
 		JMP		loc_63B2B
-; ---------------------------------------------------------------------------
 loc_B7B67:
 		JSR		_scroller_draw_line
 		JMP		loc_63B2B
-; ---------------------------------------------------------------------------
 loc_B7B6D:
 		JSR		_scroller_draw_empty_line
 		JMP		loc_63B2B
-; ---------------------------------------------------------------------------
 loc_B7B73:
 		JSR		_render_on
 loc_B7B76:
@@ -393,7 +383,6 @@ _render_on:
 		LDA		#$90
 		STA		_PPU_CTRL
 		RTS
-
 ; ---------------------------------------------------------------------------
 _tlm_scroller_heli_bladeA:
 		.BYTE $00,$00,$00,$00,$00,$00,$00,$01,$02,$03,$04,$05,$06,$07,$08,$09,$0A,$0B,$0C,$0D,$FF
@@ -423,8 +412,8 @@ _tlm_scroller_heli_with_bio:
 		.BYTE __,_3,__,_m,_o,_n,_t,_h,_s,_col,__,_e,_s,_c,_a,_p,_e,_d,_dot,__,_L,_i,_c,_e,_n,_s,_e,_d,_eol
 		.BYTE __,_p,_i,_l,_o,_t,_dot,__,_5,_9,__,_c,_o,_m,_b,_a,_t,__,_m,_i,_s,_s,_i,_o,_n,_s,_dot,_eol
 		.BYTE __,_N,_u,_m,_e,_r,_o,_u,_s,__,_s,_e,_r,_v,_i,_c,_e,__,_a,_w,_a,_r,_d,_s,_dot,_eol
-		.BYTE __,_eol
-		.BYTE __,_eol
+		.BYTE _eol
+		.BYTE _eol
 _res_the_end:
 		.BYTE _W,_H,_A,_T,__,_I,_S,__,_R,_E,_A,_L,__,_L,_I,_B,_E,_R,_T,_Y,_ex,_eol
 		.BYTE _P,_L,_E,_A,_S,_E,__,_T,_H,_I,_N,_K,__,_A,_B,_O,_U,_T,__,_I,_T,_dot,_eol

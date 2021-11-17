@@ -260,7 +260,6 @@ _script_cmd_fetch:
 		AND		#$04
 		BEQ		loc_441CD
 		RTS
-; ---------------------------------------------------------------------------
 loc_441CD:
 		LDA		(_tmp0D),Y
 		INY
@@ -406,20 +405,16 @@ loc_442B8:
 		LDA		_pad
 		AND		#$80
 		BEQ		loc_442B8
-		JMP		loc_44302
-; ---------------------------------------------------------------------------
+		BNE		_select_is_over
 _input_2_options:
 		LDA		#$00
-		TAY
-		JMP		loc_442D4
-; ---------------------------------------------------------------------------
+		BEQ		loc_442D3
 _input_3_options:
 		LDA		#$03
-		TAY
-		JMP		loc_442D4
-; ---------------------------------------------------------------------------
+		BNE		loc_442D3
 _input_4_options:
 		LDA		#$07
+loc_442D3:
 		TAY
 loc_442D4:
 		LDA		_msg_option_pos_list,Y
@@ -434,16 +429,14 @@ loc_442D4:
 		JSR		_msg_wait_for_input
 		LDA		_pad
 		AND		#$80
-		BNE		loc_44302
+		BNE		_select_is_over
 		LDA		_pad
 		AND		#$0F
-		BEQ		loc_442FF
+		BEQ		loc_442D4
 		INC		_tmp13
 		INY
-loc_442FF:
 		JMP		loc_442D4
-; ---------------------------------------------------------------------------
-loc_44302:
+_select_is_over:
 		JSR		_msg_wait_key_release
 		LDA		_tmp11
 		AND		#$C7
@@ -453,12 +446,11 @@ loc_44302:
 		PLA
 		TAY
 		JMP		_script_cmd_fetch
-
-; ---------------------------------------------------------------------------
 _msg_option_pos_list:
-		.BYTE $88,$B8,$00
-		.BYTE $88,$A8,$C8,$00
-		.BYTE $88,$98,$A8,$B8,$C8,$00
+		.BYTE $84,$B4,$00
+		.BYTE $84,$A4,$C4,$00
+		.BYTE $84,$94,$A4,$B4,$C4,$00
+
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd08_input_2_options:
 		LDA		_tmp11
@@ -557,11 +549,9 @@ _scr_cmd0F_jmp_flag_not_set:
 		AND		_game._flags+2
 		BNE		loc_443C6
 		JMP		_script_look_for_rets
-; ---------------------------------------------------------------------------
 loc_443C6:
 		JMP		_script_cmd_fetch
 
-; ---------------------------------------------------------------------------
 _bitmasks:
 		.BYTE $01,$00,$00,$00
 		.BYTE $02,$00,$00,$00
@@ -587,12 +577,15 @@ _bitmasks:
 		.BYTE $00,$00,$20,$00
 		.BYTE $00,$00,$40,$00
 		.BYTE $00,$00,$80,$00
+
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd10_jmpne_option:
 		LDA		(_tmp0D),Y
 		INY
 		CMP		_tmp13
 		BEQ		_j_script_cmd_fetch
+
+; !FALLTHROUGH!
 
 ; =============== S U B	R O U T	I N E =======================================
 _script_look_for_rets:
@@ -603,19 +596,19 @@ _script_look_for_rets:
 		CMP		#$12
 		BEQ		loc_4443E
 		JMP		_script_look_for_rets
-; ---------------------------------------------------------------------------
 loc_4443E:
 		LDA		(_tmp0D),Y
 		INY
 		CMP		#$12
 		BNE		_script_look_for_rets
-		JMP		_j_script_cmd_fetch
-; ---------------------------------------------------------------------------
+		JMP		_script_cmd_fetch
 loc_44448:
 		LDA		(_tmp0D),Y
 		INY
 		CMP		#$11
 		BNE		_script_look_for_rets
+
+; !FAALLTHROUGH!
 
 ; =============== S U B	R O U T	I N E =======================================
 _j_script_cmd_fetch:
@@ -875,7 +868,6 @@ loc_44633:
 		TAX
 		JSR		_ppu_regs_reinit
 		JMP		loc_44613
-; ---------------------------------------------------------------------------
 loc_4464B:
 		LDA		_PPU_STATUS
 		LDA		#$3F
@@ -905,7 +897,6 @@ loc_4465E:
 		TAX
 		JSR		_ppu_regs_reinit
 		JMP		loc_44613
-; ---------------------------------------------------------------------------
 loc_44676:
 		JSR		_ppu_regs_reinit
 		JMP		_script_cmd_fetch
@@ -961,13 +952,8 @@ _scr_cmd24_checkpoint_restore:
 		CMP		#$64
 		BCS		loc_446E2
 		LDA		#$64
-		STA		_game._life
-		JMP		loc_446E8
-; ---------------------------------------------------------------------------
 loc_446E2:
-		LDA		_game_life_backup
 		STA		_game._life
-loc_446E8:
 		LDA		#$01
 		STA		_game._redraw_req
 		LDA		_game._start_y
@@ -1010,8 +996,7 @@ loc_44724:
 		LDA		#$01
 		STA		_tmp13
 		LDA		#$A8
-		JMP		loc_44735
-; ---------------------------------------------------------------------------
+		BNE		loc_44735
 loc_44733:
 		LDA		#$B8
 loc_44735:
@@ -1031,7 +1016,6 @@ loc_44735:
 		BEQ		loc_44724
 		INC		_tmp13
 		JMP		loc_44724
-; ---------------------------------------------------------------------------
 loc_4475D:
 		JMP		_script_cmd_fetch
 
@@ -1327,21 +1311,18 @@ _script_sprite_anim:
 		LDA		_nmi_flag
 		BNE		loc_4496B
 		RTS
-; ---------------------------------------------------------------------------
 loc_4496B:
 		LDA		#$00
 		STA		_nmi_flag
 		LDA		_tmp14
 		BNE		loc_44977
 		RTS
-; ---------------------------------------------------------------------------
 loc_44977:
 		INC		_tmp14
 		LDA		_tmp14
 		AND		#$0F
 		BEQ		loc_44982
 		RTS
-; ---------------------------------------------------------------------------
 loc_44982:
 		LDA		_tmp14
 		AND		#$10
@@ -1360,7 +1341,6 @@ loc_44982:
 		TAX
 		LDA		#$A8
 		JMP		_spr_nibble_fill
-; ---------------------------------------------------------------------------
 loc_449A7:
 		LDA		_tmp12
 		AND		#$01
@@ -1373,7 +1353,6 @@ loc_449A7:
 		TAX
 		LDA		#$48
 		JMP		_spr_nibble_fill
-; ---------------------------------------------------------------------------
 loc_449C0:
 		LDA		_tmp11
 		AND		#$40
@@ -1389,7 +1368,6 @@ loc_449C0:
 		TAX
 		LDA		#$F8
 		JMP		_spr_nibble_fill
-; ---------------------------------------------------------------------------
 loc_449DF:
 		LDA		_tmp12
 		AND		#$01
@@ -1419,7 +1397,6 @@ _spr_nibble_fill:
 		INX
 		STA		_spr_buf,X
 		RTS
-
 ; ---------------------------------------------------------------------------
 _script_cmd_lib:
 		.WORD _scr_cmd00_portrait_draw_up
@@ -1484,7 +1461,6 @@ loc_44ADC:
 		STA		_PPU_DATA
 		INY
 		JMP		loc_44ADC
-; ---------------------------------------------------------------------------
 loc_44AE9:
 		JSR		_ppu_regs_reinit
 		INY
@@ -1494,7 +1470,6 @@ loc_44AE9:
 		JSR		_wait_for_nmi
 		JSR		_ppu_res_ofs_add64
 		JMP		loc_44ADC
-; ---------------------------------------------------------------------------
 loc_44AFC:
 		PLA
 		TAY
@@ -1639,12 +1614,10 @@ _sprite_insert:
 		CMP		#$D8
 		BNE		loc_44B5D
 		JMP		_portrait_clear
-; ---------------------------------------------------------------------------
 loc_44B5D:
 		CMP		#$C6
 		BNE		loc_44B64
 		JMP		_pack_in_time_spr_insert
-; ---------------------------------------------------------------------------
 loc_44B64:
 		CMP		#$C8
 		BNE		_portrait_spr_insert
@@ -1671,8 +1644,7 @@ _portrait_spr_insert:
 		LDA		_tmp12
 		ORA		#$02
 		STA		_tmp12
-		JMP		loc_44BA3
-; ---------------------------------------------------------------------------
+		BNE		loc_44BA3
 loc_44B93:
 		LDA		#$30
 		STA		_tmp00
@@ -1699,8 +1671,7 @@ loc_44BA3:
 		STA		_tmp00
 		LDA		#$C0
 		STA		_tmp01
-		JMP		loc_44BD1
-; ---------------------------------------------------------------------------
+		BNE		loc_44BD1
 loc_44BC7:
 		LDX		#$60
 		LDA		#$48
@@ -1727,7 +1698,6 @@ _portrait_clear:
 		AND		_tmp12
 		STA		_tmp12
 		JMP		loc_44BF6
-; ---------------------------------------------------------------------------
 loc_44BEE:
 		LDX		#$00
 		LDA		#$FE
@@ -1833,11 +1803,10 @@ loc_44C73:
 		BEQ		loc_44C82
 		LDA		#$01
 		STA		_tmp13
-		LDA		#$A8
-		JMP		loc_44C84
-; ---------------------------------------------------------------------------
+		LDA		#$A4
+		BNE		loc_44C84
 loc_44C82:
-		LDA		#$B8
+		LDA		#$B4
 loc_44C84:
 		STA		_spr_buf+$FC
 		LDA		#$4F
@@ -1872,7 +1841,6 @@ loc_44CB3:
 		INC		_tmp13
 loc_44CCB:
 		JMP		loc_44C5E
-; ---------------------------------------------------------------------------
 loc_44CCE:
 		LDA		#$F8
 		STA		_spr_buf+$FC
@@ -1953,7 +1921,6 @@ loc_44D44:
 		BEQ		loc_44D4C
 		LSR
 		JMP		loc_44D44
-; ---------------------------------------------------------------------------
 loc_44D4C:
 		AND		#$03
 		STA		_spr_buf+2,X
@@ -1976,11 +1943,10 @@ loc_44D4C:
 		DEC		_tmp03
 		BNE		loc_44D17
 		RTS
-
 ; ---------------------------------------------------------------------------
 _portraits_lib:
-		.BYTE $00,$55,$55,$55,$55,$00,$00,$F0,$55
-		.BYTE $18,$55,$55,$55,$5A,$08,$00,$24,$5A; 9
+		.BYTE $00,$55,$55,$55,$55,$00,$00,$F0,$55; $00
+		.BYTE $18,$55,$55,$55,$5A,$08,$00,$24,$5A; $09
 		.BYTE $30,$55,$55,$55,$5A,$00,$00,$3C,$5A; $12
 		.BYTE $48,$55,$55,$55,$55,$55,$55,$F3,$55; $1B
 		.BYTE $60,$55,$55,$55,$49,$55,$55,$6C,$29; $24
@@ -2070,7 +2036,6 @@ loc_44EC4:
 		PLA
 		TAY
 		RTS
-
 ; ---------------------------------------------------------------------------
 _pal_bg_default:
 		.BYTE $0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$16,$0F,$0F,$30,$30
@@ -2081,6 +2046,7 @@ _pal_portrait_lib:
 		.BYTE $0F,$0F,$06,$16,$0F,$06,$16,$27,$0F,$0F,$0F,$0F,$0F,$0F,$30,$30
 		.BYTE $0F,$06,$16,$27,$0F,$16,$27,$37,$0F,$0F,$0F,$0F,$0F,$0F,$30,$30
 		.BYTE $0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$0F,$30,$30
+
 ; =============== S U B	R O U T	I N E =======================================
 _pass_input_screen:
 		LDA		#$00
@@ -2122,7 +2088,6 @@ loc_44F94:
 		CMP		#$46
 		BNE		loc_44F9F
 		JMP		_pass_decode
-; ---------------------------------------------------------------------------
 loc_44F9F:
 		CMP		#$44
 		BEQ		loc_44FE6
@@ -2146,8 +2111,7 @@ loc_44FA3:
 		BNE		loc_4500B
 		LDA		#$A7
 		STA		_tmp06
-		JMP		loc_4500B
-; ---------------------------------------------------------------------------
+		JMP		loc_44F6D
 loc_44FCB:
 		JSR		_wait_for_nmi
 		LDA		_PPU_STATUS
@@ -2192,7 +2156,6 @@ _pass_input_control:
 		LDA		_tmp03
 		STA		_tmp00
 		JMP		loc_45023
-; ---------------------------------------------------------------------------
 loc_4501D:
 		LDA		_tmp03
 		AND		#$FE
@@ -2205,16 +2168,14 @@ loc_45023:
 		BEQ		loc_45041
 		CMP		#$07
 		BEQ		loc_4504E
-		JMP		loc_45058
-; ---------------------------------------------------------------------------
+		BNE		loc_45058
 loc_45034:
 		LDA		_tmp00
 		CMP		#$06
 		BCC		loc_45058
 		LDA		#$05
 		STA		_tmp00
-		JMP		loc_45058
-; ---------------------------------------------------------------------------
+		BNE		loc_45058
 loc_45041:
 		LDA		_tmp00
 		CMP		#$08
@@ -2222,7 +2183,6 @@ loc_45041:
 		LDA		#$07
 		STA		_tmp00
 		BNE		loc_45058
-; ---------------------------------------------------------------------------
 loc_4504E:
 		LDA		_tmp00
 		CMP		#$06
@@ -2234,7 +2194,6 @@ loc_45058:
 		AND		#$80
 		BEQ		loc_45062
 		RTS
-; ---------------------------------------------------------------------------
 loc_45062:
 		ASL		_tmp00
 		ASL		_tmp00
@@ -2250,7 +2209,7 @@ loc_45062:
 		ASL		_tmp01
 		LDA		_tmp01
 		CLC
-		ADC		#$58
+		ADC		#$54
 		STA		_tmp01
 		LDA		_tmp01
 		STA		_spr_buf+$F8
@@ -2269,15 +2228,11 @@ loc_45062:
 		LDA		_tmp06
 		CMP		#$C0
 		BCC		loc_450AD
-		LDA		#$40
-		STA		_tmp01
-		JMP		loc_450B1
-; ---------------------------------------------------------------------------
+		LDA		#$3D
+		BNE		loc_450B1
 loc_450AD:
-		LDA		#$30
-		STA		_tmp01
+		LDA		#$2D
 loc_450B1:
-		LDA		_tmp01
 		STA		_spr_buf+$FC
 		LDA		#$4E
 		STA		_spr_buf+$FD
@@ -2315,8 +2270,7 @@ loc_450E3:
 		LDA		_pad
 		AND		#$04
 		BNE		loc_4515A
-		JMP		loc_45169
-; ---------------------------------------------------------------------------
+		JMP		_pass_input_control
 loc_45107:
 		INC		_tmp03
 		LDA		_tmp04
@@ -2328,16 +2282,14 @@ loc_45107:
 		BNE		loc_4511C
 		INC		_tmp03
 		JMP		loc_4517E
-; ---------------------------------------------------------------------------
 loc_4511C:
 		LDA		_tmp03
 		CMP		#$0A
-		BCC		loc_45169
+		BCC		_j_pass_input_control
 loc_45122:
 		LDA		#$00
 		STA		_tmp03
-		JMP		loc_45169
-; ---------------------------------------------------------------------------
+		JMP		_pass_input_control
 loc_45129:
 		DEC		_tmp03
 		LDA		_tmp04
@@ -2349,98 +2301,84 @@ loc_45129:
 		BNE		loc_4513E
 		DEC		_tmp03
 		JMP		loc_451B3
-; ---------------------------------------------------------------------------
 loc_4513E:
 		LDA		_tmp03
 		AND		#$80
-		BEQ		loc_45169
+		BEQ		_j_pass_input_control
 		LDA		#$09
 		STA		_tmp03
-		JMP		loc_45169
-; ---------------------------------------------------------------------------
+		JMP		_pass_input_control
 loc_4514B:
 		DEC		_tmp04
 		LDA		_tmp04
 		AND		#$80
-		BEQ		loc_45169
+		BEQ		_j_pass_input_control
 		LDA		#$07
 		STA		_tmp04
-		JMP		loc_45169
-; ---------------------------------------------------------------------------
+		JMP		_pass_input_control
 loc_4515A:
 		INC		_tmp04
 		LDA		_tmp04
 		CMP		#$08
-		BCC		loc_45169
+		BCC		_j_pass_input_control
 		LDA		#$00
 		STA		_tmp04
-		JMP		loc_45169
-loc_45169:
+_j_pass_input_control:
 		JMP		_pass_input_control
-; ---------------------------------------------------------------------------
 loc_4516C:
 		LDA		_tmp03
 		CMP		#$06
-		BCC		loc_45169
+		BCC		_j_pass_input_control
 		JMP		loc_45122
-; ---------------------------------------------------------------------------
 loc_45175:
 		LDA		_tmp03
 		CMP		#$08
-		BCC		loc_45169
+		BCC		_j_pass_input_control
 		JMP		loc_45122
-; ---------------------------------------------------------------------------
 loc_4517E:
 		LDA		_tmp03
 		CMP		#$06
-		BCC		loc_45169
+		BCC		_j_pass_input_control
 		JMP		loc_45122
-; ---------------------------------------------------------------------------
 loc_45187:
 		LDA		_tmp03
 		CMP		#$06
-		BCC		loc_45169
+		BCC		_j_pass_input_control
 		AND		#$80
 		BEQ		loc_45196
 		LDA		#$05
-		JMP		loc_45198
-; ---------------------------------------------------------------------------
+		BNE		loc_45198
 loc_45196:
 		LDA		#$04
 loc_45198:
 		STA		_tmp03
-		JMP		loc_45169
-; ---------------------------------------------------------------------------
+		JMP		_j_pass_input_control
 loc_4519D:
 		LDA		_tmp03
 		CMP		#$08
-		BCC		loc_45169
+		BCC		_j_pass_input_control
 		AND		#$80
 		BEQ		loc_451AC
 		LDA		#$07
-		JMP		loc_451AE
-; ---------------------------------------------------------------------------
+		BNE		loc_451AE
 loc_451AC:
 		LDA		#$06
 loc_451AE:
 		STA		_tmp03
-		JMP		loc_45169
-; ---------------------------------------------------------------------------
+		JMP		_j_pass_input_control
 loc_451B3:
 		LDA		_tmp03
 		CMP		#$06
-		BCC		loc_45169
+		BCC		_j_pass_input_control
 		AND		#$80
 		BEQ		loc_451C2
 		LDA		#$04
-		JMP		loc_451C4
-; ---------------------------------------------------------------------------
+		BNE		loc_451C4
 loc_451C2:
 		LDA		#$02
 loc_451C4:
 		STA		_tmp03
-		JMP		loc_45169
-; ---------------------------------------------------------------------------
+		JMP		_j_pass_input_control
 locret_451C9:
 		RTS
 
@@ -2545,13 +2483,10 @@ loc_45268:
 		CMP		_game._crc
 		BEQ		loc_45279
 		LDA		#$02
-		STA		_tmp13
-		PLA
-		TAY
-		RTS
-; ---------------------------------------------------------------------------
+		BNE		loc_4527A
 loc_45279:
 		LDA		#$01
+loc_4527A:
 		STA		_tmp13
 		PLA
 		TAY

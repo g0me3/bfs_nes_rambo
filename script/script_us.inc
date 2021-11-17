@@ -1961,8 +1961,9 @@ _scriptA1_msg03:
 _scriptA1_msg04:
 		.BYTE _I,_ap,_l,_l,__,_b,_e,__,_b,_a,_c,_k,_dot,_eol
 		.BYTE _L,_e,_t,_ap,_s,__,_g,_e,_t,__,_o,_u,_t,__,_o,_f,_eol
-		.BYTE _h,_e,_r,_e,_dot,_eol
+		.BYTE _h,_e,_r,_e,_dot,_eol,_eol
 		.BYTE __,_eol
+; this line here is for clear an extra dot left from previous message.
 		.BYTE __,__,__,__,__,__,__,__,__,__,__,__,__,__,__,__,__,__,__,__,_eol,_eol
 _scriptA2_msg00:
 		.BYTE _G,_e,_t,__,_o,_n,__,_t,_h,_e,__,_c,_h,_o,_p,_p,_e,_r,_ex,_eol

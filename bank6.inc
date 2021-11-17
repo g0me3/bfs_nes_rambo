@@ -597,15 +597,13 @@ _obj_get_hor_delta16:
 		SBC		#$00
 		STA		_tmp0C
 		RTS
-; ---------------------------------------------------------------------------
 loc_52068:
 		LDA		_tmp0D
 		CLC
 		ADC		#$0F
 		STA		_tmp0D
-		LDA		_tmp0C
-		ADC		#$00
-		STA		_tmp0C
+		BCC		locret_52075
+		INC		_tmp0C
 locret_52075:
 		RTS
 
@@ -629,7 +627,6 @@ _obj_sub52085:
 		BNE		loc_52097
 		CLC
 		RTS
-; ---------------------------------------------------------------------------
 loc_52097:
 		SEC
 		RTS
@@ -653,23 +650,17 @@ _obj_sub52099:
 		CMP		#$03
 		BCS		loc_520C0
 		LDA		#$01
-		STA		_tmp0B
-		JMP		loc_520D2
-; ---------------------------------------------------------------------------
+		BNE		loc_520D2
 loc_520C0:
 		LDA		#$02
-		STA		_tmp0B
-		JMP		loc_520D2
-; ---------------------------------------------------------------------------
+		BNE		loc_520D2
 loc_520C7:
 		LDA		#$03
-		STA		_tmp0B
-		JMP		loc_520D2
-; ---------------------------------------------------------------------------
+		BNE		loc_520D2
 loc_520CE:
 		LDA		#$04
-		STA		_tmp0B
 loc_520D2:
+		STA		_tmp0B
 		LDA		#$00
 		STA		_objsA._player.field_7,X
 		LDA		#$00
@@ -732,7 +723,6 @@ loc_5210E:
 		LDA		_tmp13
 		STA		_apu_se_cnt1
 		JMP		loc_52148
-; ---------------------------------------------------------------------------
 loc_52140:
 		INC		_tmp08
 		LDA		_tmp08
@@ -772,7 +762,6 @@ loc_52177:
 		DEC		_objsA._player._timer,X
 		BEQ		loc_5217E
 		RTS
-; ---------------------------------------------------------------------------
 loc_5217E:
 		LDA		#$01
 		STA		_objsA._player._timer,X
@@ -807,7 +796,6 @@ _obj_prize_deploy_ex:
 		ADC		#$00
 		STA		_tmp01
 		JMP		loc_521C4
-; ---------------------------------------------------------------------------
 loc_521B7:
 		SEC
 		LDA		_tmp0D
@@ -836,7 +824,6 @@ _objB_prize_apu_select:
 		LDA		#$00
 		STA		_tmp13
 		RTS
-; ---------------------------------------------------------------------------
 loc_521E5:
 		TAY
 		LDA		_prize_apu_list,Y
@@ -857,12 +844,10 @@ loc_521FF:
 		LDA		_objsA._player._x_pos
 		CMP		_tmp0D
 		BCC		loc_52207
-		BCS		loc_5220D
-loc_52207:
-		JMP		_cur_obj_direction_left_set
-; ---------------------------------------------------------------------------
 loc_5220D:
 		JMP		_cur_obj_direction_right_set
+loc_52207:
+		JMP		_cur_obj_direction_left_set
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_vert_targeting_to_player_common:
@@ -872,7 +857,6 @@ _obj_vert_targeting_to_player_common:
 		CMP		_tmp0E
 		BCC		loc_52220
 		JMP		_cur_obj_direction_down_set
-; ---------------------------------------------------------------------------
 loc_52220:
 		JMP		_cur_obj_direction_up_set
 
@@ -977,8 +961,7 @@ loc_52299:
 		TAX
 		CPX		#$80
 		BNE		loc_52299
-		JMP		loc_522C5
-; ---------------------------------------------------------------------------
+		BEQ		loc_522C5
 loc_522A9:
 		LDA		_objsA._player._hndl_idx,Y
 		STA		_objsA._player._hndl_idx,X
@@ -1020,7 +1003,6 @@ _obj_to_player_lock:
 loc_522E2:
 		CLC
 		RTS
-; ---------------------------------------------------------------------------
 loc_522E4:
 		SEC
 		RTS
@@ -1050,7 +1032,6 @@ _obj_special_bonus_test_handler:
 		CMP		#$80
 		BEQ		loc_52313
 		RTS
-; ---------------------------------------------------------------------------
 loc_52313:
 		INC		_game._play_minutes
 		LDA		_objsA._o1._hndl_idx
@@ -1070,10 +1051,10 @@ loc_5231E:
 		STA		_objsA._o1._x_pos
 locret_52332:
 		RTS
-
 ; ---------------------------------------------------------------------------
 _obj_data_special:
 		.BYTE $3F,$F5,$00,$00,$80,$20,$00,$18,$00,$03,$00,$00,$00,$03,$9F,$00
+
 ; =============== S U B	R O U T	I N E =======================================
 _obj_rambo_shout_deploy_test:
 		LDA		_objsA._player._hndl_idx
@@ -1088,12 +1069,9 @@ _obj_rambo_shout_deploy_test:
 loc_52357:
 		LDA		_game._flags
 		AND		#$40
-		BEQ		locret_52361
-		JMP		loc_52362
-; ---------------------------------------------------------------------------
+		BNE		loc_52362
 locret_52361:
 		RTS
-; ---------------------------------------------------------------------------
 loc_52362:
 		LDA		_objsA._o6._hndl_idx
 		BPL		loc_523B0
@@ -1101,7 +1079,6 @@ loc_52362:
 		AND		#$40
 		BNE		loc_52370
 		RTS
-; ---------------------------------------------------------------------------
 loc_52370:
 		LDX		#$00
 		LDY		#$60
@@ -1123,7 +1100,6 @@ loc_52374:
 		SBC		#$00
 		STA		_objsA._o6._room_num
 		JMP		loc_5239E
-; ---------------------------------------------------------------------------
 loc_52396:
 		LDA		_objsA._player._room_num
 		STA		_objsA._o6._room_num
@@ -1210,7 +1186,6 @@ _cur_obj_direction_up_set:
 		ORA		#$80
 		STA		_tmp11
 		RTS
-
 ; ---------------------------------------------------------------------------
 _obj_hndl_lib:
 		.WORD _obj_hndl00_rambo
@@ -1277,6 +1252,7 @@ _obj_hndl_lib:
 		.WORD _obj_hndl3D_helicopterA
 		.WORD _obj_hndl3E_helicopterB
 		.WORD _obj_hndl3F_multipurpose
+
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl01_talk_idx_select:
 		LDA		_pad
@@ -1404,7 +1380,6 @@ _obj_hndl01_npcA:
 		CPX		#$00
 		BNE		loc_52561
 		JMP		_player_control_co
-; ---------------------------------------------------------------------------
 loc_52561:
 		LDA		_game._scr_idx
 		CMP		#$0A
@@ -1413,7 +1388,6 @@ loc_52561:
 		AND		#$02
 		BEQ		loc_52572
 		JMP		_player_control_co
-; ---------------------------------------------------------------------------
 loc_52572:
 		LDA		_game._scr_idx
 		CMP		#$06
@@ -1422,10 +1396,8 @@ loc_52572:
 		AND		#$02
 		BEQ		loc_52583
 		JMP		_player_control_co
-; ---------------------------------------------------------------------------
 loc_52583:
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_52586:
 		JSR		_obj_hndl01_talk_idx_select
 		JMP		_obj_npc_dialog_start
@@ -1435,7 +1407,6 @@ _obj_hndl02_npcB:
 		CPX		#$00
 		BNE		loc_52593
 		JMP		_player_control_co
-; ---------------------------------------------------------------------------
 loc_52593:
 		LDA		_game._flags+1
 		AND		#$02
@@ -1444,7 +1415,6 @@ loc_52593:
 		CMP		#$01
 		BEQ		loc_525A4
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_525A4:
 		JSR		_obj_hndl02_talk_idx_select
 		JMP		_obj_npc_dialog_start
@@ -1466,7 +1436,6 @@ loc_525BB:
 		AND		#$40
 		BEQ		loc_525C5
 		JMP		_player_control_co
-; ---------------------------------------------------------------------------
 loc_525C5:
 		LDA		_game._flags
 		AND		#$40
@@ -1475,7 +1444,6 @@ loc_525C5:
 		CMP		#$62
 		BNE		loc_525D6
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_525D6:
 		LDA		_game._scr_idx
 		CMP		#$0B
@@ -1484,10 +1452,8 @@ loc_525D6:
 		AND		#$40
 		BEQ		loc_525E7
 		JMP		_player_control_co
-; ---------------------------------------------------------------------------
 loc_525E7:
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_525EA:
 		JSR		_obj_hndl04_talk_idx_select
 		JMP		_obj_npc_dialog_start
@@ -1506,10 +1472,7 @@ _obj_npc_dialog_start:
 loc_525FF:
 		LDA		_tmp0B
 		CMP		#$02
-		BCC		loc_52608
-		JMP		loc_5267A
-; ---------------------------------------------------------------------------
-loc_52608:
+		BCS		loc_5267A
 		LDA		#$04
 		STA		_tmp01
 		LDA		#$06
@@ -1543,7 +1506,6 @@ loc_5263F:
 		BCC		loc_5264B
 		JSR		_cur_obj_direction_left_set
 		JMP		loc_52652
-; ---------------------------------------------------------------------------
 loc_5264B:
 		CMP		#$18
 		BCS		loc_52652
@@ -1561,18 +1523,14 @@ loc_52652:
 		CMP		#$A0
 		BCC		loc_5266D
 		JMP		_obj_jump_animate_test_right
-; ---------------------------------------------------------------------------
 loc_5266D:
 		JMP		_obj_jump_animate_test_left
-; ---------------------------------------------------------------------------
 loc_52670:
 		LDA		#$00
 		STA		_tmp0B
 		JMP		_obj_jump_animate_test
-; ---------------------------------------------------------------------------
 loc_52677:
 		JMP		_obj_jump_animate_test_ex
-; ---------------------------------------------------------------------------
 loc_5267A:
 		LDA		#$03
 		STA		_tmp01
@@ -1586,8 +1544,7 @@ loc_5267A:
 		LDA		#$00
 		STA		_tmp0F
 		LDA		#$02
-		JMP		loc_52699
-; ---------------------------------------------------------------------------
+		BNE		loc_52699
 loc_52697:
 		LDA		#$03
 loc_52699:
@@ -1613,7 +1570,6 @@ _obj_hndl05_bee:
 		JSR		_obj_to_player_lock
 		BCS		loc_526C4
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_526C4:
 		LDA		#$03
 		STA		_tmp01
@@ -1631,8 +1587,7 @@ loc_526D9:
 		BCC		loc_526E6
 		LDA		#$BF
 		STA		_tmp0E
-		JMP		loc_52700
-; ---------------------------------------------------------------------------
+		BNE		loc_52700
 loc_526E6:
 		CMP		#$30
 		BCS		loc_526ED
@@ -1653,8 +1608,7 @@ loc_52700:
 		LDA		#$00
 		STA		_tmp10
 		JSR		_obj_hor_targeting_to_player_common
-		JMP		loc_52719
-; ---------------------------------------------------------------------------
+		JMP		_obj_jump_animate_test_ex
 loc_5270E:
 		LDA		#$00
 		STA		_tmp0F
@@ -1675,15 +1629,11 @@ _obj_hndl06_snake:
 		AND		#$08
 		BNE		loc_52754
 		LDA		_tmp0E
-		BPL		loc_52734
-		JMP		loc_5274E
-; ---------------------------------------------------------------------------
-loc_52734:
+		BMI		loc_5274E
 		LDA		_tmp0C
 		CMP		_objsA._player._room_num
 		BEQ		loc_5273D
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_5273D:
 		LDA		_objsA._player._x_pos
 		AND		#$E0
@@ -1693,7 +1643,6 @@ loc_5273D:
 		CMP		_tmp0E
 		BCC		loc_5274E
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_5274E:
 		LDA		_tmp11
 		ORA		#$08
@@ -1706,7 +1655,6 @@ loc_52754:
 		AND		#$04
 		BNE		loc_52763
 		JMP		_obj_jump_animate_test_ex
-; ---------------------------------------------------------------------------
 loc_52763:
 		LDA		#$01
 		STA		_tmp0F
@@ -1727,8 +1675,7 @@ loc_52771:
 		BEQ		loc_5278B
 		LDA		#$01
 		STA		_tmp0F
-		JMP		loc_52792
-; ---------------------------------------------------------------------------
+		BNE		loc_52792
 loc_5278B:
 		LDA		#$03
 		STA		_tmp0F
@@ -1741,7 +1688,6 @@ _obj_hndl07_fish:
 		JSR		_obj_to_player_lock
 		BCS		loc_5279D
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_5279D:
 		LDA		#$03
 		STA		_tmp01
@@ -1755,15 +1701,12 @@ loc_5279D:
 		LDA		_tmp03
 		STA		_tmp0F
 		JMP		loc_527D4
-; ---------------------------------------------------------------------------
 loc_527B8:
 		LDA		#$01
 		STA		_tmp0F
 		JSR		_rand
 		AND		#$3F
-		BEQ		loc_527C6
-		JMP		loc_527D4
-; ---------------------------------------------------------------------------
+		BNE		loc_527D4
 loc_527C6:
 		JSR		_obj_hor_targeting_to_player_common
 		LDA		#$08
@@ -1791,9 +1734,7 @@ _obj_hndl08_bubbles:
 		BNE		loc_527FC
 		LDA		_tmp0E
 		CMP		#$F0
-		BCS		loc_527FC
-		JMP		loc_52803
-; ---------------------------------------------------------------------------
+		BCC		loc_52803
 loc_527FC:
 		JSR		_obj_multi_deploy_pos_calc
 		LDA		#$F0
@@ -1822,10 +1763,7 @@ _obj_hndl09_ceiling_bat:
 		STA		_tmp0B
 		LDA		_tmp0E
 		CMP		#$4F
-		BCC		loc_52835
-		JMP		loc_52843
-; ---------------------------------------------------------------------------
-loc_52835:
+		BCS		loc_52843
 		DEC		_objsA._player._timer,X
 		BNE		loc_52864
 		JSR		_obj_player_rand_timer_set
@@ -1865,14 +1803,12 @@ _obj_hndl0A_stalaktit:
 		CMP		_objsA._player._room_num
 		BEQ		loc_52881
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_52881:
 		LDA		_objsA._player._x_pos
 		AND		#$F0
 		CMP		_tmp0D
 		BEQ		loc_5288C
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_5288C:
 		LDA		_tmp11
 		ORA		#$08
@@ -1884,7 +1820,6 @@ loc_52892:
 		LDA		#$01
 		STA		_tmp02
 		JMP		_obj_jump_animate_test_ex
-; ---------------------------------------------------------------------------
 loc_5289F:
 		LDA		#$00
 		STA		_objsA._player.field_C,X
@@ -1902,14 +1837,10 @@ _obj_hndl0B_skull:
 		STA		_tmp0F
 		LDA		_tmp11
 		AND		#$10
-		BNE		loc_528C0
-		JMP		loc_52900
-; ---------------------------------------------------------------------------
-loc_528C0:
+		BEQ		loc_52900
 		DEC		_objsA._player._timer,X
 		BEQ		loc_528C7
 		JMP		loc_5294A
-; ---------------------------------------------------------------------------
 loc_528C7:
 		JSR		_obj_player_rand_timer_set
 		LDA		#$30
@@ -1930,7 +1861,6 @@ loc_528C7:
 		STA		_tmp0C
 		JSR		_cur_obj_direction_left_set
 		JMP		loc_52900
-; ---------------------------------------------------------------------------
 loc_528F0:
 		SEC
 		LDA		_objsA._player._x_pos
@@ -1950,8 +1880,7 @@ loc_52900:
 		LDA		_tmp0E
 		CMP		#$80
 		BCS		loc_52928
-		JMP		loc_5291B
-; ---------------------------------------------------------------------------
+		BCC		loc_5291B
 loc_52915:
 		LDA		_tmp0E
 		CMP		#$80
@@ -1990,7 +1919,6 @@ _obj_hndl0C_bird:
 		JSR		_obj_to_player_lock
 		BCS		loc_52955
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_52955:
 		LDA		#$03
 		STA		_tmp01
@@ -2004,13 +1932,11 @@ loc_52955:
 		AND		#$01
 		BNE		loc_529CA
 		JMP		loc_529B2
-; ---------------------------------------------------------------------------
 loc_5296F:
 		JSR		_rand
 		AND		#$0F
 		BEQ		loc_52979
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_52979:
 		JSR		_obj_player_rand_timer_set
 		LDA		_tmp11
@@ -2031,7 +1957,6 @@ loc_52979:
 		STA		_tmp0C
 		JSR		_cur_obj_direction_left_set
 		JMP		loc_529B2
-; ---------------------------------------------------------------------------
 loc_529A2:
 		SEC
 		LDA		_objsA._player._x_pos
@@ -2054,7 +1979,6 @@ loc_529B2:
 		LDA		#$00
 		STA		_tmp0B
 		JMP		_obj_jump_animate_test_ex
-; ---------------------------------------------------------------------------
 loc_529CA:
 		LDA		_tmp11
 		ORA		#$01
@@ -2081,9 +2005,7 @@ _obj_hndl0D_waterfall_logs:
 		JSR		_rand
 		LDA		_tmp0E
 		CMP		#$F8
-		BCS		loc_529FE
-		JMP		loc_52A07
-; ---------------------------------------------------------------------------
+		BCC		loc_52A07
 loc_529FE:
 		LDA		_tmp13
 		AND		#$07
@@ -2108,7 +2030,6 @@ _obj_hndl0E_small_bat:
 		JSR		_obj_to_player_lock
 		BCS		loc_52A27
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_52A27:
 		LDA		#$02
 		STA		_tmp01
@@ -2119,7 +2040,6 @@ loc_52A27:
 		AND		#$10
 		BEQ		loc_52A3B
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_52A3B:
 		DEC		_objsA._player._timer,X
 		BNE		loc_52A5A
@@ -2146,9 +2066,7 @@ _obj_hndl0F_spider:
 		JSR		_obj_sub5224F
 		JSR		_obj_sub52242
 		DEC		_objsA._player._timer,X
-		BEQ		loc_52A72
-		JMP		loc_52AA8
-; ---------------------------------------------------------------------------
+		BNE		loc_52AA8
 loc_52A72:
 		JSR		_obj_player_rand_timer_set
 		LDA		#$01
@@ -2167,15 +2085,12 @@ loc_52A72:
 		JSR		_cur_obj_direction_up_set
 		JSR		_obj_hor_targeting_to_player_common
 		JMP		loc_52AA8
-; ---------------------------------------------------------------------------
 loc_52A98:
 		JSR		_cur_obj_direction_right_set
 		JMP		loc_52AA8
-; ---------------------------------------------------------------------------
 loc_52A9E:
 		JSR		_cur_obj_direction_left_set
 		JMP		loc_52AA8
-; ---------------------------------------------------------------------------
 loc_52AA4:
 		LDA		#$00
 		STA		_tmp0F
@@ -2200,7 +2115,6 @@ _obj_hndl10_floor_turret:
 		BCC		loc_52ACF
 		JSR		_cur_obj_direction_down_set
 		JMP		loc_52AD2
-; ---------------------------------------------------------------------------
 loc_52ACF:
 		JSR		_cur_obj_direction_up_set
 loc_52AD2:
@@ -2211,15 +2125,13 @@ loc_52AD2:
 		LDA		#$40
 		STA		_tmp06
 		LDA		#$00
-		STA		_tmp0B
-		JMP		loc_52AEE
-; ---------------------------------------------------------------------------
+		BEQ		loc_52AEE
 loc_52AE6:
 		LDA		#$33
 		STA		_tmp06
 		LDA		#$01
-		STA		_tmp0B
 loc_52AEE:
+		STA		_tmp0B
 		LDA		#$04
 		STA		_tmp02
 		STA		_tmp03
@@ -2262,15 +2174,13 @@ loc_52B23:
 		LDA		#$04
 		STA		_tmp06
 		LDA		#$00
-		STA		_tmp0B
-		JMP		loc_52B45
-; ---------------------------------------------------------------------------
+		BEQ		loc_52B45
 loc_52B3D:
 		LDA		#$33
 		STA		_tmp06
 		LDA		#$01
-		STA		_tmp0B
 loc_52B45:
+		STA		_tmp0B
 		LDA		#$04
 		STA		_tmp02
 		STA		_tmp03
@@ -2301,15 +2211,13 @@ _obj_hndl13_jumping_ball:
 		JSR		_cur_obj_direction_down_set
 loc_52B7A:
 		JMP		loc_52BD2
-; ---------------------------------------------------------------------------
 loc_52B7D:
 		DEC		_objsA._player._timer,X
 		BNE		loc_52B8B
 		JSR		_obj_player_rand_timer_set
 		LDA		#$01
 		STA		_tmp0B
-		JMP		loc_52BB7
-; ---------------------------------------------------------------------------
+		BNE		loc_52BB7
 loc_52B8B:
 		JSR		_rand
 		LDA		_tmp13
@@ -2319,7 +2227,6 @@ loc_52B8B:
 		AND		#$F7
 		STA		_tmp11
 		JMP		loc_52BA3
-; ---------------------------------------------------------------------------
 loc_52B9D:
 		LDA		_tmp11
 		ORA		#$08
@@ -2334,7 +2241,6 @@ loc_52BA3:
 		AND		#$E8
 		STA		_objsA._player.field_7,X
 		JMP		loc_52BD2
-; ---------------------------------------------------------------------------
 loc_52BB7:
 		DEC		_objsA._player._timer,X
 		BNE		loc_52BC6
@@ -2342,8 +2248,7 @@ loc_52BB7:
 		STA		_objsA._player._timer,X
 		LDA		#$00
 		STA		_tmp0B
-		JMP		loc_52B7D
-; ---------------------------------------------------------------------------
+		BEQ		loc_52B7D
 loc_52BC6:
 		LDA		#$00
 		STA		_tmp10
@@ -2358,7 +2263,6 @@ loc_52BD2:
 		BNE		loc_52BDF
 		JSR		_cur_obj_direction_right_set
 		JMP		loc_52BE2
-; ---------------------------------------------------------------------------
 loc_52BDF:
 		JSR		_cur_obj_direction_left_set
 loc_52BE2:
@@ -2385,10 +2289,7 @@ _obj_hndl14_rocks:
 		STA		_tmp0F
 		LDA		_tmp0E
 		CMP		#$F8
-		BCS		loc_52C12
-		JMP		loc_52C18
-; ---------------------------------------------------------------------------
-loc_52C12:
+		BCC		loc_52C18
 		JSR		_obj_multi_deploy_pos_calc
 		JSR		_cur_obj_direction_down_set
 loc_52C18:
@@ -2416,24 +2317,19 @@ _obj_hndl15_grenades:
 		LDA		_objsA._player._state,X
 		BMI		loc_52C4A
 		AND		#$04
-		BNE		loc_52C4A
-		JMP		loc_52C55
-; ---------------------------------------------------------------------------
+		BEQ		loc_52C55
 loc_52C4A:
 		LDA		#$07
 		STA		_apu_se_cnt1
 		JSR		_obj_bomb_redeploy_and_explode
 		JMP		loc_52C64
-; ---------------------------------------------------------------------------
 loc_52C55:
 		LDA		_tmp11
 		AND		#$10
 		BNE		loc_52C64
 		LDA		_tmp0E
 		CMP		#$F0
-		BCS		loc_52C64
-		JMP		loc_52C79
-; ---------------------------------------------------------------------------
+		BCC		loc_52C79
 loc_52C64:
 		LDA		#$00
 		STA		_tmp10
@@ -2460,7 +2356,6 @@ _obj_hndl16_cobra:
 		AND		#$02
 		BNE		loc_52D0A
 		JMP		loc_52D40
-; ---------------------------------------------------------------------------
 loc_52C93:
 		LDA		_objsA._player._timer,X
 		BNE		loc_52C9D
@@ -2470,7 +2365,6 @@ loc_52C97:
 		BNE		loc_52CA0
 loc_52C9D:
 		JMP		loc_52D60
-; ---------------------------------------------------------------------------
 loc_52CA0:
 		LDA		_tmp11
 		AND		#$F7
@@ -2488,7 +2382,6 @@ loc_52CA0:
 		AND		#$04
 		BNE		loc_52D2F
 		JMP		loc_52CD1
-; ---------------------------------------------------------------------------
 loc_52CC2:
 		LDA		_tmp11
 		AND		#$02
@@ -2497,7 +2390,6 @@ loc_52CC2:
 		AND		#$04
 		BEQ		loc_52CE6
 		JMP		loc_52D52
-; ---------------------------------------------------------------------------
 loc_52CD1:
 		LDA		#$00
 		STA		_tmp0B
@@ -2510,7 +2402,6 @@ loc_52CD1:
 		STA		_objsA._player.field_9,X
 loc_52CE3:
 		JMP		loc_52D60
-; ---------------------------------------------------------------------------
 loc_52CE6:
 		LDA		#$00
 		STA		_objsA._player.field_8,X
@@ -2521,7 +2412,6 @@ loc_52CE6:
 		ORA		#$02
 		STA		_tmp11
 		JMP		loc_52D60
-; ---------------------------------------------------------------------------
 loc_52CF9:
 		LDA		#$01
 		STA		_tmp0B
@@ -2531,7 +2421,6 @@ loc_52CF9:
 		LDA		#$24
 		STA		_objsA._player._timer,X
 		JMP		loc_52D60
-; ---------------------------------------------------------------------------
 loc_52D0A:
 		LDA		#$2F
 		STA		_objsA._player.field_8,X
@@ -2541,7 +2430,6 @@ loc_52D0A:
 		STA		_tmp03
 		JSR		_obj_prize_deployA
 		JMP		loc_52D60
-; ---------------------------------------------------------------------------
 loc_52D1C:
 		LDA		#$00
 		STA		_objsA._player.field_8,X
@@ -2552,7 +2440,6 @@ loc_52D1C:
 		ORA		#$04
 		STA		_tmp11
 		JMP		loc_52D60
-; ---------------------------------------------------------------------------
 loc_52D2F:
 		LDA		#$02
 		STA		_tmp0B
@@ -2562,7 +2449,6 @@ loc_52D2F:
 		LDA		#$28
 		STA		_objsA._player._timer,X
 		JMP		loc_52D60
-; ---------------------------------------------------------------------------
 loc_52D40:
 		LDA		#$2F
 		STA		_objsA._player.field_8,X
@@ -2572,7 +2458,6 @@ loc_52D40:
 		STA		_tmp03
 		JSR		_obj_prize_deployA
 		JMP		loc_52D60
-; ---------------------------------------------------------------------------
 loc_52D52:
 		LDA		#$00
 		STA		_objsA._player.field_8,X
@@ -2630,19 +2515,15 @@ _obj_hndl17_pelikan:
 		STA		_tmp0B
 		LDA		#$0C
 		STA		_objsA._player.field_9,X
-		JMP		loc_52DCB
-; ---------------------------------------------------------------------------
+		BNE		loc_52DCB
 loc_52DBE:
 		JMP		_obj_jump_animate_test_right
-; ---------------------------------------------------------------------------
 loc_52DC1:
 		JMP		_obj_jump_animate_test_left
-; ---------------------------------------------------------------------------
 loc_52DC4:
 		LDA		#$00
 		STA		_tmp0B
 		JMP		_obj_jump_animate_test
-; ---------------------------------------------------------------------------
 loc_52DCB:
 		JMP		_obj_jump_animate_test_ex
 
@@ -2666,7 +2547,6 @@ _obj_hndl18_gorilla:
 		EOR		#$40
 		STA		_tmp11
 		JMP		loc_52DFC
-; ---------------------------------------------------------------------------
 loc_52DF4:
 		LDA		#$01
 		STA		_tmp0F
@@ -2705,7 +2585,6 @@ loc_52E00:
 		AND		#$BF
 		STA		_objsA._player.field_7,X
 		JMP		loc_52E44
-; ---------------------------------------------------------------------------
 loc_52E3E:
 		LDA		_objsA._player.field_7,X
 		ORA		#$40
@@ -2716,21 +2595,17 @@ loc_52E44:
 		STA		_tmp0B
 		LDA		#$0D
 		STA		_objsA._player.field_9,X
-		JMP		loc_52E63
-; ---------------------------------------------------------------------------
+		BNE		loc_52E63
 loc_52E52:
 		JMP		_obj_jump_animate_test_right
-; ---------------------------------------------------------------------------
 loc_52E55:
 		JMP		_obj_jump_animate_test_left
-; ---------------------------------------------------------------------------
 loc_52E58:
 		LDA		#$00
 		STA		_tmp0B
 		LDA		#$09
 		STA		_objsA._player.field_9,X
 		JMP		_obj_jump_animate_test
-; ---------------------------------------------------------------------------
 loc_52E63:
 		JMP		_obj_jump_animate_test_ex
 
@@ -2758,8 +2633,7 @@ loc_52E8C:
 		LDA		#$04
 		AND		_objsA._player._state,X
 		BEQ		loc_52ED5
-		JMP		loc_52EAC
-; ---------------------------------------------------------------------------
+		BNE		loc_52EAC
 loc_52E95:
 		JSR		_obj_hor_targeting_to_player_common
 		LDA		_tmp11
@@ -2785,8 +2659,7 @@ loc_52EAC:
 		STA		_tmp0B
 		LDA		#$F0
 		STA		_objsA._player._anim_phase_idx,X
-		JMP		loc_52ED5
-; ---------------------------------------------------------------------------
+		BNE		loc_52ED5
 loc_52EC8:
 		LDA		_tmp11
 		AND		#$F0
@@ -2794,7 +2667,6 @@ loc_52EC8:
 		LDA		#$00
 		STA		_tmp0B
 		JMP		_obj_jump_animate_test
-; ---------------------------------------------------------------------------
 loc_52ED5:
 		JMP		_obj_jump_animate_test_ex
 
@@ -2804,7 +2676,6 @@ _obj_hndl1B_kid:
 		AND		#$14
 		BEQ		loc_52EE2
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_52EE2:
 		LDA		_pad
 		AND		#$08
@@ -2856,15 +2727,13 @@ _obj_hndl1C_soldierA:
 		STA		_objsA._player.field_9,X
 loc_52F40:
 		JMP		_obj_jump_animate_test_ex
-; ---------------------------------------------------------------------------
 loc_52F43:
 		LDA		#$04
 		AND		_objsA._player._state,X
 		BNE		loc_52F50
 		LDA		#$04
 		STA		_tmp0B
-		JMP		loc_52F40
-; ---------------------------------------------------------------------------
+		BNE		loc_52F40
 loc_52F50:
 		DEC		_objsA._player._timer,X
 		BEQ		loc_52F70
@@ -2880,10 +2749,8 @@ loc_52F50:
 		AND		#$40
 		BNE		loc_52F6D
 		JMP		_obj_jump_animate_test_left
-; ---------------------------------------------------------------------------
 loc_52F6D:
 		JMP		_obj_jump_animate_test_right
-; ---------------------------------------------------------------------------
 loc_52F70:
 		LDA		_tmp11
 		AND		#$F0
@@ -2925,13 +2792,11 @@ loc_52FB1:
 		LDA		#$04
 		STA		_tmp0B
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_52FBC:
 		LDA		_tmp11
 		AND		#$F0
 		STA		_tmp11
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_52FC5:
 		JMP		_obj_jump_animate_test_ex
 
@@ -2960,14 +2825,12 @@ _obj_hndl1D_soldierB:
 		CMP		#$06
 		BNE		loc_52FF6
 		LDA		#$19
-		STA		_tmp0A
-		JMP		_obj_soldierB_common_hndl
-; ---------------------------------------------------------------------------
+		BNE		loc_52FF7
 loc_52FF6:
 		LDA		#$11
+loc_52FF7:
 		STA		_tmp0A
 		JMP		_obj_soldierB_common_hndl
-
 ; ---------------------------------------------------------------------------
 _obj_soldiersB_params_list:
 		.BYTE $06,$06
@@ -2983,6 +2846,7 @@ _obj_soldiersB_params_list:
 		.BYTE $03,$05
 		.BYTE $05,$06
 		.BYTE $03,$06
+
 ; =============== S U B	R O U T	I N E =======================================
 _obj_soldierB_common_subA:
 		JSR		_obj_extra_enemy_deploy_test
@@ -3004,7 +2868,6 @@ _obj_soldierB_common_subA:
 		JSR		_cur_obj_direction_down_set
 loc_5303C:
 		RTS
-; ---------------------------------------------------------------------------
 loc_5303F:
 		LDA		_tmp11
 		AND		#$10
@@ -3015,9 +2878,7 @@ loc_5303F:
 		CMP		#$50
 		BCC		loc_53056
 		CMP		#$B0
-		BCS		loc_53056
-		JMP		loc_53059
-; ---------------------------------------------------------------------------
+		BCC		loc_53059
 loc_53056:
 		JSR		_obj_hor_targeting_to_player_common
 loc_53059:
@@ -3036,9 +2897,7 @@ loc_53059:
 		CMP		#$28
 		BCC		loc_5307D
 		CMP		#$D8
-		BCS		loc_5307D
-		JMP		loc_5309F
-; ---------------------------------------------------------------------------
+		BCC		loc_5309F
 loc_5307D:
 		LDA		_tmp11
 		AND		#$01
@@ -3046,17 +2905,14 @@ loc_5307D:
 		LDA		#$01
 		STA		_tmp0F
 		LDA		#$00
-		STA		_tmp0B
-		JMP		loc_53096
-; ---------------------------------------------------------------------------
+		BEQ		loc_53096
 loc_5308E:
 		LDA		#$02
 		STA		_tmp0F
 		LDA		#$01
-		STA		_tmp0B
 loc_53096:
+		STA		_tmp0B
 		JMP		loc_530A7
-; ---------------------------------------------------------------------------
 loc_53099:
 		LDA		_objsA._player._dir
 		AND		#$04
@@ -3092,7 +2948,6 @@ loc_530BC:
 		LDA		#$06
 		STA		_tmp10
 		RTS
-; ---------------------------------------------------------------------------
 loc_530DA:
 		LDA		_objsA._player.field_7,X
 		ORA		#$40
@@ -3131,8 +2986,7 @@ loc_53100:
 		INY
 		CPY		#$50
 		BNE		loc_53100
-		JMP		loc_53122
-; ---------------------------------------------------------------------------
+		BEQ		loc_53122
 loc_5310E:
 		LDA		_objsA._o6._hndl_idx
 		BPL		loc_53156
@@ -3155,8 +3009,7 @@ loc_53122:
 		STA		_tobjA._x_pos+$10,Y
 		LDA		#$D0
 		STA		_tobjA._y_pos+$10,Y
-		JMP		loc_53149
-; ---------------------------------------------------------------------------
+		BNE		loc_53149
 loc_5313A:
 		LDA		#$00
 		STA		_tobjA._room_num+$10,Y
@@ -3199,7 +3052,6 @@ _obj_soldierB_common_hndl:
 		STA		_objsA._player._timer,X
 loc_53180:
 		JMP		_obj_jump_animate_test_ex
-; ---------------------------------------------------------------------------
 loc_53183:
 		DEC		_objsA._player._timer,X
 		BNE		loc_53197
@@ -3210,7 +3062,6 @@ loc_53183:
 		STA		_objsA._player.field_9,X
 		JSR		_obj_player_rand_timer_set
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_53197:
 		LDA		#$04
 		STA		_tmp0B
@@ -3252,9 +3103,7 @@ _obj_prize_deployB:
 		LDA		#$40
 		STA		_tmp06
 		LDA		#$04
-		STA		_tmp00
-		JMP		loc_53202
-; ---------------------------------------------------------------------------
+		BNE		loc_53202
 loc_531E5:
 		LDA		_tmp11
 		ORA		#$80
@@ -3264,15 +3113,13 @@ loc_531E5:
 		LDA		#$55
 		STA		_tmp06
 		LDA		#$05
-		STA		_tmp00
-		JMP		loc_53202
-; ---------------------------------------------------------------------------
+		BNE		loc_53202
 loc_531FA:
 		LDA		#$40
 		STA		_tmp06
 		LDA		#$08
-		STA		_tmp00
 loc_53202:
+		STA		_tmp00
 		JSR		_obj_prize_deploy_ex
 		RTS
 
@@ -3282,7 +3129,6 @@ _obj_hndl2B_boss_pirate:
 		AND		#$40
 		BEQ		loc_53210
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_53210:
 		JSR		_obj_sub52085
 		BCC		_obj_hndl2A_pirate
@@ -3309,7 +3155,7 @@ _obj_hndl2A_pirate:
 		AND		#$08
 		BNE		loc_5327C
 		DEC		_objsA._player._timer,X
-		BNE		loc_53279
+		BNE		_j_obj_jump_animate_test_ex0
 		JSR		_obj_hor_targeting_to_player_common
 		JSR		_obj_player_rand_timer_set
 		LDA		_tmp13
@@ -3325,24 +3171,20 @@ _obj_hndl2A_pirate:
 		LDA		#$01
 		STA		_tmp0F
 		LDA		#$02
-		STA		_tmp0B
-		JMP		loc_53279
-; ---------------------------------------------------------------------------
+		BNE		loc_53273
 loc_53267:
 		LDA		#$01
 		STA		_tmp0F
 		LDA		#$01
-		STA		_tmp0B
-		JMP		loc_53279
-; ---------------------------------------------------------------------------
+		BNE		loc_53273
 loc_53272:
 		LDA		#$00
 		STA		_tmp0B
 		JMP		_obj_jump_animate_test
-; ---------------------------------------------------------------------------
-loc_53279:
+loc_53273:
+		STA		_tmp0B
+_j_obj_jump_animate_test_ex0:
 		JMP		_obj_jump_animate_test_ex
-; ---------------------------------------------------------------------------
 loc_5327C:
 		DEC		_objsA._player._timer,X
 		BNE		loc_5328D
@@ -3351,21 +3193,17 @@ loc_5327C:
 		STA		_tmp11
 		LDA		#$08
 		STA		_objsA._player._timer,X
-		JMP		loc_53279
-; ---------------------------------------------------------------------------
+		JMP		_obj_jump_animate_test_ex
 loc_5328D:
 		LDA		_objsA._player._timer,X
 		CMP		#$04
-		BNE		loc_532A3
+		BNE		_j_obj_jump_animate_test_ex0
 		JSR		_obj_move_animate_common
 		JSR		_obj_get_hor_delta16
 		LDA		#$18
 		STA		_tmp0A
 		JSR		_obj_prize_deployB
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
-loc_532A3:
-		JMP		loc_53279
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl2C_dubina_man:
@@ -3399,8 +3237,7 @@ loc_532C9:
 		LDA		_objsA._player._dir
 		AND		#$40
 		BNE		loc_532F2
-		JMP		loc_532EB
-; ---------------------------------------------------------------------------
+		BEQ		loc_532EB
 loc_532E5:
 		LDA		_objsA._player._dir
 		AND		#$40
@@ -3408,13 +3245,11 @@ loc_532E5:
 loc_532EB:
 		LDA		#$03
 		STA		_tmp0F
-		JMP		loc_53307
-; ---------------------------------------------------------------------------
+		BNE		loc_53307
 loc_532F2:
 		LDA		#$01
 		STA		_tmp0F
-		JMP		loc_53307
-; ---------------------------------------------------------------------------
+		BNE		loc_53307
 loc_532F9:
 		LDA		#$02
 		STA		_tmp0B
@@ -3425,7 +3260,6 @@ loc_532F9:
 		STA		_tmp10
 loc_53307:
 		JMP		_obj_jump_animate_test_ex
-; ---------------------------------------------------------------------------
 loc_5330A:
 		JMP		_obj_flush_and_continue
 
@@ -3465,7 +3299,6 @@ loc_53339:
 		JSR		_cur_obj_direction_up_set
 loc_5334D:
 		JMP		_obj_jump_animate_test_ex
-; ---------------------------------------------------------------------------
 loc_53350:
 		JMP		_obj_flush_and_continue
 
@@ -3488,37 +3321,31 @@ _obj_hndl2E_armored_man:
 		LDA		_objsA._player._timer,X
 		CMP		#$30
 		BCC		loc_53388
-		JMP		loc_53381
-; ---------------------------------------------------------------------------
+		BCS		loc_53381
 loc_5337A:
 		LDA		#$40
 		STA		_objsA._player._timer,X
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_53381:
 		LDA		#$00
 		STA		_tmp0B
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_53388:
 		LDA		#$01
 		STA		_tmp0B
 		LDA		#$01
 		STA		_tmp0F
 		JMP		_obj_jump_animate_test_ex
-; ---------------------------------------------------------------------------
 loc_53393:
 		LDA		#$02
 		STA		_tmp0B
 		LDA		#$01
 		STA		_tmp0F
 		JMP		_obj_jump_animate_test_ex
-; ---------------------------------------------------------------------------
 loc_5339E:
 		AND		#$03
 		BEQ		loc_533A5
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_533A5:
 		LDA		#$03
 		STA		_tmp0B
@@ -3567,8 +3394,7 @@ loc_533FA:
 		STA		_tmp0B
 		LDA		#$00
 		STA		_objsA._player.field_8,X
-		JMP		loc_53448
-; ---------------------------------------------------------------------------
+		BEQ		loc_53448
 loc_53405:
 		LDA		#$02
 		STA		_tmp0F
@@ -3578,8 +3404,7 @@ loc_53405:
 		STA		_objsA._player.field_8,X
 		LDA		#$17
 		STA		_objsA._player.field_9,X
-		JMP		loc_53445
-; ---------------------------------------------------------------------------
+		BNE		loc_53445
 loc_53418:
 		LDA		#$02
 		STA		_tmp0F
@@ -3589,8 +3414,7 @@ loc_53418:
 		STA		_objsA._player.field_8,X
 		LDA		#$27
 		STA		_objsA._player.field_9,X
-		JMP		loc_53445
-; ---------------------------------------------------------------------------
+		BNE		loc_53445
 loc_5342B:
 		JSR		_obj_hor_targeting_to_player_common
 		LDA		#$02
@@ -3606,7 +3430,6 @@ loc_5342B:
 		STA		_objsA._player.field_9,X
 loc_53445:
 		JMP		_obj_jump_animate_test_ex
-; ---------------------------------------------------------------------------
 loc_53448:
 		JMP		_obj_flush_and_continue
 
@@ -3642,7 +3465,6 @@ loc_53467:
 		JSR		_obj_get_hor_delta16
 loc_53485:
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_53488:
 		DEC		_objsA._player._timer,X
 		BNE		loc_53490
@@ -3713,7 +3535,6 @@ loc_534F7:
 		JSR		_cur_obj_direction_up_set
 loc_53506:
 		JMP		_obj_jump_animate_test_ex
-; ---------------------------------------------------------------------------
 loc_53509:
 		JSR		_obj_hor_targeting_to_player_common
 		JSR		_obj_get_hor_delta16
@@ -3736,12 +3557,11 @@ _obj_hndl32_skull_monkey:
 		BEQ		loc_53566
 		LDA		#$05
 		STA		_objsA._player._timer,X
-		JMP		loc_5353B
-; ---------------------------------------------------------------------------
+		BNE		loc_5353B
 loc_53534:
 		JSR		_obj_sub52242
 		DEC		_objsA._player._timer,X
-		BNE		loc_535A7
+		BNE		_j_obj_jump_animate_test_ex
 loc_5353B:
 		JSR		_rand
 		LDA		_tmp13
@@ -3772,8 +3592,7 @@ loc_53566:
 		LDA		_objsA._player.field_7,X
 		AND		#$BF
 		STA		_objsA._player.field_7,X
-		JMP		loc_53586
-; ---------------------------------------------------------------------------
+		JMP		_obj_jump_animate_test_ex
 loc_53578:
 		INC		_objsA._player._timer,X
 		LDA		_objsA._player._timer,X
@@ -3782,9 +3601,7 @@ loc_53578:
 		LDA		_objsA._player.field_7,X
 		ORA		#$40
 		STA		_objsA._player.field_7,X
-loc_53586:
-		JMP		loc_535A7
-; ---------------------------------------------------------------------------
+		JMP		_obj_jump_animate_test_ex
 loc_53589:
 		JSR		_obj_hor_targeting_to_player_common
 		LDA		#$09
@@ -3793,8 +3610,7 @@ loc_53589:
 		STA		_tmp0F
 		LDA		#$01
 		STA		_tmp0B
-		JMP		loc_535A7
-; ---------------------------------------------------------------------------
+		JMP		_obj_jump_animate_test_ex
 loc_5359B:
 		LDA		#$09
 		STA		_objsA._player.field_9,X
@@ -3802,7 +3618,7 @@ loc_5359B:
 		STA		_tmp0F
 		LDA		#$00
 		STA		_tmp0B
-loc_535A7:
+_j_obj_jump_animate_test_ex:
 		JMP		_obj_jump_animate_test_ex
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -3829,37 +3645,30 @@ _obj_hndl33_shield_man:
 		BEQ		loc_535E9
 		CMP		#$02
 		BEQ		loc_535F4
-		JMP		loc_53603
-; ---------------------------------------------------------------------------
+		BNE		loc_53603
 loc_535DE:
 		LDA		#$05
 		STA		_objsA._player.field_9,X
 		LDA		#$00
-		STA		_tmp0F
-		JMP		loc_5360B
-; ---------------------------------------------------------------------------
+		BEQ		loc_5360B
 loc_535E9:
 		LDA		#$05
 		STA		_objsA._player.field_9,X
 		LDA		#$02
-		STA		_tmp0F
-		JMP		loc_5360B
-; ---------------------------------------------------------------------------
+		BNE		loc_5360B
 loc_535F4:
 		LDA		#$02
 		STA		_tmp0B
 		LDA		#$04
 		STA		_objsA._player.field_9,X
 		LDA		#$00
-		STA		_tmp0F
-		JMP		loc_5360B
-; ---------------------------------------------------------------------------
+		BEQ		loc_5360B
 loc_53603:
 		LDA		#$05
 		STA		_objsA._player.field_9,X
 		LDA		#$00
-		STA		_tmp0F
 loc_5360B:
+		STA		_tmp0F
 		LDA		#$10
 		STA		_objsA._player._timer,X
 loc_5360F:
@@ -3890,13 +3699,9 @@ _obj_hndl34_crouching_bomb_man:
 		LDA		#$35
 		STA		_objsA._player._hndl_idx,X
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_53643:
 		JSR		_obj_sub52085
-		BCC		loc_5364B
-		JMP		loc_5367F
-; ---------------------------------------------------------------------------
-loc_5364B:
+		BCS		loc_5367F
 		LDA		#$02
 		STA		_tmp01
 		LDA		#$09
@@ -3913,8 +3718,7 @@ loc_5364B:
 		BCS		loc_53671
 		LDA		#$06
 		STA		_objsA._player.field_9,X
-		JMP		loc_53675
-; ---------------------------------------------------------------------------
+		BNE		loc_53675
 loc_53671:
 		LDA		#$04
 		STA		_objsA._player.field_9,X
@@ -3978,7 +3782,6 @@ _obj_hndl36_boss_fire_tiger:
 		AND		#$01
 		BEQ		loc_536E3
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_536E3:
 		JSR		_obj_sub52085
 		BCC		loc_536F7
@@ -3989,7 +3792,6 @@ loc_536E3:
 		STA		_game._bosses
 loc_536F4:
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_536F7:
 		LDA		#$04
 		STA		_tmp01
@@ -4014,7 +3816,6 @@ loc_5371D:
 		AND		_objsA._player._state,X
 		BEQ		loc_53767
 		JMP		loc_5373D
-; ---------------------------------------------------------------------------
 loc_53726:
 		JSR		_obj_hor_targeting_to_player_common
 		LDA		_tmp11
@@ -4040,8 +3841,7 @@ loc_5373D:
 		STA		_tmp0B
 		LDA		#$F0
 		STA		_objsA._player._anim_phase_idx,X
-		JMP		loc_53767
-; ---------------------------------------------------------------------------
+		BNE		loc_53767
 loc_53759:
 		LDA		_tmp11
 		AND		#$F0
@@ -4057,7 +3857,6 @@ loc_53767:
 		AND		#$07
 		BNE		loc_53776
 		JMP		_obj_prize_deployC
-; ---------------------------------------------------------------------------
 loc_53776:
 		JMP		_obj_flush_and_continue
 
@@ -4067,13 +3866,11 @@ _obj_hndl37_boss_spider:
 		CMP		#$02
 		BNE		loc_53782
 		JMP		_obj_boss_spider_drone_proj_anim
-; ---------------------------------------------------------------------------
 loc_53782:
 		LDA		_game._bosses
 		AND		#$02
 		BEQ		loc_5378C
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_5378C:
 		JSR		_obj_sub52085
 		BCC		loc_537A3
@@ -4085,7 +3882,6 @@ loc_5378C:
 loc_5379D:
 		JSR		_obj_adjust_field_7
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_537A3:
 		JSR		_obj_adjust_field_7
 		LDA		#$01
@@ -4118,7 +3914,6 @@ loc_537CB:
 		STA		_tmp10
 		JSR		_cur_obj_direction_up_set
 		JMP		loc_537EF
-; ---------------------------------------------------------------------------
 loc_537E7:
 		LDA		#$00
 		STA		_tmp0F
@@ -4155,7 +3950,6 @@ _obj_hndl38_boss_motorcycle:
 		AND		#$04
 		BEQ		loc_53827
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_53827:
 		JSR		_obj_sub52085
 		BCC		loc_5383E
@@ -4167,7 +3961,6 @@ loc_53827:
 loc_53838:
 		JSR		_obj_adjust_field_7
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_5383E:
 		JSR		_obj_adjust_field_7
 		LDA		#$03
@@ -4200,8 +3993,7 @@ loc_5383E:
 		STA		_tmp0B
 		LDA		#$F6
 		STA		_objsA._player.field_9,X
-		JMP		loc_53887
-; ---------------------------------------------------------------------------
+		BNE		loc_53887
 loc_53884:
 		JSR		_obj_hor_targeting_to_player_common
 loc_53887:
@@ -4222,13 +4014,11 @@ _obj_hndl39_boss_drone:
 		CMP		#$02
 		BNE		loc_538A8
 		JMP		_obj_boss_spider_drone_proj_anim
-; ---------------------------------------------------------------------------
 loc_538A8:
 		LDA		_game._bosses
 		AND		#$08
 		BEQ		loc_538B2
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_538B2:
 		JSR		_obj_sub52085
 		BCC		loc_538C9
@@ -4240,7 +4030,6 @@ loc_538B2:
 loc_538C3:
 		JSR		_obj_drone_proj_adjust_vert
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_538C9:
 		JSR		_obj_drone_proj_adjust_vert
 		INC		_objsA._player._timer,X
@@ -4251,8 +4040,7 @@ loc_538C9:
 		STA		_tmp0B
 		LDA		#$0E
 		STA		_objsA._player.field_8,X
-		JMP		loc_538FA
-; ---------------------------------------------------------------------------
+		BNE		loc_538FA
 loc_538DF:
 		LDA		_tmp0B
 		BEQ		loc_538FA
@@ -4262,8 +4050,7 @@ loc_538DF:
 		LDA		_objsA._player.field_2,X
 		CMP		#$0F
 		BEQ		loc_5393D
-		JMP		loc_538FA
-; ---------------------------------------------------------------------------
+		BNE		loc_538FA
 loc_538F2:
 		LDA		#$00
 		STA		_tmp0B
@@ -4286,9 +4073,7 @@ loc_5390A:
 		CMP		#$40
 		BCC		loc_5391D
 		CMP		#$D0
-		BCS		loc_5391D
-		JMP		loc_53930
-; ---------------------------------------------------------------------------
+		BCC		loc_53930
 loc_5391D:
 		JSR		_obj_hor_targeting_to_player_common
 		JSR		_obj_vert_targeting_to_player_common
@@ -4304,7 +4089,6 @@ loc_53930:
 		STA		_tmp0A
 		JSR		_obj_sub53EBA
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_5393D:
 		LDA		#$10
 		STA		_tmp02
@@ -4327,11 +4111,10 @@ _obj_drone_proj_adjust_vert:
 		AND		#$20
 		BEQ		loc_53966
 		LDA		#$00
-		STA		_objsA._player.field_7,X
-		RTS
-; ---------------------------------------------------------------------------
+		BEQ		loc_53967
 loc_53966:
 		LDA		#$2F
+loc_53967:
 		STA		_objsA._player.field_7,X
 		RTS
 
@@ -4341,13 +4124,11 @@ _obj_hndl3A_boss_yusin:
 		AND		#$10
 		BEQ		loc_53975
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_53975:
 		LDA		_game._flags+2
 		AND		#$01
 		BNE		loc_5397F
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_5397F:
 		JSR		_obj_sub52085
 		BCC		loc_53999
@@ -4360,7 +4141,6 @@ loc_5397F:
 loc_53993:
 		JSR		_obj_adjust_field_7
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_53999:
 		JSR		_obj_adjust_field_7
 		LDA		#$04
@@ -4412,7 +4192,6 @@ _obj_hndl3B_boss_padovski:
 		AND		#$20
 		BEQ		loc_539FA
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_539FA:
 		JSR		_obj_sub52085
 		BCC		loc_53A14
@@ -4425,7 +4204,6 @@ loc_539FA:
 loc_53A0E:
 		JSR		_obj_adjust_field_7
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_53A14:
 		JSR		_obj_adjust_field_7
 		LDA		#$02
@@ -4449,8 +4227,7 @@ loc_53A34:
 		STA		_objsA._player._timer,X
 		LDA		#$01
 		STA		_tmp0B
-		JMP		loc_53A56
-; ---------------------------------------------------------------------------
+		BNE		loc_53A56
 loc_53A46:
 		LDA		_tmp0B
 		CMP		#$01
@@ -4472,7 +4249,6 @@ loc_53A56:
 		JSR		_obj_prize_deploy_ex
 loc_53A69:
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_53A6C:
 		LDA		#$00
 		STA		_tmp0B
@@ -4498,11 +4274,10 @@ _obj_adjust_field_7:
 		AND		#$20
 		BEQ		loc_53A98
 		LDA		#$C0
-		STA		_objsA._player.field_7,X
-		RTS
-; ---------------------------------------------------------------------------
+		BNE		loc_53A99
 loc_53A98:
 		LDA		#$EF
+loc_53A99:
 		STA		_objsA._player.field_7,X
 		RTS
 
@@ -4514,9 +4289,9 @@ _obj_hndl3C_plane:
 		CLC
 		ADC		#$02
 		STA		_tmp0D
-		LDA		_tmp0C
-		ADC		#$00
-		STA		_tmp0C
+		BCC		loc_53AB7
+		INC		_tmp0C
+loc_53AB7:
 		LDA		_tmp0C
 		CMP		#$03
 		BNE		loc_53AB8
@@ -4531,7 +4306,6 @@ loc_53AB8:
 		BEQ		loc_53AC7
 loc_53AC4:
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_53AC7:
 		LDA		#$02
 		STA		_game._scr_idx
@@ -4550,7 +4324,6 @@ loc_53AC7:
 		LDA		#$00
 		STA		_ppu_mask_shadow
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_53AEE:
 		LDA		#$3C
 		STA		_objsA._o1,X
@@ -4568,7 +4341,6 @@ loc_53AEE:
 		LDA		_tmp0E
 		STA		_objsA._o1._y_pos,X
 		JMP		loc_53AB8
-; ---------------------------------------------------------------------------
 loc_53B0F:
 		LDA		_tmp0E
 		CMP		#$D0
@@ -4590,7 +4362,6 @@ loc_53B27:
 		CMP		#$01
 		BNE		loc_53B30
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_53B30:
 		LDA		#$00
 		STA		_tmp01
@@ -4607,16 +4378,14 @@ loc_53B30:
 		LDA		_tmp11
 		AND		#$01
 		BNE		loc_53B86
-		JMP		loc_53B7C
-; ---------------------------------------------------------------------------
+		BEQ		loc_53B7C
 loc_53B52:
 		LDA		_game._scr_idx
 		CMP		#$7F
 		BEQ		loc_53B61
 		LDA		#$A6
 		STA		_game._scr_idx
-		JMP		loc_53B66
-; ---------------------------------------------------------------------------
+		BNE		loc_53B66
 loc_53B61:
 		LDA		#$A7
 		STA		_game._scr_idx
@@ -4624,27 +4393,21 @@ loc_53B66:
 		LDA		#$01
 		STA		_game._redraw_req
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_53B6E:
 		LDA		_tmp11
 		AND		#$01
 		BNE		loc_53B52
 		LDA		#$00
-		STA		_tmp10
 		DEC		_objsA._player._timer,X
 		BNE		loc_53B9E
 loc_53B7C:
 		JSR		_cur_obj_direction_up_set
 		LDA		#$02
-		STA		_tmp10
-		JMP		loc_53B9E
-; ---------------------------------------------------------------------------
+		BNE		loc_53B9E
 loc_53B86:
 		JSR		_cur_obj_direction_down_set
 		LDA		#$02
-		STA		_tmp10
-		JMP		loc_53B9E
-; ---------------------------------------------------------------------------
+		BNE		loc_53B9E
 loc_53B90:
 		LDA		_tmp0C
 		BEQ		loc_53B86
@@ -4652,8 +4415,8 @@ loc_53B90:
 		ORA		#$01
 		STA		_tmp11
 		LDA		#$00
-		STA		_tmp10
 loc_53B9E:
+		STA		_tmp10
 		JSR		_obj_move_animate_common
 		JSR		_obj_get_hor_delta16
 		SEC
@@ -4699,18 +4462,15 @@ _obj_helicopter_for_cutsenes:
 		LDA		_tmp11
 		AND		#$01
 		BNE		loc_53C15
-		JMP		loc_53C07
-; ---------------------------------------------------------------------------
+		BEQ		loc_53C07
 loc_53BF4:
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_53BF7:
 		LDA		_tmp11
 		AND		#$01
 		BNE		loc_53BF4
 		LDA		#$00
 		STA		_tmp0F
-		STA		_tmp10
 		DEC		_objsA._player._timer,X
 		BNE		loc_53C35
 loc_53C07:
@@ -4718,17 +4478,13 @@ loc_53C07:
 		LDA		#$01
 		STA		_tmp0F
 		LDA		#$02
-		STA		_tmp10
-		JMP		loc_53C35
-; ---------------------------------------------------------------------------
+		BNE		loc_53C35
 loc_53C15:
 		JSR		_cur_obj_direction_down_set
 		LDA		#$01
 		STA		_tmp0F
 		LDA		#$02
-		STA		_tmp10
-		JMP		loc_53C35
-; ---------------------------------------------------------------------------
+		BNE		loc_53C35
 loc_53C23:
 		LDA		_tmp0C
 		BEQ		loc_53C15
@@ -4738,8 +4494,8 @@ loc_53C23:
 		LDA		#$01
 		STA		_tmp0F
 		LDA		#$00
-		STA		_tmp10
 loc_53C35:
+		STA		_tmp10
 		JMP		_obj_jump_animate_test_ex
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -4753,7 +4509,6 @@ loc_53C41:
 		CMP		#$01
 		BNE		loc_53C4A
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_53C4A:
 		LDA		_objA_buf_shuffle_pos
 		CMP		#$10
@@ -4767,13 +4522,11 @@ loc_53C56:
 		AND		#$08
 		BEQ		_heli_not_landed
 		JMP		_heli_already_landed
-; ---------------------------------------------------------------------------
 _heli_not_landed:
 		LDA		_game._scr_idx
 		CMP		#$0B
 		BNE		_heli_land_anim
 		JMP		loc_53D66
-; ---------------------------------------------------------------------------
 _heli_land_anim:
 		LDA		#$80
 		STA		_objsA._player._hndl_idx
@@ -4809,7 +4562,6 @@ loc_53C9A:
 		STA		_objsA._o7.field_C
 loc_53CB3:
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 _heli_flight_up:
 		LDA		_game._scr_idx
 		CMP		#$0B
@@ -4841,7 +4593,6 @@ loc_53CD3:
 		LDA		#$80
 		STA		_objsA._o7._hndl_idx
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_53CF5:
 		LDA		_obj_heli_tmp_flag
 		STA		_game._scr_idx
@@ -4864,7 +4615,6 @@ loc_53CF5:
 		STA		_game._flags+2
 loc_53D23:
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 _heli_already_landed:
 		LDA		_game._scr_idx
 		CMP		#$01
@@ -4877,7 +4627,6 @@ loc_53D31:
 		LDA		#$80
 		STA		_objsA._o7._hndl_idx
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_53D3D:
 		LDA		_pad
 		AND		#$08
@@ -4900,19 +4649,16 @@ loc_53D57:
 		STA		_game._redraw_req
 loc_53D63:
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_53D66:
 		LDA		_tmp0E
 		CMP		#$70
 		BCS		loc_53D73
 		CMP		#$30
 		BCC		loc_53D79
-		JMP		loc_53D7C
-; ---------------------------------------------------------------------------
+		BCS		loc_53D7C
 loc_53D73:
 		JSR		_cur_obj_direction_up_set
 		JMP		loc_53D7C
-; ---------------------------------------------------------------------------
 loc_53D79:
 		JSR		_cur_obj_direction_down_set
 loc_53D7C:
@@ -4922,7 +4668,6 @@ loc_53D7C:
 		INC		_tmp0E
 		INC		_objsA._o7._y_pos
 		JMP		loc_53D8D
-; ---------------------------------------------------------------------------
 loc_53D89:
 		DEC		_tmp0E
 		DEC		_objsA._o7._y_pos
@@ -5004,11 +4749,9 @@ _obj_hndl3F_multipurpose:
 		STA		_objsA._player._hndl_idx,X
 loc_53E17:
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_53E1A:
 		JSR		_obj_sub52085
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_53E20:
 		LDA		#$04
 		STA		_tmp01
@@ -5019,7 +4762,6 @@ loc_53E20:
 		BIT		_tmp11
 		BEQ		loc_53E34
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_53E34:
 		LDA		_tmp0E
 		CMP		#$40
@@ -5038,10 +4780,8 @@ loc_53E34:
 		STA		_tmp0F
 loc_53E51:
 		JMP		_obj_jump_animate_test_ex
-; ---------------------------------------------------------------------------
 loc_53E54:
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 _special_head_prize:
 		LDA		#$00
 		STA		_tmp01
@@ -5072,18 +4812,16 @@ loc_53E88:
 		STA		_objsA._player._dir
 		LDA		#$FF
 		STA		_objsA._player._timer
-		JMP		loc_53EB4
-; ---------------------------------------------------------------------------
+		JMP		_obj_kill_and_continue
 loc_53E95:
 		CLC
 		LDA		_game._life
 		ADC		#$64
 		STA		_game._life
-		LDA		_game._life+1
-		ADC		#$00
-		STA		_game._life+1
-		JMP		loc_53EB4
-; ---------------------------------------------------------------------------
+		BCC		loc_53E96
+		INC		_game._life+1
+loc_53E96:
+		JMP		_obj_kill_and_continue
 loc_53EA9:
 		JSR		_rand
 		AND		#$03
@@ -5092,7 +4830,6 @@ loc_53EA9:
 		STA		_game._ammo_knife,Y
 loc_53EB4:
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_53EB7:
 		JMP		_obj_jump_animate_test_ex
 
@@ -5114,15 +4851,13 @@ _obj_sub53EBA:
 		SBC		#$00
 		STA		_tmp0C
 		RTS
-; ---------------------------------------------------------------------------
 loc_53ED8:
 		LDA		_tmp0D
 		CLC
 		ADC		_tmp0A
 		STA		_tmp0D
-		LDA		_tmp0C
-		ADC		#$00
-		STA		_tmp0C
+		BCC		locret_53EE5
+		INC		_tmp0C
 locret_53EE5:
 		RTS
 
@@ -5162,8 +4897,7 @@ loc_53EF2:
 		STA		_objsA._player._timer,X
 		LDA		#$00
 		STA		_objsA._player._dir,X
-		JMP		loc_53F2D
-; ---------------------------------------------------------------------------
+		BEQ		loc_53F2D
 loc_53F20:
 		SEC
 		LDA		_tmp0D
@@ -5186,7 +4920,6 @@ loc_53F2D:
 		LDA		_tmp07
 		STA		_objsA._player.field_C,X
 		JMP		loc_53F50
-; ---------------------------------------------------------------------------
 loc_53F47:
 		CLC
 		TXA
@@ -5232,7 +4965,6 @@ _obj_boss_spider_drone_proj_anim:
 		BIT		_tmp11
 		BEQ		loc_53F97
 		JMP		_obj_kill_and_continue
-; ---------------------------------------------------------------------------
 loc_53F97:
 		LDA		_objsA._player._timer,X
 		AND		#$20
@@ -5254,13 +4986,11 @@ loc_53F97:
 		PLA
 		STA		_tmp11
 		JMP		loc_53FC3
-; ---------------------------------------------------------------------------
 loc_53FC0:
 		JSR		_obj_move_animate_common
 loc_53FC3:
 		JSR		_obj_get_hor_delta16
 		JMP		_obj_flush_and_continue
-
 ; ---------------------------------------------------------------------------
 _boss_spider_drone_proj_anim_tbl:
 		.BYTE $30,$31,$31,$32,$32,$22,$22,$22,$22,$22,$22,$23,$23,$13,$13,$03

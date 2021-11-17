@@ -92,9 +92,7 @@ loc_6007F:
 		LDA		_ppu_mask_shadow
 		ORA		#$20
 		STA		_ppu_mask_shadow
-;		JMP		loc_600C8
 		BNE		loc_600C8
-; ---------------------------------------------------------------------------
 loc_600C0:
 		LDA		_ppu_mask_shadow
 		AND		#$DF
@@ -319,7 +317,6 @@ loc_602EB:
 		LDA		#$04
 		STA		_apu_se_idx
 		BNE		loc_60345
-; ---------------------------------------------------------------------------
 loc_60326:
 		LDA		_cur_weapon_selected
 		BNE		loc_60330
@@ -327,12 +324,10 @@ loc_60326:
 		BNE		loc_60370
 loc_60330:
 		JMP		loc_603AD
-; ---------------------------------------------------------------------------
 loc_60333:
 		LDA		_ppu_dequeue_idx
 		BEQ		loc_6033B
 		JMP		loc_603AD
-; ---------------------------------------------------------------------------
 loc_6033B:
 		INC		_cur_weapon_selected
 		LDA		_cur_weapon_selected
@@ -398,7 +393,6 @@ _ingame_cheats_test:
 		AND		#$7F
 		STA		_ingame_down_cheat_counter
 		JMP		loc_6040F
-; ---------------------------------------------------------------------------
 loc_603C5:
 		LDA		_pad
 		AND		#$FB
@@ -410,7 +404,6 @@ loc_603D3:
 		LDA		#$00
 		STA		_ingame_down_cheat_counter
 		BNE		loc_6040F
-; ---------------------------------------------------------------------------
 loc_603DB:
 		LDA		_ingame_down_cheat_counter
 		AND		#$80
@@ -433,7 +426,6 @@ loc_603DB:
 		LDA		#$03
 		STA		_apu_se_idx
 		BNE		loc_603D3
-; ---------------------------------------------------------------------------
 loc_6040F:
 		LDA		_pad
 		AND		#$F0
@@ -509,7 +501,6 @@ _inventory_screen_draw:
 		LDA		_game._scr_idx
 		BMI		loc_604A8
 		RTS
-; ---------------------------------------------------------------------------
 loc_604A8:
 		JSR		_chr_bg_tiles_load
 		JSR		_chr_spr_tiles_load
@@ -523,17 +514,14 @@ _level_draw_update:
 		LDA		_game._redraw_req
 		BNE		loc_604C1
 		RTS
-; ---------------------------------------------------------------------------
 loc_604C1:
 		LDA		_game._scr_idx
 		BMI		loc_604C9
 		JMP		loc_6057F
-; ---------------------------------------------------------------------------
 loc_604C9:
 		CMP		#$FF
 		BNE		loc_604D0
 		JMP		loc_6057F
-; ---------------------------------------------------------------------------
 loc_604D0:
 		LDA		#$00
 		STA		_ppu_mask_shadow
@@ -553,7 +541,6 @@ loc_604EA:
 		CPY		#$0C
 		BNE		loc_604EA
 		BEQ		loc_60508
-; ---------------------------------------------------------------------------
 loc_604F7:
 		DEC		_tmp0D
 		JMP		loc_60525
@@ -615,7 +602,6 @@ loc_60568:
 		STA		_game_scr_idx_backup_unused
 locret_6057E:
 		RTS
-; ---------------------------------------------------------------------------
 loc_6057F:
 		LDA		#$00
 		STA		_nmi_disble_ppu_reset_req
@@ -640,7 +626,6 @@ loc_6059F:
 		BNE		loc_605B7
 		JSR		_final_boss_draw
 		JMP		loc_60679
-; ---------------------------------------------------------------------------
 loc_605B7:
 		LDA		_game._scr_idx
 		TAX
@@ -683,7 +668,6 @@ loc_605B7:
 		ORA		#$80
 		STA		_cur_pal_spr_lib
 		JMP		loc_6066D
-; ---------------------------------------------------------------------------
 _palette_with_lamp:
 		LDA		_cur_loc_bg_pal_settings
 		AND		#$0F
@@ -694,7 +678,6 @@ _palette_with_lamp:
 		ORA		#$80
 		STA		_cur_pal_spr_lib
 		JMP		loc_6066D
-; ---------------------------------------------------------------------------
 _regular_day_light_palettes:
 		LDA		_game._play_hours
 		CMP		#$15
@@ -719,7 +702,6 @@ _room_night_palette:
 		ORA		#$80
 		STA		_cur_pal_spr_lib
 		JMP		loc_6066D
-; ---------------------------------------------------------------------------
 _room_day_palette:
 		LDA		_cur_loc_bg_pal_settings
 		AND		#$0F
@@ -743,7 +725,6 @@ loc_60679:
 		BNE		loc_6068E
 		LDA		#$03
 		BNE		loc_6069C
-; ---------------------------------------------------------------------------
 loc_6068E:
 		LDA		_cur_loc_room_settings
 		AND		#$F0
@@ -1058,7 +1039,6 @@ loc_60907:
 		STA		_PPU_DATA
 		INX
 		JMP		loc_60907
-; ---------------------------------------------------------------------------
 loc_60915:
 		LDA		#$24
 		STA		_PPU_DATA
@@ -1322,14 +1302,12 @@ _chr_bg_tiles_load:
 		BNE		loc_60AEA
 		LDA		#$09
 		BNE		loc_60AF9
-; ---------------------------------------------------------------------------
 loc_60AEA:
 		SEC
 		SBC		#$80
 		TAY
 		LDA		_cutscene_chr_tbl,Y
 		BNE		loc_60AF7
-; ---------------------------------------------------------------------------
 loc_60AF4:
 		LDA		_cur_level_chr_idx
 loc_60AF7:
@@ -1392,14 +1370,12 @@ _chr_spr_tiles_load:
 		STA		_tmp0F
 		INC		_tmp0F
 		JMP		loc_60B77
-; ---------------------------------------------------------------------------
 loc_60B5D:
 		SEC
 		SBC		#$80
 		TAY
 		LDA		_cutscene_chr_tbl,Y
 		BNE		loc_60B6A
-; ---------------------------------------------------------------------------
 loc_60B67:
 		LDA		_cur_level_chr_idx
 loc_60B6A:
@@ -1532,7 +1508,6 @@ _room_nt_chunk_fetch:
 		DEC		_tmp01
 		LDA		_tmp04
 		RTS
-; ---------------------------------------------------------------------------
 loc_60C51:
 		LDY		#$00
 		LDA		(_tmp0C),Y
@@ -1582,7 +1557,6 @@ loc_60C8E:
 		BNE		loc_60C8E
 		INY
 		JMP		loc_60C6A
-; ---------------------------------------------------------------------------
 locret_60C9A:
 		RTS
 
@@ -1606,7 +1580,6 @@ loc_60CB7:
 		AND		#$80
 		BNE		loc_60CBE
 		RTS
-; ---------------------------------------------------------------------------
 loc_60CBE:
 		LDA		#<[_room_map_buf+$3E0]
 		STA		_tmp0E
@@ -1819,9 +1792,9 @@ loc_60DE4:
 		CLC
 		ADC		#$20
 		STA		_tmp0E
-		LDA		_tmp0F
-		ADC		#$00
-		STA		_tmp0F
+		BCC		loc_60DE5
+		INC		_tmp0F
+loc_60DE5:
 		DEC		_tmp00
 		BNE		loc_60DE4
 		RTS
@@ -1847,9 +1820,9 @@ loc_60E00:
 		CLC
 		ADC		#$08
 		STA		_tmp01
-		LDA		_tmp02
-		ADC		#$00
-		STA		_tmp02
+		BCC		loc_60E01
+		INC		_tmp02
+loc_60E01:
 		INX
 		CPX		#$07
 		BNE		loc_60E00
@@ -1874,9 +1847,9 @@ _calc_room_attr_ofs:
 		CLC
 		ADC		_tmp01
 		STA		_tmp01
-		LDA		_tmp02
-		ADC		#$00
-		STA		_tmp02
+		BCC		loc_60E55
+		INC		_tmp02
+loc_60E55:
 		LDA		_tmp0F
 		AND		#$01
 		BEQ		loc_60E56
@@ -1922,14 +1895,12 @@ _room_scroll_to_ppu_ofs_calc:
 		LDA		_room_scroll_pos_x+1
 		STA		_tmp0F
 		RTS
-; ---------------------------------------------------------------------------
 loc_60E89:
 		LDA		_room_scroll_pos_x+1
 		STA		_tmp0F
 		BEQ		loc_60E93
 		DEC		_tmp0F
 		RTS
-; ---------------------------------------------------------------------------
 loc_60E93:
 		LDA		#$00
 		STA		_tmp0E
@@ -1948,7 +1919,6 @@ _room_macro_handler:
 		BCC		loc_60EAD
 locret_60EAC:
 		RTS
-; ---------------------------------------------------------------------------
 loc_60EAD:
 		LDA		_room_scroll_pos_x
 		AND		#$1F
@@ -1958,7 +1928,6 @@ loc_60EAD:
 		LDA		#$02
 		STA		_ppu_dequeue_idx
 		BNE		loc_60EC9
-; ---------------------------------------------------------------------------
 loc_60EC1:
 		JSR		_room_macro_adjust
 		LDA		#$01
@@ -1983,7 +1952,6 @@ loc_60EC9:
 		STA		_room_scroll_pos_x
 locret_60EF0:
 		RTS
-; ---------------------------------------------------------------------------
 loc_60EF1:
 		LDA		_room_scroll_pos_x
 		SEC
@@ -2042,7 +2010,6 @@ _calc_room_nt_ofs:
 		ADC		#$01
 		STA		_tmp0F
 		JMP		loc_60F6B
-; ---------------------------------------------------------------------------
 loc_60F5A:
 		LDA		_room_scroll_pos_x
 		AND		#$E0
@@ -2088,16 +2055,16 @@ loc_60F8E:
 		CLC
 		ADC		#$08
 		STA		_tmp03
-		LDA		_tmp04
-		ADC		#$00
-		STA		_tmp04
+		BCC		loc_60F8F
+		INC		_tmp04
+loc_60F8F:
 		LDA		_tmp01
 		CLC
 		ADC		#$08
 		STA		_tmp01
-		LDA		_tmp02
-		ADC		#$00
-		STA		_tmp02
+		BCC		loc_60F90
+		INC		_tmp02
+loc_60F90:
 		DEC		_tmp00
 		BNE		loc_60F8E
 		LDA		#$00
@@ -2132,7 +2099,6 @@ loc_60FEA:
 		STA		_tmp18
 		STA		_ppu_room_line_pos
 		JMP		loc_6112F
-; ---------------------------------------------------------------------------
 loc_60FF7:
 		LDA		#$FF
 		STA		_tmp16
@@ -2221,7 +2187,6 @@ loc_61094:
 		BEQ		loc_610AE
 		DEC		_tmp0C
 		JMP		loc_610AE
-; ---------------------------------------------------------------------------
 loc_6109D:
 		LDA		_tmp08
 		AND		#$01
@@ -2258,7 +2223,6 @@ loc_610D9:
 		BEQ		loc_610E9
 		DEC		_tmp0C
 		JMP		loc_610E9
-; ---------------------------------------------------------------------------
 loc_610E2:
 		CPX		#$08
 		BEQ		loc_610E9
@@ -2288,7 +2252,6 @@ loc_6110C:
 		BEQ		loc_61122
 		DEC		_tmp0C
 		JMP		loc_61122
-; ---------------------------------------------------------------------------
 loc_6111B:
 		CPX		#$08
 		BEQ		loc_61122
@@ -2373,13 +2336,11 @@ loc_61171:
 		DEX
 		BNE		loc_61175
 		RTS
-; ---------------------------------------------------------------------------
 loc_61175:
 		LDA		_tmp06
 		BMI		loc_6117E
 		DEC		_tmp0C
 		JMP		loc_61169
-; ---------------------------------------------------------------------------
 loc_6117E:
 		JSR		_tmp0Cw_add10
 		JMP		loc_61169
@@ -2425,7 +2386,6 @@ loc_611BC:
 		JSR		_adc01
 locret_611BF:
 		RTS
-; ---------------------------------------------------------------------------
 loc_611C0:
 		CPY		#$00
 		BEQ		locret_611BF
@@ -2463,7 +2423,6 @@ loc_611D6:
 		STA		_hud_decimals_buf,X
 		INX
 		JMP		loc_6120B
-; ---------------------------------------------------------------------------
 loc_611FF:
 		LDA		_game._life,Y
 		STA		_tmp00
@@ -2478,7 +2437,6 @@ loc_6120B:
 		JSR		_truncate
 		STA		_hud_decimals_buf,X
 		JMP		loc_6122D
-; ---------------------------------------------------------------------------
 loc_6121C:
 		LDA		_game._life,Y
 		STA		_tmp00
@@ -2590,7 +2548,6 @@ loc_612E4:
 		DEY
 		BNE		loc_612E4
 		BEQ		loc_61302
-; ---------------------------------------------------------------------------
 loc_612F1:
 		LDY		#$00
 		LDA		#$01
@@ -2677,9 +2634,7 @@ loc_61362:
 		LDA		_cur_loc_warpB_pos
 		AND		#$30
 		CMP		_tmp0D
-		BEQ		loc_61385
-		JMP		loc_613DB
-; ---------------------------------------------------------------------------
+		BNE		loc_613DB
 loc_61385:
 		LDA		_objsA._player._room_num
 		BNE		loc_6138D
@@ -2702,8 +2657,7 @@ loc_613AB:
 		ORA		_cur_pal_bg_idx
 		AND		#$80
 		BNE		loc_613AB
-		JMP		loc_61431
-; ---------------------------------------------------------------------------
+		BEQ		loc_61431
 loc_613B8:
 		LDA		_objsA._player._dir
 		AND		#$40
@@ -2713,8 +2667,7 @@ loc_613B8:
 		BCC		loc_613E2
 		CMP		#$F8
 		BCS		loc_61403
-		JMP		loc_613D5
-; ---------------------------------------------------------------------------
+		BCC		loc_613D5
 loc_613CB:
 		LDA		_objsA._player._x_pos
 		CMP		#$08
@@ -2729,7 +2682,6 @@ loc_613DB:
 		LDA		_ppu_ctrl_shadow
 		STA		_PPU_CTRL
 		RTS
-; ---------------------------------------------------------------------------
 loc_613E2:
 		LDA		_objsA._player._room_num
 		BNE		loc_613DB
@@ -2744,8 +2696,7 @@ loc_613E2:
 		LDA		#$E8
 		STA		_objsA._player._x_pos
 		LDY		#$00
-		JMP		loc_61431
-; ---------------------------------------------------------------------------
+		BEQ		loc_61431
 loc_61403:
 		LDA		_objsA._player._room_num
 		CMP		#$03
@@ -2761,8 +2712,7 @@ loc_61403:
 		LDA		#$20
 		STA		_objsA._player._x_pos
 		LDY		#$01
-		JMP		loc_61431
-; ---------------------------------------------------------------------------
+		BNE		loc_61431
 loc_61426:
 		LDA		_cur_loc_warpB_pos
 		BNE		loc_613DB
@@ -2855,12 +2805,10 @@ loc_614C2:
 		LDA		#$0A
 		STA		_tmp12
 		BNE		loc_614F3
-; ---------------------------------------------------------------------------
 loc_614CF:
 		LDA		#$09
 		STA		_tmp12
 		BNE		loc_614F3
-; ---------------------------------------------------------------------------
 loc_614D6:
 		LDA		_tobjA._dir,X
 		ASL
@@ -2899,12 +2847,10 @@ loc_614FD:
 		CMP		#$48
 		BCS		loc_61517
 		JMP		loc_615A6
-; ---------------------------------------------------------------------------
 loc_61517:
 		LDA		_tobjA.field_8,X
 		BMI		loc_6151E
 		JMP		loc_615A6
-; ---------------------------------------------------------------------------
 loc_6151E:
 		LDA		_tobjA._dir,X
 		ASL
@@ -2932,8 +2878,7 @@ loc_6151E:
 		LDA		_tmp13
 		CMP		#$04
 		BCC		loc_61567
-		JMP		loc_615A6
-; ---------------------------------------------------------------------------
+		BCS		loc_615A6
 loc_6154F:
 		LDA		_obj_collision_tableB,Y
 		AND		#$F0
@@ -2945,9 +2890,7 @@ loc_6154F:
 		STA		_tmp10
 		BCS		loc_61567
 		DEC		_tmp13
-		BPL		loc_61567
-		JMP		loc_615A6
-; ---------------------------------------------------------------------------
+		BMI		loc_615A6
 loc_61567:
 		LDA		_obj_collision_tableB,Y
 		AND		#$0F
@@ -3069,7 +3012,6 @@ _collision_test_subB:
 		ADC		#$08
 		STA		_tobjA._y_pos,X
 		RTS
-; ---------------------------------------------------------------------------
 loc_61638:
 		LDA		_tobjA._y_pos,X
 		AND		#$0F
@@ -3098,7 +3040,6 @@ loc_6164D:
 		AND		#$F8
 		STA		_tobjA._x_pos,X
 		JMP		loc_6168F
-; ---------------------------------------------------------------------------
 loc_6166E:
 		LDA		_tmp18
 		CMP		#$59
@@ -3161,15 +3102,13 @@ _obj_sub616BF:
 		BNE		loc_616D4
 loc_616CF:
 		LDY		#$02
-		JMP		loc_61703
-; ---------------------------------------------------------------------------
+		BNE		loc_61703
 loc_616D4:
 		LDA		#$5C
 		JSR		_obj_sub6170D
 		BNE		loc_616E0
 		LDY		#$01
-		JMP		loc_61703
-; ---------------------------------------------------------------------------
+		BNE		loc_61703
 loc_616E0:
 		LDA		#$60
 		JSR		_obj_sub6170D
@@ -3184,8 +3123,7 @@ loc_616E0:
 		JSR		_obj_sub6170D
 		BEQ		loc_61701
 		LDY		#$00
-		JMP		loc_61703
-; ---------------------------------------------------------------------------
+		BEQ		loc_61703
 loc_61701:
 		LDY		#$03
 loc_61703:
@@ -3207,9 +3145,6 @@ _obj_sub6170D:
 		CMP		_ppu_room_line_pos
 		BEQ		locret_6171E
 		CMP		_tmp18
-		BEQ		locret_6171E
-		RTS
-; ---------------------------------------------------------------------------
 locret_6171E:
 		RTS
 
@@ -3230,7 +3165,6 @@ _obj_to_room_collision_testA:
 		BCS		loc_6173F
 		JSR		_obj_to_room_projectile_collision_test
 		JMP		loc_6177B
-; ---------------------------------------------------------------------------
 loc_6173F:
 		LDA		#$01
 		STA		_tmp12
@@ -3238,7 +3172,6 @@ loc_6173F:
 		AND		#$F8
 		STA		_tobjA._x_pos,X
 		JMP		loc_6177B
-; ---------------------------------------------------------------------------
 loc_6174C:
 		LDA		_tmp18
 		CMP		#$59
@@ -3249,7 +3182,6 @@ loc_6174C:
 		BCS		loc_61760
 		JSR		_obj_to_room_projectile_collision_test
 		JMP		loc_6177B
-; ---------------------------------------------------------------------------
 loc_61760:
 		LDA		_tobjA._x_pos,X
 		AND		#$0F
@@ -3283,7 +3215,6 @@ loc_6177B:
 		ADC		#$08
 		STA		_tobjA._y_pos,X
 		RTS
-; ---------------------------------------------------------------------------
 loc_6179D:
 		LDA		_tmp17
 		CMP		#$59
@@ -3306,7 +3237,6 @@ _obj_to_room_projectile_collision_test:
 		LDA		_ppu_dequeue_idx
 		BEQ		loc_617BC
 		JMP		loc_618A5
-; ---------------------------------------------------------------------------
 loc_617BC:
 		LDA		#$02
 		STA		_ppu_dequeue_idx
@@ -3322,7 +3252,6 @@ loc_617C5:
 		DEY
 		BNE		loc_617C5
 		JMP		loc_618A5
-; ---------------------------------------------------------------------------
 loc_617D4:
 		BIT		_objsA._player._dir
 		BVS		loc_617E9
@@ -3336,7 +3265,6 @@ loc_617D4:
 		BCC		loc_617FB
 		INC		_tmp13
 		JMP		loc_617FB
-; ---------------------------------------------------------------------------
 loc_617E9:
 		LDA		_tmp00
 		ASL
@@ -3481,8 +3409,7 @@ _collision_test_subC:
 		LDA		_tmp16
 		CMP		#$59
 		BCS		loc_618E0
-		JMP		loc_618DA
-; ---------------------------------------------------------------------------
+		BCC		loc_618DA
 loc_618D4:
 		LDA		_tmp17
 		CMP		#$59
@@ -3497,8 +3424,7 @@ loc_618E0:
 		LDA		_tmp18
 		CMP		#$59
 		BCS		loc_618F9
-		JMP		loc_618F3
-; ---------------------------------------------------------------------------
+		BCC		loc_618F3
 loc_618ED:
 		LDA		_ppu_room_line_pos
 		CMP		#$59
@@ -3511,7 +3437,6 @@ loc_618F9:
 		LDA		_tmp12
 		STA		_tobjB.field_4,X
 		RTS
-
 ; ---------------------------------------------------------------------------
 _obj_collision_tableA:
 		.BYTE $11,$12
@@ -3539,27 +3464,10 @@ _obj_collision_tableB:
 		.BYTE $11,$22
 		.BYTE $12,$22
 		.BYTE $22,$22
+
 ; =============== S U B	R O U T	I N E =======================================
 _obj_collision_testB:
-; weird portion of code does nothing useful, but write some garbage in random places
-;		LDA		#$20
-;		STA		_tmp12
-;		LDA		#$08
-;		STA		_tmp13
-;loc_61936:
-;		LDA		_tobjA._dir,X
-;		AND		#$DF
-;		STA		_tobjA._dir,X
-;		TXA
-;		CLC
-;		ADC		#$10
-;		TAX
-;		DEC		_tmp13
-;		BNE		loc_61936
-; one more weird part, it seems leftover from something
 		LDA		#$30
-;		CLC
-;		ADC		#$10
 		STA		_tmp12
 		LDA		#$07
 		STA		_tmp13
@@ -3568,7 +3476,6 @@ loc_61950:
 		LDA		_tobjA._hndl_idx,X
 		BPL		loc_61959
 		JMP		loc_61A88
-; ---------------------------------------------------------------------------
 loc_61959:
 		JSR		_obj_col_testB_calcA
 		LDA		_tobjA.field_7,X
@@ -3631,7 +3538,6 @@ loc_619CE:
 		LDA		_tobjB,X
 		BPL		loc_619D7
 		JMP		loc_61A7A
-; ---------------------------------------------------------------------------
 loc_619D7:
 		JSR		_obj_col_testB_calcC
 		LDX		_tmp14
@@ -3663,7 +3569,6 @@ loc_619D7:
 		BCC		loc_61A17
 		DEC		_tobjA.field_C,X
 		JMP		loc_61A24
-; ---------------------------------------------------------------------------
 loc_61A17:
 		LDA		_tobjA.field_C,X
 		SEC
@@ -3706,7 +3611,6 @@ loc_61A2A:
 		BCC		loc_61A67
 		DEC		_tobjA.field_C,X
 		JMP		loc_61A74
-; ---------------------------------------------------------------------------
 loc_61A67:
 		LDA		_tobjA.field_C,X
 		SEC
@@ -3727,7 +3631,6 @@ loc_61A7A:
 		DEC		_tmp15
 		BEQ		loc_61A88
 		JMP		loc_619CE
-; ---------------------------------------------------------------------------
 loc_61A88:
 		LDA		_tmp12
 		CLC
@@ -3736,7 +3639,6 @@ loc_61A88:
 		DEC		_tmp13
 		BEQ		loc_61A96
 		JMP		loc_61950
-; ---------------------------------------------------------------------------
 loc_61A96:
 		JSR		_obj_col_testB_calcA
 		LDA		#$C0
@@ -3833,7 +3735,6 @@ loc_61B29:
 		LDA		#$40
 		STA		_final_boss_delay_and_hp
 		RTS
-; ---------------------------------------------------------------------------
 loc_61B5E:
 		LDA		_tmp14
 		CLC
@@ -3897,8 +3798,7 @@ _obj_collision_testB_subB:
 		LDA		_tmp05
 		CMP		#$04
 		BCC		loc_61BDB
-		JMP		loc_61C0A
-; ---------------------------------------------------------------------------
+		BCS		loc_61C0A
 loc_61BC3:
 		LDA		_obj_collision_tableB,Y
 		AND		#$F0
@@ -3910,9 +3810,7 @@ loc_61BC3:
 		STA		_tmp06
 		BCS		loc_61BDB
 		DEC		_tmp05
-		BPL		loc_61BDB
-		JMP		loc_61C0A
-; ---------------------------------------------------------------------------
+		BMI		loc_61C0A
 loc_61BDB:
 		LDA		_obj_collision_tableB,Y
 		AND		#$0F
@@ -3941,7 +3839,6 @@ loc_61BDB:
 		STA		_tmp05
 		LDA		#$00
 		RTS
-; ---------------------------------------------------------------------------
 loc_61C0A:
 		LDA		#$FF
 		RTS
@@ -3998,8 +3895,7 @@ _obj_col_testB_calcB:
 		LDA		_tmp00
 		CMP		#$04
 		BCC		loc_61C7C
-		JMP		loc_61CAB
-; ---------------------------------------------------------------------------
+		BCS		loc_61CAB
 loc_61C64:
 		LDA		_obj_collision_tableB,Y
 		AND		#$F0
@@ -4011,9 +3907,7 @@ loc_61C64:
 		STA		_tmp01
 		BCS		loc_61C7C
 		DEC		_tmp00
-		BPL		loc_61C7C
-		JMP		loc_61CAB
-; ---------------------------------------------------------------------------
+		BMI		loc_61CAB
 loc_61C7C:
 		LDA		_obj_collision_tableB,Y
 		AND		#$0F
@@ -4042,7 +3936,6 @@ loc_61C7C:
 		STA		_tmp00
 		LDA		#$00
 		RTS
-; ---------------------------------------------------------------------------
 loc_61CAB:
 		LDA		#$FF
 		RTS
@@ -4155,7 +4048,6 @@ loc_61D49:
 		BCC		loc_61D6A
 		DEC		_tobjA.field_C,X
 		RTS
-; ---------------------------------------------------------------------------
 loc_61D6A:
 		LDA		_tobjA.field_C,X
 		SEC
@@ -4195,7 +4087,6 @@ loc_61DA4:
 		LDA		#$00
 		STA		_tmp16
 		RTS
-; ---------------------------------------------------------------------------
 loc_61DAB:
 		LDA		_tmp04
 		ASL
@@ -4245,8 +4136,7 @@ loc_61DD3:
 		DEC		_tmp0B
 		LDA		#$FF
 		STA		_tmp0C
-		JMP		loc_61E19
-; ---------------------------------------------------------------------------
+		BNE		loc_61E19
 loc_61DFF:
 		LDA		_tmp03
 		ASL
@@ -4280,8 +4170,7 @@ loc_61E19:
 		DEC		_tmp0E
 		LDA		#$FF
 		STA		_tmp0F
-		JMP		loc_61E53
-; ---------------------------------------------------------------------------
+		BNE		loc_61E53
 loc_61E39:
 		LDA		_tmp08
 		ASL
@@ -4303,8 +4192,7 @@ loc_61E53:
 		CMP		_tmp0B
 		BEQ		loc_61E5E
 		BCS		loc_61E78
-		JMP		loc_61E64
-; ---------------------------------------------------------------------------
+		BCC		loc_61E64
 loc_61E5E:
 		LDA		_tmp06
 		CMP		_tmp0C
@@ -4314,17 +4202,13 @@ loc_61E64:
 		CMP		_tmp00
 		BEQ		loc_61E6F
 		BCC		loc_61E78
-		JMP		loc_61E7B
-; ---------------------------------------------------------------------------
+		BCS		loc_61E7B
 loc_61E6F:
 		LDA		_tmp0F
 		CMP		_tmp01
-		BCC		loc_61E78
-		JMP		loc_61E7B
-; ---------------------------------------------------------------------------
+		BCS		loc_61E7B
 loc_61E78:
 		JMP		loc_61DA4
-; ---------------------------------------------------------------------------
 loc_61E7B:
 		LDA		#$FF
 		STA		_tmp16
@@ -4340,20 +4224,14 @@ _engine_handlers:
 		JSR		_obj_collision_testB
 		JSR		_player_pos_x_delta_calc
 		LDA		_tmp00
-		BNE		loc_61E99
-		JMP		loc_61F13
-; ---------------------------------------------------------------------------
-loc_61E99:
+		BEQ		loc_61F13
 		STA		_cur_player_pos_x_delta
 		BMI		loc_61EDA
 		LDA		_objsA._player._room_num
 		CMP		#$00
 		BEQ		loc_61EC3
 		CMP		#$03
-		BEQ		loc_61EAB
-		JMP		loc_61F10
-; ---------------------------------------------------------------------------
-loc_61EAB:
+		BNE		loc_61F10
 		LDA		_objsA._player._x_pos
 		SEC
 		SBC		#$86
@@ -4366,7 +4244,6 @@ loc_61EAB:
 		BCS		loc_61F10
 		STA		_cur_player_pos_x_delta
 		JMP		loc_61F10
-; ---------------------------------------------------------------------------
 loc_61EC3:
 		LDA		_objsA._player._x_pos
 		CMP		#$87
@@ -4379,16 +4256,12 @@ loc_61EC3:
 		BCS		loc_61F13
 		STA		_cur_player_pos_x_delta
 		JMP		loc_61F13
-; ---------------------------------------------------------------------------
 loc_61EDA:
 		LDA		_objsA._player._room_num
 		CMP		#$00
 		BEQ		loc_61EFE
 		CMP		#$03
-		BEQ		loc_61EE7
-		JMP		loc_61F10
-; ---------------------------------------------------------------------------
-loc_61EE7:
+		BNE		loc_61F10
 		LDA		_objsA._player._x_pos
 		SEC
 		SBC		#$78
@@ -4400,7 +4273,6 @@ loc_61EE7:
 		ORA		#$80
 		STA		_cur_player_pos_x_delta
 		JMP		loc_61F10
-; ---------------------------------------------------------------------------
 loc_61EFE:
 		LDA		_objsA._player._x_pos
 		SEC
@@ -4447,12 +4319,9 @@ _final_boss_animate_handler:
 		CMP		#$FF
 		BNE		locret_61F4E
 		LDA		_game._redraw_req
-		BNE		locret_61F4E
-		JMP		loc_61F4F
-; ---------------------------------------------------------------------------
+		BEQ		loc_61F4F
 locret_61F4E:
 		RTS
-; ---------------------------------------------------------------------------
 loc_61F4F:
 		LDA		_final_boss_deploy_delay_timer
 		BEQ		loc_61F93
@@ -4469,13 +4338,11 @@ loc_61F4F:
 		CMP		#$80
 		BCS		loc_61F73
 		JMP		_final_boss_animate
-; ---------------------------------------------------------------------------
 loc_61F73:
 		LDA		_ppu_status_shadow
 		EOR		#$80
 		STA		_ppu_status_shadow
 		JMP		_final_boss_animate
-; ---------------------------------------------------------------------------
 loc_61F7E:
 		DEC		_objsA._o3._x_pos
 		DEC		_objsA._o3._x_pos
@@ -4486,7 +4353,6 @@ loc_61F7E:
 		BEQ		loc_61F73
 		BMI		loc_61F73
 		JMP		_final_boss_animate
-; ---------------------------------------------------------------------------
 loc_61F93:
 		JSR		_rand
 		AND		#$08
@@ -4503,7 +4369,6 @@ loc_61F9E:
 		DEY
 		BNE		loc_61F9E
 		RTS
-; ---------------------------------------------------------------------------
 loc_61FAD:
 		LDA		#$06
 		STA		_apu_se_cnt1
@@ -4534,7 +4399,6 @@ loc_61FAD:
 		DEC		_final_boss_delay_and_hp
 		BEQ		loc_61FE8
 		RTS
-; ---------------------------------------------------------------------------
 loc_61FE8:
 		LDA		#$AF
 		STA		_game._scr_idx
@@ -4549,13 +4413,11 @@ loc_61FE8:
 		LDA		#$03
 		STA		_game._life+1
 		RTS
-; ---------------------------------------------------------------------------
 _final_boss_animate:
 		DEC		_final_boss_delay_and_hp
 		LDA		_final_boss_delay_and_hp
 		BEQ		_final_boss_obj_insert
 		RTS
-; ---------------------------------------------------------------------------
 _final_boss_obj_insert:
 		LDA		#$78
 		STA		_final_boss_delay_and_hp
@@ -4678,15 +4540,14 @@ _objB_flush:
 		SBC		#$00
 		STA		_tmp0C
 		JMP		loc_620E3
-; ---------------------------------------------------------------------------
 loc_620D6:
 		LDA		_tmp0D
 		CLC
 		ADC		#$08
 		STA		_tmp0D
-		LDA		_tmp0C
-		ADC		#$00
-		STA		_tmp0C
+		BCC		loc_620D7
+		INC		_tmp0C
+loc_620D7:
 loc_620E3:
 		LDA		_tmp0F
 		ASL
@@ -4727,7 +4588,6 @@ _objB_hndl01:
 		AND		#$08
 		BEQ		loc_6211B
 		JMP		_objB_sub62362
-; ---------------------------------------------------------------------------
 loc_6211B:
 		LDA		#$06
 		STA		_tmp01
@@ -4750,7 +4610,6 @@ _objB_hndl02:
 		AND		#$08
 		BEQ		loc_62140
 		JMP		_objB_sub62362
-; ---------------------------------------------------------------------------
 loc_62140:
 		LDA		#$06
 		STA		_tmp01
@@ -4773,7 +4632,6 @@ _objB_hndl03:
 		AND		#$08
 		BEQ		loc_62165
 		JMP		_objB_sub62380
-; ---------------------------------------------------------------------------
 loc_62165:
 		LDA		#$06
 		STA		_tmp01
@@ -4796,7 +4654,6 @@ _objB_hndl04:
 		AND		#$08
 		BEQ		loc_6218A
 		JMP		_objB_sub62362
-; ---------------------------------------------------------------------------
 loc_6218A:
 		LDA		#$06
 		STA		_tmp01
@@ -4819,7 +4676,6 @@ _objB_hndl05:
 		AND		#$08
 		BEQ		loc_621AF
 		JMP		_objB_sub62380
-; ---------------------------------------------------------------------------
 loc_621AF:
 		LDA		#$06
 		STA		_tmp01
@@ -4850,7 +4706,6 @@ _objB_hndl06:
 		DEC		_objsB._o0.field_7,X
 		BNE		loc_621E4
 		JMP		_objB_sub62380
-; ---------------------------------------------------------------------------
 loc_621E4:
 		LDA		_tmp11
 		AND		#$08
@@ -4890,7 +4745,6 @@ _objB_hndl08:
 		AND		#$08
 		BEQ		loc_62222
 		JMP		_objB_sub62380
-; ---------------------------------------------------------------------------
 loc_62222:
 		LDA		#$06
 		STA		_tmp01
@@ -5035,7 +4889,6 @@ loc_6230E:
 		STA		_objsB,X
 loc_62329:
 		JMP		_objB_flush_and_continue
-
 ; ---------------------------------------------------------------------------
 _scores_tbl:
 		.WORD 1
@@ -5047,6 +4900,7 @@ _scores_tbl:
 		.WORD 100
 		.WORD 200
 		.WORD 500
+
 ; =============== S U B	R O U T	I N E =======================================
 _objB_hndl1D:
 		LDA		_objsB._o0.field_7,X
@@ -5138,6 +4992,7 @@ _objB_hndl_lib:
 		.WORD _objB_hndl14_1C_score
 		.WORD _objB_hndl1D
 		.WORD _objB_hndl1E
+
 ; =============== S U B	R O U T	I N E =======================================
 _spr_objsA_manager:
 		LDA		#$00
@@ -5180,8 +5035,7 @@ loc_6241A:
 		BNE		loc_623DE
 		LDA		#$10
 		STA		_tmp09
-		JMP		loc_623DE
-; ---------------------------------------------------------------------------
+		BNE		loc_623DE
 loc_6242A:
 		LDA		_objA_buf_shuffle_pos
 		CLC
@@ -5229,7 +5083,6 @@ loc_62472:
 		BEQ		locret_62481
 		JSR		_spr_obj_fetch_chunkB
 		JMP		loc_62472
-; ---------------------------------------------------------------------------
 locret_62481:
 		RTS
 
@@ -5289,7 +5142,6 @@ _spr_obj_fetch_chunkB:
 		ADC		_tmp00
 		STA		_tmp01
 		RTS
-; ---------------------------------------------------------------------------
 loc_624D3:
 		LDA		(_tmp0A),Y
 		ROL
@@ -5370,11 +5222,9 @@ loc_62541:
 		CLC
 		ADC		#$08
 		STA		_tmp0C
-		LDA		_tmp0D
-		ADC		#$00
-		STA		_tmp0D
+		BCC		loc_62564
+		INC		_tmp0D
 		JMP		loc_62564
-; ---------------------------------------------------------------------------
 loc_62557:
 		SEC
 		LDA		_tmp0C
@@ -5458,7 +5308,6 @@ loc_625C6:
 		LDA		_spr_libA+1,Y
 		STA		_tmp0B
 		JMP		loc_625EA
-; ---------------------------------------------------------------------------
 loc_625DE:
 		ASL
 		TAY
@@ -5514,10 +5363,7 @@ loc_62627:
 		STA		_tmp09
 loc_62636:
 		CMP		_objB_buf_shuffle_pos
-		BEQ		loc_6263E
-		JMP		loc_625FC
-; ---------------------------------------------------------------------------
-loc_6263E:
+		BNE		loc_625FC
 		LDA		_objB_buf_shuffle_pos
 		CLC
 		ADC		#$08
@@ -5550,7 +5396,6 @@ loc_62658:
 		JSR		_obj_get_prize_spr_insert
 locret_62675:
 		RTS
-; ---------------------------------------------------------------------------
 loc_62676:
 		LDA		_objsB._o0.field_6,X
 		STA		_tmp0F
@@ -5647,11 +5492,9 @@ loc_62706:
 		CLC
 		ADC		#$08
 		STA		_tmp12
-		LDA		_tmp11
-		ADC		#$00
-		STA		_tmp11
+		BCC		loc_62727
+		INC		_tmp11
 		JMP		loc_62727
-; ---------------------------------------------------------------------------
 loc_6271A:
 		SEC
 		LDA		_tmp12
@@ -5667,7 +5510,6 @@ loc_62727:
 		LDA		#$00
 		STA		_tmp01
 		JMP		_obj_get_prize_spr_insert
-; ---------------------------------------------------------------------------
 locret_62734:
 		RTS
 
@@ -5695,7 +5537,6 @@ _obj_move_animate_common:
 		ADC		_tmp10
 		STA		_tmp10
 		JMP		loc_62775
-; ---------------------------------------------------------------------------
 loc_6275A:
 		LDA		_tmp02
 		AND		#$0F
@@ -5724,7 +5565,6 @@ loc_6277D:
 		ADC		_tmp10
 		STA		_tmp0E
 		JMP		loc_62792
-; ---------------------------------------------------------------------------
 loc_6278B:
 		SEC
 		LDA		_tmp0E
@@ -5741,7 +5581,6 @@ loc_62792:
 		ADC		_tmp0F
 		STA		_tmp0F
 		JMP		loc_627C3
-; ---------------------------------------------------------------------------
 loc_627A6:
 		LDA		_tmp00
 		AND		#$0F
@@ -5775,7 +5614,6 @@ loc_627CB:
 		AND		#$3F
 		STA		_tmp0C
 		RTS
-; ---------------------------------------------------------------------------
 loc_627E1:
 		SEC
 		LDA		_tmp0D
@@ -5806,7 +5644,6 @@ loc_62803:
 		LDA		#$06
 		STA		_objsA._player.field_9
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_62812:
 		LDA		_tmp11
 		AND		#$08
@@ -5824,13 +5661,11 @@ loc_62812:
 		AND		#$FE
 		STA		_ppu_mask_shadow
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_62836:
 		LDA		_ppu_mask_shadow
 		ORA		#$01
 		STA		_ppu_mask_shadow
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_62841:
 		LDA		_ppu_mask_shadow
 		AND		#$FE
@@ -5840,19 +5675,16 @@ loc_62841:
 		LDA		#$01
 		STA		_game._redraw_req
 		JMP		_obj_flush_and_continue
-; ---------------------------------------------------------------------------
 loc_62856:
 		LDA		_tmp11
 		AND		#$01
 		BNE		loc_62863
 		LDA		#$03
-		STA		_tmp01
-		JMP		loc_62867
-; ---------------------------------------------------------------------------
+		BNE		loc_62867
 loc_62863:
 		LDA		#$04
-		STA		_tmp01
 loc_62867:
+		STA		_tmp01
 		LDA		#$0F
 		STA		_tmp03
 		LDA		#$01
@@ -5873,21 +5705,16 @@ loc_62867:
 		AND		_pad
 		BNE		loc_62891
 		JMP		loc_62AA3
-; ---------------------------------------------------------------------------
 loc_62891:
 		LDA		_tmp11
 		EOR		#$40
 		STA		_tmp11
 		LDA		#$00
 		STA		_tmp0B
-		JMP		loc_628D5
-; ---------------------------------------------------------------------------
+		BEQ		loc_628D5
 loc_6289E:
 		DEC		_objsA._player._timer
-		BEQ		loc_628A5
-		JMP		loc_628D5
-; ---------------------------------------------------------------------------
-loc_628A5:
+		BNE		loc_628D5
 		LDA		_tmp11
 		AND		#$DF
 		STA		_tmp11
@@ -5930,13 +5757,11 @@ loc_628D5:
 		LDA		#$20
 		STA		_objsA._player._timer
 		JMP		loc_62AA3
-; ---------------------------------------------------------------------------
 loc_62900:
 		LDA		#$04
 		AND		_objsA._player._state
 		BEQ		loc_62909
 		JMP		loc_6298C
-; ---------------------------------------------------------------------------
 loc_62909:
 		LDA		#$08
 		AND		_objsA._player._state
@@ -5961,7 +5786,6 @@ loc_6291F:
 		JSR		_rambo_weapon_manager
 		JSR		_rambo_crouch_test
 		JMP		loc_62AAC
-; ---------------------------------------------------------------------------
 loc_6293A:
 		LDX		_cur_weapon_selected
 		LDA		_game._exp_level,X
@@ -6000,10 +5824,8 @@ loc_6296F:
 		JSR		_player_weapon_projectile_deploy
 		JSR		_rambo_crouch_test
 		JMP		loc_62AAC
-; ---------------------------------------------------------------------------
 loc_62989:
 		JMP		loc_62AA3
-; ---------------------------------------------------------------------------
 loc_6298C:
 		LDA		#$00
 		STA		_tmp10
@@ -6028,24 +5850,19 @@ loc_6298C:
 		AND		#$02
 		BNE		loc_629C1
 		LDA		#$09
-		STA		_tmp10
-		JMP		loc_629CC
-; ---------------------------------------------------------------------------
+		BNE		loc_629CC
 loc_629C1:
 		LDA		#$0C
-		STA		_tmp10
-		JMP		loc_629CC
-; ---------------------------------------------------------------------------
+		BNE		loc_629CC
 loc_629C8:
 		LDA		#$06
-		STA		_tmp10
 loc_629CC:
+		STA		_tmp10
 		LDA		_tmp0F
 		BEQ		loc_629D2
 		INC		_tmp10
 loc_629D2:
 		JMP		loc_62AA3
-; ---------------------------------------------------------------------------
 loc_629D5:
 		LDA		_tmp0B
 		CMP		#$06
@@ -6062,7 +5879,6 @@ loc_629E7:
 		JSR		_rambo_weapon_manager
 		JSR		_rambo_crouch_test
 		JMP		loc_62AAC
-; ---------------------------------------------------------------------------
 loc_629F6:
 		LDX		_cur_weapon_selected
 		LDA		_game._exp_level,X
@@ -6096,10 +5912,8 @@ loc_62A29:
 		JSR		_player_weapon_projectile_deploy
 		JSR		_rambo_crouch_test
 		JMP		loc_62AAC
-; ---------------------------------------------------------------------------
 loc_62A3C:
 		JMP		loc_62A9D
-; ---------------------------------------------------------------------------
 loc_62A3F:
 		LDA		#$40
 		AND		_pad
@@ -6115,7 +5929,6 @@ loc_62A4C:
 		JSR		_player_weapon_projectile_deploy
 		JSR		_rambo_crouch_test
 		JMP		loc_62AAC
-; ---------------------------------------------------------------------------
 loc_62A5F:
 		LDA		#$01
 		AND		_pad
@@ -6124,7 +5937,6 @@ loc_62A5F:
 		STA		_tmp00
 		JSR		_rambo_state_adjust
 		JMP		loc_62AA3
-; ---------------------------------------------------------------------------
 loc_62A70:
 		LDA		#$02
 		AND		_pad
@@ -6133,7 +5945,6 @@ loc_62A70:
 		STA		_tmp00
 		JSR		_rambo_state_adjust
 		JMP		loc_62AA3
-; ---------------------------------------------------------------------------
 loc_62A81:
 		LDA		_tmp0B
 		CMP		#$05
@@ -6147,7 +5958,6 @@ loc_62A81:
 		LDA		#$04
 		STA		_objsA._player.field_9
 		JMP		loc_62A9D
-; ---------------------------------------------------------------------------
 loc_62A9A:
 		JSR		_rambo_state_adjust
 loc_62A9D:
@@ -6189,18 +5999,14 @@ loc_62AD3:
 		CMP		#$00
 		BEQ		loc_62AEB
 		LDA		#$01
-		STA		_tmp0B
-		JMP		loc_62AEF
-; ---------------------------------------------------------------------------
+		BNE		loc_62AEF
 loc_62AE4:
 		LDA		#$02
-		STA		_tmp0B
-		JMP		loc_62AEF
-; ---------------------------------------------------------------------------
+		BNE		loc_62AEF
 loc_62AEB:
 		LDA		#$00
-		STA		_tmp0B
 loc_62AEF:
+		STA		_tmp0B
 		LDA		#$FE
 		STA		_objsA._player.field_7
 		LDA		#$00
@@ -6241,9 +6047,8 @@ _player_weapon_projectile_deploy:
 		CLC
 		ADC		#$64
 		STA		_game._life
-		LDA		_game._life+1
-		ADC		#$00
-		STA		_game._life+1
+		BCC		loc_62B40
+		INC		_game._life+1
 loc_62B40:
 		LDA		#$00
 		STA		_cur_weapon_selected
@@ -6283,7 +6088,6 @@ loc_62B4C:
 		LDA		_tmp13
 		STA		_apu_se_cnt1
 		JMP		loc_62B86
-; ---------------------------------------------------------------------------
 loc_62B7E:
 		INC		_tmp08
 		LDA		_tmp08
@@ -6293,7 +6097,6 @@ loc_62B86:
 		PLA
 		TAX
 		RTS
-
 ; ---------------------------------------------------------------------------
 _weapons_data_tbl:
 		.BYTE $07,$36,$00,$10,$19,$24,$00,$04,$08,$54,$00,$10,$08,$24,$00,$04
@@ -6307,6 +6110,7 @@ _weapon_se_tbl:
 		.BYTE $01,$02,$05,$85,$84,$81,$01
 _wapon_damage_tbl:
 		.BYTE $01,$02,$03,$06,$0C,$18,$30,$60,$C0
+
 ; =============== S U B	R O U T	I N E =======================================
 _rambo_weapon_manager:
 		LDA		_tmp0B
@@ -6316,8 +6120,7 @@ _rambo_weapon_manager:
 		BEQ		loc_62C1A
 		CMP		#$08
 		BEQ		loc_62C2F
-		JMP		loc_62C45
-; ---------------------------------------------------------------------------
+		BNE		loc_62C45
 loc_62C1A:
 		LDA		_objsA._player.field_2
 		CMP		#$09
@@ -6328,8 +6131,7 @@ loc_62C1A:
 		STA		_objsA._player.field_8
 		LDA		#$16
 		STA		_objsA._player.field_9
-		JMP		loc_62C6B
-; ---------------------------------------------------------------------------
+		BNE		loc_62C6B
 loc_62C2F:
 		LDA		_objsA._player.field_2
 		CMP		#$09
@@ -6340,18 +6142,14 @@ loc_62C2F:
 		STA		_objsA._player.field_8
 		LDA		#$06
 		STA		_objsA._player.field_9
-		JMP		loc_62C6B
-; ---------------------------------------------------------------------------
+		BNE		loc_62C6B
 locret_62C44:
 		RTS
-; ---------------------------------------------------------------------------
 loc_62C45:
 		CMP		#$0B
 		BEQ		loc_62C50
 		CMP		#$0C
-		BEQ		loc_62C50
-		JMP		loc_62C62
-; ---------------------------------------------------------------------------
+		BNE		loc_62C62
 loc_62C50:
 		LDA		#$40
 		AND		_pad
@@ -6360,14 +6158,12 @@ loc_62C50:
 		STA		_objsA._player.field_7
 		LDA		#$08
 		STA		_objsA._player.field_2
-		JMP		loc_62C6B
-; ---------------------------------------------------------------------------
+		BNE		loc_62C6B
 loc_62C62:
 		LDA		_objsA._player.field_2
 		CMP		#$05
 		BEQ		loc_62C6B
 		RTS
-; ---------------------------------------------------------------------------
 loc_62C6B:
 		LDA		_game._exp_level
 		TAY
@@ -6390,7 +6186,6 @@ loc_62C88:
 		LDA		_game._exp_level,Y
 		BNE		loc_62C96
 		RTS
-; ---------------------------------------------------------------------------
 loc_62C96:
 		LDA		_cur_weapon_selected
 		TAX
@@ -6401,7 +6196,6 @@ loc_62C9F:
 		BMI		loc_62CA9
 		STA		_tmp13
 		JMP		loc_62CB3
-; ---------------------------------------------------------------------------
 loc_62CA9:
 		AND		#$7F
 		STA		_tmp13
@@ -6435,7 +6229,6 @@ loc_62CC5:
 		ADC		#$00
 		STA		_tmp01
 		JMP		loc_62CED
-; ---------------------------------------------------------------------------
 loc_62CDF:
 		SEC
 		LDA		_tmp0D
@@ -6484,7 +6277,6 @@ _rambo_crouch_test:
 		AND		#$BF
 		STA		_objsA._player.field_7
 		RTS
-; ---------------------------------------------------------------------------
 loc_62D37:
 		LDA		_objsA._player.field_7
 		ORA		#$40
@@ -6515,8 +6307,7 @@ _player_control_co:
 		STA		_tmp11
 		LDA		#$09
 		STA		_tmp10
-		JMP		loc_62D99
-; ---------------------------------------------------------------------------
+		BNE		loc_62D99
 loc_62D6D:
 		LDA		#$08
 		AND		_objsA._player._state,X
@@ -6537,7 +6328,6 @@ loc_62D83:
 		AND		#$BF
 		STA		_objsA._player.field_7,X
 		JMP		loc_62D99
-; ---------------------------------------------------------------------------
 loc_62D93:
 		LDA		_objsA._player.field_7,X
 		ORA		#$40
@@ -6552,9 +6342,7 @@ loc_62D99:
 		AND		#$BF
 		STA		_tmp11
 		LDA		#$02
-		STA		_tmp0F
-		JMP		loc_62DD1
-; ---------------------------------------------------------------------------
+		BNE		loc_62DD1
 loc_62DB1:
 		LDA		#$02
 		AND		_pad
@@ -6565,15 +6353,13 @@ loc_62DB1:
 		ORA		#$40
 		STA		_tmp11
 		LDA		#$02
-		STA		_tmp0F
-		JMP		loc_62DD1
-; ---------------------------------------------------------------------------
+		BNE		loc_62DD1
 loc_62DC9:
 		LDA		#$00
 		STA		_tmp0B
 		LDA		#$00
-		STA		_tmp0F
 loc_62DD1:
+		STA		_tmp0F
 		JSR		_obj_move_animate_common
 		JSR		_obj_get_hor_delta16
 		JMP		_obj_flush_and_continue
@@ -6590,7 +6376,6 @@ _hud_num_idx_adjust_ex:
 		CMP		#$0A
 		BCS		loc_62DE3
 		RTS
-; ---------------------------------------------------------------------------
 loc_62DE3:
 		CLC
 		ADC		#$1E
@@ -6614,14 +6399,12 @@ loc_62DF6:
 		JSR		_sub1000
 		INC		_tmp05
 		JMP		loc_62DF6
-; ---------------------------------------------------------------------------
 loc_62E03:
 		JSR		_cmp100
 		BCC		loc_62E10
 		JSR		_sub100
 		INC		_tmp04
 		JMP		loc_62E03
-; ---------------------------------------------------------------------------
 loc_62E10:
 		LDA		_tmp00
 loc_62E12:
@@ -6629,7 +6412,6 @@ loc_62E12:
 		BCS		loc_62E19
 		STA		_tmp02
 		RTS
-; ---------------------------------------------------------------------------
 loc_62E19:
 		SEC
 		SBC		#$0A
@@ -6642,7 +6424,6 @@ _cmp1000:
 		CMP		#$03
 		BEQ		loc_62E28
 		RTS
-; ---------------------------------------------------------------------------
 loc_62E28:
 		LDA		_tmp00
 		CMP		#$E8
@@ -6654,7 +6435,6 @@ _cmp100:
 		CMP		#$00
 		BEQ		loc_62E34
 		RTS
-; ---------------------------------------------------------------------------
 loc_62E34:
 		LDA		_tmp00
 		CMP		#$64
@@ -6753,13 +6533,11 @@ _nmi_sub:
 		LDA		_nmi_disable
 		BEQ		loc_62EBA
 		JMP		_nmi_finish
-; ---------------------------------------------------------------------------
 loc_62EBA:
 		LDA		_nmi_disble_ppu_reset_req
 		BPL		loc_62EC5
 		LDA		_PPU_STATUS
 		JMP		_nmi_finish
-; ---------------------------------------------------------------------------
 loc_62EC5:
 		LDA		#$00
 		STA		_PPU_MASK
@@ -6770,7 +6548,6 @@ loc_62EC5:
 		LDA		_game._redraw_req
 		BEQ		loc_62EDC
 		JMP		loc_62F3D
-; ---------------------------------------------------------------------------
 loc_62EDC:
 		INC		_ppu_status_shadow
 		LDA		_ppu_status_shadow
@@ -6813,26 +6590,22 @@ loc_62F2A:
 		DEX
 		BNE		loc_62F2A
 		JMP		loc_63096
-; ---------------------------------------------------------------------------
 loc_62F34:
 		STY		_PPU_DATA
 loc_62F37:
 		DEX
 		BNE		loc_62F37
 		JMP		loc_63096
-; ---------------------------------------------------------------------------
 loc_62F3D:
 		LDA		_cur_pal_bg_idx
 		ORA		_cur_pal_spr_lib
 		BMI		loc_62F48
 		JMP		loc_63096
-; ---------------------------------------------------------------------------
 loc_62F48:
 		LDA		_pal_fade_delay
 		BEQ		loc_62F53
 		DEC		_pal_fade_delay
 		JMP		loc_63096
-; ---------------------------------------------------------------------------
 loc_62F53:
 		LDA		#$06
 		STA		_pal_fade_delay
@@ -6844,7 +6617,6 @@ loc_62F53:
 		BEQ		loc_62F6C
 		JSR		_nmi_pal_fade_out
 		JMP		loc_62F6F
-; ---------------------------------------------------------------------------
 loc_62F6C:
 		JSR		_nmi_pal_fade_in
 loc_62F6F:
@@ -6869,7 +6641,6 @@ loc_62F6F:
 		AND		#$0F
 		STA		_cur_pal_spr_lib
 		JMP		loc_62FFA
-; ---------------------------------------------------------------------------
 loc_62FA2:
 		LDA		_cur_pal_bg_idx
 		AND		#$0F
@@ -6926,12 +6697,10 @@ loc_62FFA:
 		STA		_PPU_ADDR
 		STA		_PPU_ADDR
 		JMP		loc_630FA
-; ---------------------------------------------------------------------------
 loc_63010:
 		LDA		_ppu_dequeue_idx
 		BNE		loc_63018
 		JMP		loc_630E8
-; ---------------------------------------------------------------------------
 loc_63018:
 		DEC		_ppu_dequeue_idx
 		BEQ		loc_63046
@@ -6950,12 +6719,10 @@ loc_63022:
 		STY		_PPU_DATA
 		INX
 		JMP		loc_63022
-; ---------------------------------------------------------------------------
 loc_6303F:
 		LDA		#<[_ppu_queue_buf]
 		STA		_ppu_queue_buf_ofs
 		JMP		loc_6308C
-; ---------------------------------------------------------------------------
 loc_63046:
 		CLC
 		LDA		#$94
@@ -6999,12 +6766,10 @@ loc_6308C:
 		AND		#$DF
 		BNE		loc_630FA
 		JMP		_nmi_finish
-; ---------------------------------------------------------------------------
 loc_63096:
 		LDA		_chr_tiles_send_dst+1
 		BNE		loc_6309E
 		JMP		loc_63010
-; ---------------------------------------------------------------------------
 loc_6309E:
 		LDA		_chr_tiles_send_src
 		STA		_tmp00
@@ -7036,14 +6801,12 @@ loc_630C2:
 		BNE		loc_6308C
 		LDA		#$00
 		STA		_chr_tiles_send_dst+1
-		JMP		loc_6308C
-; ---------------------------------------------------------------------------
+		BEQ		loc_6308C
 loc_630E8:
 		LDA		_ppu_mask_shadow
 		AND		#$DF
 		BNE		loc_630F2
 		JMP		_nmi_finish
-; ---------------------------------------------------------------------------
 loc_630F2:
 		LDA		#$90
 		STA		_PPU_CTRL
@@ -7093,7 +6856,6 @@ loc_63137:
 		LDA		_ppu_ctrl_shadow
 		STA		_PPU_CTRL
 		JMP		_nmi_finish
-; ---------------------------------------------------------------------------
 loc_63159:
 		LDA		_room_scroll_pos_x
 		STA		_PPU_SCROLL
@@ -7116,7 +6878,6 @@ _nmi_finish:
 loc_63184:
 		STX		_APU_STATUS
 		JMP		loc_6318F
-; ---------------------------------------------------------------------------
 loc_6318A:
 		LDA		#$0F
 		STA		_APU_STATUS
@@ -7192,7 +6953,6 @@ loc_631EE:
 		STA		_PPU_DATA
 locret_63219:
 		RTS
-; ---------------------------------------------------------------------------
 loc_6321A:
 		CMP		#$20
 		BNE		loc_6328F
@@ -7250,7 +7010,6 @@ loc_63262:
 		STA		_PPU_DATA
 		STA		_PPU_DATA
 		RTS
-; ---------------------------------------------------------------------------
 loc_6328F:
 		LDA		_PPU_STATUS
 		LDA		#$3F
@@ -7366,7 +7125,6 @@ loc_63349:
 		BNE		loc_63349
 locret_63365:
 		RTS
-; ---------------------------------------------------------------------------
 loc_63366:
 		CMP		#$20
 		BNE		loc_633C0
@@ -7414,7 +7172,6 @@ loc_633A0:
 		DEY
 		BNE		loc_633A0
 		RTS
-; ---------------------------------------------------------------------------
 loc_633C0:
 		LDA		_PPU_STATUS
 		LDA		#$3F
@@ -7477,8 +7234,7 @@ loc_63429:
 		CMP		#$05
 		BCC		loc_6343A
 		STA		_PPU_DATA
-		JMP		loc_63458
-; ---------------------------------------------------------------------------
+		BCS		loc_63458
 loc_6343A:
 		CMP		#$01
 		BEQ		loc_63455
@@ -7488,19 +7244,16 @@ loc_6343A:
 		BNE		loc_6344C
 		JSR		_hud_decimal_putB
 		JMP		loc_6344F
-; ---------------------------------------------------------------------------
 loc_6344C:
 		JSR		_hud_decimal_putA
 loc_6344F:
 		JSR		_hud_decimal_putA
 		JMP		loc_63458
-; ---------------------------------------------------------------------------
 loc_63455:
 		JSR		_hud_decimal_putB
 loc_63458:
 		INX
 		JMP		loc_63429
-; ---------------------------------------------------------------------------
 locret_6345C:
 		RTS
 
@@ -7517,11 +7270,11 @@ _hud_decimal_putB:
 		STA		_PPU_DATA
 		INY
 		RTS
-
 ; ---------------------------------------------------------------------------
 _hud_decimals_list:
 		.BYTE $15,$03,$15,$04,$15,$0B,$01,$15,$02,$15,$02,$15,$02,$15,$02,$15
 		.BYTE $0A,$01,$15,$0A,$01,$FF
+
 ; =============== S U B	R O U T	I N E =======================================
 _game_time_do_count:
 		INC		_pre_timer
