@@ -56,7 +56,7 @@
 _script80:
 		set_room_idx		$81
 		ptr_load			_script80_msg00
-		msg_printf			$2063	; [RAMBO_ IS A	REGISTERED\TRADEMARK OF CAROLCO\PICTURES INC._ 1985,1988\CAROLCO.ALL RIGHTS RESERVED.]
+		msg_printf			$2063	; [RAMBO_ IS A REGISTERED\TRADEMARK OF CAROLCO\PICTURES INC._ 1985,1988\CAROLCO.ALL RIGHTS RESERVED.]
 		ptr_load			_script80_msg01
 		msg_printf			$2163	; [UNAUTHORIZED DUPLICATION\IS STRICTLY PROHIBITED.]
 		ptr_load			_script80_msg02
@@ -64,12 +64,12 @@ _script80:
 		ptr_load			_script80_msg03
 		msg_printf			$2263	; [LICENCED AND CONTROLLED FOR\THE UNITED STATES AND CANADA\BY ACCLAIM ENTERTAINMENT,INC.]
 		ptr_load			_script80_msg03A
-		msg_printf			$2323	; [LICENSED BY	NINTENDO OF\AMERICA,INC.]
+		msg_printf			$2323	; [LICENSED BY NINTENDO OF\AMERICA,INC.]
 		sprite_draw_up		_SPR_PACK_IN_TIME
 		stop
 _script81:
 		ptr_load			_script81_msg00
-		msg_printf			$21c3	; [REND THE FEELINGS THE HEART\  WITH PAINFUL FEELINGS]
+		msg_printf			$21c3	; [REND THE FEELINGS OF HEART\  WITH PAINFUL FEELINGS]
 		ptr_load			_script81_msg01
 		msg_printf			$22ac	; [START\CONTINUE]
 		ptr_load			_script81_msg02
@@ -119,7 +119,7 @@ _script82_loc02:
 		jump				_script82_loc00
 _script83:
 		ptr_load			_script83_msg00
-		msg_printf			$2465	; [LIFE	(MAX	  )\EXP         (NEXT     )\TIME]
+		msg_printf			$2465	; [LIFE        (MAX      )\EXP         (NEXT     )\TIME]
 		game_stats_draw
 		frame_draw_custom	$2525, $17, $0a
 		ptr_load			_script83_msg01
@@ -280,10 +280,10 @@ _script88_loc00:
 		ptr_load			_script88_msg00
 		msg_draw_up			; [Rambo,forget about\your absurd hand-to\-hand fighting.\Military technology\will work best.]
 		frame_draw_down		PORTRAIT00_RAMBO
-		ptr_load			_script88_msg01
+;		ptr_load			_script88_msg01
+;		msg_draw_down		; [-MISSING-]
+		ptr_load			_script88_msg02
 		msg_draw_up			; [Go to the hangar.]
-;		ptr_load			_script88_msg02
-;		msg_draw_up			; [-MISSING-]
 		set_room_idx		$01
 		stop
 _script88_loc01:
@@ -311,7 +311,7 @@ _script89:
 		ptr_load			_script89_msg00
 		msg_draw_up			; [I'm Co.\You did not expect\a woman?]
 		ptr_load			_script89_msg00A
-		msg_draw_up			; [Would you	like to\know something?]
+		msg_draw_up			; [Would you like to\know something?]
 		frame_draw_down		PORTRAIT00_RAMBO
 		input_2_options
 		ptr_load			_script89_msg01
@@ -349,7 +349,7 @@ _script8A_loc01:
 _script8A_loc02:
 		frame_draw_down		PORTRAIT03_CO
 		ptr_load			_script8A_msg01
-		msg_draw_down		; [What? You	should\know us.We wanna\get on the boat.\Here's money.]
+		msg_draw_down		; [What? You should\know us.We wanna\get on the boat.\Here's money.]
 		frame_draw_up		PORTRAIT14_PIRATE
 		ptr_load			_script8A_msg02
 		msg_draw_up			; [OK] [-MORE TEXT-]
@@ -429,7 +429,7 @@ _script8C_loc02:
 		------------------
 _script8C_loc03:
 		ptr_load			_script8C_msg02
-		msg_draw_up			; [Cross the	river\to the West,and\climb the hill,\then you'll find\the pick-up point.]
+		msg_draw_up			; [Cross the river\to the West,and\climb the hill,\then you'll find\the pick-up point.]
 		jmp_flags_not_set	FLAG0A_MISSION_TIME_OVER, _script8C_loc04
 		jmp_branch			_script8C_loc05
 _script8C_loc04:
@@ -530,7 +530,7 @@ _script92_loc01:
 		ptr_load			_script92_msg04
 		msg_draw_down		; [What happened\today?] [-DIFFERENT MEANING-]
 		ptr_load			_script92_msg05
-		msg_draw_up			; [I	caught a spy.] [-DIFFERENT MEANING-]
+		msg_draw_up			; [I caught a spy.] [-DIFFERENT MEANING-]
 		ptr_load			_script92_msg06
 		msg_draw_down		; [So,you have the key\to the room.] [-DIFFERENT MEANING-]
 		sprite_draw_up		PORTRAIT_CLEAR
@@ -550,7 +550,7 @@ _script93:
 		ptr_load			_script93_msg01
 		msg_draw_down		; [Sorry.]
 		ptr_load			_script93_msg02
-		msg_draw_up			; [Hey!Where	are you\going?\The exit is on the\right.]
+		msg_draw_up			; [Hey!Where are you\going?\The exit is on the\right.]
 		ptr_load			_script93_msg03
 		msg_draw_up			; [To the left is the\torture room.]
 		set_room_idx		$6e
@@ -647,7 +647,7 @@ _script95_loc06:
 _script95_loc07:
 		sprite_draw_up		PORTRAIT05_CO_SAD
 		ptr_load			_script95_msg0b
-		msg_draw_up			; [I	won't see you\any more.\Good-bye.]
+		msg_draw_up			; [I won't see you\any more.\Good-bye.]
 		game_flags_clear	FLAG09_CO_TAKEN
 		set_room_idx		$0b
 		player_pos_set		$00, $a0
@@ -705,7 +705,7 @@ _script97:
 		ptr_load			_script97_msg03
 		msg_draw_down		; [...]
 		ptr_load			_script97_msg04
-		msg_draw_up			; [I	want you to radio\your headquarters\and say that you\have been captured.]
+		msg_draw_up			; [I want you to radio\your headquarters\and say that you\have been captured.]
 		ptr_load			_script97_msg05
 		msg_draw_down		; [...]
 		sprite_draw_down	PORTRAIT00_RAMBO
@@ -930,10 +930,10 @@ _script9D:
 _script9D_loc00:
 		ptr_load			_script9D_msg01
 ;		msg_printf			$2127	; [Sergeant Yashin\came up there.]
-; here is the BUG missed in the, this message overwrites the second line
+; BUG. in the US version this message overwrites the second line
 ; of upper message because offsets are from japanese version, but
-; there message above is single lined. althoug they knew this issue!
-; but fixed it with adding an extra spaces to the following message
+; there the message above is single lined. althoug they knew this issue!
+; bug "fixed" somehow with adding an extra spaces to the following message
 ; to effectively erase the previous one! instead of just moving the
 ; message one line down!
 ; FIX
@@ -1616,7 +1616,7 @@ _script88_msg00:
 		.BYTE _M,_i,_l,_i,_t,_a,_r,_y,__,_t,_e,_c,_h,_n,_o,_l,_o,_g,_y,_eol
 		.BYTE _w,_i,_l,_l,__,_w,_o,_r,_k,__,_b,_e,_s,_t,_dot,_eol
 		.BYTE _eof
-_script88_msg01:
+_script88_msg02:
 		.BYTE _G,_o,__,_t,_o,__,_t,_h,_e,__,_h,_a,_n,_g,_a,_r,_dot,_eol
 		.BYTE _eof
 _script88_msg03:

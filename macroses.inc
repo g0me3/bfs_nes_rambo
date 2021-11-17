@@ -170,17 +170,15 @@ _tobjB.field_7			SET	_tobjB + 7
 
 	MAC	_tapu_chnl
 {1}		SET .
-{1}.field_0:
-		.BYTE 0
-{1}.field_1:
-		.BYTE 0
+{1}._pos:
+		.WORD 0
 {1}.field_2:
 		.BYTE 0
 {1}.field_3:
 		.BYTE 0
 {1}.field_4:
 		.BYTE 0
-{1}.field_5:
+{1}._loop:
 		.BYTE 0
 	ENDM
 
@@ -336,11 +334,13 @@ _tobjB.field_7			SET	_tobjB + 7
 ;---------G-A-M-E--S-P-E-C-I-F-I-C--------------
 
 	MAC	PPU_FILL_LINEY
+#if {1}!=0
 		LDA		_PPU_STATUS
 		LDA		#>[{1}]
 		STA		_PPU_ADDR
 		LDA		#<[{1}]
 		STA		_PPU_ADDR
+#endif
 		LDA		#{2}
 		LDY		#{3}
 .1:
@@ -350,11 +350,13 @@ _tobjB.field_7			SET	_tobjB + 7
 	ENDM
 
 	MAC	PPU_FILL_LINEX
+#if {1}!=0
 		LDA		_PPU_STATUS
 		LDA		#>[{1}]
 		STA		_PPU_ADDR
 		LDA		#<[{1}]
 		STA		_PPU_ADDR
+#endif
 		LDA		#{2}
 		LDX		#{3}
 .1:

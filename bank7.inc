@@ -8,105 +8,6 @@
 		SECTION_START
 
 ; =============== S U B	R O U T	I N E =======================================
-_MAIN:
-;		LDA		#$06							; WHY?
-;		STA		_cur_prg_bank
-;		JSR		_mmc_prg
-;		LDA		_location_room_settings
-loc_6000E:
-		INC		_tmp04
-		BNE		loc_6000E
-		INC		_tmp05
-		BNE		loc_6000E
-		INC		_tmp06
-		LDA		_tmp06
-		CMP		#$02
-		BNE		loc_6000E
-		LDA		#$06
-		STA		_cur_prg_bank
-		JSR		_mmc_prg
-		LDA		_ppu_ctrl_shadow
-		STA		_PPU_CTRL
-		LDA		#$0E
-		JSR		_apu_cur_mus_load
-_main_loop:
-		LDA		_nmi_flag
-		CMP		#$02
-		BCC		_main_loop
-		LDA		#$00
-		STA		_nmi_flag
-loc_6003D:
-		LDA		_ppu_dequeue_idx
-		BNE		loc_6003D
-		LDA		#$14
-		STA		_spr_buf_pos
-		JSR		_read_pad_safeB
-		LDA		_ingame_pause_flag
-		BNE		loc_6005D
-		JSR		_level_draw_update
-		LDA		_game._redraw_req
-		BNE		loc_6005D
-		JSR		_engine_handlers
-		JSR		_game_warps_handler
-loc_6005D:
-		LDA		_objsA._player._dir
-		AND		#$08
-		BEQ		loc_6006B
-		LDA		#$00
-		STA		_ingame_pause_flag
-		BEQ		loc_6006E
-loc_6006B:
-		JSR		_ingame_start_select_handler
-loc_6006E:
-		JSR		_game_values_to_decimal
-		JSR		_hud_cursor_spr_insert
-		LDA		_game._redraw_req
-		BNE		loc_6007F
-		JSR		_spr_objsB_manager
-		JSR		_spr_objsA_manager
-loc_6007F:
-		LDA		#$06
-		STA		_cur_prg_bank
-		JSR		_mmc_prg
-		LDA		_game._life+1
-		BNE		loc_600C0
-		LDA		_game._life_level
-		ASL
-		TAY
-		LDA		_max_life_list,Y
-		STA		_tmp02
-		LDA		_max_life_list+1,Y
-		STA		_tmp03
-		LSR		_tmp03
-		ROR		_tmp02
-		LSR		_tmp03
-		ROR		_tmp02
-		LSR		_tmp03
-		ROR		_tmp02
-		LDA		_game._life
-		CMP		_tmp02
-		BCS		loc_600C0
-		LDA		_play_seconds
-		AND		#$01
-		BEQ		loc_600C0
-		LDA		_ppu_mask_shadow
-		ORA		#$20
-		STA		_ppu_mask_shadow
-		BNE		loc_600C8
-loc_600C0:
-		LDA		_ppu_mask_shadow
-		AND		#$DF
-		STA		_ppu_mask_shadow
-loc_600C8:
-		LDA		_ppu_ctrl_shadow
-		STA		_PPU_CTRL
-;		LDA		_pad							; removed cheat leftovers.
-;		CMP		#$18
-;		BNE		loc_600D5
-;loc_600D5:
-		JMP		_main_loop
-
-; =============== S U B	R O U T	I N E =======================================
 IRQ:
 RESET:
 		CLD
@@ -160,7 +61,141 @@ loc_600F9:
 		LDA		#$10
 		STA		_objA_buf_shuffle_pos
 		JSR		_objs_reset
-		JMP		_MAIN
+_delay:
+		INC		_tmp04
+		BNE		_delay
+		INC		_tmp05
+		BNE		_delay
+		INC		_tmp06
+		LDA		_tmp06
+		CMP		#$02
+		BNE		_delay
+		LDA		#$06
+		JSR		_mmc_prg_set
+		LDA		_ppu_ctrl_shadow
+		STA		_PPU_CTRL
+		LDA		#$0E
+		JSR		_apu_cur_mus_load
+_main_loop:
+		LDA		_nmi_flag
+		CMP		#$02
+		BCC		_main_loop
+		LDA		#$00
+		STA		_nmi_flag
+loc_6003D:
+		LDA		_ppu_dequeue_idx
+		BNE		loc_6003D
+		LDA		#$14
+		STA		_spr_buf_pos
+		JSR		_read_pad_safeB
+		LDA		_ingame_pause_flag
+		BNE		loc_6005D
+		JSR		_level_draw_update
+		LDA		_game._redraw_req
+		BNE		loc_6005D
+		JSR		_engine_handlers
+		JSR		_game_warps_handler
+loc_6005D:
+		LDA		_objsA._player._dir
+		AND		#$08
+		BEQ		loc_6006B
+		LDA		#$00
+		STA		_ingame_pause_flag
+		BEQ		loc_6006E
+loc_6006B:
+		JSR		_ingame_start_select_handler
+loc_6006E:
+		JSR		_game_values_to_decimal
+		JSR		_hud_cursor_spr_insert
+		LDA		_game._redraw_req
+		BNE		loc_6007F
+		JSR		_spr_objsB_manager
+		JSR		_spr_objsA_manager
+loc_6007F:
+		LDA		#$06
+		JSR		_mmc_prg_set
+		LDA		_game._life+1
+		BNE		loc_600C0
+		LDA		_game._life_level
+		ASL
+		TAY
+		LDA		_max_life_list,Y
+		STA		_tmp02
+		LDA		_max_life_list+1,Y
+		STA		_tmp03
+		LSR		_tmp03
+		ROR		_tmp02
+		LSR		_tmp03
+		ROR		_tmp02
+		LSR		_tmp03
+		ROR		_tmp02
+		LDA		_game._life
+		CMP		_tmp02
+		BCS		loc_600C0
+		LDA		_play_seconds
+		AND		#$01
+		BEQ		loc_600C0
+		LDA		_ppu_mask_shadow
+		ORA		#$20
+		STA		_ppu_mask_shadow
+		BNE		loc_600C8
+loc_600C0:
+		LDA		_ppu_mask_shadow
+		AND		#$DF
+		STA		_ppu_mask_shadow
+loc_600C8:
+		LDA		_ppu_ctrl_shadow
+		STA		_PPU_CTRL
+;		LDA		_pad							; removed cheat leftovers.
+;		CMP		#$18
+;		BNE		loc_600D5
+;loc_600D5:
+		JMP		_main_loop
+
+; =============== S U B	R O U T	I N E =======================================
+_render_off:
+		LDA		#$00
+		STA		_nmi_flag
+loc_63C46:
+		LDA		_nmi_flag
+		BEQ		loc_63C46
+
+; !FALLTHROUGH!
+
+; =============== S U B	R O U T	I N E =======================================
+_render_off_ex:
+		LDA		#$10
+		STA		_PPU_CTRL
+		LDA		#$00
+		STA		_PPU_MASK
+		RTS
+
+; =============== S U B	R O U T	I N E =======================================
+_render_on:
+		LDA		_PPU_STATUS
+		LDA		#$00
+		STA		_PPU_SCROLL
+		STA		_PPU_SCROLL
+
+; !FALLTHROUGH!
+
+; =============== S U B	R O U T	I N E =======================================
+_render_on_ex:
+		LDA		_PPU_STATUS
+		LDA		#$20
+		STA		_PPU_ADDR
+		LDA		#$00
+		STA		_PPU_ADDR
+
+; !FALLTHROUGH!
+
+; =============== S U B	R O U T	I N E =======================================
+_render_on_ex_ex:
+		LDA		#$1E
+		STA		_PPU_MASK
+		LDA		#$90
+		STA		_PPU_CTRL
+		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
 _spr_clear:
@@ -231,23 +266,14 @@ _read_pad_safe:
 
 ; =============== S U B	R O U T	I N E =======================================
 _read_pad:
-		LDA		#<[_PAD0_REG]
-		STA		_tmp01
-		LDA		#>[_PAD0_REG]
-		STA		_tmp02
-		LDA		#$01
-		STA		_PAD0_REG
-		NOP
-		NOP
-		LDA		#$00
-		STA		_tmp03
+		LDX		#$01
+		STX		_PAD0_REG
+		DEX
+		TXA
 		TAY
-		TAX
-		STA		_PAD0_REG
-		NOP
-		NOP
+		STX		_PAD0_REG
 loc_6029F:
-		LDA		(_tmp01),Y
+		LDA		_PAD0_REG
 		STA		_tmp00
 		LSR
 		ORA		_tmp00
@@ -260,23 +286,21 @@ loc_6029F:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
+_mmc_prg_set:
+		STA		_cur_prg_bank
+
+; !FALLTHROUGH!
+
+; =============== S U B	R O U T	I N E =======================================
 _mmc_prg:
 		PHA
-;		LDA		_cur_prg_bank					; redundant check, debug leftovers
-;		CMP		#$00
-;		BCC		loc_602CD
-;		CMP		#$08
-;		BCS		loc_602CD
 		TXA
 		PHA
 		LDA		_cur_prg_bank
-		AND		#$0F
 		TAX
-		LDA		_cur_prg_bank
 		STA		_mmc_cmd_list,X
 		PLA
 		TAX
-;loc_602CD:
 		PLA
 		RTS
 _mmc_cmd_list:
@@ -288,7 +312,7 @@ _ingame_start_select_handler:
 		AND		#$10
 		BEQ		loc_602EB
 		LDA		#$01
-		STA		_apu_se_idx
+		STA		_apu_se_pulse_idx
 		LDA		_ingame_pause_flag
 		EOR		#$FF
 		STA		_ingame_pause_flag
@@ -311,23 +335,21 @@ loc_602EB:
 		CLC
 		ADC		#$64
 		STA		_game._life
-		LDA		#$00
-		ADC		_game._life+1
-		STA		_game._life+1
+		BCC		loc_602EC
+		INC		_game._life+1
+loc_602EC:
 		LDA		#$04
-		STA		_apu_se_idx
+		STA		_apu_se_pulse_idx
 		BNE		loc_60345
 loc_60326:
 		LDA		_cur_weapon_selected
-		BNE		loc_60330
+		BNE		loc_603AD
 		LDA		_prev_weapon_selected
 		BNE		loc_60370
-loc_60330:
-		JMP		loc_603AD
+		BEQ		loc_603AD
 loc_60333:
 		LDA		_ppu_dequeue_idx
-		BEQ		loc_6033B
-		JMP		loc_603AD
+		BNE		loc_603AD
 loc_6033B:
 		INC		_cur_weapon_selected
 		LDA		_cur_weapon_selected
@@ -360,10 +382,10 @@ loc_60370:
 		LDA		_ppu_ctrl_shadow
 		AND		#$7F
 		STA		_PPU_CTRL
-		LDA		_apu_se_idx
+		LDA		_apu_se_pulse_idx
 		BNE		loc_60388
 		LDA		#$02
-		STA		_apu_se_idx
+		STA		_apu_se_pulse_idx
 loc_60388:
 		JSR		_hud_cursor_spr_insert
 		LDA		_cur_weapon_selected
@@ -384,8 +406,6 @@ loc_603AD:
 		LDA		_ingame_pause_flag
 		BEQ		_ingame_cheats_test
 		RTS
-
-; =============== S U B	R O U T	I N E =======================================
 _ingame_cheats_test:
 		LDA		_pad
 		BNE		loc_603C5
@@ -420,11 +440,10 @@ loc_603DB:
 		CLC
 		ADC		#$0F
 		STA		_game._exp
-		LDA		#$00
-		ADC		_game._exp+1
-		STA		_game._exp+1
+		INC		_game._exp+1
+loc_6040E:
 		LDA		#$03
-		STA		_apu_se_idx
+		STA		_apu_se_pulse_idx
 		BNE		loc_603D3
 loc_6040F:
 		LDA		_pad
@@ -448,7 +467,7 @@ loc_6040F:
 		CMP		#$09
 		BCS		loc_60445
 		LDA		#$03
-		STA		_apu_se_idx
+		STA		_apu_se_pulse_idx
 		INC		_game._potions
 loc_60445:
 		LDA		#$00
@@ -497,7 +516,7 @@ _hud_cursor_spr_insert:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_inventory_screen_draw:
+_far_inventory_screen_draw:
 		LDA		_game._scr_idx
 		BMI		loc_604A8
 		RTS
@@ -505,9 +524,8 @@ loc_604A8:
 		JSR		_chr_bg_tiles_load
 		JSR		_chr_spr_tiles_load
 		LDA		#$05
-		STA		_cur_prg_bank
-		JSR		_mmc_prg
-		JMP		_inventory_screen
+		JSR		_mmc_prg_set
+		JMP		_inventory_screen_draw
 
 ; =============== S U B	R O U T	I N E =======================================
 _level_draw_update:
@@ -576,7 +594,7 @@ loc_60525:
 		LDA		_ppu_ctrl_shadow
 		STA		_PPU_CTRL
 loc_60542:
-		JSR		_inventory_screen_draw
+		JSR		_far_inventory_screen_draw
 		LDA		_game._scr_idx
 		BPL		loc_60551
 		CMP		#$FF
@@ -593,8 +611,7 @@ loc_60551:
 		STA		_spr_buf+3
 loc_60568:
 		LDA		#$06
-		STA		_cur_prg_bank
-		JSR		_mmc_prg
+		JSR		_mmc_prg_set
 		LDA		#$00
 		STA		_ppu_dequeue_idx
 		JSR		_hud_cursor_spr_insert
@@ -746,8 +763,7 @@ loc_6069C:
 loc_606B3:
 		JSR		_rambo_chr_weapon_tiles_unpdate
 		LDA		#$06
-		STA		_cur_prg_bank
-		JSR		_mmc_prg
+		JSR		_mmc_prg_set
 		LDA		#$00
 		STA		_ppu_dequeue_idx
 		JSR		_hud_cursor_spr_insert
@@ -791,8 +807,7 @@ _rambo_chr_weapon_tiles_unpdate:
 		LDA		#$00
 		STA		_PPU_ADDR
 		LDA		#$03
-		STA		_cur_prg_bank
-		JSR		_mmc_prg
+		JSR		_mmc_prg_set
 		LDY		#$00
 loc_60724:
 		LDA		(_tmp0E),Y
@@ -1338,8 +1353,7 @@ loc_60B1D:
 		ADC		#>[_chr_bg_data]
 		STA		_tmp03
 		LDA		#$02
-		STA		_cur_prg_bank
-		JSR		_mmc_prg
+		JSR		_mmc_prg_set
 		TYA
 		PHA
 		LDY		#$00
@@ -1351,8 +1365,7 @@ loc_60B30:
 		PLA
 		TAY
 		LDA		#$06
-		STA		_cur_prg_bank
-		JSR		_mmc_prg
+		JSR		_mmc_prg_set
 		INY
 		DEX
 		BNE		loc_60B1D
@@ -1421,8 +1434,7 @@ loc_60BA9:
 		PLA
 		TAY
 		LDA		#$06
-		STA		_cur_prg_bank
-		JSR		_mmc_prg
+		JSR		_mmc_prg_set
 		INY
 		DEX
 		BNE		loc_60B8C
@@ -1459,8 +1471,7 @@ loc_60BD4:
 		JSR		_room_nt_data_unpack
 		JSR		_room_attr_data_unpack
 		LDA		#$06
-		STA		_cur_prg_bank
-		JSR		_mmc_prg
+		JSR		_mmc_prg_set
 		LDA		_tmp03
 		BEQ		loc_60C0D
 		JSR		_room_map_w_e_exits_disable
@@ -2484,7 +2495,7 @@ _game_values_update:
 		JSR		_cmp_tmp00w_tmp02w
 		BCC		loc_61296
 		LDA		#$03
-		STA		_apu_se_idx
+		STA		_apu_se_pulse_idx
 		INC		_game._exp_level
 		LDA		_game._exp_level
 		CMP		#$08
@@ -2562,7 +2573,7 @@ loc_612F5:
 		BNE		loc_612F5
 loc_61302:
 		LDA		#$03
-		STA		_apu_se_idx
+		STA		_apu_se_pulse_idx
 		LDA		#$63
 		STA		_game._ammo_knife
 		STA		_game._ammo_spear
@@ -4371,7 +4382,7 @@ loc_61F9E:
 		RTS
 loc_61FAD:
 		LDA		#$06
-		STA		_apu_se_cnt1
+		STA		_apu_se_noise_idx
 		LDA		#$80
 		SEC
 		SBC		_final_boss_scroll_pos
@@ -4767,7 +4778,7 @@ _objB_hndl0A_heart:
 		CMP		#$18
 		BNE		_objB_animate_common
 		LDA		#$04
-		STA		_apu_se_idx
+		STA		_apu_se_pulse_idx
 		LDA		_game._life_level
 		CMP		#$07
 		BEQ		loc_62266
@@ -4935,7 +4946,7 @@ _objB_sub62362:
 		LDA		#$0F
 		STA		_tmp0F
 		LDA		#$06
-		STA		_apu_se_cnt1
+		STA		_apu_se_noise_idx
 		LDA		#$00
 		STA		_objsB._o0.field_5
 		LDA		_tmp11
@@ -4956,7 +4967,7 @@ _objB_sub62380:
 		ORA		#$31
 		STA		_tmp11
 		LDA		#$07
-		STA		_apu_se_cnt1
+		STA		_apu_se_noise_idx
 		JMP		_objB_flush_and_continue
 
 ; ---------------------------------------------------------------------------
@@ -6086,7 +6097,7 @@ loc_62B4C:
 		LDA		_tmp07
 		STA		_objsB._o0.field_7,X
 		LDA		_tmp13
-		STA		_apu_se_cnt1
+		STA		_apu_se_noise_idx
 		JMP		loc_62B86
 loc_62B7E:
 		INC		_tmp08
@@ -6781,8 +6792,7 @@ loc_6309E:
 		LDA		_chr_tiles_send_dst
 		STA		_PPU_ADDR
 		LDA		#$03
-		STA		_cur_prg_bank
-		JSR		_mmc_prg
+		JSR		_mmc_prg_set
 		LDY		_chr_tiles_send_dst
 loc_630C2:
 		LDA		(_tmp00),Y
@@ -6792,8 +6802,7 @@ loc_630C2:
 		AND		#$0F
 		BNE		loc_630C2
 		LDA		#$06
-		STA		_cur_prg_bank
-		JSR		_mmc_prg
+		JSR		_mmc_prg_set
 		LDA		_chr_tiles_send_dst
 		CLC
 		ADC		#$10
@@ -6870,9 +6879,9 @@ _nmi_finish:
 		LDA		_ingame_pause_flag
 		BEQ		loc_6318A
 		LDX		#$02
-		LDA		_apu_se_cnt0
+		LDA		_apu_se_pulse_cnt
 		BNE		loc_63184
-		LDA		_apu_se_idx
+		LDA		_apu_se_pulse_idx
 		BNE		loc_63184
 		LDX		#$00
 loc_63184:
@@ -7312,13 +7321,7 @@ locret_634C6:
 		SECTION_END "APU PLAYER"
 
 		SECTION_START
-
-#if LANGUAGE == LANG_US
-		INCLUDE	"..\scroller_us.inc"
-#endif
-#if LANGUAGE == LANG_JP
-		INCLUDE	"..\scroller_jp.inc"
-#endif
+		INCLUDE	"..\scroller.inc"
 		SECTION_END "INTRO\ENDING SCROLLER"
 
 		LAST_BANK_END 7,$10000

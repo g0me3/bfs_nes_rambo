@@ -721,7 +721,7 @@ loc_5210E:
 		LDA		_tmp07
 		STA		_objsB._o0.field_7,X
 		LDA		_tmp13
-		STA		_apu_se_cnt1
+		STA		_apu_se_noise_idx
 		JMP		loc_52148
 loc_52140:
 		INC		_tmp08
@@ -2146,7 +2146,7 @@ _obj_hndl11_landmine:
 		JSR		_obj_sub52085
 		BCC		loc_52B08
 		LDA		#$07
-		STA		_apu_se_cnt1
+		STA		_apu_se_noise_idx
 loc_52B08:
 		JMP		_obj_flush_and_continue
 
@@ -2320,7 +2320,7 @@ _obj_hndl15_grenades:
 		BEQ		loc_52C55
 loc_52C4A:
 		LDA		#$07
-		STA		_apu_se_cnt1
+		STA		_apu_se_noise_idx
 		JSR		_obj_bomb_redeploy_and_explode
 		JMP		loc_52C64
 loc_52C55:
@@ -2478,8 +2478,7 @@ _obj_prize_deployA:
 		STA		_tmp06
 		LDA		#$07
 		STA		_tmp00
-		JSR		_obj_prize_deploy_ex
-		RTS
+		JMP		_obj_prize_deploy_ex
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl17_pelikan:
@@ -3120,8 +3119,7 @@ loc_531FA:
 		LDA		#$08
 loc_53202:
 		STA		_tmp00
-		JSR		_obj_prize_deploy_ex
-		RTS
+		JMP		_obj_prize_deploy_ex
 
 ; =============== S U B	R O U T	I N E =======================================
 _obj_hndl2B_boss_pirate:
@@ -4531,7 +4529,7 @@ _heli_land_anim:
 		LDA		#$80
 		STA		_objsA._player._hndl_idx
 		LDA		#$07
-		STA		_apu_se_cnt1
+		STA		_apu_se_noise_idx
 		INC		_tmp0E
 		INC		_objsA._o7._y_pos
 		LDA		_tmp0E
@@ -4579,7 +4577,7 @@ loc_53CC4:
 		STA		_objsA._player.field_7
 loc_53CD3:
 		LDA		#$07
-		STA		_apu_se_cnt1
+		STA		_apu_se_noise_idx
 		DEC		_tmp0E
 		DEC		_objsA._o7._y_pos
 		LDA		_tmp0E
@@ -4794,7 +4792,7 @@ _special_head_prize:
 		LDA		_objsA._player._state,X
 		BPL		loc_53EB7
 		LDA		#$04
-		STA		_apu_se_idx
+		STA		_apu_se_pulse_idx
 		JSR		_rand
 		CMP		#$50
 		BCC		loc_53E95

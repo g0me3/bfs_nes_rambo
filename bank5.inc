@@ -6,10 +6,10 @@
 		SECTION_START
 
 ; =============== S U B	R O U T	I N E =======================================
-_inventory_screen:
+_inventory_screen_draw:
 		LDA		#$90
 		STA		_PPU_CTRL
-		JSR		_screen_off
+		JSR		_palette_off
 		LDX		#$00
 		LDA		#$F8
 loc_4400C:
@@ -28,7 +28,7 @@ loc_4400C:
 		PLA
 		STA		_game._scr_idx
 		JSR		_script_lib_player
-		JSR		_screen_off
+		JSR		_palette_off
 loc_4402E:
 		JSR		_read_pad_safeA
 		LDA		_pad
@@ -37,22 +37,19 @@ loc_4402E:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
-_screen_off:
-		JSR		_wait_for_nmi
+_palette_off:
+		JSR		_render_off
 		PPU_FILL_LINEY	$3F00, $0F, $20
-		JMP		_ppu_regs_reinit
+		JMP		_render_on
 
 ; =============== S U B	R O U T	I N E =======================================
 _ppu_screen_clear:
-		LDA		#$10
-		STA		_PPU_CTRL
-		LDA		#$00
-		STA		_PPU_MASK
+		JSR		_render_off_ex
 		PPU_FILL_RECT	$2400, $FE, $1E, $20
 		PPU_FILL_RECT	$2000, $FE, $1E, $20
 		PPU_FILL_LINEY	$23C0, $FF, $40
 		PPU_FILL_LINEY	$27C0, $FF, $40
-		JMP		_ppu_regs_reinit
+		JMP		_render_on
 
 ; =============== S U B	R O U T	I N E =======================================
 _frame_draw:
@@ -80,7 +77,7 @@ loc_4414B:
 
 ; =============== S U B	R O U T	I N E =======================================
 _frame_line_draw:
-		JSR		_wait_for_nmi
+		JSR		_render_off
 		JSR		_ppu_set_ofs_and_add20
 		STY		_PPU_DATA
 		LDX		_tmp02
@@ -91,7 +88,7 @@ loc_44134:
 		BNE		loc_44134
 		INY
 		STY		_PPU_DATA
-		JMP		_ppu_regs_reinit
+		JMP		_render_on
 
 ; =============== S U B	R O U T	I N E =======================================
 _ppu_set_ofs_and_add20:
@@ -684,7 +681,7 @@ _scr_cmd1A_game_stats_draw:
 
 ; =============== S U B	R O U T	I N E =======================================
 _ppu_num_draw:
-		JSR		_wait_for_nmi
+		JSR		_render_off
 		LDA		_PPU_STATUS
 		LDA		_tmp00
 		STA		_PPU_ADDR
@@ -697,7 +694,7 @@ loc_445EF:
 		STA		_PPU_DATA
 		DEX
 		BNE		loc_445EF
-		JMP		_ppu_regs_reinit
+		JMP		_render_on
 
 ; =============== S U B	R O U T	I N E =======================================
 _scr_cmd1B_life_resore:
@@ -713,7 +710,7 @@ _scr_cmd1B_life_resore:
 		STA		_game._life+1
 		LDX		#$00
 loc_44613:
-		JSR		_wait_for_nmi
+		JSR		_render_off
 		INX
 		TXA
 		CMP		#$40
@@ -730,7 +727,7 @@ loc_44613:
 #endif
 		LDA		#$30
 		STA		_PPU_DATA
-		JSR		_ppu_regs_reinit
+		JSR		_render_on
 		JMP		loc_44613
 loc_4464B:
 #if LANGUAGE == LANG_JP
@@ -743,12 +740,12 @@ loc_4464B:
 #endif
 		LDA		#$30
 		STA		_PPU_DATA
-		JSR		_ppu_regs_reinit
+		JSR		_render_on
 		JMP		loc_44613
 loc_44676:
 		PLA
 		TAY
-		JSR		_ppu_regs_reinit
+		JSR		_render_on
 		JMP		_script_cmd_fetch
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -876,8 +873,8 @@ _scr_cmd28_ending_anim:
 		STA		_tmp14
 loc_44766:
 		JSR		_script_sprite_anim
-		JSR		_wait_for_nmi
-		JSR		_ppu_regs_reinit
+		JSR		_render_off
+		JSR		_render_on
 		DEX
 		BNE		loc_44766
 		JMP		_script_cmd_fetch
@@ -927,7 +924,7 @@ _msg_wnd_clear_ex:
 		PHA
 		LDY		#$0A
 loc_440E5:
-		JSR		_wait_for_nmi
+		JSR		_render_off
 		JSR		_ppu_set_ofs_and_add20
 		LDA		#$FE
 		LDX		#$14					; little fix allow up to 20 chars in
@@ -935,7 +932,7 @@ loc_440E7:								; one line to be cleared, fixes at least
 		STA		_PPU_DATA				; one problem in scripts.
 		DEX
 		BNE		loc_440E7
-		JSR		_ppu_regs_reinit
+		JSR		_render_on
 		DEY
 		BNE		loc_440E5
 		PLA
@@ -975,7 +972,7 @@ _msg_display_inventory_screen:
 ; the US version uses additional fonts color to highlight the small letters
 ; when return to the title screen it will restore regular white coloring
 #if LANGUAGE == LANG_US
-		JSR		_wait_for_nmi
+		JSR		_render_off
 		LDA		_PPU_STATUS
 		LDA		#$3F
 		STA		_PPU_ADDR
@@ -983,7 +980,7 @@ _msg_display_inventory_screen:
 		STA		_PPU_ADDR
 		LDA		#$22
 		STA		_PPU_DATA
-		JSR		_ppu_regs_reinit
+		JSR		_render_on
 #endif
 		JSR		_cur_game_vars_backup
 		JSR		_pass_encode
@@ -993,12 +990,9 @@ loc_44817:
 		LDA		_pad
 		AND		#$10
 		BEQ		loc_44817
-		LDA		#$90
-		STA		_PPU_CTRL
-		LDA		#$1E
-		STA		_PPU_MASK
+		JSR		_render_on_ex_ex
 #if LANGUAGE == LANG_US
-		JSR		_wait_for_nmi
+		JSR		_render_off
 		LDA		_PPU_STATUS
 		LDA		#$3F
 		STA		_PPU_ADDR
@@ -1006,7 +1000,7 @@ loc_44817:
 		STA		_PPU_ADDR
 		LDA		#$30
 		STA		_PPU_DATA
-		JSR		_ppu_regs_reinit
+		JSR		_render_on
 #endif
 		RTS
 
@@ -1108,7 +1102,7 @@ _pass_get_dataD:
 
 ; =============== S U B	R O U T	I N E =======================================
 _pass_write_ppu_char:
-		JSR		_wait_for_nmi
+		JSR		_render_off
 		LDA		_PPU_STATUS
 		LDA		_tmp05
 		STA		_PPU_ADDR
@@ -1290,7 +1284,7 @@ _script_cmd_lib:
 _ppu_res_draw:
 		TYA
 		PHA
-		JSR		_wait_for_nmi
+		JSR		_render_off
 		LDA		_PPU_STATUS
 		LDA		_tmp00
 		STA		_PPU_ADDR
@@ -1305,12 +1299,12 @@ loc_44ADC:
 		INY
 		JMP		loc_44ADC
 loc_44AE9:
-		JSR		_ppu_regs_reinit
+		JSR		_render_on
 		INY
 		LDA		(_tmp04),Y
 		CMP		#$FF
 		BEQ		loc_44AFC
-		JSR		_wait_for_nmi
+		JSR		_render_off
 		JSR		_ppu_res_ofs_add64
 		JMP		loc_44ADC
 loc_44AFC:
@@ -1339,7 +1333,7 @@ _ppu_res_ofs_add64:
 _ppu_res_draw:
 		TYA
 		PHA
-		JSR		_wait_for_nmi
+		JSR		_render_off
 		LDA		_PPU_STATUS
 		LDA		_tmp00
 		STA		_PPU_ADDR
@@ -1386,12 +1380,12 @@ loc_80A9B:
 		STA		_PPU_ADDR
 		JMP		loc_80A88
 loc_80AD4:
-		JSR		_ppu_regs_reinit
+		JSR		_render_on
 		INY
 		LDA		(_tmp04),Y
 		CMP		#$FF
 		BEQ		loc_80AE7
-		JSR		_wait_for_nmi
+		JSR		_render_off
 		JSR		_ppu_res_ofs_add64
 		JMP		loc_80A88
 loc_80AE7:
@@ -1416,36 +1410,6 @@ _ppu_res_ofs_add64:
 		STA		_tmp03
 		RTS
 #endif
-
-; =============== S U B	R O U T	I N E =======================================
-_wait_for_nmi:
-		LDA		#$00
-		STA		_nmi_flag
-loc_44B1D:
-		LDA		_nmi_flag
-		BEQ		loc_44B1D
-		LDA		#$10
-		STA		_PPU_CTRL
-		LDA		#$00
-		STA		_PPU_MASK
-		RTS
-
-; =============== S U B	R O U T	I N E =======================================
-_ppu_regs_reinit:
-		LDA		_PPU_STATUS
-		LDA		#$00
-		STA		_PPU_SCROLL
-		STA		_PPU_SCROLL
-		LDA		_PPU_STATUS
-		LDA		#$20
-		STA		_PPU_ADDR
-		LDA		#$00
-		STA		_PPU_ADDR
-		LDA		#$1E
-		STA		_PPU_MASK
-		LDA		#$90
-		STA		_PPU_CTRL
-		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
 _sprite_insert:
@@ -1593,8 +1557,8 @@ _pack_in_time_spr_insert:
 		LDA		#$80
 		STA		_tmp14
 loc_44C1A:
-		JSR		_wait_for_nmi
-		JSR		_ppu_regs_reinit
+		JSR		_render_off
+		JSR		_render_on
 		INC		_tmp14
 		BNE		loc_44C1A
 		PLA
@@ -1605,7 +1569,7 @@ loc_44C1A:
 
 ; =============== S U B	R O U T	I N E =======================================
 _title_screen_spr_anim_menu_input:
-		JSR		_wait_for_nmi
+		JSR		_render_off
 		LDA		_PPU_STATUS
 		LDA		#$23
 		STA		_PPU_ADDR
@@ -1618,7 +1582,7 @@ loc_44C3D:
 		INY
 		CPY		#$10
 		BNE		loc_44C3D
-		JSR		_ppu_regs_reinit
+		JSR		_render_on
 		LDA		#$05
 		STA		_tmp0A
 		JSR		_msg_pal_lib_load
@@ -1727,8 +1691,7 @@ _spr_sheet_title_insert:
 		STA		_tmp00
 		LDA		#$60
 		STA		_tmp01
-		JSR		_sprite_sheet_insert
-		RTS
+		JMP		_sprite_sheet_insert
 
 ; =============== S U B	R O U T	I N E =======================================
 _sprite_sheet_insert:
@@ -1840,7 +1803,7 @@ _msg_pal_lib_load:
 		PHA
 		TXA
 		PHA
-		JSR		_wait_for_nmi
+		JSR		_render_off
 		LDA		_PPU_STATUS
 		LDA		#$3F
 		STA		_PPU_ADDR
@@ -1873,7 +1836,7 @@ loc_44EC4:
 		STA		_PPU_ADDR
 		STA		_PPU_ADDR
 		STA		_PPU_ADDR
-		JSR		_ppu_regs_reinit
+		JSR		_render_on
 		PLA
 		TAX
 		PLA
@@ -1956,7 +1919,7 @@ loc_44FA3:
 		STA		_tmp06
 		JMP		loc_44F6D
 loc_44FCB:
-		JSR		_wait_for_nmi
+		JSR		_render_off
 		LDA		_PPU_STATUS
 		LDA		_tmp05
 		STA		_PPU_ADDR
@@ -1966,7 +1929,7 @@ loc_44FCB:
 		CLC
 		ADC		#$50
 		STA		_PPU_DATA
-		JSR		_ppu_regs_reinit
+		JSR		_render_on
 loc_44FE6:
 		INC		_tmp06
 		LDA		_tmp06
@@ -2259,8 +2222,7 @@ loc_45201:
 		LDA		#$F8
 		STA		_spr_buf+$F8
 		STA		_spr_buf+$FC
-		JSR		_pass_decrypt
-		RTS
+		JMP		_pass_decrypt
 
 ; =============== S U B	R O U T	I N E =======================================
 _pass_encrypt:
@@ -2398,7 +2360,7 @@ _pass_store_dataD:
 
 ; =============== S U B	R O U T	I N E =======================================
 _pass_read_ppu_char:
-		JSR		_wait_for_nmi
+		JSR		_render_off
 		LDA		_PPU_STATUS
 		LDA		_tmp05
 		STA		_PPU_ADDR
@@ -2409,8 +2371,7 @@ _pass_read_ppu_char:
 		LDA		_PPU_DATA
 		SBC		#$50
 		STA		_tmp02
-		JSR		_ppu_regs_reinit
-		RTS
+		JMP		_render_on
 
 		SECTION_END "SCRIPT PROGRAM"
 

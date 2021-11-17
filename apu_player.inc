@@ -10,13 +10,12 @@ _apu_cur_mus_load:
 		PHA
 		LDA		_tmp01
 		PHA
-		LDX		#$00
+		LDX		#$17
 		LDA		#$00
 loc_60184:
 		STA		_apu,X
-		INX
-		CPX		#$18
-		BNE		loc_60184
+		DEX
+		BPL		loc_60184
 		LDX		_apu_cur_mus_idx
 		LDA		_apu_mus_prg_list,X
 		STA		_apu_cur_mus_prg
@@ -30,13 +29,12 @@ loc_60184:
 		LDA		#$00
 		ADC		#>[_apu_mus_lib]
 		STA		_tmp01
-		LDY		#$00
+		LDY		#$07
 loc_601A8:
 		LDA		(_tmp00),Y
 		STA		_apu_mus_ptrs,Y
-		INY
-		CPY		#$08
-		BNE		loc_601A8
+		DEY
+		BPL		loc_601A8
 		LDA		#$0F
 		STA		_APU_STATUS
 		PLA
@@ -49,32 +47,6 @@ loc_601A8:
 		TAX
 		RTS
 
-; ---------------------------------------------------------------------------
-_apu_mus_prg_list:
-		.BYTE $01,$00,$01,$00,$01,$00,$00,$00,$00,$01,$00,$00,$00,$00,$01,$00
-_apu_mus_lib:
-		.WORD _apu_mus00A,_apu_mus00B,_apu_mus00C,_apu_mus00D
-		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
-		.WORD _apu_mus02A,_apu_mus02B,_apu_mus02C,_apu_mus02D
-		.WORD _apu_mus03A,_apu_mus03B,_apu_mus03C,_apu_mus03D
-		.WORD _apu_mus04A,_apu_mus04B,_apu_mus04C,_apu_mus04D
-		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
-		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
-		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
-		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
-		.WORD _apu_mus09A,_apu_mus09B,_apu_mus09C,_apu_mus09D
-		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
-		.WORD _apu_mus0BA,_apu_mus0BB,_apu_mus0BC,_apu_mus0BD
-		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
-		.WORD _apu_mus0DA,_apu_mus0DB,_apu_mus0DC,_apu_mus0DD
-		.WORD _apu_mus00A,_apu_mus00B,_apu_mus00C,_apu_mus00D
-		.WORD _apu_mus0FA,_apu_mus0FB,_apu_mus0FC,_apu_mus0FD
-
-; ---------------------------------------------------------------------------
-_apu_tbl3:
-		.BYTE $09,$0A,$0B,$FF,$01,$01,$01,$04,$04,$04,$04,$04,$04,$04,$04,$03
-		.BYTE $03,$03,$03,$03,$03,$03,$03,$02,$02,$02,$02,$02,$02,$02,$02,$01
-		.BYTE $01,$01,$01,$01,$01,$01,$01,$00
 ; =============== S U B	R O U T	I N E =======================================
 _apu_play:
 		INC		_apu_counter
@@ -86,13 +58,9 @@ _apu_play:
 loc_634FE:
 		LDA		#$00
 		STA		_tmp00
-loc_63502:
-		LDA		_tmp00
-		ASL
-		STA		_tmp02
-		ASL
-		CLC
-		ADC		_tmp02
+.apu_chnl_loop:
+		LDX		_tmp00
+		LDA		_apu_mul6_tbl,X
 		TAX
 		LDA		_apu._ch0.field_2,X
 		BEQ		loc_63516
@@ -108,26 +76,22 @@ loc_63520:
 loc_63523:
 		LDA		_tmp00
 		CMP		#$03
-		BEQ		loc_63581
+		BEQ		.apu_next_chnl
 		LDA		_apu._ch0.field_3,X
 		CMP		#$00
 		BNE		loc_63552
 		LDY		_apu._ch0.field_4,X
 		LDA		_apu_tbl3,Y
 		STA		_tmp04
-		BEQ		loc_6357A
+		BEQ		.apu_len_and_continue
 		CMP		#$FF
 		BNE		loc_63549
 		INC		_apu._ch0.field_4,X
 		INY
 		LDA		_apu_tbl3,Y
 		STA		_tmp04
-		BEQ		loc_6357A
-loc_63549:
-		JSR		_apu_len_calc
-		INC		_apu._ch0.field_4,X
-		JMP		loc_63581
-; ---------------------------------------------------------------------------
+		BEQ		.apu_len_and_continue
+		BNE		loc_63549
 loc_63552:
 		DEC		_apu._ch0.field_3,X
 		LDY		_apu._ch0.field_4,X
@@ -138,29 +102,76 @@ loc_63552:
 		DEY
 		LDA		_apu_tbl3,Y
 		STA		_tmp04
-		JSR		_apu_len_calc
-		JMP		loc_63581
-; ---------------------------------------------------------------------------
+		JMP		.apu_len_and_continue
 loc_6356D:
 		LDA		_tmp04
-		BEQ		loc_6357A
-		JSR		_apu_len_calc
+		BEQ		.apu_len_and_continue
+loc_63549:
 		INC		_apu._ch0.field_4,X
-		JMP		loc_63581
-; ---------------------------------------------------------------------------
-loc_6357A:
-		LDA		#$00
-		STA		_tmp04
+.apu_len_and_continue:
 		JSR		_apu_len_calc
-loc_63581:
+.apu_next_chnl:
 		INC		_tmp00
 		LDA		_tmp00
 		CMP		#$04
-		BEQ		loc_6358C
-		JMP		loc_63502
-; ---------------------------------------------------------------------------
-loc_6358C:
-		JSR		_apu_se_play
+		BNE		.apu_chnl_loop
+_apu_se_play:
+		LDA		_apu_se_pulse_cnt
+		BEQ		loc_6378B
+		DEC		_apu_se_pulse_cnt
+		BNE		loc_6378B
+		LDA		#$00
+		STA		_APU_PULSE2_ENV
+		STA		_APU_PULSE2_SWEEP
+		STA		_APU_PULSE2_TIME
+		STA		_APU_PULSE2_LEN
+loc_6378B:
+		LDA		_apu_se_pulse_idx
+		BEQ		loc_637B7
+		TAY
+		DEY
+		TYA
+		ASL
+		ASL
+		TAY
+		LDA		_apu_se_pulse_tbl,Y
+		STA		_APU_PULSE2_ENV
+		LDA		_apu_se_pulse_tbl+1,Y
+		STA		_APU_PULSE2_SWEEP
+		LDA		_apu_se_pulse_tbl+2,Y
+		STA		_APU_PULSE2_TIME
+		LDA		_apu_se_pulse_tbl+3,Y
+		STA		_APU_PULSE2_LEN
+		LSR
+		STA		_apu_se_pulse_cnt
+		LDA		#$00
+		STA		_apu_se_pulse_idx
+loc_637B7:
+		LDA		_apu_se_noise_idx
+		BEQ		loc_637E7
+		TAY
+		DEY
+		TYA
+		ASL
+		ASL
+		TAY
+		LDA		_apu_se_noise_tbl,Y
+		STA		_APU_NOISE_ENV
+;		LDA		#$00
+;		STA		_APU_NOISE_UNUSED
+		LDA		_apu_se_noise_tbl+2,Y
+		STA		_APU_NOISE_LOOP
+		LDA		_apu_se_noise_tbl+3,Y
+		STA		_APU_NOISE_LEN
+		LDA		_apu_se_noise_tbl+1,Y
+		STA		_apu_se_noise_cnt
+		LDA		#$00
+		STA		_apu_se_noise_idx
+loc_637E7:
+		LDA		_apu_se_noise_cnt
+		BEQ		locret_637EF
+		DEC		_apu_se_noise_cnt
+locret_637EF:
 		RTS
 
 ; =============== S U B	R O U T	I N E =======================================
@@ -168,13 +179,12 @@ _apu_mus_play:
 		LDA		_cur_prg_bank
 		STA		_tmp0B
 		LDA		_apu_cur_mus_prg
-		STA		_cur_prg_bank
-		JSR		_mmc_prg
-loc_6359E:
-		LDA		_apu,X
+		JSR		_mmc_prg_set
+.apu_mus_play_loop:
+		LDA		_apu._ch0._pos,X
 		ASL
 		STA		_tmp02
-		LDA		_apu._ch0.field_1,X
+		LDA		_apu._ch0._pos+1,X
 		ROL
 		STA		_tmp05
 		LDA		_tmp00
@@ -182,9 +192,9 @@ loc_6359E:
 		BEQ		loc_635BF
 		LDA		_tmp02
 		CLC
-		ADC		_apu,X
+		ADC		_apu._ch0._pos,X
 		STA		_tmp02
-		LDA		_apu._ch0.field_1,X
+		LDA		_apu._ch0._pos+1,X
 		ADC		_tmp05
 		STA		_tmp05
 loc_635BF:
@@ -199,9 +209,9 @@ loc_635BF:
 		LDA		_apu_mus_ptrs,Y
 		ADC		_tmp05
 		STA		_tmp09
-		INC		_apu,X
+		INC		_apu._ch0._pos,X
 		BNE		loc_635DB
-		INC		_apu._ch0.field_1,X
+		INC		_apu._ch0._pos+1,X
 loc_635DB:
 		LDY		#$00
 		LDA		(_tmp08),Y
@@ -210,23 +220,20 @@ loc_635DB:
 		LDA		#$0A
 		JSR		_apu_cur_mus_load
 		JMP		loc_63674
-; ---------------------------------------------------------------------------
 loc_635EB:
 		CMP		#$FF
 		BNE		loc_635F8
-		LDA		_apu,X
-		STA		_apu._ch0.field_5,X
-		JMP		loc_6359E
-; ---------------------------------------------------------------------------
+		LDA		_apu._ch0._pos,X
+		STA		_apu._ch0._loop,X
+		JMP		.apu_mus_play_loop
 loc_635F8:
 		CMP		#$FE
 		BNE		loc_6360A
-		LDA		_apu._ch0.field_5,X
-		STA		_apu,X
+		LDA		_apu._ch0._loop,X
+		STA		_apu._ch0._pos,X
 		LDA		#$00
-		STA		_apu._ch0.field_1,X
-		JMP		loc_6359E
-; ---------------------------------------------------------------------------
+		STA		_apu._ch0._pos+1,X
+		BEQ		.apu_mus_play_loop
 loc_6360A:
 		STA		_tmp01
 		LDA		_tmp00
@@ -234,7 +241,6 @@ loc_6360A:
 		LDA		_tmp01
 		STA		_apu_tmp187
 		JMP		loc_63621
-; ---------------------------------------------------------------------------
 loc_63618:
 		CMP		#$01
 		BNE		loc_63621
@@ -262,8 +268,7 @@ loc_63621:
 		STA		_tmp06
 		LDA		#$00
 		STA		_tmp07
-		JMP		loc_63671
-; ---------------------------------------------------------------------------
+		BEQ		loc_63671
 loc_6364E:
 		LDA		_tmp01
 		SEC
@@ -289,9 +294,7 @@ loc_63671:
 		JSR		_apu_chnl_play
 loc_63674:
 		LDA		_tmp0B
-		STA		_cur_prg_bank
-		JSR		_mmc_prg
-		RTS
+		JMP		_mmc_prg_set
 
 ; =============== S U B	R O U T	I N E =======================================
 _apu_chnl_play:
@@ -305,12 +308,11 @@ _apu_chnl_play:
 		STA		_APU_PULSE1_TIME
 		LDA		_tmp07
 		STA		_APU_PULSE1_LEN
-		JMP		locret_63700
-; ---------------------------------------------------------------------------
+		RTS
 loc_63698:
 		CMP		#$01
 		BNE		loc_636B8
-		LDA		_apu_se_cnt0
+		LDA		_apu_se_pulse_cnt
 		BNE		locret_63700
 		LDA		#$F0
 		STA		_APU_PULSE2_ENV
@@ -320,8 +322,7 @@ loc_63698:
 		STA		_APU_PULSE2_TIME
 		LDA		_tmp07
 		STA		_APU_PULSE2_LEN
-		JMP		locret_63700
-; ---------------------------------------------------------------------------
+		RTS
 loc_636B8:
 		CMP		#$02
 		BNE		loc_636DA
@@ -331,30 +332,29 @@ loc_636B8:
 		CLC
 		ADC		_apu._ch0.field_3,X
 		STA		_APU_TRI_COUNT
-		LDA		#$00
-		STA		_APU_TRI_UNUSED
+;		LDA		#$00
+;		STA		_APU_TRI_UNUSED
 		LDA		_tmp06
 		STA		_APU_TRI_TIME
 		LDA		_tmp07
 		STA		_APU_TRI_LEN
-		JMP		locret_63700
-; ---------------------------------------------------------------------------
+		RTS
 loc_636DA:
 		CMP		#$03
 		BNE		locret_63700
-		LDA		_apu_se_cnt2
+		LDA		_apu_se_noise_cnt
 		BNE		locret_63700
 		LDA		_tmp01
 		ASL
 		ASL
 		TAY
-		LDA		_apu_tbl0,Y
+		LDA		_apu_mus_noise_tbl,Y
 		STA		_APU_NOISE_ENV
-		LDA		_apu_tbl0+1,Y
-		STA		_APU_NOISE_UNUSED
-		LDA		_apu_tbl0+2,Y
+		LDA		_apu_mus_noise_tbl+1,Y
+;		STA		_APU_NOISE_UNUSED
+;		LDA		_apu_mus_noise_tbl+2,Y
 		STA		_APU_NOISE_LOOP
-		LDA		_apu_tbl0+3,Y
+		LDA		_apu_mus_noise_tbl+3,Y
 		STA		_APU_NOISE_LEN
 locret_63700:
 		RTS
@@ -383,12 +383,11 @@ _apu_len_calc:
 		STA		_APU_PULSE1_TIME
 		LDA		_tmp04
 		STA		_APU_PULSE1_ENV
-		JMP		locret_6375D
-; ---------------------------------------------------------------------------
+		RTS
 loc_63732:
 		CMP		#$01
 		BNE		locret_6375D
-		LDA		_apu_se_cnt0
+		LDA		_apu_se_pulse_cnt
 		BNE		locret_6375D
 		LDA		_apu_tmp188
 		BEQ		locret_6375D
@@ -416,77 +415,39 @@ _apu_decay_calc:
 		CMP		#$04
 		BCS		loc_6376C
 		DEC		_tmp06
-		JMP		locret_63772
-; ---------------------------------------------------------------------------
+		RTS
 loc_6376C:
 		CMP		#$04
 		BEQ		locret_63772
 		INC		_tmp06
 locret_63772:
 		RTS
-
-; =============== S U B	R O U T	I N E =======================================
-_apu_se_play:
-		LDA		_apu_se_cnt0
-		BEQ		loc_6378B
-		DEC		_apu_se_cnt0
-		BNE		loc_6378B
-		LDA		#$00
-		STA		_APU_PULSE2_ENV
-		STA		_APU_PULSE2_SWEEP
-		STA		_APU_PULSE2_TIME
-		STA		_APU_PULSE2_LEN
-loc_6378B:
-		LDA		_apu_se_idx
-		BEQ		loc_637B7
-		TAY
-		DEY
-		TYA
-		ASL
-		ASL
-		TAY
-		LDA		_apu_tbl1,Y
-		STA		_APU_PULSE2_ENV
-		LDA		_apu_tbl1+1,Y
-		STA		_APU_PULSE2_SWEEP
-		LDA		_apu_tbl1+2,Y
-		STA		_APU_PULSE2_TIME
-		LDA		_apu_tbl1+3,Y
-		STA		_APU_PULSE2_LEN
-		LSR
-		STA		_apu_se_cnt0
-		LDA		#$00
-		STA		_apu_se_idx
-loc_637B7:
-		LDA		_apu_se_cnt1
-		BEQ		loc_637E7
-		LDA		_apu_se_cnt1
-		TAY
-		DEY
-		TYA
-		ASL
-		ASL
-		TAY
-		LDA		_apu_tbl2,Y
-		STA		_APU_NOISE_ENV
-		LDA		#$00
-		STA		_APU_NOISE_UNUSED
-		LDA		_apu_tbl2+2,Y
-		STA		_APU_NOISE_LOOP
-		LDA		_apu_tbl2+3,Y
-		STA		_APU_NOISE_LEN
-		LDA		_apu_tbl2+1,Y
-		STA		_apu_se_cnt2
-		LDA		#$00
-		STA		_apu_se_cnt1
-loc_637E7:
-		LDA		_apu_se_cnt2
-		BEQ		locret_637EF
-		DEC		_apu_se_cnt2
-locret_637EF:
-		RTS
-
 ; ---------------------------------------------------------------------------
+_apu_mul6_tbl:
+		.BYTE 0*6,1*6,2*6,3*6
+_apu_mus_prg_list:
+		.BYTE $01,$00,$01,$00,$01,$00,$00,$00,$00,$01,$00,$00,$00,$00,$01,$00
+_apu_mus_lib:
+		.WORD _apu_mus00A,_apu_mus00B,_apu_mus00C,_apu_mus00D
+		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
+		.WORD _apu_mus02A,_apu_mus02B,_apu_mus02C,_apu_mus02D
+		.WORD _apu_mus03A,_apu_mus03B,_apu_mus03C,_apu_mus03D
+		.WORD _apu_mus04A,_apu_mus04B,_apu_mus04C,_apu_mus04D
+		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
+		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
+		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
+		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
+		.WORD _apu_mus09A,_apu_mus09B,_apu_mus09C,_apu_mus09D
+		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
+		.WORD _apu_mus0BA,_apu_mus0BB,_apu_mus0BC,_apu_mus0BD
+		.WORD _apu_mus01A,_apu_mus01B,_apu_mus01C,_apu_mus01D
+		.WORD _apu_mus0DA,_apu_mus0DB,_apu_mus0DC,_apu_mus0DD
+		.WORD _apu_mus00A,_apu_mus00B,_apu_mus00C,_apu_mus00D
+		.WORD _apu_mus0FA,_apu_mus0FB,_apu_mus0FC,_apu_mus0FD
+_apu_tbl3:
+		.BYTE $09,$0A,$0B,$FF,$01,$01,$01,$04,$04,$04,$04,$04,$04,$04,$04,$03
+		.BYTE $03,$03,$03,$03,$03,$03,$03,$02,$02,$02,$02,$02,$02,$02,$02,$01
+		.BYTE $01,$01,$01,$01,$01,$01,$01,$00
 _apu_len_tbl:
 		.BYTE $AF,$06,$4E,$06,$F4,$05,$9E,$05,$4E,$05,$01,$05,$BA,$04,$76,$04
 		.BYTE $36,$04,$F9,$03,$C0,$03,$8A,$03,$57,$03,$27,$03,$FA,$02,$CF,$02
@@ -497,7 +458,7 @@ _apu_len_tbl:
 		.BYTE $6B,$00,$65,$00,$5F,$00,$5A,$00,$55,$00,$50,$00,$4C,$00,$47,$00
 		.BYTE $43,$00,$40,$00,$3C,$00,$39,$00,$35,$00,$32,$00,$30,$00,$2D,$00
 		.BYTE $2A,$00,$28,$00,$26,$00,$24,$00,$22,$00,$20,$00,$1E,$00,$1C,$00
-_apu_tbl0:
+_apu_mus_noise_tbl:
 		.BYTE $00,$00,$00,$00
 		.BYTE $01,$00,$03,$01
 		.BYTE $01,$00,$03,$01
@@ -507,7 +468,7 @@ _apu_tbl0:
 		.BYTE $01,$00,$03,$01
 		.BYTE $01,$00,$03,$01
 		.BYTE $01,$00,$03,$01
-_apu_tbl1:
+_apu_se_pulse_tbl:
 		.BYTE $7F,$AA,$FF,$98
 		.BYTE $86,$00,$B0,$F8
 		.BYTE $BF,$BB,$F6,$A0
@@ -516,7 +477,7 @@ _apu_tbl1:
 		.BYTE $00,$00,$00,$00
 		.BYTE $00,$00,$00,$00
 		.BYTE $00,$00,$00,$00
-_apu_tbl2:
+_apu_se_noise_tbl:
 		.BYTE $0D,$1E,$0C,$00
 		.BYTE $0F,$1E,$07,$00
 		.BYTE $03,$1E,$6B,$F0

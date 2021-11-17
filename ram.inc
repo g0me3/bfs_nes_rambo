@@ -231,13 +231,13 @@ _apu_cur_mus_idx:
 
 _apu_mus_ptrs:
 		.BYTE 0,0,0,0,0,0,0,0
-_apu_se_idx:
+_apu_se_pulse_idx:
 		.BYTE 0
-_apu_se_cnt0:
+_apu_se_pulse_cnt:
 		.BYTE 0
-_apu_se_cnt1:
+_apu_se_noise_idx:
 		.BYTE 0
-_apu_se_cnt2:
+_apu_se_noise_cnt:
 		.BYTE 0
 _apu_prev_mus_idx:
 		.BYTE 0
