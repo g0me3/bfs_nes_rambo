@@ -5,7 +5,7 @@
 
 		SECTION_START
 _chr_spr_data:
-		INCLUDE "..\chr\sprites0.inc"
+		INCLUDE "../chr/sprites0.inc"
 		SECTION_END "CHR SPRITES A"
 
 		BANK_END 3,$C000

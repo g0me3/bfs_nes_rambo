@@ -1961,10 +1961,10 @@ _pass_write_char_and_render_on:
 		SECTION_START
 _script_lib:
 #if LANGUAGE == LANG_US
-		INCLUDE "..\script\script_us.inc"
+		INCLUDE "../script/script_us.inc"
 #endif
 #if LANGUAGE == LANG_JP
-		INCLUDE "..\script\script_jp.inc"
+		INCLUDE "../script/script_jp.inc"
 #endif
 		SECTION_END "SCRIPTS AND TEXTS"
 

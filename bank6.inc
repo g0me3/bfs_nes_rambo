@@ -4444,11 +4444,11 @@ _boss_spider_drone_proj_anim_tbl:
 		SECTION_END "OBJECTS PROGRAM"
 
 		SECTION_START
-		INCLUDE "..\game_data.inc"
+		INCLUDE "../game_data.inc"
 		SECTION_END "GAME DATA"
 
 		SECTION_START
-		INCLUDE "..\sprites.inc"
+		INCLUDE "../sprites.inc"
 		SECTION_END "SPRITES DATA"
 
 		BANK_END 6,$C000
