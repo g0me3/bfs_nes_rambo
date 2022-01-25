@@ -3,7 +3,7 @@
 
 		BANK_START $7
 
-		INCBIN "..\copyrights.txt"
+		INCBIN "../copyrights.txt"
 
 		SECTION_START
 
@@ -7177,11 +7177,11 @@ _rand_tbl:
 		SECTION_END "MAIN PROGRAM"
 
 		SECTION_START
-		INCLUDE	"..\apu_player.inc"
+		INCLUDE	"../apu_player.inc"
 		SECTION_END "APU PLAYER"
 
 		SECTION_START
-		INCLUDE	"..\scroller.inc"
+		INCLUDE	"../scroller.inc"
 		SECTION_END "INTRO\ENDING SCROLLER"
 
 		LAST_BANK_END 7,$10000

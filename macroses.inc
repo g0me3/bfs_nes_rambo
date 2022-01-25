@@ -125,10 +125,10 @@ SEN07	EQU	07*4
 ;-------------------F-O-N-T-S-------------------
 
 #if LANGUAGE == LANG_US
-	INCLUDE "..\script\font_us.inc"
+	INCLUDE "../script/font_us.inc"
 #endif
 #if LANGUAGE == LANG_JP
-	INCLUDE "..\script\font_jp.inc"
+	INCLUDE "../script/font_jp.inc"
 #endif
 
 ;--------------------A-P-U----------------------
